@@ -2,4 +2,8 @@
 
 ## Setup
 
-Run `npm install`
+`npm install`
+
+## Run
+
+`node server.js`
