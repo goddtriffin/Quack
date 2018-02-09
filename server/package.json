@@ -9,6 +9,7 @@
   "author": "Todd Griffin, Justin Hartman",
   "license": "ISC",
   "dependencies": {
+    "eslint": "^4.17.0",
     "express": "^4.16.2",
     "express-graphql": "^0.6.11",
     "graphql": "^0.12.3"
