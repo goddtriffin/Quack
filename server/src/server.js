@@ -7,6 +7,7 @@ var schema = buildSchema(`
   type Query {
     hello: String
     goodbye: String
+    wow: String
   }
 `);
 
@@ -17,6 +18,9 @@ var root = {
   },
   goodbye: () => {
     return 'Goodbye';
+  },
+  wow: () => {
+    return 'Owen Wilson??';
   }
 };
 
