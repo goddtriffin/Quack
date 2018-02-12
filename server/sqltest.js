@@ -7,8 +7,9 @@ var config = {
   userName: 'quackRoot@quackserver-useast', // update me
   password: 'goddtriffin#1334', // update me
   server: 'quackserver-useast.database.windows.net',
+  database: 'quackDatabase',
   options: {
-      database: 'quackDatabase'
+      encrypt: true
   }
 }
 var connection = new Connection(config);
