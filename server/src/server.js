@@ -6,6 +6,7 @@ var { buildSchema } = require('graphql');
 var schema = buildSchema(`
   type Query {
     hello: String
+    goodbye: String
   }
 `);
 
@@ -14,6 +15,9 @@ var root = {
   hello: () => {
     return 'Hello world!';
   },
+  goodbye: () => {
+    return 'Goodbye';
+  }
 };
 
 var app = express();

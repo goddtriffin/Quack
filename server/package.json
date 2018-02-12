@@ -4,7 +4,7 @@
   "description": "The Quack server.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "babel-node src/server.js --presets es2015,stage-2"
   },
   "author": "Todd Griffin, Justin Hartman",
   "license": "ISC",
@@ -17,6 +17,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1"
+    "babel-preset-stage-2": "^6.24.1",
+    "nodemon": "^1.14.12"
   }
 }
