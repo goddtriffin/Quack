@@ -4,8 +4,8 @@
   "description": "The Quack server.",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon src/server.js --exec babel-node --presets es2015,stage-2",
-    "build": "babel src -d dist --presets es2015,stage-2",
+    "start": "nodemon src/server.js --exec babel-node",
+    "build": "babel src -d dist",
     "serve": "node dist/server.js"
   },
   "author": "Todd Griffin, Justin Hartman",
