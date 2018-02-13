@@ -2,7 +2,7 @@
 
 ## Setup (everytime before you get working)
 
-`yarn` (`npm install`)
+`yarn setup` (`npm run setup`)
 
 ## Run
 
