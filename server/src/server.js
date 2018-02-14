@@ -13,7 +13,7 @@ var schema = buildSchema(`
 var root = {
   hello: () => {
     return 'Hello world!';
-  },
+  }
 };
 
 var app = express();
