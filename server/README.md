@@ -1,12 +1,18 @@
 # Quack Server
 
-## Setup
+## Setup (everytime before you get working)
 
-`npm install`
+`yarn setup` (`npm run setup`)
 
 ## Run
 
-`node server.js`
+`yarn start` (`npm run start`)
+
+## Deploy
+
+`yarn build` (`npm run build`)
+
+`yarn serve` (`npm run serve`)
 
 ## Setup Docker for Mac 
 
