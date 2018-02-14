@@ -1,0 +1,3 @@
+rootProject.name = 'quack_nativeapp'
+
+include ':app'

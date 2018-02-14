@@ -1,5 +1,15 @@
 # Quack Server
 
-## Setup
+## Setup (everytime before you get working)
 
-Run `npm install`
+`yarn setup` (`npm run setup`)
+
+## Run
+
+`yarn start` (`npm run start`)
+
+## Deploy
+
+`yarn build` (`npm run build`)
+
+`yarn serve` (`npm run serve`)
