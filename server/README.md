@@ -12,7 +12,7 @@
 
 Install Docker for Mac here: https://docs.docker.com/docker-for-mac/install/
 
-Docker will be used to locally host our SQL database since we can't connect to Azure:/ (Thanks iTap)
+Docker will be used to locally host our SQL database since we can't connect to Azure :sweat_smile: (Thanks iTap)
 
 Once Docker is installed, make sure that in Preferences/Advanced, set at least 4GB of RAM for Docker
 
