@@ -1,0 +1,14 @@
+type User {
+    id: Int
+    name: String
+    courses: [Course]
+}
+
+type Query {
+    users: [User]
+    user(id: Int!): User
+}
+
+type Mutation {
+    addUser(name: String!): User
+}
