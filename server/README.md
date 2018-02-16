@@ -6,6 +6,8 @@
 
 ## Run
 
+`node server.js`
+
 `yarn start` (`npm run start`)
 
 ## Deploy
