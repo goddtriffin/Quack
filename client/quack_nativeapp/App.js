@@ -11,14 +11,14 @@ import {
   Text,
   View
 } from 'react-native';
-import Login from './app/components/Login/Login';
+import LoginScreen from './app/components/LoginScreen/LoginScreen';
 
 
 export default class App extends Component {
   render() {
     return (
       //Going straight to login right now for testing
-      <Login />
+      <LoginScreen />
     );
   }
 }
