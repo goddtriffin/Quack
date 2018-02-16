@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, StatusBar, KeyboardAvoidingView } from 'react-native';
 import styles from './styles';
 import LoginForm from './LoginForm';
 export default class Login extends Component {
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView behavior='padding' style={styles.container}>
+            <StatusBar
+                barStyle="light-content"
+            />
                 <View style={styles.logoContainer}>
                     <Image
                     style={styles.logo} 
@@ -14,10 +17,11 @@ export default class Login extends Component {
                 </View>
                 <View style={styles.formContainer}>
                     <LoginForm/>
+
                 </View>
 
 
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }
