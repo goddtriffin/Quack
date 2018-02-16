@@ -2,6 +2,10 @@ var express = require('express');
 var graphqlHTTP = require('express-graphql');
 var { buildSchema } = require('graphql');
 
+import types from './graphql/types';
+import rootValue from './graphql/resolvers';
+
+/*
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
   type Query {
@@ -15,11 +19,16 @@ var root = {
     return 'Hello world!';
   }
 };
+*/
+console.log(types);
+console.log(rootValue);
+
+const schema = buildSchema(types);
 
 var app = express();
 app.use('/graphql', graphqlHTTP({
   schema: schema,
-  rootValue: root,
+  rootValue/*: root,*/,
   graphiql: true,
 }));
 app.listen(4000);
