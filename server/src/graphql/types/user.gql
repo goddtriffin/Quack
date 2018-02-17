@@ -1,6 +1,12 @@
+input UserInput {
+    firstName: String!
+    lastName: String!
+}
+
 type User {
     id: Int
-    name: String
+    firstName: String!
+    lastName: String!
     courses: [Course]
 }
 
@@ -10,5 +16,6 @@ type Query {
 }
 
 type Mutation {
-    addUser(name: String!): User
+    createUser(input: UserInput): User
+    updateUser(id: Int!, input: UserInput): User
 }
