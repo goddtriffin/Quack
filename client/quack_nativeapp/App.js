@@ -12,13 +12,14 @@ import {
   View
 } from 'react-native';
 import LoginScreen from './app/components/LoginScreen/LoginScreen';
+import Quiz from './app/components/Quiz/Quiz';
 
 
 export default class App extends Component {
   render() {
     return (
-      //Going straight to login right now for testing
-      <LoginScreen />
+      //Going straight to quiz right now for testing
+      <Quiz />
     );
   }
 }
