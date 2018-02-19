@@ -1,0 +1,10 @@
+type Course {
+    id: Int
+    description: String
+    professor: User
+}
+
+type Query {
+    courses: [Course]
+    course(id: Int): Course
+}
