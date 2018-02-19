@@ -2,6 +2,8 @@ var express = require('express');
 var graphqlHTTP = require('express-graphql');
 var { buildSchema } = require('graphql');
 
+import types from './graphql/types';
+import rootValue from './graphql/resolvers';
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var TYPES = require('tedious').TYPES;
@@ -49,17 +51,15 @@ var schema = buildSchema(`
   }
 `);
 
-// The root provides a resolver function for each API endpoint
-var root = {
-  hello: () => {
-    return "Hello World";
-  }
-};
+console.log(types);
+// console.log(rootValue);
+
+const schema = buildSchema(types);
 
 var app = express();
 app.use('/graphql', graphqlHTTP({
   schema: schema,
-  rootValue: root,
+  rootValue,
   graphiql: true,
 }));
 app.listen(4000);
