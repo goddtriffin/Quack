@@ -7,47 +7,48 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import LoginScreen from './app/components/LoginScreen/LoginScreen';
-import RegisterScreen from './app/components/LoginScreen/RegisterScreen'
+import RegisterScreen from './app/components/LoginScreen/RegisterScreen';
+import HomeScreen from './app/components/HomeScreen/HomeScreen';
 
 
 
 
-// export default class App extends Component {
-//   render() {
+export default class App extends Component {
+  state = {
+    loggedIn: true,
+  }
+  render() {
+    if(this.state.loggedIn == false) {
+      return (
+        <LoginRoute/>
+      );
+    }else {
+      return (
+        <HomeRoute />
+      );
+    }
     
-//     return (
-//       //Going straight to login right now for testing
-//       <LoginScreen />
-//     );
-//   }
-// }
+  }
+}
 
 
-
-export default StackNavigator({
+const LoginRoute = StackNavigator({
     Login: {
       screen: LoginScreen,
     },
     Register: {
       screen: RegisterScreen,
     },
+    Home: {
+      screen: HomeScreen,
+    }
 });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+const HomeRoute = StackNavigator({
+  Home: {
+    screen: HomeScreen,
+  }
 });
+
+
+

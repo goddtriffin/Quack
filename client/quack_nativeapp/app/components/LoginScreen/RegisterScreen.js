@@ -14,6 +14,7 @@ export default class RegisterScreen extends Component {
         color: 'white',
         textAlign: 'left'},
         headerTintColor: 'white',
+        headerBackTitle: 'Back',
     };
 
     render() {

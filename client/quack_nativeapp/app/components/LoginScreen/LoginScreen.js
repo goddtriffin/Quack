@@ -3,6 +3,7 @@ import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text } 
 import styles from './styles';
 import LoginForm from './LoginForm';
 import { StackNavigator } from 'react-navigation';
+
 export default class LoginScreen extends Component {
     static navigationOptions = {
         header: null,
