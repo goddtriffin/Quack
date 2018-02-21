@@ -11,6 +11,8 @@ export default StyleSheet.create({
       width: 180,
       height: 180,
       resizeMode: 'contain',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
   },
   logoContainer: {
       alignItems: 'center',
@@ -19,6 +21,7 @@ export default StyleSheet.create({
       justifyContent: 'center',
       height: 200,
       paddingVertical: 30,
+      flexDirection: 'column',
   },
   formContainer: {
     padding: 20,
@@ -71,6 +74,23 @@ export default StyleSheet.create({
     fontSize: 16,
     color: 'white',
     textAlign: 'left',
+  },
+
+  bigHeaderText: {
+    fontFamily: 'Fira Sans',
+    fontWeight: '900',
+    fontSize: 30,
+    color: 'white',
+    textAlign: 'left',
+  },
+
+  header: {
+    alignItems: 'flex-start',
+    flex: 1,
+    height: 200,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    flexDirection: 'column',
   }
   
 });

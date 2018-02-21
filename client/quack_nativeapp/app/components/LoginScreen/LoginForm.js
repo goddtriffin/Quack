@@ -8,7 +8,7 @@ export default class LoginForm extends Component {
             
                 <TextInput 
                     placeholderTextColor='rgba(255,255,255,0.6)'
-                    placeholder="Username"
+                    placeholder="Email"
                     keyboardType='email-address'
                     returnKeyType='next'
                     autoCapitalize='none'
@@ -32,12 +32,8 @@ export default class LoginForm extends Component {
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={styles.textButton}>
-                    <Text style={styles.detailText}>Not registered? </Text>
-                    <Text style={styles.signupText}>Sign up now</Text>
-                </TouchableOpacity>
-
+                
+                
             </View>
         );
     }

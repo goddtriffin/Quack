@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   Platform,
@@ -11,17 +5,33 @@ import {
   Text,
   View
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 import LoginScreen from './app/components/LoginScreen/LoginScreen';
+import RegisterScreen from './app/components/LoginScreen/RegisterScreen'
 
 
-export default class App extends Component {
-  render() {
-    return (
-      //Going straight to login right now for testing
-      <LoginScreen />
-    );
-  }
-}
+
+
+// export default class App extends Component {
+//   render() {
+    
+//     return (
+//       //Going straight to login right now for testing
+//       <LoginScreen />
+//     );
+//   }
+// }
+
+
+
+export default StackNavigator({
+    Login: {
+      screen: LoginScreen,
+    },
+    Register: {
+      screen: RegisterScreen,
+    },
+});
 
 const styles = StyleSheet.create({
   container: {
