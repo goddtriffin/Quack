@@ -3,13 +3,23 @@ import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text } 
 import styles from './styles';
 import { StackNavigator } from 'react-navigation';
 
+const user = {
+    firstName: '',
+    lastName: '',
+    ID: '',
+}
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
     static navigationOptions = {
         header: null,
     };
 
     render() {
+
+        const fullName  = this.props.navigation.state.params;
+
+        
+
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -17,7 +27,8 @@ export default class HomeScreen extends Component {
                 />
 
                 <View style={styles.header}>
-                    <Text style={styles.bigTitle}>Classes</Text>
+                    <Text style={styles.bigTitle}>Hi, {fullName}</Text>
+                    <Text>Hello {fullName}</Text>
                 </View>
 
 
@@ -26,3 +37,4 @@ export default class HomeScreen extends Component {
         );
     }
 }
+export default HomeScreen;

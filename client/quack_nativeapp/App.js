@@ -15,7 +15,7 @@ import HomeScreen from './app/components/HomeScreen/HomeScreen';
 
 export default class App extends Component {
   state = {
-    loggedIn: true,
+    loggedIn: false,
   }
   render() {
     if(this.state.loggedIn == false) {

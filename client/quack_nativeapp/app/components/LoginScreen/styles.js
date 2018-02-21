@@ -3,8 +3,12 @@ import { colors } from '../../style/styles';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 3,
     backgroundColor: colors.qGreen,
+  },
+  buttonContainer: {
+    flex: 1,
+    padding: 20,
   },
   logo: {
       flex: 1,
@@ -86,9 +90,7 @@ export default StyleSheet.create({
 
   header: {
     alignItems: 'flex-start',
-    flex: 1,
-    height: 200,
-    paddingVertical: 10,
+    paddingTop: 20,
     paddingHorizontal: 20,
     flexDirection: 'column',
   }
