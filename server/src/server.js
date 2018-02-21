@@ -4,9 +4,14 @@ var { buildSchema } = require('graphql');
 
 import types from './graphql/types';
 import rootValue from './graphql/resolvers';
+import Sequelize from 'sequelize';
+
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var TYPES = require('tedious').TYPES;
+var async = require('async');
+
+var sql = require('mssql');
 
 var config;
 
@@ -26,6 +31,10 @@ var localConfig = {
     password: 'Test@123', 
     server: 'localhost',
     database: 'quackDB',
+    options: {
+        database: 'quackDB',
+        rowCollectionOnRequestCompletion: true
+    }
 }
 
 if(process.argv.length != 3) {
@@ -44,34 +53,56 @@ else {
     process.exit(1);
 }
 
-// Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`);
-
 console.log(types);
 // console.log(rootValue);
 
 const schema = buildSchema(types);
 
-var app = express();
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue,
-  graphiql: true,
-}));
-app.listen(4000);
-console.log('Running a GraphQL API server at localhost:4000/graphql');
-
-
 var connection = new Connection(config);
-// Attempt to connect and execute queries if connection goes through
+
 connection.on('connect', function(err) {
   if (err) {
     console.log(err);
   } else {
     console.log('Connected');
+    executeStatement();
   }
 });
+
+//console.log('**Node CRUD sample with Sequelize and MSSQL **');
+var app = express();
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue,
+  context: {
+    db: connection 
+  },
+  graphiql: true,
+}));
+app.listen(4000);
+console.log('Running a GraphQL API server at localhost:4000/graphql');
+
+function executeStatement() {
+  var request = new Request("select * from TestSchema.Users", function(err, rowCount, rows) {        
+    if (err) {
+        console.log(err);
+    }
+    else {
+      console.log(rowCount + ' rows');
+      console.log(rows);
+      var jsonArray = []
+      rows.forEach(function (columns) {
+          var rowObject ={};
+          columns.forEach(function(column) {
+              rowObject[column.metadata.colName] = column.value;
+          });
+          jsonArray.push(rowObject)
+      });
+      console.log(jsonArray);
+    }
+  });
+  //console.log(rows);
+
+  connection.execSql(request);
+}
+

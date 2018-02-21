@@ -1,12 +1,14 @@
 input UserInput {
     firstName: String!
     lastName: String!
+    email: String!
 }
 
 type User {
     id: Int
     firstName: String!
     lastName: String!
+    email: String!
     courses: [Course]
 }
 
