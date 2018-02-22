@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Row, Grid } from "react-native-easy-grid"
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, Dimensions } from 'react-native';
 import styles from './styles';
 export default class Roster extends Component {
     dummyData = {
@@ -17,10 +17,10 @@ export default class Roster extends Component {
         return (
             <Grid>
                 <Row size={25}>
-                    <Image>
+                    {/* <Image>
                         source={require('../../images/navigation_resources/back_button.png')}
                         style={styles.navigationButton}
-                    </Image>
+                    </Image> */}
 
                     <Text style = {styles.rosterHeaderText}>
                         CS 307 Class Roster

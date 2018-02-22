@@ -3,10 +3,12 @@ import { colors } from '../../style/styles';
 
 export default StyleSheet.create({
   navigationButton: {
+    resizeMode: 'contain',
     paddingTop: 70,
   },
   rosterHeaderText: {
       textAlign: 'left',
+      paddingTop: 70,
       paddingLeft: 20,
   }
 });
