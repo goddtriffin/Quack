@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   Platform,
@@ -11,33 +5,50 @@ import {
   Text,
   View
 } from 'react-native';
-import Login from './app/components/Login/Login';
+import { StackNavigator } from 'react-navigation';
+import LoginScreen from './app/components/LoginScreen/LoginScreen';
+import RegisterScreen from './app/components/LoginScreen/RegisterScreen';
+import HomeScreen from './app/components/HomeScreen/HomeScreen';
+
+
 
 
 export default class App extends Component {
+  state = {
+    loggedIn: true,
+  }
   render() {
-    return (
-      //Going straight to login right now for testing
-      <Login />
-    );
+    if(this.state.loggedIn == false) {
+      return (
+        <LoginRoute/>
+      );
+    }else {
+      return (
+        <HomeRoute />
+      );
+    }
+    
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+
+const LoginRoute = StackNavigator({
+    Login: {
+      screen: LoginScreen,
+    },
+    Register: {
+      screen: RegisterScreen,
+    },
+    Home: {
+      screen: HomeScreen,
+    }
 });
+
+const HomeRoute = StackNavigator({
+  Home: {
+    screen: HomeScreen,
+  }
+});
+
+
+
