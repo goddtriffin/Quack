@@ -13,13 +13,14 @@ import {
 } from 'react-native';
 import LoginScreen from './app/components/LoginScreen/LoginScreen';
 import Quiz from './app/components/Quiz/Quiz';
+import Grades from './app/components/Grades/Grades';
 
 
 export default class App extends Component {
   render() {
     return (
       //Going straight to quiz right now for testing
-      <Quiz />
+      <Grades />
     );
   }
 }
