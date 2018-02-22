@@ -16,8 +16,9 @@ export default class Roster extends Component {
     render() {
         return (
             <Grid>
-                <Row size={25}>
-                    {/* <Image>
+                <Row size={20}>
+                    {/* Can't Figure out why this wont work
+                     <Image>
                         source={require('../../images/navigation_resources/back_button.png')}
                         style={styles.navigationButton}
                     </Image> */}
@@ -27,12 +28,36 @@ export default class Roster extends Component {
                     </Text>
                 </Row>
 
-                <Row size={75}>
+                <Row size={80}>
                     <Col>
-                       
+                       <Text style = {styles.RosterTitle}>
+                            Students
+                       </Text>
+                       <Text style = {styles.RosterEntry}>
+                            Tyler
+                       </Text>
+                       <Text style = {styles.RosterEntry}>
+                            Mason
+                       </Text>
+                       <Text style = {styles.RosterEntry}>
+                            Theo
+                       </Text>
+
                     </Col>
                     
                     <Col>
+                        <Text style = {styles.RosterTitle}>
+                            Grade
+                        </Text>
+                        <Text style = {styles.RosterEntry}>
+                            100%
+                       </Text>
+                       <Text style = {styles.RosterEntry}>
+                            69%
+                       </Text>
+                       <Text style = {styles.RosterEntry}>
+                            89%
+                       </Text>
                         
                     </Col>
                 </Row>

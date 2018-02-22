@@ -7,8 +7,21 @@ export default StyleSheet.create({
     paddingTop: 70,
   },
   rosterHeaderText: {
-      textAlign: 'left',
+      textAlign: 'center',
+      //fontFamily: '',
+      //width: 200,
+      fontSize: 20,
       paddingTop: 70,
       paddingLeft: 20,
+  },
+  RosterTitle: {
+      fontWeight: 'bold',
+      fontSize: 15,
+      paddingLeft: 20,
+  },
+  RosterEntry: {
+      fontSize: 10,
+      paddingLeft: 20,
+      paddingTop: 30,
   }
 });
