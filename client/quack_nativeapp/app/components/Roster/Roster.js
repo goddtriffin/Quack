@@ -17,13 +17,23 @@ export default class Roster extends Component {
         return (
             <Grid>
                 <Row size={25}>
+                    <Image>
+                        source={require('../../images/navigation_resources/back_button.png')}
+                        style={styles.navigationButton}
+                    </Image>
+
+                    <Text style = {styles.rosterHeaderText}>
+                        CS 307 Class Roster
+                    </Text>
                 </Row>
+
                 <Row size={75}>
                     <Col>
-                        
+                       
                     </Col>
+                    
                     <Col>
-
+                        
                     </Col>
                 </Row>
             </Grid>

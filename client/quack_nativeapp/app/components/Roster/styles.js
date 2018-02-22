@@ -5,7 +5,7 @@ export default StyleSheet.create({
   navigationButton: {
     paddingTop: 70,
   },
-  RosterHeaderText: {
+  rosterHeaderText: {
       textAlign: 'left',
       paddingLeft: 20,
   }

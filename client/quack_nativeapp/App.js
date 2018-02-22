@@ -11,14 +11,14 @@ import {
   Text,
   View
 } from 'react-native';
-import Login from './app/components/Login/Login';
+import Roster from './app/components/Roster/Roster';
 
 
 export default class App extends Component {
   render() {
     return (
-      //Going straight to login right now for testing
-      <Login />
+      //Going straight to Roster right now for testing
+      <Roster />
     );
   }
 }
