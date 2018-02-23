@@ -41,7 +41,7 @@ class sqlConnector {
 	                console.log(jsonArray[0]);
 	                console.log(Object.keys(args).length);
 
-	                if(Object.keys(args).length > 0) {
+	                if(Object.keys(args).length > 0 && jsonArray.length < 2) {
 	                    console.log("sent first");
 	                    resolve(jsonArray[0]);
 	                }

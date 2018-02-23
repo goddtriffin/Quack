@@ -18,6 +18,8 @@ type Query {
 }
 
 type Mutation {
-    createUser(input: UserInput): User
-    updateUser(id: Int!, input: UserInput): User
+    userCreate(input: UserInput): User
+    userUpdate(id: Int!, input: UserInput): User
+    userAddCourse(id: Int!, c_id: Int!): [Course]
+    userGetCourses(id: Int!): [Course]
 }
