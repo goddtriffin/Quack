@@ -14,6 +14,8 @@ var async = require('async');
 
 var sql = require('mssql');
 
+require('dotenv').config();
+
 var config;
 
 // Create connection to database
