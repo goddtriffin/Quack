@@ -23,7 +23,7 @@ class RegisterScreen extends Component {
         email: '',
         studentID: '',
         password: '',
-        instructor: false,
+        instructor: '',
     }
 
     
@@ -35,6 +35,8 @@ class RegisterScreen extends Component {
             await AsyncStorage.setItem('password', this.state.password);
             await AsyncStorage.setItem('studentID', this.state.studentID);
             await AsyncStorage.setItem('fullName', this.state.fullName);
+            await AsyncStorage.setItem('instructor', this.state.selectedIndex.toString());
+
             this.props.navigation.navigate('Home');
         }
 

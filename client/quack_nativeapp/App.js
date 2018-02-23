@@ -30,8 +30,8 @@ export default class App extends Component {
   render() {
     if(this.state.loggedIn == false) {
       return (
-        //<LoginRoute screenProps={this.state.user.firstName}/>
-        <Roster/>
+        <LoginRoute screenProps={this.state.user.firstName}/>
+        //<Roster/>
       );
     }else {
       return (
