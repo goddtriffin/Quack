@@ -1,18 +1,31 @@
 import React, { Component } from 'react';
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { View, Image, Text, Dimensions } from 'react-native';
+import { View, Image, Text, Dimensions, TouchableOpacity, AlertIOS, ScrollView } from 'react-native';
 import styles from './styles';
 export default class Roster extends Component {
-    dummyData = {
+    state = {
         students : [
-            {'students': 'Tyler', 'id': 1},
-            {'students': 'Mason', 'id': 2},
-            {'students': 'Theo', 'id': 3},
-            {'students': 'Justin', 'id': 4},
-            {'students': 'Todd', 'id': 5},
+            {'name': 'Tyler', 'avg' : 0, 'attendence': 0, 'grades': '0/5, 0/5 and 0/5', 'key': 0},
+            {'name': 'Mason', 'avg' : 66.667, 'attendence': 5, 'grades': '3/5, 4/5 and 3/5', 'key': 1},
+            {'name': 'Theo', 'avg' : 60, 'attendence': 3, 'grades': '3/5, 3/5 and 3/5', 'key': 2},
+            {'name': 'Justin', 'avg' : 100, 'attendence': 5, 'grades': '5/5, 5/5 and 5/5', 'key': 3},
+            {'name': 'Todd', 'avg': 40, 'attendence': 4, 'grades': '2/5, 2/5 and 2/5', 'key': 4},
         ]
     }
     
+    name_click(key) {
+        let students = this.state.courses;
+        AlertIOS.alert(
+            'Attendence Details', this.state.students[key].name + ' has been to ' + this.state.students[key].attendence + ' out of 5 classes.'
+        );
+    }
+    grade_click(key) {
+        let students = this.state.courses;
+        AlertIOS.alert(
+            'Grades Details', this.state.students[key].name + ' has gotten ' + this.state.students[key].grades + ' on the 3 classes quizes.'
+        );
+    }
+
     render() {
         return (
             <Grid>
@@ -30,35 +43,37 @@ export default class Roster extends Component {
 
                 <Row size={80}>
                     <Col>
-                       <Text style = {styles.RosterTitle}>
+                        <Text style = {styles.RosterTitle}>
                             Students
                        </Text>
-                       <Text style = {styles.RosterEntry}>
-                            Tyler
-                       </Text>
-                       <Text style = {styles.RosterEntry}>
-                            Mason
-                       </Text>
-                       <Text style = {styles.RosterEntry}>
-                            Theo
-                       </Text>
-
+                       <ScrollView style={styles.courseList}>
+                        {
+                            this.state.students.map(({name, key}) => 
+                                <View>
+                                    <TouchableOpacity /*style={styles.}*/ onPress={() => this.name_click(key)}>
+                                        <Text style={styles.RosterName}>{name}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )
+                        }
+                        </ScrollView>
                     </Col>
                     
                     <Col>
                         <Text style = {styles.RosterTitle}>
                             Grade
                         </Text>
-                        <Text style = {styles.RosterEntry}>
-                            100%
-                       </Text>
-                       <Text style = {styles.RosterEntry}>
-                            69%
-                       </Text>
-                       <Text style = {styles.RosterEntry}>
-                            89%
-                       </Text>
-                        
+                        <ScrollView style={styles.courseList}>
+                        {
+                            this.state.students.map(({avg, key}) => 
+                                <View>
+                                    <TouchableOpacity /*style={styles.}*/ onPress={() => this.grade_click(key)}>
+                                        <Text style={styles.RosterName}>{avg}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )
+                        }
+                        </ScrollView>
                     </Col>
                 </Row>
             </Grid>
