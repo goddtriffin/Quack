@@ -20,8 +20,8 @@ var config;
 var prodConfig = {
   userName: process.env.DB_P_USER,
   password: process.env.DB_P_PASS,
-  server: process.env.DB_P_SERVER,
-  database: process.env.DB_P_DATABASE,
+  server: process.env.DB_P_ENDPOINT,
+  database: process.env.DB_P_NAME,
   options: {
       encrypt: true
   }
@@ -30,10 +30,10 @@ var prodConfig = {
 var localConfig = {
     userName: process.env.DB_T_USER,
     password: process.env.DB_T_PASS, 
-    server: process.env.DB_T_SERVER,
-    database: process.env.DB_T_DATABASE,
+    server: process.env.DB_T_ENDPOINT,
+    database: process.env.DB_T_NAME,
     options: {
-        database: process.env.DB_T_DATABASE,
+        database: process.env.DB_T_NAME,
         rowCollectionOnRequestCompletion: true
     }
 }
