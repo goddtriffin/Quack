@@ -4,6 +4,12 @@ import styles from './styles';
 import LoginForm from './LoginForm';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import gql from 'graphql-tag';
+
 export default class LoginScreen extends Component {
     static navigationOptions = {
         header: null,
@@ -88,3 +94,8 @@ export default class LoginScreen extends Component {
         );
     }
 }
+
+const client = new ApolloClient({
+  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
+  cache: new InMemoryCache()
+});
