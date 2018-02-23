@@ -18,22 +18,22 @@ var config;
 
 // Create connection to database
 var prodConfig = {
-  userName: 'quackRoot@quackserver-useast', // update me
-  password: 'goddtriffin#1334', // update me
-  server: 'quackserver-useast.database.windows.net',
-  database: 'quackDatabase',
+  userName: process.env.DB_P_USER,
+  password: process.env.DB_P_PASS,
+  server: process.env.DB_P_SERVER,
+  database: process.env.DB_P_DATABASE,
   options: {
       encrypt: true
   }
 }
 
 var localConfig = {
-    userName: 'sa',
-    password: 'Test@123', 
-    server: 'localhost',
-    database: 'quackDB',
+    userName: process.env.DB_T_USER,
+    password: process.env.DB_T_PASS, 
+    server: process.env.DB_T_SERVER,
+    database: process.env.DB_T_DATABASE,
     options: {
-        database: 'quackDB',
+        database: process.env.DB_T_DATABASE,
         rowCollectionOnRequestCompletion: true
     }
 }
