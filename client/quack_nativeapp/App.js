@@ -63,6 +63,9 @@ const LoginRoute = StackNavigator({
     },
     WriteQuiz: {
       screen: WriteQuiz
+    },
+    Roster: {
+      screen: Roster,
     }
 });
 

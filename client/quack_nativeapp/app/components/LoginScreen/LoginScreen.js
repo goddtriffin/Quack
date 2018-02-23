@@ -47,11 +47,14 @@ export default class LoginScreen extends Component {
             await AsyncStorage.setItem('email:key', this.state.email);
             await AsyncStorage.setItem('password', this.state.password);
 
-            const resetAction = NavigationActions.reset({
-                index: 0,
-                actions: [ NavigationActions.navigate({ routeName: 'Home' })]
-              });
-              this.props.navigation.dispatch(resetAction);
+                const resetAction = NavigationActions.reset({
+                    index: 0,
+                    actions: [ NavigationActions.navigate({ routeName: 'Home' })]
+                });
+                this.props.navigation.dispatch(resetAction);
+            }else {
+                alert("Please enter a username and password");
+            }
         }
 
         return (

@@ -101,10 +101,10 @@ class HomeScreen extends Component {
     render() {
 
         let AddCourseButton = <Text/>;
+
         let CourseDetails = null;
         if(this.state.instructor == '1') {
             AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
-            
         }
         else {
              AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
@@ -134,13 +134,21 @@ class HomeScreen extends Component {
                 <View style={styles.courseListView}>
                     <ScrollView style={styles.courseList}>
                         {
-                            this.state.courses.map(({course}) => 
+                            this.state.courses.map(({course}) => {
+                                if(this.state.instructor == '1') {
                                 <View>
                                     <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades')}>
                                         <Text style={styles.courseListText}>{course}</Text>
                                     </TouchableOpacity>
                                 </View>
-                            )
+                                }else {
+                                    <View>
+                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Roster')}>
+                                        <Text style={styles.courseListText}>{course}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                }
+                            })
                             
                         }
                     

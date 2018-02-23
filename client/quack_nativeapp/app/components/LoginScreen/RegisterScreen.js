@@ -36,7 +36,9 @@ class RegisterScreen extends Component {
     render() {
 
         registerUser = async() => {
-            client.mutate({ mutation: gql`
+
+            if(this.state.fullName != '' && this.state.email != '') {
+                client.mutate({ mutation: gql`
                 mutation userCreate($input: UserInput) {
                   userCreate(input: $input) {
                     id
@@ -64,7 +66,11 @@ class RegisterScreen extends Component {
             await AsyncStorage.setItem('fullName', this.state.fullName);
             await AsyncStorage.setItem('instructor', this.state.selectedIndex.toString());
 
-            this.props.navigation.navigate('Home');
+                this.props.navigation.navigate('Home');
+            }else {
+                alert("Please enter something in every field.");
+            }
+            
         }
 
         return (
