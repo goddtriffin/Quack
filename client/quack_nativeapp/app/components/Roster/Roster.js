@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row, Grid } from "react-native-easy-grid"
+import { Col, Row, Grid } from "react-native-easy-grid";
 import { View, Image, Text, Dimensions } from 'react-native';
 import styles from './styles';
 export default class Roster extends Component {

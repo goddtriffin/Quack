@@ -11,14 +11,16 @@ import {
   Text,
   View
 } from 'react-native';
-import Roster from './app/components/Roster/Roster';
+import LoginScreen from './app/components/LoginScreen/LoginScreen';
+import Quiz from './app/components/Quiz/Quiz';
+import Grades from './app/components/Grades/Grades';
 
 
 export default class App extends Component {
   render() {
     return (
-      //Going straight to Roster right now for testing
-      <Roster />
+      //Going straight to quiz right now for testing
+      <Grades />
     );
   }
 }
