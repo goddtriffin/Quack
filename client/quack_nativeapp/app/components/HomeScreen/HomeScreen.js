@@ -58,8 +58,10 @@ class HomeScreen extends Component {
     render() {
 
         let AddCourseButton = <Text/>;
+        let CourseDetails = null;
         if(this.state.instructor == '1') {
             AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
+            
         }
 
         if(this.state.isLoading) {
