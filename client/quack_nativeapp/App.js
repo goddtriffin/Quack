@@ -15,12 +15,19 @@ import HomeScreen from './app/components/HomeScreen/HomeScreen';
 
 export default class App extends Component {
   state = {
-    loggedIn: true,
+    loggedIn: false,
+    user: {
+      firstName: '',
+      lastName: '',
+      email: ''
+    }
   }
+
+  
   render() {
     if(this.state.loggedIn == false) {
       return (
-        <LoginRoute/>
+        <LoginRoute screenProps={this.state.user.firstName}/>
       );
     }else {
       return (
