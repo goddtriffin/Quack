@@ -4,6 +4,7 @@ var { buildSchema } = require('graphql');
 
 import types from './graphql/types';
 import rootValue from './graphql/resolvers';
+import sqlConnector from './graphql/connectors';
 import Sequelize from 'sequelize';
 
 var Connection = require('tedious').Connection;
@@ -58,16 +59,7 @@ console.log(types);
 
 const schema = buildSchema(types);
 
-var connection = new Connection(config);
-
-connection.on('connect', function(err) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('Connected');
-    executeStatement();
-  }
-});
+const sqlDB = new sqlConnector(config);
 
 //console.log('**Node CRUD sample with Sequelize and MSSQL **');
 var app = express();
@@ -75,15 +67,15 @@ app.use('/graphql', graphqlHTTP({
   schema: schema,
   rootValue,
   context: {
-    db: connection 
+    db: sqlDB 
   },
   graphiql: true,
 }));
 app.listen(4000);
 console.log('Running a GraphQL API server at localhost:4000/graphql');
 
-function executeStatement() {
-  var request = new Request("select * from TestSchema.Users", function(err, rowCount, rows) {        
+/*function executeStatement() {
+  var request = new Request("SELECT * FROM TestSchema.Users", function(err, rowCount, rows) {        
     if (err) {
         console.log(err);
     }
@@ -104,5 +96,5 @@ function executeStatement() {
   //console.log(rows);
 
   connection.execSql(request);
-}
+}*/
 
