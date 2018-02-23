@@ -10,9 +10,6 @@ import LoginScreen from './app/components/LoginScreen/LoginScreen';
 import RegisterScreen from './app/components/LoginScreen/RegisterScreen';
 import HomeScreen from './app/components/HomeScreen/HomeScreen';
 
-
-
-
 export default class App extends Component {
   state = {
     loggedIn: false,
@@ -23,8 +20,8 @@ export default class App extends Component {
     }
   }
 
-  
   render() {
+
     if(this.state.loggedIn == false) {
       return (
         <LoginRoute screenProps={this.state.user.firstName}/>
@@ -56,6 +53,9 @@ const HomeRoute = StackNavigator({
     screen: HomeScreen,
   }
 });
+
+
+
 
 
 
