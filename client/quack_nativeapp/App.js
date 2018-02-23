@@ -11,6 +11,7 @@ import Quiz from './app/components/Quiz/Quiz';
 import Grades from './app/components/Grades/Grades';
 import RegisterScreen from './app/components/LoginScreen/RegisterScreen';
 import HomeScreen from './app/components/HomeScreen/HomeScreen';
+import Roster from './app/components/Roster/Roster';
 
 
 
@@ -29,7 +30,8 @@ export default class App extends Component {
   render() {
     if(this.state.loggedIn == false) {
       return (
-        <LoginRoute screenProps={this.state.user.firstName}/>
+        //<LoginRoute screenProps={this.state.user.firstName}/>
+        <Roster/>
       );
     }else {
       return (

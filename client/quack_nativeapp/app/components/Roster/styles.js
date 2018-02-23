@@ -7,21 +7,40 @@ export default StyleSheet.create({
     paddingTop: 70,
   },
   rosterHeaderText: {
-      textAlign: 'center',
-      //fontFamily: '',
-      //width: 200,
-      fontSize: 20,
+      textAlign: 'left',
+      fontFamily: 'Fira Sans',
+      width: 400,
+      fontSize: 30,
+      fontWeight: '800',
       paddingTop: 70,
       paddingLeft: 20,
   },
   RosterTitle: {
+        fontFamily: 'Fira Sans',
       fontWeight: 'bold',
-      fontSize: 15,
+      fontSize: 24,
       paddingLeft: 20,
   },
   RosterEntry: {
-      fontSize: 10,
+      fontFamily: 'Fira Sans',
+      fontSize: 20,
       paddingLeft: 20,
       paddingTop: 30,
-  }
+  },
+
+  header: {
+    height: 80,
+    paddingTop: 30,
+    paddingLeft: 10,
+    flexDirection: 'row',
+  },
+
+  bigTitle: {
+    fontFamily: 'Fira Sans',
+    fontWeight: '800',
+    flex: 3,
+    fontSize: 45,
+    color: 'black',
+    textAlign: 'left',
+  },
 });
