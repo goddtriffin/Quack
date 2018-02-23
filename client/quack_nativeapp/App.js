@@ -26,6 +26,7 @@ export default class App extends Component {
   }
 
   render() {
+    console.disableYellowBox = true;
 
     if(this.state.loggedIn == false) {
       return (

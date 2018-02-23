@@ -20,7 +20,7 @@ class HomeScreen extends Component {
     }
 
     state = {
-        courses: [
+        courses: [{'course': '', key: '1'}
         ],
         studentID:'',
         email:'',
@@ -90,6 +90,9 @@ class HomeScreen extends Component {
         let courses = this.state.courses;
         AlertIOS.prompt(
             'Enter course title', null, (text) => {
+                if(this.state.courses[0].course == "No current classes") {
+                    courses = [];
+                }
                 courses.push({'course': text});
                 this.setState({courses});
                 console.log(this.state);
@@ -134,21 +137,21 @@ class HomeScreen extends Component {
                 <View style={styles.courseListView}>
                     <ScrollView style={styles.courseList}>
                         {
-                            this.state.courses.map(({course}) => {
-                                if(this.state.instructor == '1') {
-                                <View>
-                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades')}>
-                                        <Text style={styles.courseListText}>{course}</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                }else {
+                            this.state.courses.map(({course}) => 
+                                //if(this.state.instructor == '1') {
                                     <View>
-                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Roster')}>
-                                        <Text style={styles.courseListText}>{course}</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                }
-                            })
+                                        <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades')}>
+                                            <Text style={styles.courseListText}>{course}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                // }else {
+                                //     <View>
+                                //     <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Roster')}>
+                                //         <Text style={styles.courseListText}>{course}</Text>
+                                //     </TouchableOpacity>
+                                // </View>
+                                // }
+                            )
                             
                         }
                     
