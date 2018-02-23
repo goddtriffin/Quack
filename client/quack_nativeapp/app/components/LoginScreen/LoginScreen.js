@@ -52,9 +52,6 @@ export default class LoginScreen extends Component {
                     actions: [ NavigationActions.navigate({ routeName: 'Home' })]
                 });
                 this.props.navigation.dispatch(resetAction);
-            }else {
-                alert("Please enter a username and password");
-            }
         }
 
         return (

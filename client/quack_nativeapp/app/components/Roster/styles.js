@@ -43,4 +43,16 @@ export default StyleSheet.create({
     color: 'black',
     textAlign: 'left',
   },
+  RosterName: {
+    fontFamily: 'Fira Sans',
+    fontSize: 20,
+    paddingLeft: 20,
+    paddingTop: 30,
+  },
+  RosterGrade: {
+    fontFamily: 'Fira Sans',
+    fontSize: 20,
+    paddingLeft: 20,
+    paddingTop: 30,
+  },
 });

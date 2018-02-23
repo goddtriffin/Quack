@@ -131,17 +131,17 @@ class HomeScreen extends Component {
                         {
                             this.state.courses.map(({course}) => {
                                 if(this.state.instructor == '1') {
-                                <View>
-                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades')}>
-                                        <Text style={styles.courseListText}>{course}</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                }else {
-                                    <View>
+                                return (<View>
                                     <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Roster')}>
                                         <Text style={styles.courseListText}>{course}</Text>
                                     </TouchableOpacity>
-                                </View>
+                                </View>);
+                                }else {
+                                    return (<View>
+                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades')}>
+                                        <Text style={styles.courseListText}>{course}</Text>
+                                    </TouchableOpacity>
+                                </View>);
                                 }
                             })
                             
