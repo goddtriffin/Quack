@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, AsyncStorage } from 'react-native';
+import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, AsyncStorage, AlertIOS } from 'react-native';
 import styles from './styles';
 import { StackNavigator } from 'react-navigation';
 
@@ -7,6 +7,11 @@ class HomeScreen extends Component {
     static navigationOptions = {
         header: null,
     };
+
+    constructor(props) {
+        super(props);
+        this.updateCourseList = this.updateCourseList.bind(this);
+    }
 
     state = {
         courses: [
@@ -29,6 +34,17 @@ class HomeScreen extends Component {
         });
     }
 
+    updateCourseList() {
+        let courses = this.state.courses;
+        AlertIOS.prompt(
+            'Enter course title', null, (text) => {
+                courses.push({'course': text});
+                this.setState({courses});
+                console.log(this.state);
+            }
+        );
+    }
+
 
     render() {
 
@@ -46,7 +62,7 @@ class HomeScreen extends Component {
 
                 <View style={styles.header}>
                     <Text style={styles.bigTitle}>Classes</Text>
-                    <TouchableOpacity style={styles.addCourse}>
+                    <TouchableOpacity style={styles.addCourse} onPress={() => this.updateCourseList()}>
                         <Text style={styles.addCourseText}>+ Add course</Text>
                     </TouchableOpacity>
                 </View>
@@ -54,13 +70,14 @@ class HomeScreen extends Component {
                 <View style={styles.courseListView}>
                     <ScrollView style={styles.courseList}>
                         {
-                            this.state.courses.map((item) => (
+                            this.state.courses.map(({course}) => 
                                 <View>
                                     <TouchableOpacity style={styles.courseListRow}>
-                                        <Text style={styles.courseListText}>{item.course}</Text>
+                                        <Text style={styles.courseListText}>{course}</Text>
                                     </TouchableOpacity>
                                 </View>
-                            ))
+                            )
+                            
                         }
                     
                     </ScrollView>
