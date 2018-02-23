@@ -72,7 +72,7 @@ class HomeScreen extends Component {
                         {
                             this.state.courses.map(({course}) => 
                                 <View>
-                                    <TouchableOpacity style={styles.courseListRow}>
+                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades')}>
                                         <Text style={styles.courseListText}>{course}</Text>
                                     </TouchableOpacity>
                                 </View>

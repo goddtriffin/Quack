@@ -17,17 +17,17 @@ export default class Quiz extends Component {
     }
 
     onPress = () => {
-        Alert.alert("Lets go to the quiz!");
+        
     }
     render() {
         return (
             <Grid>
                 <Row size={25}>
                     <Col size={50}>
-                        <Image
+                        {/* <Image
                         source={require('../../images/navigation_resources/back_button.png')}
                         style={styles.navigationButton}
-                        />
+                        /> */}
                         
                         <Text style = {styles.classHeaderText}>
                         CS 307
@@ -88,7 +88,7 @@ export default class Quiz extends Component {
                         <Text style={styles.gradeDates}>
                         2/11
                         </Text>
-                        <TouchableHighlight onPress={this.onPress}>
+                        <TouchableHighlight onPress={() => this.props.navigation.navigate('Quiz')}>
                             <Image
                                 source={require('../../images/navigation_resources/quiz_up.png')}
                                 style={styles.letsGoToQuiz}

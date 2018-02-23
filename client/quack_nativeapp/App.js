@@ -50,6 +50,12 @@ const LoginRoute = StackNavigator({
     },
     Home: {
       screen: HomeScreen,
+    },
+    Grades: {
+      screen: Grades,
+    },
+    Quiz: {
+      screen: Quiz,
     }
 });
 
