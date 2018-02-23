@@ -106,6 +106,9 @@ class HomeScreen extends Component {
             AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
             
         }
+        else {
+             AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
+        }
 
         if(this.state.isLoading) {
             return(<View><Text>Loading...</Text></View>);
