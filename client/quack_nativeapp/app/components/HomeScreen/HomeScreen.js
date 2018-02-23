@@ -21,10 +21,6 @@ class HomeScreen extends Component {
 
     state = {
         courses: [
-            {'course': 'CS307', 'key': 1},
-            {'course': 'ENTR310', 'key': 2},
-            {'course': 'CS252', 'key': 3},
-            {'course': 'ANTH210', 'key': 4},
         ],
         studentID:'',
         email:'',
@@ -56,8 +52,14 @@ class HomeScreen extends Component {
                }}).then( data => {
               console.log(data);
               courses = [];
-              for(let i = 0; i < data.data.userGetCourses.length; i++) {
-                courses.push({'course' : data.data.userGetCourses[i].name})
+
+              if(data.data.userGetCourses == null) {
+                courses.push({'course' : 'No current classes'})
+              }
+              else {
+                for(let i = 0; i < data.data.userGetCourses.length; i++) {
+                    courses.push({'course' : data.data.userGetCourses[i].name})
+                }
               }
               this.setState({courses});
             }).catch(function(error) {
