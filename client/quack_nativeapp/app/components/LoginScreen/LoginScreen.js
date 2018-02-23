@@ -1,16 +1,39 @@
 import React, { Component } from 'react';
-import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text } from 'react-native';
+import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, TextInput, AsyncStorage } from 'react-native';
 import styles from './styles';
 import LoginForm from './LoginForm';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, NavigationActions } from 'react-navigation';
+
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import gql from 'graphql-tag';
 
 export default class LoginScreen extends Component {
     static navigationOptions = {
         header: null,
     };
 
+    state = {
+        email: '',
+        password: '',
+    }
+
     render() {
-       
+        
+        loginUser = async() => {
+            
+            await AsyncStorage.setItem('email:key', this.state.email);
+            await AsyncStorage.setItem('password', this.state.password);
+
+            const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [ NavigationActions.navigate({ routeName: 'Home' })]
+              });
+              this.props.navigation.dispatch(resetAction);
+        }
+
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>
             <StatusBar
@@ -24,7 +47,39 @@ export default class LoginScreen extends Component {
                 </View>
                 
                 <View style={styles.formContainer}>
-                    <LoginForm/>
+                <View>
+            
+                    <TextInput 
+                        placeholderTextColor='rgba(255,255,255,0.6)'
+                        placeholder="Email"
+                        keyboardType='email-address'
+                        returnKeyType='next'
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        placeholderStyle={styles.input}
+                        style={styles.input}
+                        onSubmitEditing={() => this.passwordInput.focus()}
+                        onChangeText={(email) => this.setState({email})}
+                    />
+                    <TextInput 
+                        secureTextEntry={true}
+                        placeholderStyle={styles.input}
+                        placeholderTextColor='rgba(255,255,255,0.6)'
+                        placeholder="Password"
+                        returnKeyType='next'
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        style={styles.input}
+                        ref={(input) => this.passwordInput = input}
+                        onChangeText={(password) => this.setState({password})}
+                    />
+
+                    <TouchableOpacity style={styles.button} onPress ={() => loginUser()}>
+                        <Text style={styles.buttonText}>Login</Text>
+                    </TouchableOpacity>
+                
+                
+                </View>
 
                     <TouchableOpacity style={styles.textButton} onPress={() => this.props.navigation.navigate('Register')}>
                         <Text style={styles.detailText}>Not registered? </Text>
@@ -39,3 +94,8 @@ export default class LoginScreen extends Component {
         );
     }
 }
+
+const client = new ApolloClient({
+  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
+  cache: new InMemoryCache()
+});

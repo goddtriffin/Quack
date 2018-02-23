@@ -7,20 +7,28 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import LoginScreen from './app/components/LoginScreen/LoginScreen';
+import Quiz from './app/components/Quiz/Quiz';
+import Grades from './app/components/Grades/Grades';
 import RegisterScreen from './app/components/LoginScreen/RegisterScreen';
 import HomeScreen from './app/components/HomeScreen/HomeScreen';
-
-
-
+import Roster from './app/components/Roster/Roster';
 
 export default class App extends Component {
   state = {
-    loggedIn: true,
+    loggedIn: false,
+    user: {
+      firstName: '',
+      lastName: '',
+      email: ''
+    }
   }
+
   render() {
+
     if(this.state.loggedIn == false) {
       return (
-        <LoginRoute/>
+        <LoginRoute screenProps={this.state.user.firstName}/>
+        //<Roster/>
       );
     }else {
       return (
@@ -41,6 +49,12 @@ const LoginRoute = StackNavigator({
     },
     Home: {
       screen: HomeScreen,
+    },
+    Grades: {
+      screen: Grades,
+    },
+    Quiz: {
+      screen: Quiz,
     }
 });
 
@@ -49,6 +63,9 @@ const HomeRoute = StackNavigator({
     screen: HomeScreen,
   }
 });
+
+
+
 
 
 

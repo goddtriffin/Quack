@@ -1,8 +1,29 @@
 import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 import styles from './styles';
+import { StackNavigator, NavigationActions } from 'react-navigation'
 export default class LoginForm extends Component {
+
+
+    state = {
+        email: '',
+        password: ''
+    }
+
+
     render() {
+        loginUser = () => {
+            const resetAction = NavigationActions.reset({
+                index: 1,
+                actions: [
+                  NavigationActions.navigate({ routeName: 'LoginRoute' }),
+                  NavigationActions.navigate({ routeName: 'HomeRoute' })
+                ]
+              });
+              this.props.navigation.dispatch(resetAction);
+        }
+        
+
         return (
             <View>
             
@@ -16,6 +37,7 @@ export default class LoginForm extends Component {
                     placeholderStyle={styles.input}
                     style={styles.input}
                     onSubmitEditing={() => this.passwordInput.focus()}
+                    onChangeText={(email) => this.setState({email})}
                 />
                 <TextInput 
                     secureTextEntry={true}
@@ -27,9 +49,10 @@ export default class LoginForm extends Component {
                     autoCorrect={false}
                     style={styles.input}
                     ref={(input) => this.passwordInput = input}
+                    onChangeText={(password) => this.setState({password})}
                 />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress ={() => loginUser()}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
                 
