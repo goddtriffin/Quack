@@ -1,7 +1,6 @@
 type Course {
-    id: Int
-    description: String
-    professor: User
+    id: Int!
+    name: String!
 }
 
 type Query {

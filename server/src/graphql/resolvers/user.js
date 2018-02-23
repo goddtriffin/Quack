@@ -18,24 +18,26 @@ var argSQL = {};
 export default {
     // Query //
 
-    users: (_, context) => {
+    users: (args, context) => {
         // Read all rows from table
         argSQL = {}
+        //argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.id};
         return context.db.executeSQL("SELECT * FROM TestSchema.Users", argSQL);
 
     },
 
     user: (args, context) => {
         // make sure User with given id actually exists
+
         argSQL = {}
-        argSQL[0] = {name: "id", type: TYPES.Int, args: arg.id};
+        argSQL[0] = {name: "id", type: TYPES.Int, arg: args.id};
         console.log(args.id);
         return context.db.executeSQL("SELECT * FROM TestSchema.Users where id = @id", argSQL);
     },
     
     // Mutation //
 
-    createUser: (args, context) => {
+    userCreate: (args, context) => {
         // (TEMPORARY FIX) use fakeDatabase's size to create initial id
 
         // update database with new User (potentially async task)
@@ -53,11 +55,11 @@ export default {
             argSQL);
     },
 
-    updateUser: (args, context) => {
+    userUpdate: (args, context) => {
         // make sure User with given id actually exists
         console.log("ARGUMENTS " + args.id);
         argSQL = {};
-        argSQL[0] = {name: "id", type: TYPES.Int, arg: args.id};
+        argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.id};
         argSQL[1] = {name: 'firstName', type: TYPES.NVarChar, arg: args.input.firstName};
         argSQL[2] = {name: 'lastName', type: TYPES.NVarChar, arg: args.input.lastName};
         argSQL[3] = {name: 'email', type: TYPES.NVarChar, arg: args.input.email};
@@ -67,5 +69,23 @@ export default {
              "firstName = @firstName, lastName = @lastName, email = @email " + 
              "OUTPUT INSERTED.id, INSERTED.firstName, INSERTED.lastName, INSERTED.email WHERE id = @id;", 
             argSQL);
+    },
+
+    userAddCourse: (args, context) => {
+        console.log(args.c_id);
+        argSQL = {}
+        argSQL[0] = {name: 's_id', type: TYPES.Int, arg: args.id};
+        argSQL[1] = {name: 'c_id', type: TYPES.Int, arg: args.c_id};
+        return context.db.executeSQL("if not exists (select * from TestSchema.UsersCourses d where d.s_id = @s_id and d.c_id = @c_id) " + 
+            "INSERT INTO TestSchema.UsersCourses (s_id, c_id) VALUES (@s_id, @c_id) " + 
+            "SELECT c.id, name FROM TestSchema.UsersCourses sc " +  
+            "INNER JOIN TestSchema.Courses c ON c.id = sc.c_id WHERE sc.s_id = @s_id ", argSQL);
+    },
+
+    userGetCourses: (args, context) => {
+        argSQL = {}
+        argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.id};
+        return context.db.executeSQL("SELECT c.id, name FROM TestSchema.UsersCourses sc " + 
+            "INNER JOIN TestSchema.Courses c ON c.id = sc.c_id WHERE sc.s_id = @id", argSQL);
     }
 }
