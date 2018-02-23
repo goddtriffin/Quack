@@ -50,12 +50,13 @@ class RegisterScreen extends Component {
                     email: this.state.email
                 }
                }}).then( data => {
-              console.log(data);
+               this.state.studentID = data.data.userCreate.id;
             }).catch(function(error) {
                 console.log('There has been a problem with your fetch operation: ' + error.message);
                  // ADD THIS THROW error
                 throw error;
             });
+
 
             await AsyncStorage.setItem('email:key', this.state.email);
             await AsyncStorage.setItem('password', this.state.password);

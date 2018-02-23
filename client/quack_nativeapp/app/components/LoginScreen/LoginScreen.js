@@ -18,12 +18,32 @@ export default class LoginScreen extends Component {
     state = {
         email: '',
         password: '',
+        studentID: ''
     }
 
     render() {
         
         loginUser = async() => {
+
+            await client.query({ query: gql`
+                query user($email: String!) {
+                    user( email: $email ) {
+                        id
+                    }
+                }
+              `,
+              variables: {
+                email: this.state.email
+               }}).then( data => {
+               this.setState({studentID : data.data.user.id.toString()});
+              console.log(this.state.studentID);
+            }).catch(function(error) {
+                console.log('There has been a problem with your fetch operation: ' + error.message);
+                 // ADD THIS THROW error
+                throw error;
+            });
             
+            await AsyncStorage.setItem('studentID', this.state.studentID);
             await AsyncStorage.setItem('email:key', this.state.email);
             await AsyncStorage.setItem('password', this.state.password);
 
