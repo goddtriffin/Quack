@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, TextInput, Keyboard } from 'react-native';
+import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, TextInput, Keyboard, SegmentedControlIOS, AsyncStorage } from 'react-native';
 import styles from './styles';
 import { colors } from '../../style/styles';
 import { StackNagivator } from 'react-navigation'
@@ -23,16 +23,19 @@ class RegisterScreen extends Component {
         email: '',
         studentID: '',
         password: '',
-        password2: '',
+        instructor: false,
     }
 
     
 
     render() {
 
-        registerUser = () => {
-            console.log("HELLOOOOO");
-            this.props.navigation.navigate('Home', this.state.fullName);
+        registerUser = async() => {
+            await AsyncStorage.setItem('email:key', this.state.email);
+            await AsyncStorage.setItem('password', this.state.password);
+            await AsyncStorage.setItem('studentID', this.state.studentID);
+            await AsyncStorage.setItem('fullName', this.state.fullName);
+            this.props.navigation.navigate('Home');
         }
 
         return (
@@ -44,8 +47,23 @@ class RegisterScreen extends Component {
                     <View style={styles.header}>
                         <Text style={styles.bigHeaderText}>Create an account</Text>    
                     </View>
+
+                    
                     
                     <View style={styles.formContainer}>
+                        
+                        <Text style={styles.bigText}>I am a...</Text>
+
+                        <View style={styles.HELLO}>
+                            <SegmentedControlIOS
+                                values={['Student', 'Instructor']}
+                                selectedIndex={this.state.selectedIndex}
+                                onChange={(event) => {
+                                    this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
+                                }}
+                                tintColor='white'
+                            />
+                        </View>
                         <View>
                             <TextInput 
                                 placeholderTextColor='rgba(255,255,255,0.6)'
@@ -71,7 +89,7 @@ class RegisterScreen extends Component {
                                 style={styles.input}
                                 ref={(input) => this.emailInput = input}
                                 onSubmitEditing={() => this.idInput.focus()}
-                                onChangeText={(fullName) => this.setState({email})}
+                                onChangeText={(email) => this.setState({email})}
                             />
                             <TextInput 
                                 placeholderTextColor='rgba(255,255,255,0.6)'
@@ -83,7 +101,7 @@ class RegisterScreen extends Component {
                                 style={styles.input}
                                 ref={(input) => this.idInput = input}
                                 onSubmitEditing={() => this.passwordInput.focus()}
-                                onChangeText={(fullName) => this.setState({studentID})}
+                                onChangeText={(studentID) => this.setState({studentID})}
                             />
                             <TextInput 
                                 secureTextEntry={true}
@@ -94,25 +112,10 @@ class RegisterScreen extends Component {
                                 autoCapitalize='none'
                                 autoCorrect={false}
                                 style={styles.input}
-                                onSubmitEditing={() => this.passwordInput2.focus()}
-                                ref={(input) => this.passwordInput = input}
-                                onChangeText={(fullName) => this.setState({password})}
-                            />
-
-                            <TextInput 
-                                secureTextEntry={true}
-                                placeholderStyle={styles.input}
-                                placeholderTextColor='rgba(255,255,255,0.6)'
-                                placeholder="Retype Password"
-                                returnKeyType='next'
-                                autoCapitalize='none'
-                                autoCorrect={false}
-                                style={styles.input}
                                 onSubmitEditing={Keyboard.dismiss}
-                                ref={(input) => this.passwordInput2 = input}
-                                onChangeText={(fullName) => this.setState({password2})}
+                                ref={(input) => this.passwordInput = input}
+                                onChangeText={(password) => this.setState({password})}
                             />
-
                             
                         </View>
 

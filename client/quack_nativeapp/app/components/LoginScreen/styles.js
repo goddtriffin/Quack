@@ -58,6 +58,14 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
 
+  bigText: {
+    fontFamily: 'Fira Sans',
+    fontWeight: '700',
+    fontSize: 20,
+    color: 'white',
+    textAlign: 'left',
+  },
+
   textButton: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -93,6 +101,11 @@ export default StyleSheet.create({
     paddingTop: 20,
     paddingHorizontal: 20,
     flexDirection: 'column',
+  },
+
+  HELLO: {
+    paddingVertical: 10,
+    
   }
   
 });
