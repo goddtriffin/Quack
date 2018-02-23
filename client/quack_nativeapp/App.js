@@ -12,6 +12,8 @@ import Grades from './app/components/Grades/Grades';
 import RegisterScreen from './app/components/LoginScreen/RegisterScreen';
 import HomeScreen from './app/components/HomeScreen/HomeScreen';
 import Roster from './app/components/Roster/Roster';
+import PastQuiz from './app/components/PastQuiz/PastQuiz';
+import WriteQuiz from './app/components/WriteQuiz/WriteQuiz';
 
 export default class App extends Component {
   state = {
@@ -55,6 +57,12 @@ const LoginRoute = StackNavigator({
     },
     Quiz: {
       screen: Quiz,
+    },
+    PastQuiz: {
+      screen: PastQuiz
+    },
+    WriteQuiz: {
+      screen: WriteQuiz
     }
 });
 

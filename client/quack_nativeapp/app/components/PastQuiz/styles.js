@@ -87,15 +87,6 @@ export default StyleSheet.create({
   abQuestionButtons: {
     resizeMode: 'contain',
     justifyContent: 'center',
-  },
-  nextButton: {
-    fontFamily: 'Fira Sans',
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20,
-    //width: 250,
-    paddingTop: 20,
-
   }
   
 
