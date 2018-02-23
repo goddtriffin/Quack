@@ -30,9 +30,8 @@ export default {
         // make sure User with given id actually exists
 
         argSQL = {}
-        argSQL[0] = {name: "id", type: TYPES.Int, arg: args.id};
-        console.log(args.id);
-        return context.db.executeSQL("SELECT * FROM TestSchema.Users where id = @id", argSQL);
+        argSQL[0] = {name: "email", type: TYPES.NVarChar, arg: args.email};
+        return context.db.executeSQL("SELECT * FROM TestSchema.Users where email = @email", argSQL);
     },
     
     // Mutation //

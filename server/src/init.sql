@@ -20,5 +20,5 @@ UNION
 
 (SELECT 'Course' as c, id, name FROM TestSchema.Courses)*/
 
-DELETE FROM TestSchema.UsersCourses where s_id = 1 and c_id = 3;
+DELETE FROM TestSchema.Users where firstName = 'Phil' ;
 	

@@ -38,10 +38,10 @@ class sqlConnector {
 	                });
 
 
-	                console.log(jsonArray[0]);
-	                console.log(Object.keys(args).length);
+	                console.log(jsonArray.length);
+	                console.log(jsonArray[1]);
 
-	                if(Object.keys(args).length > 0 && jsonArray.length < 2) {
+	                if(jsonArray.length < 2) {
 	                    console.log("sent first");
 	                    resolve(jsonArray[0]);
 	                }

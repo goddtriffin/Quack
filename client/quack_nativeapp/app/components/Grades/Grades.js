@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Row, Grid } from "react-native-easy-grid"
-import { View, Image, StatusBar, Text, Dimensions, SectionList, TouchableHighlight, Alert } from 'react-native';
+import { View, Image, StatusBar, Text, Dimensions, SectionList, TouchableHighlight, Alert, TouchableOpacity } from 'react-native';
 import styles from './styles';
 export default class Quiz extends Component {
     dummyData = {
@@ -42,9 +42,11 @@ export default class Quiz extends Component {
 
                     </Col>
                     <Col style={{alignItems: 'flex-end'}}>
-                        <Text style={styles.liveQuizReminder}>
-                        Live Quiz
-                        </Text>
+                        <TouchableHighlight onPress={() => Alert.alert("Professor Quack's email is\nquack@quackers.edu")}>
+                            <Text style={styles.liveQuizReminder}>
+                            Contact Instructor
+                            </Text>
+                        </TouchableHighlight>
                     </Col>
                 </Row>
                 <Row size={50}>
@@ -55,9 +57,11 @@ export default class Quiz extends Component {
                         <Text style={styles.gradeQuizTitle}>
                         Quiz 1
                         </Text>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('PastQuiz')}>
                         <Text style={styles.scoreDescription}>
-                        Score: 3/5
+                        Score: 1/1
                         </Text>
+                        </TouchableOpacity>
                         <Text style={styles.gradeQuizTitle}>
                         Quiz 2
                         </Text>
@@ -68,7 +72,7 @@ export default class Quiz extends Component {
                         Quiz 3
                         </Text>
                         <Text style={styles.scoreDescription}>
-                        Score: 6/9 points
+                        Score Hidden
                         </Text> 
                         <Image
                         source={require('../../images/quiz_resources/quiz_backdrop_triple.png')}

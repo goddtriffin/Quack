@@ -45,25 +45,26 @@ class RegisterScreen extends Component {
                   }
                 }
               `,
-                variables: {
-                    input : {
-                        firstName: this.state.fullName.split(" ")[0],
-                        lastName: this.state.fullName.split(" ")[1],
-                        email: this.state.email
-                    }
-                }}).then( data => {
-                console.log(data);
-                }).catch(function(error) {
-                    console.log('There has been a problem with your fetch operation: ' + error.message);
-                    // ADD THIS THROW error
-                    throw error;
-                });
+              variables: {
+                input : {
+                    firstName: this.state.fullName.split(" ")[0],
+                    lastName: this.state.fullName.split(" ")[1],
+                    email: this.state.email
+                }
+               }}).then( data => {
+               this.state.studentID = data.data.userCreate.id;
+            }).catch(function(error) {
+                console.log('There has been a problem with your fetch operation: ' + error.message);
+                 // ADD THIS THROW error
+                throw error;
+            });
 
-                await AsyncStorage.setItem('email:key', this.state.email);
-                await AsyncStorage.setItem('password', this.state.password);
-                await AsyncStorage.setItem('studentID', this.state.studentID);
-                await AsyncStorage.setItem('fullName', this.state.fullName);
-                await AsyncStorage.setItem('instructor', this.state.selectedIndex.toString());
+
+            await AsyncStorage.setItem('email:key', this.state.email);
+            await AsyncStorage.setItem('password', this.state.password);
+            await AsyncStorage.setItem('studentID', this.state.studentID);
+            await AsyncStorage.setItem('fullName', this.state.fullName);
+            await AsyncStorage.setItem('instructor', this.state.selectedIndex.toString());
 
                 this.props.navigation.navigate('Home');
             }else {

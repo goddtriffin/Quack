@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Image, StatusBar, Text, Dimensions, TouchableHighlight, TouchableOpacity, Alert } from 'react-native';
+import { View, Image, StatusBar, Text, Dimensions, TouchableHighlight } from 'react-native';
 import styles from './styles';
-export default class Quiz extends Component {
+export default class PastQuiz extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
@@ -15,48 +15,39 @@ export default class Quiz extends Component {
                     style={styles.quizBackground}
                     />
                     <Text style={styles.quizText}>
-                        Current Quiz
+                        Past Quiz
                     </Text>
                     <Image
                     source={require('../../images/quiz_resources/close_quiz_indicator_triple.png')}
                     style={styles.downIndicator}
                     />
                     <Image
-                    source={require('../../images/quiz_resources/tempPhoto.jpg')}
+                    source={require('../../images/quiz_resources/dogPic.jpg')}
                     style={styles.pictureView}
                     />
                 </View>
 
                 <View style={styles.foregroundContainer}>
                     <Text style={styles.quizQuestionText}>
-                        a.) 100 ft
+                        a.) True
                     </Text>
                     <Text style={styles.quizQuestionText}>
-                        b.) 69 ft
+                        b.) False
                     </Text>
                 </View>
 
                 <View style={styles.questionButtonContainer}>
                     <Text style={styles.quizBodyText}>
-                        How tall is the Empire State Building?
+                        Is this a dog?
                     </Text>
-                    <TouchableOpacity onPress={() => Alert.alert("You selected A!")}>
-                        <Image
-                        source={require('../../images/quiz_resources/A_button.png')}
-                        style={styles.abQuestionButtons}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => Alert.alert("You selected B!")}>
-                        <Image
-                        source={require('../../images/quiz_resources/B_button.png')}
-                        style={styles.abQuestionButtons}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('WriteQuiz')}>
-                        <Text style={styles.nextButton}>
-                        Next Question
-                        </Text>
-                    </TouchableOpacity>
+                    <Image
+                    source={require('../../images/quiz_resources/A_button.png')}
+                    style={styles.abQuestionButtons}
+                    />
+                    <Image
+                    source={require('../../images/quiz_resources/B_button.png')}
+                    style={styles.abQuestionButtons}
+                    />
                 
                 </View>
             </View>

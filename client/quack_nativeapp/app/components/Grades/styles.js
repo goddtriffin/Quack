@@ -33,8 +33,9 @@ export default StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     width: 200,
-    paddingTop: 70,
-    paddingLeft: 40,
+    paddingTop: 200,
+    paddingRight: 10,
+    //paddingLeft: 20,
   },
   currentGrade: {
     fontFamily: 'Fira Sans',

@@ -47,18 +47,20 @@ export default StyleSheet.create({
     textAlign: 'center',
     width: 350,
     position: 'absolute',
-    top: -90,
-    bottom: 20,
+    top: 55,
+    bottom: 0,
     left: 15,
  },
  quizQuestionText: {
-  flex: 1,
+  position: 'absolute',
   fontFamily: 'Fira Sans',
   color: 'white',
   fontSize: 20,
   textAlign: 'center',
   width: 250,
-  paddingTop: 90,
+  paddingTop: 150,
+  top: 120,
+  bottom: 20,
 
 },
   downIndicator: {
@@ -88,17 +90,28 @@ export default StyleSheet.create({
     resizeMode: 'contain',
     justifyContent: 'center',
   },
-  nextButton: {
+  textInput: {
+     // flex:1,
+      width: 100,
+      height: 200,
+    //  position: 'absolute',
+      borderColor: 'white',
+      top: 120,
+      bottom: 20,
+      left: 15,
+      right: 15,
+  },
+  input: {
+    height: 100,
+    //backgroundColor: 'rgba(255,255,255,0.8)',
+    marginBottom: 120,
+    borderBottomColor: 'rgba(255,255,255,0.8)',
+    borderBottomWidth: 1.5,
     fontFamily: 'Fira Sans',
+    fontWeight: '500',
+    fontSize: 18,
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20,
-    //width: 250,
-    paddingTop: 20,
+    paddingLeft: 50,
 
-  }
-  
-
-
-  
+},  
 });

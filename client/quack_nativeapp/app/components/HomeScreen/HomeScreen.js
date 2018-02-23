@@ -3,6 +3,12 @@ import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, S
 import styles from './styles';
 import { StackNavigator } from 'react-navigation';
 
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import gql from 'graphql-tag';
+
 class HomeScreen extends Component {
     static navigationOptions = {
         header: null,
@@ -20,6 +26,7 @@ class HomeScreen extends Component {
             {'course': 'CS252', 'key': 3},
             {'course': 'ANTH210', 'key': 4},
         ],
+        studentID:'',
         email:'',
         isLoading: true,
         instructor: '',
@@ -27,6 +34,40 @@ class HomeScreen extends Component {
     };
 
     componentDidMount() {
+
+
+        AsyncStorage.getItem('studentID').then((token) => {
+            this.setState({
+                studentID: token,
+                isLoading: false
+            });
+
+            console.log(this.state.studentID);
+
+            client.mutate({ mutation: gql`
+                mutation userGetCourses($id: Int!) {
+                  userGetCourses(id: $id) {
+                    name
+                  }
+                }
+              `,
+              variables: {
+                id : parseInt(this.state.studentID)
+               }}).then( data => {
+              console.log(data);
+              courses = [];
+              for(let i = 0; i < data.data.userGetCourses.length; i++) {
+                courses.push({'course' : data.data.userGetCourses[i].name})
+              }
+              this.setState({courses});
+            }).catch(function(error) {
+                console.log('There has been a problem with your fetch operation: ' + error.message);
+                 // ADD THIS THROW error
+                throw error;
+            });
+        });
+
+
         AsyncStorage.getItem('email:key').then((token) => {
             this.setState({
                 email: token,
@@ -113,4 +154,10 @@ class HomeScreen extends Component {
         );
     }
 }
+
+const client = new ApolloClient({
+  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
+  cache: new InMemoryCache()
+});
+
 export default HomeScreen;
