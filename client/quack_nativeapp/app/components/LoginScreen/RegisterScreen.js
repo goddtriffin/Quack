@@ -4,6 +4,12 @@ import styles from './styles';
 import { colors } from '../../style/styles';
 import { StackNagivator } from 'react-navigation'
 
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import gql from 'graphql-tag';
+
 class RegisterScreen extends Component {    
 
     static navigationOptions = {
@@ -23,18 +29,40 @@ class RegisterScreen extends Component {
         email: '',
         studentID: '',
         password: '',
-        instructor: false,
+        instructor: '',
     }
-
     
 
     render() {
 
         registerUser = async() => {
+            client.mutate({ mutation: gql`
+                mutation userCreate($input: UserInput) {
+                  userCreate(input: $input) {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input : {
+                    firstName: this.state.fullName.split(" ")[0],
+                    lastName: this.state.fullName.split(" ")[1],
+                    email: this.state.email
+                }
+               }}).then( data => {
+              console.log(data);
+            }).catch(function(error) {
+                console.log('There has been a problem with your fetch operation: ' + error.message);
+                 // ADD THIS THROW error
+                throw error;
+            });
+
             await AsyncStorage.setItem('email:key', this.state.email);
             await AsyncStorage.setItem('password', this.state.password);
             await AsyncStorage.setItem('studentID', this.state.studentID);
             await AsyncStorage.setItem('fullName', this.state.fullName);
+            await AsyncStorage.setItem('instructor', this.state.selectedIndex.toString());
+
             this.props.navigation.navigate('Home');
         }
 
@@ -131,5 +159,10 @@ class RegisterScreen extends Component {
         );
     }
 }
+
+const client = new ApolloClient({
+  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
+  cache: new InMemoryCache()
+});
 
 export default RegisterScreen;

@@ -55,13 +55,12 @@ else {
 }
 
 console.log(types);
-// console.log(rootValue);
+
 
 const schema = buildSchema(types);
 
 const sqlDB = new sqlConnector(config);
 
-//console.log('**Node CRUD sample with Sequelize and MSSQL **');
 var app = express();
 app.use('/graphql', graphqlHTTP({
   schema: schema,
@@ -73,28 +72,3 @@ app.use('/graphql', graphqlHTTP({
 }));
 app.listen(4000);
 console.log('Running a GraphQL API server at localhost:4000/graphql');
-
-/*function executeStatement() {
-  var request = new Request("SELECT * FROM TestSchema.Users", function(err, rowCount, rows) {        
-    if (err) {
-        console.log(err);
-    }
-    else {
-      console.log(rowCount + ' rows');
-      console.log(rows);
-      var jsonArray = []
-      rows.forEach(function (columns) {
-          var rowObject ={};
-          columns.forEach(function(column) {
-              rowObject[column.metadata.colName] = column.value;
-          });
-          jsonArray.push(rowObject)
-      });
-      console.log(jsonArray);
-    }
-  });
-  //console.log(rows);
-
-  connection.execSql(request);
-}*/
-

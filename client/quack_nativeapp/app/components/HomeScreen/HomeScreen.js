@@ -15,13 +15,14 @@ class HomeScreen extends Component {
 
     state = {
         courses: [
-            {'course': 'CS307', 'id': 1},
-            {'course': 'ENTR310', 'id': 2},
-            {'course': 'CS252', 'id': 3},
-            {'course': 'ANTH210', 'id': 4},
+            {'course': 'CS307', 'key': 1},
+            {'course': 'ENTR310', 'key': 2},
+            {'course': 'CS252', 'key': 3},
+            {'course': 'ANTH210', 'key': 4},
         ],
         email:'',
         isLoading: true,
+        instructor: '',
     
     };
 
@@ -32,6 +33,14 @@ class HomeScreen extends Component {
                 isLoading: false
             });
         });
+
+        AsyncStorage.getItem('instructor').then((token) => {
+            this.setState({
+                instructor: token,
+            });
+        });
+
+        console.log(this.state.instructor);
     }
 
     updateCourseList() {
@@ -48,6 +57,11 @@ class HomeScreen extends Component {
 
     render() {
 
+        let AddCourseButton = <Text/>;
+        if(this.state.instructor == '1') {
+            AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
+        }
+
         if(this.state.isLoading) {
             return(<View><Text>Loading...</Text></View>);
         }else {
@@ -60,10 +74,12 @@ class HomeScreen extends Component {
                     barStyle="default"
                 />
 
+                
                 <View style={styles.header}>
                     <Text style={styles.bigTitle}>Classes</Text>
+                    
                     <TouchableOpacity style={styles.addCourse} onPress={() => this.updateCourseList()}>
-                        <Text style={styles.addCourseText}>+ Add course</Text>
+                        {AddCourseButton}
                     </TouchableOpacity>
                 </View>
 
