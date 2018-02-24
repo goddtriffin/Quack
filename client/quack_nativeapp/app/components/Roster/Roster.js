@@ -10,7 +10,8 @@ export default class Roster extends Component {
             {'name': 'Theo', 'avg' : 60, 'attendence': 3, 'grades': '3/5, 3/5 and 3/5', 'key': 2},
             {'name': 'Justin', 'avg' : 100, 'attendence': 5, 'grades': '5/5, 5/5 and 5/5', 'key': 3},
             {'name': 'Todd', 'avg': 40, 'attendence': 4, 'grades': '2/5, 2/5 and 2/5', 'key': 4},
-        ]
+        ],
+        course: '',
     }
     
     name_click(key) {
@@ -27,6 +28,7 @@ export default class Roster extends Component {
     }
 
     render() {
+        this.state.course = this.props.navigation.state.params.courses;
         return (
             <Grid>
                 <Row size={20}>
@@ -37,7 +39,7 @@ export default class Roster extends Component {
                     </Image> */}
 
                     <Text style = {styles.rosterHeaderText}>
-                        CS 307 Class Roster
+                        {this.state.course} class roster
                     </Text>
                 </Row>
 

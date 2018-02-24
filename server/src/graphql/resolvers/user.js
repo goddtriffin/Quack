@@ -1,5 +1,6 @@
 var Request = require('tedious').Request;
 var TYPES   = require('tedious').TYPES;
+var argSQL = {};
 
 class User {
     constructor(id, {firstName, lastName, email}) {
@@ -12,7 +13,6 @@ class User {
 
     // addCourse () {}
 }
-var argSQL = {};
 
 
 export default {

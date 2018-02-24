@@ -20,11 +20,7 @@ class HomeScreen extends Component {
     }
 
     state = {
-        courses: [
-            {'course': 'CS307', 'key': 1},
-            {'course': 'ENTR310', 'key': 2},
-            {'course': 'CS252', 'key': 3},
-            {'course': 'ANTH210', 'key': 4},
+        courses: [{'course': '', key: '1'}
         ],
         studentID:'',
         email:'',
@@ -56,8 +52,14 @@ class HomeScreen extends Component {
                }}).then( data => {
               console.log(data);
               courses = [];
-              for(let i = 0; i < data.data.userGetCourses.length; i++) {
-                courses.push({'course' : data.data.userGetCourses[i].name})
+
+              if(data.data.userGetCourses == null) {
+                courses.push({'course' : 'No current classes'})
+              }
+              else {
+                for(let i = 0; i < data.data.userGetCourses.length; i++) {
+                    courses.push({'course' : data.data.userGetCourses[i].name})
+                }
               }
               this.setState({courses});
             }).catch(function(error) {
@@ -85,14 +87,53 @@ class HomeScreen extends Component {
     }
 
     updateCourseList() {
+
+        var title = "";
         let courses = this.state.courses;
         AlertIOS.prompt(
             'Enter course title', null, (text) => {
+                if(this.state.courses[0].course == "No current classes") {
+                    courses = [];
+                }
                 courses.push({'course': text});
                 this.setState({courses});
                 console.log(this.state);
+
+                client.query({ query: gql`
+                query course($name: String) {
+                    course( name: $name ) {
+                        id
+                    }
+                }`,
+              variables: {
+                name: text
+               }}).then( data => {
+                    client.mutate({ mutation: gql`
+                        mutation userAddCourses($id: Int!, $c_id: Int!) {
+                          userGetCourses(id: $id, c_id: $c_id) {
+                            name
+                          }
+                        }
+                      `,
+                      variables: {
+                        id : this.state.studentID,
+                        c_id: parseInt(data.data.id)
+                       }}).then( data2 => {
+                      console.log(data2);
+                    }).catch(function(error) {
+                        console.log('There has been a problem with your fetch operation: ' + error.message);
+                         // ADD THIS THROW error
+                        throw error;
+                    }); 
+                  
+                }).catch(function(error) {
+                    console.log('There has been a problem with your fetch operation: ' + error.message);
+                     // ADD THIS THROW error
+                    throw error;
+                });
             }
         );
+
     }
 
 
@@ -103,6 +144,9 @@ class HomeScreen extends Component {
         let CourseDetails = null;
         if(this.state.instructor == '1') {
             AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
+        }
+        else {
+             AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
         }
 
         if(this.state.isLoading) {
@@ -132,7 +176,7 @@ class HomeScreen extends Component {
                             this.state.courses.map(({course}) => {
                                 if(this.state.instructor == '1') {
                                 return (<View>
-                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Roster')}>
+                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Roster', {courses:course})}>
                                         <Text style={styles.courseListText}>{course}</Text>
                                     </TouchableOpacity>
                                 </View>);

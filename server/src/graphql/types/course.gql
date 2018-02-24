@@ -5,5 +5,5 @@ type Course {
 
 type Query {
     courses: [Course]
-    course(id: Int): Course
+    course(name: String!): Course
 }
