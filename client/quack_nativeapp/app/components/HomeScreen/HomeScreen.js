@@ -87,6 +87,8 @@ class HomeScreen extends Component {
     }
 
     updateCourseList() {
+
+        var title = "";
         let courses = this.state.courses;
         AlertIOS.prompt(
             'Enter course title', null, (text) => {
@@ -96,8 +98,42 @@ class HomeScreen extends Component {
                 courses.push({'course': text});
                 this.setState({courses});
                 console.log(this.state);
+
+                client.query({ query: gql`
+                query course($name: String) {
+                    course( name: $name ) {
+                        id
+                    }
+                }`,
+              variables: {
+                name: text
+               }}).then( data => {
+                    client.mutate({ mutation: gql`
+                        mutation userAddCourses($id: Int!, $c_id: Int!) {
+                          userGetCourses(id: $id, c_id: $c_id) {
+                            name
+                          }
+                        }
+                      `,
+                      variables: {
+                        id : this.state.studentID,
+                        c_id: parseInt(data.data.id)
+                       }}).then( data2 => {
+                      console.log(data2);
+                    }).catch(function(error) {
+                        console.log('There has been a problem with your fetch operation: ' + error.message);
+                         // ADD THIS THROW error
+                        throw error;
+                    }); 
+                  
+                }).catch(function(error) {
+                    console.log('There has been a problem with your fetch operation: ' + error.message);
+                     // ADD THIS THROW error
+                    throw error;
+                });
             }
         );
+
     }
 
 
@@ -140,7 +176,7 @@ class HomeScreen extends Component {
                             this.state.courses.map(({course}) => {
                                 if(this.state.instructor == '1') {
                                 return (<View>
-                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Roster')}>
+                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Roster', {courses:course})}>
                                         <Text style={styles.courseListText}>{course}</Text>
                                     </TouchableOpacity>
                                 </View>);

@@ -20,5 +20,5 @@ UNION
 
 (SELECT 'Course' as c, id, name FROM TestSchema.Courses)*/
 
-TRUNCATE TABLE TestSchema.UsersCourses;
+TRUNCATE TABLE TestSchema.Users;
 	
