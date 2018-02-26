@@ -25,7 +25,9 @@ var prodConfig = {
   server: process.env.DB_P_ENDPOINT,
   database: process.env.DB_P_NAME,
   options: {
-      encrypt: true
+     encrypt: true,
+     database: process.env.DB_P_NAME,
+     rowCollectionOnRequestCompletion: true
   }
 }
 
