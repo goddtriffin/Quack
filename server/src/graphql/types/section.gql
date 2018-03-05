@@ -1,0 +1,20 @@
+input SectionInput {
+    courseID: Int!
+    title: String!
+}
+
+type Section {
+    id: Int!
+    courseID: Int!
+    title: String!
+}
+
+type Query {
+    sections: [Section]
+    section(id: Int!): Section
+}
+
+type Mutation {
+    sectionCreate(input: SectionInput): Section
+    sectionUpdate(id: Int!, input: SectionInput): Section
+}
