@@ -1,0 +1,22 @@
+input AnswerInput {
+    quizID: Int!
+    type: String!
+    content: [String]!
+}
+
+type Answer {
+    id: Int
+    quizID: Int!
+    type: String!
+    content: [String!]
+}
+
+type Query {
+    answers: [Answer]
+    answer(id: Int!): Answer
+}
+
+type Mutation {
+    answerCreate(input: AnswerInput): Answer
+    answerUpdate(id: Int!, input: AnswerInput): Answer
+}
