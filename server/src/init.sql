@@ -20,5 +20,11 @@ UNION
 
 (SELECT 'Course' as c, id, name FROM TestSchema.Courses)*/
 
-TRUNCATE TABLE TestSchema.Users;
+CREATE TABLE TestSchema.Roles (
+	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	type NVARCHAR(50),
+	courseID INT,
+	userID INT
+);
+
 	
