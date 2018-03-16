@@ -16,6 +16,7 @@ import Routes from './routes'
 
 
 class App extends Component {
+
   render() {
 
     const sidebar = <SidebarContent params={this.props.params}/>

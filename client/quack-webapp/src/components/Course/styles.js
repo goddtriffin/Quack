@@ -10,7 +10,7 @@ import { colors } from '../../styles/styles'
 
 export const styles = {
     container: {
-        marginTop: '20px',
+        marginTop: '15px',
         paddingLeft: '15px',
         marginRight: '20px',
         marginBottom: '10px',

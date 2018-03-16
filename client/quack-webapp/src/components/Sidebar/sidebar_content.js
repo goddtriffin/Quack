@@ -4,6 +4,7 @@ import { colors } from '../../styles/styles'
 import { Component, Image, Text } from 'react'
 import logo from '../../assets/quack-logo-white.svg'
 import Routes from '../../routes'
+import { Modal, Button, ControlLabel, FormControl, FormGroup, HelpBlock } from '../../../node_modules/react-bootstrap'
 
 const styles = {
   sidebar: {
@@ -68,36 +69,105 @@ const styles = {
   }
 };
 
-const SidebarContent = (props) => {
-
-  const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
-
-  const links = [];
-
-  for (let ind = 0; ind < 3; ind++) {
-    links.push(
-      <a key={ind} href="/course/" style={styles.sidebarLink}>Course {ind}</a>);
+class SidebarContent extends Component {
+  state = {
+    links: [],
+    count: 0,
+    show: false,
+    newCourseInput: '',
+    newCoursePrefix: '',
+    courseTitles: []
   }
 
-  return (
+  constructor(props) {
+    super(props);
+    this.addCourse = this.addCourse.bind(this);
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleClose() {
+    this.setState({show: false});
+    var prefix = this.state.newCourseInput.split(":");
+    var tempTitles = this.state.courseTitles.slice();
+    tempTitles.push(this.state.newCourseInput);
+    var temp = this.state.links.slice();
+    temp.push(
+      <a key={this.state.count++} href={'/course/' + this.state.count} style={styles.sidebarLink}>{prefix[0]}</a>
+    );
+    
+    this.setState({
+      links: temp,
+      courseTitles: tempTitles,
+    });
+
+  }
+
+  handleShow() {
+    this.setState({show: true});
+  }
+
+  addCourse() {
+    console.log("addCourse clicked");
+
+    this.handleShow();
+
+  }
+
+  getValidationState() {
+    if(this.state.newCourseInput.length == 0) {
+      return null;
+    }
+    var string = this.state.newCourseInput;
+    var temp = ":";
+    if(string.includes(temp)) {
+      return 'success';
+    }else {
+      return 'error';
+    }
+  }
+
+  handleChange(e) {
+    this.setState({newCourseInput: e.target.value})
+  }
+
+  render() {
+
+    return(
       <div style={styles.content}>
+      <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Create new course</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <FormGroup controlID="addCourseForm" validationState={this.getValidationState()}>
+              <ControlLabel>Enter New Course Title</ControlLabel>
+              <FormControl type="text" value={this.state.newCourseInput} placeholder="New course" onChange={this.handleChange}/>
+              <FormControl.Feedback/>
+              <HelpBlock>Example: "CS307: Software Engineering"</HelpBlock>
+            </FormGroup>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.handleClose}>Create</Button>
+        </Modal.Footer>
+      </Modal>
         <div style={styles.logoContainer}>
             <img src={logo} style={styles.logo}/>
         </div>
         <div style={styles.links}>
             <h1 style={styles.title}>Courses</h1>
             <div style={styles.divider}/>
-            {links}
-            <button onClick={ addCourse } style={styles.addCourseButton}>+ Add course</button>
-            
+            {this.state.links}
+            <button onClick={ this.addCourse } style={styles.addCourseButton}>+ Add course</button>  
         </div>
       </div>
-  );
-};
-
-function addCourse() {
-    console.log("addCourse clicked");
+    );
+  }
 }
+
 
 SidebarContent.propTypes = {
   style: PropTypes.object,
