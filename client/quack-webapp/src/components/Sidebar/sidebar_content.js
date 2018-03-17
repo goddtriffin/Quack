@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { colors } from '../../styles/styles'
-import { Component, Image, Text } from 'react'
 import logo from '../../assets/quack-logo-white.svg'
-import Routes from '../../routes'
+import { Link } from 'react-router-dom'
 import { Modal, Button, ControlLabel, FormControl, FormGroup, HelpBlock } from '../../../node_modules/react-bootstrap'
 
 const styles = {
@@ -17,9 +16,10 @@ const styles = {
     textDecoration: 'none',
     fontFamily: 'Fira Sans',
     color: 'white',
-    fontSize: '12pt',
+    fontSize: '14pt',
     fontWeight: 'regular',
     textAlign: 'left',
+    marginLeft: '10px',
   },
   divider: {
     //margin: '8px 0',
@@ -60,16 +60,30 @@ const styles = {
     paddingBottom: 0,
   },
   addCourseButton: {
+    marginTop: '20px',
     backgroundColor: colors.qDarkGrey,
     border: 0,
     fontFamily: 'Fira Sans',
     color: 'white',
-    fontSize: '11pt',
+    fontSize: '12pt',
     textAlign: 'left',
+  },
+  currentCourse: {
+    display: 'block',
+    padding: '10px 0px',
+    textDecoration: 'none',
+    fontFamily: 'Fira Sans',
+    color: 'white',
+    fontSize: '14pt',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    marginLeft: '10px',
   }
 };
 
-class SidebarContent extends Component {
+
+class SidebarContent extends React.PureComponent {
+
   state = {
     links: [],
     count: 0,
@@ -78,29 +92,50 @@ class SidebarContent extends Component {
     newCoursePrefix: '',
     courseTitles: []
   }
-
+  
+  
   constructor(props) {
     super(props);
+
+
+    //Download course data and map onto links
+
+
+
+
     this.addCourse = this.addCourse.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
+ 
+
   handleClose() {
     this.setState({show: false});
-    var prefix = this.state.newCourseInput.split(":");
-    var tempTitles = this.state.courseTitles.slice();
-    tempTitles.push(this.state.newCourseInput);
-    var temp = this.state.links.slice();
-    temp.push(
-      <a key={this.state.count++} href={'/course/' + this.state.count} style={styles.sidebarLink}>{prefix[0]}</a>
-    );
-    
-    this.setState({
-      links: temp,
-      courseTitles: tempTitles,
-    });
+    if(this.state.newCourseInput.length > 0) {
+      var prefix = this.state.newCourseInput.split(":");
+      var tempTitles = this.state.courseTitles.slice();
+      tempTitles.push(this.state.newCourseInput);
+      var temp = this.state.links.slice();
+      temp.push(
+        <Link to={{
+          pathname: '/course/' + this.state.count,
+          state: {courseTitle: this.state.newCourseInput}
+          }} 
+        key={this.state.count++} 
+        style={styles.sidebarLink}>{prefix[0]}</Link>
+      );
+      
+      
+      this.setState({
+        links: temp,
+        courseTitles: tempTitles,
+        newCourseInput: ''
+        
+      });
+
+    }
 
   }
 
@@ -116,8 +151,8 @@ class SidebarContent extends Component {
   }
 
   getValidationState() {
-    if(this.state.newCourseInput.length == 0) {
-      return null;
+    if(this.state.newCourseInput.length === 0) {
+      return 'error';
     }
     var string = this.state.newCourseInput;
     var temp = ":";
@@ -142,7 +177,7 @@ class SidebarContent extends Component {
         </Modal.Header>
         <Modal.Body>
           <form>
-            <FormGroup controlID="addCourseForm" validationState={this.getValidationState()}>
+            <FormGroup validationState={this.getValidationState()}>
               <ControlLabel>Enter New Course Title</ControlLabel>
               <FormControl type="text" value={this.state.newCourseInput} placeholder="New course" onChange={this.handleChange}/>
               <FormControl.Feedback/>
@@ -160,7 +195,7 @@ class SidebarContent extends Component {
         <div style={styles.links}>
             <h1 style={styles.title}>Courses</h1>
             <div style={styles.divider}/>
-            {this.state.links}
+                {this.state.links}
             <button onClick={ this.addCourse } style={styles.addCourseButton}>+ Add course</button>  
         </div>
       </div>

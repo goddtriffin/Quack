@@ -23,6 +23,14 @@ export const styles = {
         fontSize: '30pt',
         fontWeight: 'bold',
         textAlign: 'left',
+    },
+    tab_menu: {
+
+    },
+    tab: {
+        fontFamily: 'Fira Sans',
+        color: 'black',
+        fontSize: '13pt',
     }
 }
 

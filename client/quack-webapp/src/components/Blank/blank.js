@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
-import { Alert } from 'react-bootstrap'
 import { colors } from '../../styles/styles'
+import { withRouter } from 'react-router-dom'
 
 const styles = {
     header: {
