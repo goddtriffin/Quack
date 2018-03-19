@@ -20,8 +20,18 @@ UNION
 
 (SELECT 'Course' as c, id, name FROM TestSchema.Courses)*/
 
-SELECT * FROM TestSchema.Roles;
+/*SELECT * FROM TestSchema.Roles;*/
 
 /*DELETE FROM TestSchema.Roles where userID IS NULL*/
 
-	
+/*CREATE TABLE TestSchema.Answers (
+	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	quizID INT,
+	userID INT,
+	type NVARCHAR(50),
+	content NVARCHAR(1000)
+);*/
+
+SELECT * FROM TestSchema.Answers;
+
+
