@@ -20,5 +20,8 @@ UNION
 
 (SELECT 'Course' as c, id, name FROM TestSchema.Courses)*/
 
-TRUNCATE TABLE TestSchema.Users;
+SELECT * FROM TestSchema.Roles;
+
+/*DELETE FROM TestSchema.Roles where userID IS NULL*/
+
 	
