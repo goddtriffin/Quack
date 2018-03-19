@@ -20,5 +20,23 @@ UNION
 
 (SELECT 'Course' as c, id, name FROM TestSchema.Courses)*/
 
-TRUNCATE TABLE TestSchema.Users;
-	
+/*SELECT * FROM TestSchema.Roles;*/
+
+/*DELETE FROM TestSchema.Roles where userID IS NULL*/
+
+/*CREATE TABLE TestSchema.Quizzes (
+	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	sectionID INT,
+	type NVARCHAR(50),
+	date NVARCHAR(10),
+	correctAnswer NVARCHAR(1000),
+	isOpen BIT,
+	isManual BIT
+);*/
+
+/*INSERT INTO TestSchema.Quizzes (sectionID, type, date, correctAnswer, isOpen, isManual) VALUES 
+	(1, 'short-answer', '1998-04-05', 'blahblahblah', 0, 1);*/
+
+SELECT * FROM TestSchema.Quizzes;
+
+
