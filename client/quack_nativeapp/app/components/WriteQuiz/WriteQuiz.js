@@ -10,10 +10,7 @@ export default class PastQuiz extends Component {
     render() {
         return (
         <Grid>
-            <StatusBar
-                    barStyle="dark-content"
-                    style={styles.navBar}
-            />
+           
             <Row size={2}>
                     <Image
                     source={require('../../images/quiz_resources/quiz_backdrop_triple.png')}
@@ -29,10 +26,17 @@ export default class PastQuiz extends Component {
                     />
             
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => Alert.alert("Answers saved. You can go back now")}>
+                    <TouchableHighlight onPress={() => Alert.alert("Next question")}>
                     <Image
                     source={require('../../images/quiz_resources/next_button.png')}
                     style={styles.nextButton}
+                    />
+            
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={() => Alert.alert("Previous question")}>
+                    <Image
+                    source={require('../../images/quiz_resources/previous_button.png')}
+                    style={styles.prevButton}
                     />
             
                     </TouchableHighlight>

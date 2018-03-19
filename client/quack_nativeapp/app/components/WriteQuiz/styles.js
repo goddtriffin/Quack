@@ -79,6 +79,12 @@ nextButton: {
     top: Dimensions.get('window').height - 35,
     left: 275, 
 },
+prevButton: {
+  resizeMode: 'contain',
+  position: 'absolute',
+  top: Dimensions.get('window').height - 36,
+  left: 25, 
+},
   pictureView: {
       resizeMode: 'contain',
       width: Dimensions.get('window').width - 30,
