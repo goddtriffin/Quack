@@ -1,12 +1,12 @@
 input SectionInput {
     courseID: Int!
-    title: String!
+    name: String!
 }
 
 type Section {
     id: Int!
     courseID: Int!
-    title: String!
+    name: String!
 }
 
 type Query {
