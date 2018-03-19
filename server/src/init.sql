@@ -24,14 +24,19 @@ UNION
 
 /*DELETE FROM TestSchema.Roles where userID IS NULL*/
 
-/*CREATE TABLE TestSchema.Answers (
+/*CREATE TABLE TestSchema.Quizzes (
 	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	quizID INT,
-	userID INT,
+	sectionID INT,
 	type NVARCHAR(50),
-	content NVARCHAR(1000)
+	date NVARCHAR(10),
+	correctAnswer NVARCHAR(1000),
+	isOpen BIT,
+	isManual BIT
 );*/
 
-SELECT * FROM TestSchema.Answers;
+/*INSERT INTO TestSchema.Quizzes (sectionID, type, date, correctAnswer, isOpen, isManual) VALUES 
+	(1, 'short-answer', '1998-04-05', 'blahblahblah', 0, 1);*/
+
+SELECT * FROM TestSchema.Quizzes;
 
 
