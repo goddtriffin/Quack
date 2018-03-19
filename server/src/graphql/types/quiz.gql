@@ -4,6 +4,7 @@ input QuizInput {
     date: String!
     correctAnswer: String!
     isOpen: Boolean!
+    isManual: Boolean!
 }
 
 type Quiz {
@@ -13,10 +14,11 @@ type Quiz {
     date: String!
     correctAnswer: String!
     isOpen: Boolean!
+    isManual: Boolean!
 }
 
 type Query {
-    quizs: [Quiz]
+    quizzes: [Quiz]
     quiz(id: Int!): Quiz
 }
 
