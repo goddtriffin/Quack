@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Row, Grid } from "react-native-easy-grid"
+import { Input, Item, Content } from "native-base"
 import { View, Image, StatusBar, Text, Dimensions, TouchableHighlight, TextInput, Alert } from 'react-native';
 import styles from './styles';
 export default class PastQuiz extends Component {
@@ -10,7 +11,10 @@ export default class PastQuiz extends Component {
     render() {
         return (
         <Grid>
-           
+            <StatusBar
+                    barStyle="dark-content"
+                    style={styles.navBar}
+            />
             <Row size={2}>
                     <Image
                     source={require('../../images/quiz_resources/quiz_backdrop_triple.png')}
@@ -40,15 +44,20 @@ export default class PastQuiz extends Component {
                     />
             
                     </TouchableHighlight>
-            </Row>
-            <Row size = {48}>
                     <Image
                     source={require('../../images/quiz_resources/dogPic.jpg')}
                     style={styles.pictureView}
                     />
             </Row>
-            <Row size = {50}>
-
+            <Row size = {58}>
+                
+            </Row>
+            <Row size = {40}>
+                <Content>
+                    <Item rounded>
+                        <Input placeholder='Rounded Textbox'/>
+                    </Item>
+                </Content>
             </Row>    
         </Grid>
         );
