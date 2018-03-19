@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Col, Row, Grid } from "react-native-easy-grid"
 import { View, Image, StatusBar, Text, Dimensions, TouchableHighlight, TextInput, Alert } from 'react-native';
 import styles from './styles';
 export default class PastQuiz extends Component {
@@ -8,50 +9,44 @@ export default class PastQuiz extends Component {
     }
     render() {
         return (
-            <View style={{flex: 1}}>
-                <StatusBar
+        <Grid>
+            <StatusBar
                     barStyle="dark-content"
                     style={styles.navBar}
-                />
-                <View style={styles.backgroundContainer}>
+            />
+            <Row size={2}>
                     <Image
                     source={require('../../images/quiz_resources/quiz_backdrop_triple.png')}
                     style={styles.quizBackground}
                     />
                     <Text style={styles.quizText}>
-                        Current Quiz
+                        Quiz 1
                     </Text>
                     <TouchableHighlight onPress={() => Alert.alert("Answers saved. You can go back now")}>
                     <Image
                     source={require('../../images/quiz_resources/close_quiz_indicator_triple.png')}
                     style={styles.downIndicator}
                     />
+            
                     </TouchableHighlight>
+                    <TouchableHighlight onPress={() => Alert.alert("Answers saved. You can go back now")}>
+                    <Image
+                    source={require('../../images/quiz_resources/next_button.png')}
+                    style={styles.nextButton}
+                    />
+            
+                    </TouchableHighlight>
+            </Row>
+            <Row size = {48}>
                     <Image
                     source={require('../../images/quiz_resources/dogPic.jpg')}
                     style={styles.pictureView}
                     />
-                </View>
+            </Row>
+            <Row size = {50}>
 
-                <View style={styles.foregroundContainer}>
-                    
-                </View>
-
-                <View style={styles.questionButtonContainer}>
-                    <Text style={styles.quizBodyText}>
-                        Tell me why this isn't a cat
-                    </Text>
-                </View>
-                <TextInput
-                    placeholderTextColor='rgba(255,255,255,0.6)'
-                    placeholder="Answer"
-                    returnKeyType='next'
-                 //   autoCapitalize='none'
-                    autoCorrect={false}
-                    placeholderStyle={styles.input}
-                    style={styles.input}
-                />
-            </View>
+            </Row>    
+        </Grid>
         );
     }
 }

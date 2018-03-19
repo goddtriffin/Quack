@@ -29,18 +29,19 @@ export default StyleSheet.create({
     paddingBottom: 80,
   }, 
   quizText: {
-     flex: 1,
      fontFamily: 'Fira Sans',
      color: 'white',
      fontWeight: 'bold',
      fontSize: 35,
      textAlign: 'left',
      width: 250,
-     paddingLeft: 20,
+     position: 'absolute',
+     top: 40,
+     left: 20,
 
   },
   quizBodyText: {
-    flex: 1,
+   // flex: 1,
     fontFamily: 'Fira Sans',
     color: 'white',
     fontSize: 25,
@@ -63,12 +64,21 @@ export default StyleSheet.create({
   bottom: 20,
 
 },
-  downIndicator: {
+downIndicator: {
     resizeMode: 'contain',
     justifyContent: 'flex-end',
     paddingRight: 125,
+    position: 'absolute',
+    top: 40,
+    left: 250,
 
-  },
+},
+nextButton: {
+    resizeMode: 'contain',
+    position: 'absolute',
+    top: Dimensions.get('window').height - 35,
+    left: 275, 
+},
   pictureView: {
       resizeMode: 'contain',
       width: Dimensions.get('window').width - 30,
