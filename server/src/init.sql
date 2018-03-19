@@ -37,6 +37,13 @@ UNION
 /*INSERT INTO TestSchema.Quizzes (sectionID, type, date, correctAnswer, isOpen, isManual) VALUES 
 	(1, 'short-answer', '1998-04-05', 'blahblahblah', 0, 1);*/
 
-SELECT * FROM TestSchema.Quizzes;
+/*SELECT * FROM TestSchema.Quizzes;*/
+
+DROP TABLE TestSchema.Sections;
+CREATE TABLE TestSchema.Sections (
+	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	courseID INT,
+	name NVARCHAR(50)
+);
 
 
