@@ -53,15 +53,15 @@ export default StyleSheet.create({
     left: 15,
  },
  quizQuestionText: {
-  position: 'absolute',
+ // position: 'absolute',
   fontFamily: 'Fira Sans',
   color: 'white',
   fontSize: 20,
   textAlign: 'center',
-  width: 250,
-  paddingTop: 150,
-  top: 120,
-  bottom: 20,
+  textAlignVertical: 'center',
+  width: Dimensions.get('window').width - 5,
+//  paddingTop: 150,
+  
 
 },
 downIndicator: {
@@ -70,7 +70,7 @@ downIndicator: {
     paddingRight: 125,
     position: 'absolute',
     top: 40,
-    left: 250,
+    left: 275,
 
 },
 nextButton: {
@@ -90,7 +90,7 @@ prevButton: {
       width: Dimensions.get('window').width - 30,
       height: Dimensions.get('window').height / 3,
       position: 'absolute',
-      top: 120,
+      top: 90,
       bottom: 20,
       left: 15,
       right: 15,
