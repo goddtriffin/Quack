@@ -4,6 +4,8 @@ import { colors } from '../../styles/styles'
 import styles from './styles'
 import {  } from 'react-router-dom';
 import { Grid, Col, Row, Tabs, Tab } from '../../../node_modules/react-bootstrap'
+import CourseDetails from '../CourseDetails/courseDetails';
+import CourseRoster from '../CourseRoster/courseRoster'
 
 class Course extends Component {
 
@@ -25,17 +27,27 @@ constructor(props) {
     }
 
     this.handleSelect = this.handleSelect.bind(this);
+    this.updateDetails = this.updateDetails.bind(this);
 }
 
 handleSelect(key) {
     this.setState({ key: key });
 }
 
+updateDetails(title, description) {
+    console.log("new title");
+    console.log(title);
+    this.setState({
+        courseTitle: title,
+        courseDescription: description
+    })
+}
+
 render() {
     
     return(
-        <div style={styles.container}>
-        <Grid >
+        <div style={{width: '100%'}}>
+        <Grid style={{width: '100%', margin: '0px', padding: '0px', marginLeft: '20px'}}>
             <Row>
             <div style={{margin: '0px', padding: '0px'}}>
             <h1 style={styles.title}>{this.state.courseTitle}</h1>
@@ -50,13 +62,18 @@ render() {
                     id="course-tabs"
                 >
                     <Tab eventKey={1} title="Course Details">
-                    
+                        <CourseDetails 
+                            courseID={this.state.courseID} 
+                            courseTitle={this.state.courseTitle}
+                            courseDescription={this.state.courseDescription}
+                            callback={this.updateDetails}
+                            />
                     </Tab>
                     <Tab eventKey={2} title="Quizzes">
-                    
+                        
                     </Tab>
                     <Tab eventKey={3} title="Roster">
-                    
+                        <CourseRoster/>
                     </Tab>
                     <Tab eventKey={4} title="Roles">
                     

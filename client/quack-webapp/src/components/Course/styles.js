@@ -25,7 +25,7 @@ export const styles = {
         textAlign: 'left',
     },
     tab_menu: {
-
+        margin: 'auto',
     },
     tab: {
         fontFamily: 'Fira Sans',

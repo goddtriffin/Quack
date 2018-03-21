@@ -46,8 +46,8 @@ class App extends Component {
     return (
         <div>
           <Grid fluid={true}>
-            <Row className="show-grid">
-              <Col className="col-md-2" style={{height: '100vh', width: '175px'}}>
+            <Row >
+              <Col md={1} style={{height: '100vh', width: '175px'}}>
                 {/* <Sidebar {...sidebarProps} className="Sidebar" location={location}/> */}
                   <div>
                     <Route render={({ location }) => (
@@ -55,7 +55,7 @@ class App extends Component {
                     )}/>
                   </div>
               </Col>
-              <Col className="col-md-auto">
+              <Col md={10}>
                   
                   <Switch>
                     <Route exact path="/" component={Blank}/>
