@@ -5,6 +5,7 @@ export const colors = {
   qDarkGrey: '#5A5A5A',
   qLightGreen: '#07A386',
   qDarkGreen: '#046150',
+  transparent: 'rgba(255, 255, 255, 0.0)'
 };
 
 //qLightGrey in rgb w/ transparency: rgba(161,161,161,0.8)

@@ -6,6 +6,7 @@ import {  } from 'react-router-dom';
 import { Grid, Col, Row, Tabs, Tab } from '../../../node_modules/react-bootstrap'
 import CourseDetails from '../CourseDetails/courseDetails';
 import CourseRoster from '../CourseRoster/courseRoster'
+import CourseRoles from '../CourseRoles/courseRoles';
 
 class Course extends Component {
 
@@ -76,7 +77,7 @@ render() {
                         <CourseRoster/>
                     </Tab>
                     <Tab eventKey={4} title="Roles">
-                    
+                        <CourseRoles/>
                     </Tab>
                 
                 </Tabs>

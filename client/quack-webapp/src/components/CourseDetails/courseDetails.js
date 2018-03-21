@@ -8,7 +8,7 @@ import { Grid, Col, Row, Tabs, Tab, FormGroup, ControlLabel, FormControl, HelpBl
 class CourseDetails extends Component {
 
     state = {
-        courseID: 6969,
+        courseID: '123456',
         courseTitle: "ABC123: Course Title",
         courseDescription: "Software Engineering",
         newCourseInput: '',
@@ -18,7 +18,7 @@ constructor(props) {
     console.log(props.location);
     super(props);
     this.state = {
-        courseID: props.courseID,
+        courseID: '123456',
         courseTitle: props.courseTitle,
         courseDescription: props.courseDescription,
         newCourseInput: ''
@@ -62,7 +62,7 @@ render() {
         <Grid style={{width: 'auto'}}>
             <Row>
                 <Col>
-                    <h1 style={styles.header}>Course ID: {this.state.courseID}</h1>
+                    <h1 style={styles.emphasis}>Course ID: {this.state.courseID}</h1>
                     <h1 style={styles.header}>Course title</h1>
                     <form style={{width: '500px'}}>
                         <FormGroup validationState={this.getValidationState()}>
