@@ -58,7 +58,7 @@ render() {
             <Row style={{marginTop: '20px'}}>
                 <Col sm={3} style={{paddingLeft: '0px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <h1 style={styles.header}>Sections</h1>
-                    <button onPress={this.addSection} style={styles.button}>
+                    <button onClick={this.addSection} style={styles.button}>
                         <div style={styles.buttonText}>add section</div>
                     </button>
                 </Col>
