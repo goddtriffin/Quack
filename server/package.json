@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "setup": "git pull origin master && git pull origin Development && yarn && npm install",
+    "test": "node tests/index.js",
     "start": "nodemon src/server.js --exec babel-node",
     "build": "babel src -d dist",
     "serve": "node dist/server.js"
