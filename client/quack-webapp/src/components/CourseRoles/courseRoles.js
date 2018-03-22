@@ -262,7 +262,7 @@ render() {
             </Modal>
         </div>
         <Grid style={{width: 'auto'}}>
-            <Row style={{marginTop: '20px'}}>
+            <Row style={{marginTop: '20px', width: '90%'}}>
                 <Col>
                 <h1 style={styles.header}>Course Users</h1>
                 </Col>
@@ -271,7 +271,7 @@ render() {
                 <button onClick={this.addUser} style={styles.button}>Add user</button>
                 </Col>
             </Row>
-            <Row style={{height: '70vh', overflowY: 'scroll'}}>
+            <Row style={{height: '70vh', overflowY: 'scroll', width: '90%'}}>
                 <BootstrapTable
                     striped
                     hover

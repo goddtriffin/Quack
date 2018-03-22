@@ -7,6 +7,7 @@ import { Grid, Col, Row, Tabs, Tab } from '../../../node_modules/react-bootstrap
 import CourseDetails from '../CourseDetails/courseDetails';
 import CourseRoster from '../CourseRoster/courseRoster'
 import CourseRoles from '../CourseRoles/courseRoles';
+import CourseQuizzes from '../CourseQuizzes/courseQuizzes';
 
 class Course extends Component {
 
@@ -71,7 +72,7 @@ render() {
                             />
                     </Tab>
                     <Tab eventKey={2} title="Quizzes">
-                        
+                        <CourseQuizzes/>
                     </Tab>
                     <Tab eventKey={3} title="Roster">
                         <CourseRoster/>
