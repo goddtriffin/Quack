@@ -29,7 +29,7 @@ constructor(props) {
     var temp = [];
     for(var i = 0; i < 40; i++) {
         temp.push(
-            {key: {i}, name: "Theo Burkhart", email: "burkhat@purdue.edu"}
+            {key: `${i}`, name: "Theo Burkhart", email: "burkhat@purdue.edu"}
         )
     }
 
@@ -83,7 +83,7 @@ render() {
                                     hover
                                     condensed
                                     bordered={false} 
-                                    keyField='name' 
+                                    keyField='key' 
                                     data={this.state.students} 
                                     columns={this.state.columns}
                                     />
