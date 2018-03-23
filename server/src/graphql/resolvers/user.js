@@ -1,5 +1,6 @@
-var Request = require('tedious').Request;
-var TYPES   = require('tedious').TYPES;
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
 var argSQL = {};
 
 class User {
@@ -36,12 +37,14 @@ export default {
     
     // Mutation //
 
-    userCreate: (args, context) => {
+    userCreate: async (args, context) => {
         // (TEMPORARY FIX) use fakeDatabase's size to create initial id
 
         // update database with new User (potentially async task)
 
         // return newly created User to client
+        const user = args;
+        user.password = 
         argSQL = {};
         argSQL[0] = {name: 'firstName', type: TYPES.NVarChar, arg: args.input.firstName};
         argSQL[1] = {name: 'lastName', type: TYPES.NVarChar, arg: args.input.lastName};

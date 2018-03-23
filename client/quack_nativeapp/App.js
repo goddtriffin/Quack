@@ -15,6 +15,12 @@ import Roster from './app/components/Roster/Roster';
 import PastQuiz from './app/components/PastQuiz/PastQuiz';
 import WriteQuiz from './app/components/WriteQuiz/WriteQuiz';
 
+import { ApolloClient, createNetworkInterface ,ApolloProvider } from 'react-apollo'
+
+const client = new ApolloClient({
+  networkInterface: createNetworkInterface({ uri: 'http://localhost:4000/graphql'}),
+})
+
 export default class App extends Component {
   state = {
     loggedIn: false,
@@ -26,16 +32,21 @@ export default class App extends Component {
   }
 
   render() {
+    
+
     console.disableYellowBox = true;
 
     if(this.state.loggedIn == false) {
       return (
-        <LoginRoute screenProps={this.state.user.firstName}/>
-        //<Roster/>
+        <ApolloProvider client={client}>
+          <LoginRoute screenProps={this.state.user.firstName}/>
+        </ApolloProvider>
       );
     }else {
       return (
-        <HomeRoute />
+        <ApolloProvider client={client}>
+          <HomeRoute />
+        </ApolloProvider>
       );
     }
     
