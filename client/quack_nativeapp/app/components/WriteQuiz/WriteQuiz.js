@@ -6,9 +6,30 @@ import styles from './styles';
 export default class PastQuiz extends Component {
     constructor(props) {
         super(props);
-        this.state = { text: 'Enter text here'}
+        this.state = { 
+            text: 'Enter text here',
+            picture: '../../images/quiz_resources/quiz_backdrop_triple.png',
+            questionText: 'What color is the dog? and what is the meaning of life',
+            hasPicture: true,
+        
+        }
     }
     render() {
+        const quizPicture = <Image
+            source={require('../../images/quiz_resources/dogPic.jpg')}
+            style={styles.pictureView}
+            />
+        const quizQuestion = <Text style={styles.quizQuestionText}>{this.state.questionText}</Text>
+        const answerBox = 
+                <Item rounded>
+                <Input 
+                    placeholder='Enter text here...'
+                    multiline={true}
+                    numberOfLines={5}
+                    style={this.state.hasPicture ? {height:200} : {height:200}}
+                />
+                </Item>
+        
         return (
         <Container>
             <Image
@@ -24,23 +45,20 @@ export default class PastQuiz extends Component {
                     barStyle="dark-content"
                     style={styles.navBar}
             />
-            <Row size = {50}>
-                
+            <Row size ={30}></Row>
+            <Row size = {20}>
+                <Content>
+                    {this.state.hasPicture ? null : quizQuestion}
+                </Content>
             </Row>
             <Row size = {10}>
-                <Text style={styles.quizQuestionText}>What color is the dog? and what is the meaning of life</Text>
+                {this.state.hasPicture ? quizQuestion : null}
             </Row>
             <Row size = {40} padding={8}>
                 <Content>
-                    <Item rounded>
-                        <Input 
-                        placeholder='Enter text here...'
-                        multiline={true}
-                        numberOfLines={5}
-                        style={{height:200}}
-                        />
-                    </Item>
+                    {answerBox}
                 </Content>
+                
             </Row>    
         </Grid>
         <TouchableOpacity style={styles.downIndicator} onPress={ () => Alert.alert("Answers saved. You can go back now") }>
@@ -64,10 +82,7 @@ export default class PastQuiz extends Component {
             />
     
             </TouchableOpacity>
-            <Image
-                source={require('../../images/quiz_resources/dogPic.jpg')}
-                style={styles.pictureView}
-            />
+            {this.state.hasPicture ? quizPicture : null}
         </Container>
         );
     }

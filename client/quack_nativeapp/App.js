@@ -27,11 +27,11 @@ export default class App extends Component {
 
   render() {
     console.disableYellowBox = true;
-    /*
+    
     return (
       <WriteQuiz />
-    )*/
-    
+    )
+    /*
     if(this.state.loggedIn == false) {
       return (
         <LoginRoute screenProps={this.state.user.firstName}/>
@@ -41,7 +41,7 @@ export default class App extends Component {
       return (
         <HomeRoute />
       );
-    }
+    }*/
     
   }
 }

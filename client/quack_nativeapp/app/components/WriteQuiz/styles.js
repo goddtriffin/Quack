@@ -64,6 +64,18 @@ export default StyleSheet.create({
   
 
 },
+quizQuestionTextWithoutPic: {
+  // position: 'absolute',
+   fontFamily: 'Fira Sans',
+   color: 'white',
+   fontSize: 20,
+   textAlign: 'center',
+   textAlignVertical: 'center',
+   width: Dimensions.get('window').width - 5,
+ //  paddingTop: 150,
+   
+ 
+ },
 downIndicator: {
     resizeMode: 'contain',
     justifyContent: 'flex-end',
