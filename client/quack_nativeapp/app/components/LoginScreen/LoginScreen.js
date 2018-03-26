@@ -11,6 +11,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
+//import { login } from '../utils/AuthService';
+
 class LoginScreen extends Component {
     static navigationOptions = {
         header: null,

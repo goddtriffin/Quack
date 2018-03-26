@@ -17,6 +17,8 @@ import WriteQuiz from './app/components/WriteQuiz/WriteQuiz';
 
 import { ApolloClient, createNetworkInterface ,ApolloProvider } from 'react-apollo'
 
+import { isLoggedIn } from './app/utils/AuthService';
+
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({ uri: 'http://localhost:4000/graphql'}),
 })
@@ -36,7 +38,7 @@ export default class App extends Component {
 
     console.disableYellowBox = true;
 
-    if(this.state.loggedIn == false) {
+    if(!isLoggedIn()) {
       return (
         <ApolloProvider client={client}>
           <LoginRoute screenProps={this.state.user.firstName}/>
