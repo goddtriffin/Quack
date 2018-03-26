@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Row, Grid } from "react-native-easy-grid"
-import { Input, Item, Content, Container } from "native-base"
+import { Input, Item, Content, Container, Icon } from "native-base"
 import { View, Image, StatusBar, Text, Dimensions, TouchableHighlight, TouchableOpacity, TextInput, Alert } from 'react-native';
 import styles from './styles';
 export default class PastQuiz extends Component {
@@ -11,6 +11,9 @@ export default class PastQuiz extends Component {
             picture: '../../images/quiz_resources/quiz_backdrop_triple.png',
             questionText: 'What color is the dog? and what is the meaning of life',
             hasPicture: true,
+            firstTextCorrect: true,
+            inputText: '',
+            secondInputText: '',
         
         }
     }
@@ -29,6 +32,18 @@ export default class PastQuiz extends Component {
                     style={this.state.hasPicture ? {height:200} : {height:200}}
                 />
                 </Item>
+
+        const fillinBox = 
+            <Item success={this.state.firstTextCorrect}>
+                <Input 
+                placeholder='Answer'
+             //   style={this.state.hasPicture ? {height:200} : {height:200}}
+                
+                />
+                <Icon name = {this.state.firstTextCorrect ? 'checkmark-circle' : null}/>
+            </Item>
+        
+        const checkmark = <Icon name = 'checkmark-circle'/>
         
         return (
         <Container>
