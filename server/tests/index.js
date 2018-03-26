@@ -1,5 +1,5 @@
-testEndpoint = "quack.localtunnel.me/graphql";
-testBody = JSON.stringify({query: "{ hello }"});
+testEndpoint = "https://quack.localtunnel.me/graphql";
+testBody = JSON.stringify({query: "{  }"});
 
 function get (endpoint, body) {
     var xhr = new XMLHttpRequest();
@@ -24,4 +24,5 @@ function post (endpoint, body) {
     .then(res => console.log(res.data));
 }
 
-console.log(get(testEndpoint, testBody));
+// console.log(get(testEndpoint, testBody));
+post(testEndpoint, testBody);
