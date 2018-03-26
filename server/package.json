@@ -21,6 +21,7 @@
     "graphql": "^0.13.1",
     "merge-graphql-schemas": "^1.4.0",
     "mssql": "^4.1.0",
+    "node-fetch": "^2.1.2",
     "request": "^2.83.0",
     "sequelize": "^4.33.4",
     "tedious": "^2.3.1",
