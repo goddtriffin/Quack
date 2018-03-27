@@ -22,6 +22,7 @@ type Mutation {
     login(email: String!, password: String): User
     userCreate(input: UserInput, password: String!): User
     userUpdate(id: Int!, input: UserInput): User
-    userAddCourse(id: Int!, c_id: Int!): [Course]
+    userAddCourse(id: Int!, course: String!): [Course]
     userGetCourses(id: Int!): [Course]
+    userGetQuizzes(courseID: Int!): [Quiz]
 }

@@ -119,11 +119,18 @@ export default {
             argSQL, false);
     },
 
-    userAddCourse: (args, context) => {
-        console.log(args.c_id);
+    userAddCourse: async (args, context) => {
+        argSQL = {}
+        argSQL[0] = {name: 'name', type: TYPES.NVarChar, arg: args.course};
+        const course = await context.db.executeSQL("SELECT id FROM TestSchema.Courses where name = @name", argSQL, false);
+        if(!course) {
+            return new Error("Course does not exist");
+        }
+
+        const c_id = course.id;
         argSQL = {}
         argSQL[0] = {name: 's_id', type: TYPES.Int, arg: args.id};
-        argSQL[1] = {name: 'c_id', type: TYPES.Int, arg: args.c_id};
+        argSQL[1] = {name: 'c_id', type: TYPES.Int, arg: c_id};
         return context.db.executeSQL("if not exists (select * from TestSchema.UsersCourses d where d.s_id = @s_id and d.c_id = @c_id) " + 
             "INSERT INTO TestSchema.UsersCourses (s_id, c_id) VALUES (@s_id, @c_id) " + 
             "SELECT c.id, name FROM TestSchema.UsersCourses sc " +  
@@ -135,6 +142,12 @@ export default {
         argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.id};
         return context.db.executeSQL("SELECT c.id, name FROM TestSchema.UsersCourses sc " + 
             "INNER JOIN TestSchema.Courses c ON c.id = sc.c_id WHERE sc.s_id = @id", argSQL, true);
+    },
+
+    userGetQuizzes: (args, context) => {
+        argSQL = {}
+        argSQL[0] = {name: 'courseID', type: TYPES.Int, arg: args.courseID};
+        return context.db.executeSQL("SELECT * FROM TestSchema.Quizzes where courseID = @courseID and isOpen = 1", argSQL, true);
     }
 }
 

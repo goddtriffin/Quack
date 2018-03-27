@@ -3,7 +3,13 @@ import { Col, Row, Grid } from "react-native-easy-grid"
 import { Input, Item, Content, Container, Icon } from "native-base"
 import { View, Image, StatusBar, Text, Dimensions, TouchableHighlight, TouchableOpacity, TextInput, Alert } from 'react-native';
 import styles from './styles';
-export default class PastQuiz extends Component {
+
+
+import { ApolloProvider, graphql, withApollo } from 'react-apollo';
+
+import gql from 'graphql-tag';
+
+class PastQuiz extends Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -14,11 +20,39 @@ export default class PastQuiz extends Component {
             firstTextCorrect: true,
             inputText: '',
             secondInputText: '',
+            image: '',
             origA: require('../../images/quiz_resources/A_button.png'),
             origB: require('../../images/quiz_resources/B_button.png'),
             origC: require('../../images/quiz_resources/C_button.png'),
             origD: require('../../images/quiz_resources/D_button.png')
         }
+
+
+    }
+
+    componentDidMount() {
+
+        this.props.client.query({ query: gql`
+                query quiz($id: Int!) {
+                  quiz(id: $id) {
+                    image
+                    question
+                  }
+                }
+              `,
+              variables: {
+                id : 1
+               }}).then( data => {
+              
+                this.setState({
+                    image: data.data.quiz.image,
+                    questionText : data.data.quiz.question
+                });
+            }).catch(function(error) {
+                console.log('There has been a problem with your fetch operation: ' + error.message);
+                 // ADD THIS THROW error
+                throw error;
+        });
     }
 
     setAChoiceState() {
@@ -56,7 +90,7 @@ export default class PastQuiz extends Component {
 
     render() {
         const quizPicture = <Image
-            source={require('../../images/quiz_resources/dogPic.jpg')}
+            source={{uri: (this.state.image)}}
             style={styles.pictureView}
             />
         const quizQuestion = <Text style={styles.quizQuestionText}>{this.state.questionText}</Text>
@@ -243,3 +277,5 @@ export default class PastQuiz extends Component {
         );
     }
 }
+
+export default withApollo(PastQuiz);
