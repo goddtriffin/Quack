@@ -43,12 +43,8 @@ export default class App extends Component {
   render() {
     
     console.disableYellowBox = true;
-    return (
-      <WriteQuiz/>
-    )
-  
 
-    if(!this.state.loggedIn) {
+    
     if(this.state.loggedIn == false) {
       return (
         <ApolloProvider client={client}>
@@ -62,7 +58,7 @@ export default class App extends Component {
         </ApolloProvider>
       );
     }
-    */
+    
   }
 }
 
