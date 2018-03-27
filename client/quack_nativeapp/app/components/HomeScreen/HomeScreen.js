@@ -20,12 +20,10 @@ class HomeScreen extends Component {
     }
 
     state = {
-        courses: [{'course': '', key: '1'}
-        ],
+        courses: [{course: 'CS 307', key: 1}],
         studentID:'',
         email:'',
         isLoading: true,
-        instructor: '',
     };
 
     componentDidMount() {
@@ -75,14 +73,6 @@ class HomeScreen extends Component {
                 isLoading: false
             });
         });
-
-        AsyncStorage.getItem('instructor').then((token) => {
-            this.setState({
-                instructor: token,
-            });
-        });
-
-        console.log(this.state.instructor);
     }
 
     updateCourseList() {
@@ -91,12 +81,12 @@ class HomeScreen extends Component {
         let courses = this.state.courses;
         AlertIOS.prompt(
             'Enter course title', null, (text) => {
-                if(this.state.courses[0].course == "No current classes") {
+                /*if(this.state.courses[0].course == "No current classes") {
                     courses = [];
-                }
+                }*/
                 courses.push({'course': text});
                 this.setState({courses});
-                console.log(this.state);
+                //console.log(this.state);
 
                 client.query({ query: gql`
                 query course($name: String) {
@@ -140,12 +130,7 @@ class HomeScreen extends Component {
 
         let AddCourseButton = <Text/>;
         let CourseDetails = <CourseDetails/>;
-        if(this.state.instructor == '1') {
-            AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
-        }
-        else {
-             AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
-        }
+        AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
 
         if(this.state.isLoading) {
             return(<View><Text>Loading...</Text></View>);
@@ -172,21 +157,13 @@ class HomeScreen extends Component {
                     <ScrollView style={styles.courseList}>
                         {
                             this.state.courses.map(({course}) => {
-                                if(this.state.instructor == '1') {
-                                return (<View>
-                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Roster', {courses:course})}>
-                                        <Text style={styles.courseListText}>{course}</Text>
-                                    </TouchableOpacity>
-                                </View>);
-                                }else {
                                     return (<View>
-                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades')}>
+                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades', {courses:course})}>
                                         <Text style={styles.courseListText}>{course}</Text>
                                     </TouchableOpacity>
                                 </View>);
                                 }
-                            })
-                            
+                            ) 
                         }
                     
                     </ScrollView>

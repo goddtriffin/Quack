@@ -62,12 +62,12 @@ export default class App extends Component {
 }
 
 const LoginRoute = StackNavigator({
-    Login: {
+    /*Login: {
       screen: LoginScreen,
     },
     Register: {
       screen: RegisterScreen,
-    },
+    },*/
     Home: {
       screen: HomeScreen,
     },
