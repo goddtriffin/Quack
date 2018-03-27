@@ -3,7 +3,7 @@ import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, S
 import styles from './styles';
 import { StackNavigator } from 'react-navigation';
 
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider, graphql, withApollo } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -39,7 +39,7 @@ class HomeScreen extends Component {
 
             console.log(this.state.studentID);
 
-            client.mutate({ mutation: gql`
+            this.props.client.mutate({ mutation: gql`
                 mutation userGetCourses($id: Int!) {
                   userGetCourses(id: $id) {
                     name
@@ -91,45 +91,35 @@ class HomeScreen extends Component {
         let courses = this.state.courses;
         AlertIOS.prompt(
             'Enter course title', null, (text) => {
-                if(this.state.courses[0].course == "No current classes") {
-                    courses = [];
-                }
-                courses.push({'course': text});
-                this.setState({courses});
-                console.log(this.state);
 
-                client.query({ query: gql`
-                query course($name: String) {
-                    course( name: $name ) {
-                        id
+                console.log(text);
+                
+                this.props.client.mutate({ mutation: gql`
+                    mutation userAddCourse($id: Int!, $course: String!) {
+                      userAddCourse(id: $id, course: $course) {
+                        name
+                      }
                     }
-                }`,
-              variables: {
-                name: text
-               }}).then( data => {
-                    client.mutate({ mutation: gql`
-                        mutation userAddCourses($id: Int!, $c_id: Int!) {
-                          userGetCourses(id: $id, c_id: $c_id) {
-                            name
-                          }
-                        }
-                      `,
-                      variables: {
-                        id : this.state.studentID,
-                        c_id: parseInt(data.data.id)
-                       }}).then( data2 => {
-                      console.log(data2);
-                    }).catch(function(error) {
-                        console.log('There has been a problem with your fetch operation: ' + error.message);
-                         // ADD THIS THROW error
-                        throw error;
-                    }); 
-                  
+                  `,
+                  variables: {
+                    id : this.state.studentID,
+                    course: text
+                   }
+                }).then( data => {
+                  courses = [];
+
+                  if(data.data.userAddCourse == null) {
+                    courses.push({'course' : 'No current classes'})
+                  }
+                  else {
+                    for(let i = 0; i < data.data.userAddCourse.length; i++) {
+                        courses.push({'course' : data.data.userAddCourse[i].name})
+                    }
+                  }
+                  this.setState({courses});
                 }).catch(function(error) {
-                    console.log('There has been a problem with your fetch operation: ' + error.message);
-                     // ADD THIS THROW error
-                    throw error;
-                });
+                    alert(error.message);
+                }); 
             }
         );
 
@@ -196,9 +186,4 @@ class HomeScreen extends Component {
     }
 }
 
-const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
-  cache: new InMemoryCache()
-});
-
-export default HomeScreen;
+export default withApollo(HomeScreen)

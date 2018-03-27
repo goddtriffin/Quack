@@ -1,7 +1,10 @@
 input QuizInput {
-    sectionID: Int!
+    courseID: Int!
     type: String!
     date: String!
+    question: String!
+    image: String!
+    options: String!
     correctAnswer: String!
     isOpen: Boolean!
     isManual: Boolean!
@@ -9,9 +12,12 @@ input QuizInput {
 
 type Quiz {
     id: Int!
-    sectionID: Int!
+    courseID: Int!
     type: String!
     date: String!
+    question: String!
+    image: String!
+    options: String!
     correctAnswer: String!
     isOpen: Boolean!
     isManual: Boolean!
