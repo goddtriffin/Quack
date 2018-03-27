@@ -72,7 +72,10 @@ function answer_content_whitespace () {
 }
 
 function answer_content_fine () {
-    return v.validate_answer_content("hello");
+    const msg = v.validate_answer_content("hello");
+
+    if (msg !== 'ok') return "Should've returned a-okay.";
+    return 'ok';
 }
 
 // TESTALL

@@ -1,5 +1,5 @@
 // for debugging: true=validate , false=skip_validation
-const trigger = true;
+let trigger = true;
 
 // EMAIL
 
@@ -172,5 +172,8 @@ function arg_error (arg, properFormat) {
 module.exports = {
     validate_course_name,
     validate_answer_type,
-    validate_answer_content
+    validate_answer_content,
+    do_trigger: function (val) {
+        trigger = val;
+    }
 }
