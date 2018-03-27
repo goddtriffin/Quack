@@ -1,3 +1,5 @@
+import { validate_quiz_type, validate_quiz_question, validate_quiz_options, validate_quiz_correct_answer } from '../validators/validate'
+
 var Request = require('tedious').Request;
 var TYPES   = require('tedious').TYPES;
 var argSQL = {};
@@ -31,6 +33,12 @@ export default {
     // Mutation //
 
     quizCreate: (args, context) => {
+        // validate all user input
+        validate_quiz_type(args.input.type);
+        validate_quiz_question(args.input.question);
+        validate_quiz_options(args.input.options);
+        validate_quiz_correct_answer(args.input.correctAnswer);
+
         // (TEMPORARY FIX) use fakeDatabase's size to create initial id
 
         // update database with new User (potentially async task)
@@ -56,6 +64,11 @@ export default {
     }, 
 
     quizUpdate: (args, context) => {
+        // validate all user input
+        validate_quiz_type(args.input.type);
+        validate_quiz_question(args.input.question);
+        validate_quiz_options(args.input.options);
+        validate_quiz_correct_answer(args.input.correctAnswer);
 
         // update database of existing Role (async task)
 
