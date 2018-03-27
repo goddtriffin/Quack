@@ -1,3 +1,5 @@
+import { validate_answer_type, validate_answer_content } from '../validators/validate'
+
 var Request = require('tedious').Request;
 var TYPES   = require('tedious').TYPES;
 var argSQL = {};
@@ -25,6 +27,10 @@ export default {
     // Mutation //
 
     answerCreate: (args, context) => {
+        // validate all user input
+        // validate_answer_type(args.input.type);
+        // validate_answer_content(args.input.content);
+
         // (TEMPORARY FIX) use fakeDatabase's size to create initial id
 
         // update database with new User (potentially async task)
@@ -45,6 +51,9 @@ export default {
     }, 
 
     answerUpdate: (args, context) => {
+        // validate all user input
+        validate_answer_type(args.input.type);
+        validate_answer_content(args.input.content);
 
         // update database of existing Role (async task)
 

@@ -1,3 +1,5 @@
+import { validate_role_type } from '../validators/validate'
+
 var Request = require('tedious').Request;
 var TYPES   = require('tedious').TYPES;
 var argSQL = {};
@@ -24,6 +26,9 @@ export default {
     // Mutation //
 
     roleCreate: (args, context) => {
+        // validate all user input
+        // validate_role_type(args.input.type);
+
         // (TEMPORARY FIX) use fakeDatabase's size to create initial id
 
         // update database with new User (potentially async task)
@@ -43,6 +48,7 @@ export default {
     },
 
     roleUpdate: (args, context) => {
+        // validate_role_type(args.input.type);
 
         // update database of existing Role (async task)
 
