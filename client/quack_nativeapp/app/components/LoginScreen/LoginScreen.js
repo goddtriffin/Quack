@@ -20,9 +20,6 @@ class LoginScreen extends Component {
 
     state = {
         email: '',
-        password: '',
-        studentID: '',
-        authToken: ''
     }
 
     render() {
@@ -38,7 +35,7 @@ class LoginScreen extends Component {
                 }`,
                 variables: {
                     email: this.state.email,
-                    password: this.state.password
+                    password: this.state.password,
                 },
             }).then( data => { 
                 console.log(data);
@@ -114,8 +111,6 @@ class LoginScreen extends Component {
                     </TouchableOpacity>
 
                 </View>
-                
-
 
             </KeyboardAvoidingView>
         );

@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import LoginScreen from './app/components/LoginScreen/LoginScreen';
 import Quiz from './app/components/Quiz/Quiz';
@@ -14,15 +9,13 @@ import HomeScreen from './app/components/HomeScreen/HomeScreen';
 import Roster from './app/components/Roster/Roster';
 import PastQuiz from './app/components/PastQuiz/PastQuiz';
 import WriteQuiz from './app/components/WriteQuiz/WriteQuiz';
-
+import CourseDetails from './app/components/CourseDetails/CourseDetails';
+import LoginForm from './app/components/LoginScreen/LoginForm';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
-
-
-
 
 const client = new ApolloClient({
   link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
@@ -36,13 +29,19 @@ export default class App extends Component {
     user: {
       firstName: '',
       lastName: '',
-      email: ''
+      email: '',
     }
   }
 
   render() {
     
     console.disableYellowBox = true;
+
+    /*
+    return (
+      </>
+    )
+    */
 
     return (
       <ApolloProvider client={client}>
@@ -82,14 +81,14 @@ const LoginRoute = StackNavigator({
       screen: Quiz,
     },
     PastQuiz: {
-      screen: PastQuiz
+      screen: PastQuiz,
     },
     WriteQuiz: {
-      screen: WriteQuiz
+      screen: WriteQuiz,
     },
-    Roster: {
-      screen: Roster,
-    }
+    CourseDetails: {
+      screen: CourseDetails,
+    },
 });
 
 const HomeRoute = StackNavigator({
