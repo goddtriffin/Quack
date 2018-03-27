@@ -116,6 +116,6 @@ export default class LoginScreen extends Component {
 }
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
-  cache: new InMemoryCache()
+   link: new HttpLink({ uri: 'https://quack.localtunnel.me/graphql' }),
+   cache: new InMemoryCache()
 });
