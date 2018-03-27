@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar/sidebar'
 import SidebarContent from './components/Sidebar/sidebar_content'
 import Blank from './components/Blank/blank';
 import Course from './components/Course/course';
+import { AUTH_TOKEN } from './constants'
 import { Grid, Col, Row } from '../node_modules/react-bootstrap'
 import {
   Route,
@@ -18,7 +19,19 @@ import {
 
 class App extends Component {
 
+  state = {
+    userID: "",
+    userEmail: "",
+    
+  }
+
   render() {
+
+    const authToken = localStorage.getItem(AUTH_TOKEN);
+    if(!authToken) {
+      //go to login
+
+    }
 
     const sidebar = <SidebarContent params={this.props.params}/>
 
@@ -56,13 +69,11 @@ class App extends Component {
                   </div>
               </Col>
               <Col md={10}>
-                  
                   <Switch>
                     <Route exact path="/" component={Blank}/>
                     <Route path="/course/:courseID" component={CourseParent}/> 
                     <Redirect to="/" />
                   </Switch>
-                
               </Col>
             </Row>
           </Grid>

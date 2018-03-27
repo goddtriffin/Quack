@@ -3,8 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "apollo-boost": "^0.1.4",
+    "apollo-client": "^2.2.8",
     "bootstrap": "^3.3.7",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.8.0",
     "react": "^16.2.0",
+    "react-apollo": "^2.1.1",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-table-next": "^0.1.5",
     "react-dom": "^16.2.0",
