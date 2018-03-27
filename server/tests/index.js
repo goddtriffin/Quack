@@ -5,7 +5,7 @@ const endpoint = "https://quack.localtunnel.me/graphql";
 function sendRequest (request, callback) {
     fetch(endpoint, {
         method: 'POST',
-        body: JSON.stringify({ mutation: "{ userCreate( input: { firstName: \"t1\" lastName: \"t1\" email: \"t1@purdue.edu\" }, password: \"t1\") { firstName } }" }),
+        body: JSON.stringify(request),
         headers: { 'Content-Type': 'application/json' }
     })
     .then(res => res.json())
