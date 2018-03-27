@@ -64,6 +64,11 @@ export default StyleSheet.create({
   
 
 },
+quizAnswerText: {
+  fontFamily: 'Fira Sans',
+  color: 'white',
+  fontWeight: 'bold',
+},
 quizQuestionTextWithoutPic: {
   // position: 'absolute',
    fontFamily: 'Fira Sans',

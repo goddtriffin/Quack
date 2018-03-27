@@ -21,15 +21,17 @@ class PastQuiz extends Component {
             inputText: '',
             secondInputText: '',
             image: '',
-            options: '',
+            c: '',
+            d: '',
+            options: 'meh;meh;meh;meh',
             numberOfOptions: 2,
             origA: require('../../images/quiz_resources/A_button.png'),
             origB: require('../../images/quiz_resources/B_button.png'),
             origC: require('../../images/quiz_resources/C_button.png'),
             origD: require('../../images/quiz_resources/D_button.png'),
             fillinBlank: false,
-            freeResp: true,
-            multiChoice: false,
+            freeResp: false,
+            multiChoice: true,
         }
 
 
@@ -212,6 +214,32 @@ class PastQuiz extends Component {
                 </Col>
         </View>
 
+        const multipleQuizAnsCol1 =
+        <View>
+                <Col paddingRight={60} paddingTop={70}>
+                    
+                    <Text style={styles.quizAnswerText}>
+                        {'a.) ' + this.state.options.split(";")[0]}
+                    </Text>
+                    
+                    <Text style={styles.quizAnswerText}>
+                        {this.numberOfOptions > 2 ? 'c.) ' + this.state.options.split(";")[2] : null}
+                    </Text>
+                </Col>
+        </View>
+
+        const multipleQuizAnsCol2 =
+        <View>
+                <Col paddingRight={130} paddingTop={70}>
+                    <Text style={styles.quizAnswerText}>
+                        {'b.) ' + this.state.options.split(";")[1]}
+                    </Text>
+                    <Text style={styles.quizAnswerText}>
+                        {this.numberOfOptions > 3 ? 'd.) ' + this.state.options.split(";")[3] : null}
+                    </Text>
+                </Col>
+        </View>
+
         return (
         <Container>
             <Image
@@ -231,7 +259,10 @@ class PastQuiz extends Component {
             <Row size = {20}>
                 <Content>
                     {this.state.hasPicture ? null : quizQuestion}
+                    
                 </Content>
+                {this.state.multiChoice ? multipleQuizAnsCol1 : null}
+                {this.state.multiChoice ? multipleQuizAnsCol2 : null}
             </Row>
             <Row size = {10}>
                 {this.state.hasPicture ? quizQuestion : null}
