@@ -4,7 +4,7 @@ import styles from './styles';
 import { colors } from '../../style/styles';
 import { StackNagivator } from 'react-navigation'
 
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider, createNetworkInterface} from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -172,9 +172,10 @@ class RegisterScreen extends Component {
     }
 }
 
+//const link = new HttpLink({ uri: 'https://quack.localtunnel.me/graphql' });
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
-  cache: new InMemoryCache()
+   link: new HttpLink({ uri: 'https://quack.localtunnel.me/graphql' }),
+   cache: new InMemoryCache()
 });
 
 export default RegisterScreen;

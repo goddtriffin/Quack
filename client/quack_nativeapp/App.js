@@ -15,12 +15,19 @@ import Roster from './app/components/Roster/Roster';
 import PastQuiz from './app/components/PastQuiz/PastQuiz';
 import WriteQuiz from './app/components/WriteQuiz/WriteQuiz';
 
-import { ApolloClient, createNetworkInterface ,ApolloProvider } from 'react-apollo'
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import gql from 'graphql-tag';
+
+
 
 
 const client = new ApolloClient({
-  networkInterface: createNetworkInterface({ uri: 'https://quack.localtunnel.me/graphql'}),
-})
+  link: new HttpLink({ uri: 'https://quack.localtunnel.me' }),
+  cache: new InMemoryCache()
+});
 
 export default class App extends Component {
   state = {
@@ -36,8 +43,13 @@ export default class App extends Component {
   render() {
     
     console.disableYellowBox = true;
+    return (
+      <WriteQuiz/>
+    )
+  
 
     if(!this.state.loggedIn) {
+    if(this.state.loggedIn == false) {
       return (
         <ApolloProvider client={client}>
           <LoginRoute screenProps={this.state.user.firstName}/>
@@ -50,7 +62,7 @@ export default class App extends Component {
         </ApolloProvider>
       );
     }
-    
+    */
   }
 }
 
@@ -87,9 +99,3 @@ const HomeRoute = StackNavigator({
     screen: HomeScreen,
   }
 });
-
-
-
-
-
-
