@@ -1,3 +1,5 @@
+import { validate_section_name } from '../validators/validate'
+
 var Request = require('tedious').Request;
 var TYPES   = require('tedious').TYPES;
 var argSQL = {};
@@ -25,6 +27,9 @@ export default {
     // Mutation //
 
     sectionCreate: (args, context) => {
+        // validate all user input
+        validate_section_name(args.input.name);
+
         // (TEMPORARY FIX) use fakeDatabase's size to create initial id
 
         // update database with new User (potentially async task)
@@ -43,6 +48,8 @@ export default {
     }, 
 
    sectionUpdate: (args, context) => {
+        // validate all user input
+        validate_section_name(args.input.name);
 
         // update database with new User (potentially async task)
 
@@ -55,8 +62,8 @@ export default {
         //console.log(argSQL);
         return context.db.executeSQL( 
             "UPDATE TestSchema.Sections SET " + 
-             "courseID=@courseID, name=@name " + 
-             "OUTPUT INSERTED.id, INSERTED.courseID, INSERTED.name WHERE id = @id;", 
+                "courseID=@courseID, name=@name " + 
+                "OUTPUT INSERTED.id, INSERTED.courseID, INSERTED.name WHERE id = @id;", 
             argSQL, false);
     }
 }
