@@ -43,12 +43,12 @@ export default class App extends Component {
     )
     */
 
-    return (
+    /*return (
       <ApolloProvider client={client}>
       <WriteQuiz/>
       </ApolloProvider>
-      );
-    /*if(this.state.loggedIn == false) {
+      );*/
+    if(this.state.loggedIn == false) {
       return (
         <ApolloProvider client={client}>
           <LoginRoute screenProps={this.state.user.firstName}/>
@@ -60,7 +60,7 @@ export default class App extends Component {
           <HomeRoute />
         </ApolloProvider>
       );
-    }*/
+    }
   }
 }
 
