@@ -27,7 +27,7 @@ export default {
 
     roleCreate: (args, context) => {
         // validate all user input
-        validate_role_type(args.input.type);
+        // validate_role_type(args.input.type);
 
         // (TEMPORARY FIX) use fakeDatabase's size to create initial id
 
@@ -48,7 +48,7 @@ export default {
     },
 
     roleUpdate: (args, context) => {
-        validate_role_type(args.input.type);
+        // validate_role_type(args.input.type);
 
         // update database of existing Role (async task)
 

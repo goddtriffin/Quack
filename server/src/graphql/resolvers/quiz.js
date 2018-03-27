@@ -34,11 +34,11 @@ export default {
 
     quizCreate: (args, context) => {
         // validate all user input
-        validate_quiz_type(args.input.type);
-        validate_quiz_question(args.input.question);
-        validate_quiz_options(args.input.options);
-        validate_quiz_correct_answer(args.input.correctAnswer);
-        validate_date(args.input.date);
+        // validate_quiz_type(args.input.type);
+        // validate_quiz_question(args.input.question);
+        // validate_quiz_options(args.input.options);
+        // validate_quiz_correct_answer(args.input.correctAnswer);
+        // validate_date(args.input.date);
 
         // (TEMPORARY FIX) use fakeDatabase's size to create initial id
 
@@ -66,11 +66,11 @@ export default {
 
     quizUpdate: (args, context) => {
         // validate all user input
-        validate_quiz_type(args.input.type);
-        validate_quiz_question(args.input.question);
-        validate_quiz_options(args.input.options);
-        validate_quiz_correct_answer(args.input.correctAnswer);
-        validate_date(args.input.date);
+        // validate_quiz_type(args.input.type);
+        // validate_quiz_question(args.input.question);
+        // validate_quiz_options(args.input.options);
+        // validate_quiz_correct_answer(args.input.correctAnswer);
+        // validate_date(args.input.date);
 
         // update database of existing Role (async task)
 

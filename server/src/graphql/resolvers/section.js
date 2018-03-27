@@ -28,7 +28,7 @@ export default {
 
     sectionCreate: (args, context) => {
         // validate all user input
-        validate_section_name(args.input.name);
+        // validate_section_name(args.input.name);
 
         // (TEMPORARY FIX) use fakeDatabase's size to create initial id
 
@@ -49,7 +49,7 @@ export default {
 
    sectionUpdate: (args, context) => {
         // validate all user input
-        validate_section_name(args.input.name);
+        // validate_section_name(args.input.name);
 
         // update database with new User (potentially async task)
 

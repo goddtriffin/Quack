@@ -28,8 +28,8 @@ export default {
 
     answerCreate: (args, context) => {
         // validate all user input
-        validate_answer_type(args.input.type);
-        validate_answer_content(args.input.content);
+        // validate_answer_type(args.input.type);
+        // validate_answer_content(args.input.content);
 
         // (TEMPORARY FIX) use fakeDatabase's size to create initial id
 
