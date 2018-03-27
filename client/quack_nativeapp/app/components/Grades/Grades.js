@@ -3,41 +3,30 @@ import { Col, Row, Grid } from "react-native-easy-grid"
 import { View, Image, StatusBar, Text, Dimensions, SectionList, TouchableHighlight, Alert, TouchableOpacity } from 'react-native';
 import styles from './styles';
 export default class Quiz extends Component {
-    dummyData = {
-        numbers: [
-            {'numbers': 'Quiz 1', 'id': 1},
-            {'numbers': 'Quiz 2', 'id': 2},
-            {'numbers': 'Quiz 3', 'id': 3},
-            {'numbers': 'Quiz 4', 'id': 4},
-            {'numbers': 'Quiz 5', 'id': 5},
-            {'numbers': 'Quiz 6', 'id': 6},
-            {'numbers': 'Quiz 7', 'id': 7},
-            {'numbers': 'Quiz 8', 'id': 8},
-        ]
+
+    state = {
+        authToken: '',
+        email: '',
+        course: '',
     }
 
-    onPress = () => {
-        
-    }
     render() {
         return (
             <Grid>
                 <Row size={25}>
                     <Col size={50}>
-                        {/* <Image
+                        { <Image onPress={() => this.props.navigation.navigate("Dashboard")}
                         source={require('../../images/navigation_resources/back_button.png')}
                         style={styles.navigationButton}
-                        /> */}
-                        
+                        />}                        
                         <Text style = {styles.classHeaderText}>
-                        CS 307
+                        {this.state.course}
                         </Text>
-                        
                         <Text style = {styles.classReminderText}>
-                        Next class today @ 11:30am
+                        Next class       @ 
                         </Text>
                         <Text style = {styles.currentGrade}>
-                        Current Grade:  69%
+                        Current Grade: 
                         </Text>
 
                     </Col>
@@ -101,9 +90,6 @@ export default class Quiz extends Component {
                     </Col>
                 </Row>
             </Grid>
-            
-        
-        
         );
     }
 }

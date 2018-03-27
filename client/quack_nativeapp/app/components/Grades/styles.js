@@ -6,6 +6,7 @@ export default StyleSheet.create({
     //flex: 1,
     resizeMode: 'contain',
     paddingTop: 70,
+    paddingLeft: 70,
   },
   classHeaderText: {
     //flex: 1,

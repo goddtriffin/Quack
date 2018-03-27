@@ -26,7 +26,6 @@ class HomeScreen extends Component {
         email:'',
         isLoading: true,
         instructor: '',
-    
     };
 
     componentDidMount() {
@@ -140,8 +139,7 @@ class HomeScreen extends Component {
     render() {
 
         let AddCourseButton = <Text/>;
-
-        let CourseDetails = null;
+        let CourseDetails = <CourseDetails/>;
         if(this.state.instructor == '1') {
             AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
         }
@@ -160,11 +158,11 @@ class HomeScreen extends Component {
                 <StatusBar
                     barStyle="default"
                 />
-
                 
                 <View style={styles.header}>
-                    <Text style={styles.bigTitle}>Classes</Text>
-                    
+                    <Text style={styles.bigTitle}>
+                        Classes
+                    </Text>
                     <TouchableOpacity style={styles.addCourse} onPress={() => this.updateCourseList()}>
                         {AddCourseButton}
                     </TouchableOpacity>
@@ -193,7 +191,6 @@ class HomeScreen extends Component {
                     
                     </ScrollView>
                 </View>
-                
             </View>
         );
     }

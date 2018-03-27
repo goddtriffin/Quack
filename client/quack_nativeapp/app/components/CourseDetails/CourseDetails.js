@@ -4,8 +4,8 @@ import {View, Image, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 export default class CourseDetails extends Component {
     state = {
-        course: 'CS307',
-        grade: '69%',
+        course: 'Error',
+        grade: 'Error'
     }
 
     render () {
