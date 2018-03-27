@@ -4,13 +4,16 @@ import styles from './styles';
 import LoginForm from './LoginForm';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider, graphql, withApollo } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
+import PropTypes from 'prop-types';
 
-export default class LoginScreen extends Component {
+//import { login } from '../utils/AuthService';
+
+class LoginScreen extends Component {
     static navigationOptions = {
         header: null,
     };
@@ -18,40 +21,44 @@ export default class LoginScreen extends Component {
     state = {
         email: '',
         password: '',
-        studentID: ''
+        studentID: '',
+        authToken: ''
     }
 
     render() {
         
         loginUser = async() => {
 
-            await client.query({ query: gql`
-                query user($email: String!) {
-                    user( email: $email ) {
+            await this.props.client.mutate({
+                mutation: gql`mutation login($email: String!, $password: String!) {
+                    login( email: $email, password: $password) {
                         id
+                        jwt
                     }
-                }
-              `,
-              variables: {
-                email: this.state.email
-               }}).then( data => {
-               this.setState({studentID : data.data.user.id.toString()});
-              console.log(this.state.studentID);
-            }).catch(function(error) {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
-                 // ADD THIS THROW error
-                throw error;
+                }`,
+                variables: {
+                    email: this.state.email,
+                    password: this.state.password
+                },
+            }).then( data => { 
+                console.log(data);
+                this.setState({studentID : data.data.login.id.toString()}); 
+                this.setState({authToken : data.data.login.jwt.toString()});
+            }).catch(function(error) { 
+                alert(error.message); 
+                 // ADD THIS THROW error 
+                throw error; 
             });
             
-            await AsyncStorage.setItem('studentID', this.state.studentID);
-            await AsyncStorage.setItem('email:key', this.state.email);
-            await AsyncStorage.setItem('password', this.state.password);
+            await AsyncStorage.setItem('studentID', this.state.studentID); 
+            await AsyncStorage.setItem('email:key', this.state.email); 
+            await AsyncStorage.setItem('authToken', this.state.authToken); 
 
-                const resetAction = NavigationActions.reset({
-                    index: 0,
-                    actions: [ NavigationActions.navigate({ routeName: 'Home' })]
-                });
-                this.props.navigation.dispatch(resetAction);
+            const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [ NavigationActions.navigate({ routeName: 'Home' })]
+            });
+            this.props.navigation.dispatch(resetAction);
         }
 
         return (
@@ -115,7 +122,5 @@ export default class LoginScreen extends Component {
     }
 }
 
-const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
-  cache: new InMemoryCache()
-});
+export default withApollo(LoginScreen)
+

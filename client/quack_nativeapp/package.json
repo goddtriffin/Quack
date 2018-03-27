@@ -8,12 +8,21 @@
   },
   "dependencies": {
     "apollo-boost": "^0.1.1",
+    "apollo-client": "^2.2.8",
+    "graphql": "^0.12.3",
+    "native-base": "^2.3.10",
+    "npm": "^5.7.1",
+    "apollo-cache-inmemory": "^0.2.0-rc.4",
+    "apollo-client": "^2.0.0-rc.7",
+    "apollo-link-http": "^1.5.3",
     "graphql": "^0.13.1",
+    "jwt-decode": "^2.2.0",
     "react": "^16.2.0",
-    "react-apollo": "^2.0.4",
+    "react-apollo": "^1.4.16",
     "react-native": "^0.53.0",
     "react-native-easy-grid": "^0.1.17",
-    "react-navigation": "^1.1.1"
+    "react-navigation": "^1.1.1",
+    "react-router": "^4.2.0"
   },
   "devDependencies": {
     "babel-jest": "22.2.2",
