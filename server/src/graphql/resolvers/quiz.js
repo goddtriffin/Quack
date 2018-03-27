@@ -6,7 +6,7 @@ var argSQL = {};
 /*
  *Different types of quizzes: multiple-choice, short-answer, true-false
  *Date format: "MMDDYYYY"
- *
+ *image: default "image"
  */
 
 export default {
