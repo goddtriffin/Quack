@@ -8,6 +8,19 @@ export default StyleSheet.create({
     paddingTop: 70,
     paddingLeft: 70,
   },
+  gradesListView: {
+    paddingLeft: 10,
+    flex: 2,
+  },
+  gradeListText: {
+    fontFamily: 'Fira Sans',
+    fontWeight: '600',
+    flex: 1,
+    fontSize: 30,
+    color: 'black',
+    textAlign: 'left',
+    paddingLeft: 20
+  },
   classHeaderText: {
     //flex: 1,
     fontFamily: 'Fira Sans',
@@ -16,7 +29,7 @@ export default StyleSheet.create({
     fontSize: 60,
     textAlign: 'left',
     width: 200,
-    paddingLeft: 20,
+    paddingLeft: 10,
  },
   classReminderText: {
     fontFamily: 'Fira Sans',
