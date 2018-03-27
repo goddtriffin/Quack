@@ -19,6 +19,7 @@
     "express": "^4.16.2",
     "express-graphql": "^0.6.11",
     "graphql": "^0.13.1",
+    "graphql-query-builder": "^1.0.7",
     "merge-graphql-schemas": "^1.4.0",
     "mssql": "^4.1.0",
     "node-fetch": "^2.1.2",
