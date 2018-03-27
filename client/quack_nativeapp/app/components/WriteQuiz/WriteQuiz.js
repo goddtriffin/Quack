@@ -14,9 +14,46 @@ export default class PastQuiz extends Component {
             firstTextCorrect: true,
             inputText: '',
             secondInputText: '',
-        
+            origA: require('../../images/quiz_resources/A_button.png'),
+            origB: require('../../images/quiz_resources/B_button.png'),
+            origC: require('../../images/quiz_resources/C_button.png'),
+            origD: require('../../images/quiz_resources/D_button.png')
         }
     }
+
+    setAChoiceState() {
+        this.setState({
+            origA: require('../../images/quiz_resources/A_button_selected.png')
+        });
+    }
+
+    setBChoiceState() {
+        this.setState({
+            origB: require('../../images/quiz_resources/B_button_selected.png')
+        });
+    }
+
+    setCChoiceState() {
+        this.setState({
+            origC: require('../../images/quiz_resources/C_button_selected.png')
+        });
+    }
+
+    setDChoiceState() {
+        this.setState({
+            origD: require('../../images/quiz_resources/D_button_selected.png')
+        });
+    }
+
+    resetState() {
+        this.setState({
+            origA: require('../../images/quiz_resources/A_button.png'),
+            origB: require('../../images/quiz_resources/B_button.png'),
+            origC: require('../../images/quiz_resources/C_button.png'),
+            origD: require('../../images/quiz_resources/D_button.png')
+        })
+    }
+
     render() {
         const quizPicture = <Image
             source={require('../../images/quiz_resources/dogPic.jpg')}
@@ -44,6 +81,112 @@ export default class PastQuiz extends Component {
             </Item>
         
         const checkmark = <Icon name = 'checkmark-circle'/>
+
+        const A_button = <TouchableOpacity onPress={() => {
+            this.resetState();
+            this.setAChoiceState();
+        }}>
+            <Image
+            source={this.state.origA}
+        
+            />
+        </TouchableOpacity>
+
+        const B_button = <TouchableOpacity onPress={() => {
+            this.resetState();
+            this.setBChoiceState();
+        }}>
+            <Image
+            source={this.state.origB}
+        
+            />
+        </TouchableOpacity>
+
+        const C_button = <TouchableOpacity onPress={() => {
+            this.resetState();
+            this.setCChoiceState();
+        }}>
+            <Image
+            source={this.state.origC}
+            />
+        </TouchableOpacity>
+
+        const D_button = <TouchableOpacity onPress={() => {
+            this.resetState();
+            this.setDChoiceState();
+        }}>
+            <Image
+            source={this.state.origD}
+        
+            />
+        </TouchableOpacity>
+        
+        const fourMultipleQuizCol1 =
+        <View>
+                <Col paddingLeft={75}>
+                    <Content>
+                    {A_button}
+                    </Content>
+                    <Content>
+                    {C_button}
+                    </Content>
+                </Col>
+        </View>
+
+        const fourMultipleQuizCol2 =
+        <View>
+                <Col paddingLeft={90}>
+                    <Content>
+                    {B_button}
+                    </Content>
+                    <Content>
+                    {D_button}
+                    </Content>
+                </Col>
+        </View>
+
+        const threeMultipleQuizCol1 = 
+        <View>
+                <Col paddingLeft={75}>
+                    <Content>
+                    {A_button}
+                    </Content>
+                    <Content>
+                    {C_button}
+                    </Content>
+                </Col>
+        </View>
+
+        const threeMultipleQuizCol2 =
+        <View>
+                <Col paddingLeft={90}>
+                    <Content>
+                    {B_button}
+                    </Content>
+                </Col>
+        </View>
+
+        const twoMultipleQuizCol1 =
+        <View>
+                <Col paddingLeft={90}>
+                    <Content>
+                    {A_button}
+                    </Content>
+                </Col>
+        </View>
+
+         const twoMultipleQuizCol2 =
+        <View>
+                <Col paddingLeft={90}>
+                    <Content>
+                    {B_button}
+                    </Content>
+                </Col>
+        </View>
+
+
+
+                
         
         return (
         <Container>
@@ -70,10 +213,8 @@ export default class PastQuiz extends Component {
                 {this.state.hasPicture ? quizQuestion : null}
             </Row>
             <Row size = {40} padding={8}>
-                <Content>
-                    {answerBox}
-                </Content>
-                
+                {fourMultipleQuizCol1}
+                {fourMultipleQuizCol2}
             </Row>    
         </Grid>
         <TouchableOpacity style={styles.downIndicator} onPress={ () => Alert.alert("Answers saved. You can go back now") }>
