@@ -25,7 +25,7 @@ import gql from 'graphql-tag';
 
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'https://quack.localtunnel.me' }),
+  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
   cache: new InMemoryCache()
 });
 
@@ -44,8 +44,12 @@ export default class App extends Component {
     
     console.disableYellowBox = true;
 
-    
-    if(this.state.loggedIn == false) {
+    return (
+      <ApolloProvider client={client}>
+      <Quiz/>
+      </ApolloProvider>
+      );
+    /*if(this.state.loggedIn == false) {
       return (
         <ApolloProvider client={client}>
           <LoginRoute screenProps={this.state.user.firstName}/>
@@ -57,8 +61,7 @@ export default class App extends Component {
           <HomeRoute />
         </ApolloProvider>
       );
-    }
-    }
+    }*/
   }
 }
 
