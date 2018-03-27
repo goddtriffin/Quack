@@ -45,7 +45,7 @@ export default class App extends Component {
 
     return (
       <ApolloProvider client={client}>
-      <Quiz/>
+      <WriteQuiz/>
       </ApolloProvider>
       );
     /*if(this.state.loggedIn == false) {

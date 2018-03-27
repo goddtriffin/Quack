@@ -21,10 +21,15 @@ class PastQuiz extends Component {
             inputText: '',
             secondInputText: '',
             image: '',
+            options: '',
+            numberOfOptions: 2,
             origA: require('../../images/quiz_resources/A_button.png'),
             origB: require('../../images/quiz_resources/B_button.png'),
             origC: require('../../images/quiz_resources/C_button.png'),
-            origD: require('../../images/quiz_resources/D_button.png')
+            origD: require('../../images/quiz_resources/D_button.png'),
+            fillinBlank: false,
+            freeResp: true,
+            multiChoice: false,
         }
 
 
@@ -47,6 +52,34 @@ class PastQuiz extends Component {
                 this.setState({
                     image: data.data.quiz.image,
                     questionText : data.data.quiz.question
+                });
+            }).catch(function(error) {
+                console.log('There has been a problem with your fetch operation: ' + error.message);
+                 // ADD THIS THROW error
+                throw error;
+        });
+    }
+
+    componentDidMountMult() {
+
+        this.props.client.query({ query: gql`
+                query quiz($id: Int!) {
+                  quiz(id: $id) {
+                    image
+                    question
+                    options
+                  }
+                }
+              `,
+              variables: {
+                id : 3
+               }}).then( data => {
+                console.log(data);
+              
+                this.setState({
+                    image: data.data.quiz.image,
+                    questionText : data.data.quiz.question,
+                    options: data.data.quiz.options
                 });
             }).catch(function(error) {
                 console.log('There has been a problem with your fetch operation: ' + error.message);
@@ -155,73 +188,30 @@ class PastQuiz extends Component {
             />
         </TouchableOpacity>
         
-        const fourMultipleQuizCol1 =
+        const multipleQuizCol1 =
         <View>
                 <Col paddingLeft={75}>
                     <Content>
                     {A_button}
                     </Content>
                     <Content>
-                    {C_button}
+                    {this.state.numberOfOptions > 2 ? C_button : null}
                     </Content>
                 </Col>
         </View>
 
-        const fourMultipleQuizCol2 =
+        const multipleQuizCol2 =
         <View>
                 <Col paddingLeft={90}>
                     <Content>
                     {B_button}
                     </Content>
                     <Content>
-                    {D_button}
+                    {this.state.numberOfOptions > 3 ? D_button : null}
                     </Content>
                 </Col>
         </View>
 
-        const threeMultipleQuizCol1 = 
-        <View>
-                <Col paddingLeft={75}>
-                    <Content>
-                    {A_button}
-                    </Content>
-                    <Content>
-                    {C_button}
-                    </Content>
-                </Col>
-        </View>
-
-        const threeMultipleQuizCol2 =
-        <View>
-                <Col paddingLeft={90}>
-                    <Content>
-                    {B_button}
-                    </Content>
-                </Col>
-        </View>
-
-        const twoMultipleQuizCol1 =
-        <View>
-                <Col paddingLeft={90}>
-                    <Content>
-                    {A_button}
-                    </Content>
-                </Col>
-        </View>
-
-         const twoMultipleQuizCol2 =
-        <View>
-                <Col paddingLeft={90}>
-                    <Content>
-                    {B_button}
-                    </Content>
-                </Col>
-        </View>
-
-
-
-                
-        
         return (
         <Container>
             <Image
@@ -247,8 +237,13 @@ class PastQuiz extends Component {
                 {this.state.hasPicture ? quizQuestion : null}
             </Row>
             <Row size = {40} padding={8}>
-                {fourMultipleQuizCol1}
-                {fourMultipleQuizCol2}
+                {this.state.multiChoice ? multipleQuizCol1 : null}
+                {this.state.multiChoice ? multipleQuizCol2 : null}
+                <Content>
+                {this.state.freeResp ? answerBox : null}
+                {this.state.fillinBlank ? fillinBox : null}
+                </Content>
+
             </Row>    
         </Grid>
         <TouchableOpacity style={styles.downIndicator} onPress={ () => Alert.alert("Answers saved. You can go back now") }>
