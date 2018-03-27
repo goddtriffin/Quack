@@ -21,5 +21,8 @@ function testCallback (json) {
     console.log(json);
 }
 
-sendRequest(testQuery, testCallback);
-sendRequest(testMutation, testCallback);
+// sendRequest(testQuery, testCallback);
+// sendRequest(testMutation, testCallback);
+
+// VALIDATOR
+
