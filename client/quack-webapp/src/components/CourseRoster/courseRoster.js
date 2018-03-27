@@ -18,6 +18,7 @@ class CourseRoster extends Component {
         newCourseInput: '',
         columns: [],
         students: [],
+        students2: [],
         
     }
 
@@ -27,9 +28,14 @@ constructor(props) {
     super(props);
 
     var temp = [];
+    var temp2 = [];
     for(var i = 0; i < 40; i++) {
         temp.push(
             {key: `${i}`, name: "Theo Burkhart", email: "burkhat@purdue.edu"}
+        )
+
+        temp2.push(
+            {key: `${i}`, name: "Frank Ocean", email: "frank@purdue.edu"}
         )
     }
 
@@ -41,6 +47,7 @@ constructor(props) {
             {key: '2', dataField: 'email', text: "Email"}
         ],
         students: temp,
+        students2: temp2,
 
     }
     
@@ -88,7 +95,17 @@ render() {
                                     columns={this.state.columns}
                                     />
                             </Tab.Pane>
-                            <Tab.Pane eventKey="second">Tab 2 content</Tab.Pane>
+                            <Tab.Pane eventKey="second" style={{width: '80%', height: '70vh', overflowY: 'scroll'}}>
+                                <BootstrapTable
+                                    striped
+                                    hover
+                                    condensed
+                                    bordered={false} 
+                                    keyField='key' 
+                                    data={this.state.students2} 
+                                    columns={this.state.columns}
+                                    />
+                            </Tab.Pane>
                         </Tab.Content>
                         </Col>
                     </Row>
