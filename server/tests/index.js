@@ -1,28 +1,25 @@
-testEndpoint = "https://quack.localtunnel.me/graphql";
-testBody = JSON.stringify({query: "{  }"});
+import fetch from "node-fetch";
 
-function get (endpoint, body) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-    xhr.open("GET", endpoint);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("Accept", "application/json");
-    xhr.onload = function () {
-        // console.log('data returned:', xhr.response);
-        return xhr.response;
-    }
-    xhr.send(body);
-}
+const endpoint = "https://quack.localtunnel.me/graphql";
 
-function post (endpoint, body) {
+function sendRequest (request, callback) {
     fetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: body,
+        body: JSON.stringify({ mutation: "{ userCreate( input: { firstName: \"t1\" lastName: \"t1\" email: \"t1@purdue.edu\" }, password: \"t1\") { firstName } }" }),
+        headers: { 'Content-Type': 'application/json' }
     })
     .then(res => res.json())
-    .then(res => console.log(res.data));
+    .then(json => callback(json));
 }
 
-// console.log(get(testEndpoint, testBody));
-post(testEndpoint, testBody);
+// TEST
+
+const testQuery = { query: "{ users { firstName } }" }
+const testMutation = { mutation: "{ userCreate( input: { firstName: \"t1\" lastName: \"t1\" email: \"t1@purdue.edu\" }, password: \"t1\") { firstName } }" };
+
+function testCallback (json) {
+    console.log(json);
+}
+
+sendRequest(testQuery, testCallback);
+sendRequest(testMutation, testCallback);
