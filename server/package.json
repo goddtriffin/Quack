@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "setup": "git pull origin master && git pull origin Development && yarn && npm install",
+    "test": "node tests/index.js",
     "start": "nodemon src/server.js --exec babel-node",
     "build": "babel src -d dist",
     "serve": "node dist/server.js"
@@ -21,9 +22,11 @@
     "express-graphql": "^0.6.11",
     "express-session": "^1.15.6",
     "graphql": "^0.13.1",
-    "jsonwebtoken": "^8.2.0",
+    "graphql-query-builder": "^1.0.7",
     "merge-graphql-schemas": "^1.4.0",
     "mssql": "^4.1.0",
+    "node-fetch": "^2.1.2",
+    "jsonwebtoken": "^8.2.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "request": "^2.83.0",
