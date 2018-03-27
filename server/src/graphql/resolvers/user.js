@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import sqlConnector from '../connectors';
+import { validate_email, validate_password, validate_human_name } from '../validators/validate'
 
 var TYPES = require('tedious').TYPES;
 
@@ -38,6 +39,7 @@ export default {
             return null;
         }
         else{*/
+
         argSQL = {}
         argSQL[0] = {name: 'email', type: TYPES.NVarChar, arg: args.email};
         return context.db.executeSQL("SELECT * FROM TestSchema.Users where email = @email", argSQL, false);
@@ -84,6 +86,12 @@ export default {
         }
         else {
 
+            // validate all user input
+            validate_email(args.input.email);
+            validate_password(args.password);
+            validate_human_name(args.input.firstName);
+            validate_human_name(args.input.lastName);
+
             console.log("creating user");
             //Not in the array
             const hash = await bcrypt.hash(args.password, 10);
@@ -104,6 +112,12 @@ export default {
     },
 
     userUpdate: (args, context) => {
+
+        // validate all user input
+        validate_email(args.input.email);
+        validate_human_name(args.input.firstName);
+        validate_human_name(args.input.lastName);
+
         // make sure User with given id actually exists
         console.log("ARGUMENTS " + args.id);
         argSQL = {};
