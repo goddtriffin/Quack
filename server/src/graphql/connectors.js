@@ -13,7 +13,6 @@ class sqlConnector {
 		    console.log(err);
 		  } else {
 		    console.log('Connected');
-		    //executeStatement();
 		  }
 		});
 	}

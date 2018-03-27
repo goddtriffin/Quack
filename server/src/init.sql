@@ -39,11 +39,14 @@ UNION
 
 /*SELECT * FROM TestSchema.Quizzes;*/
 
-DROP TABLE TestSchema.Sections;
-CREATE TABLE TestSchema.Sections (
+DROP TABLE TestSchema.Users; 
+
+CREATE TABLE TestSchema.Users (
 	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	courseID INT,
-	name NVARCHAR(50)
-);
+	firstName NVARCHAR(50),
+	lastName NVARCHAR(50),
+	email NVARCHAR(50),
+	password NVARCHAR(60)
+)
 
 

@@ -15,9 +15,6 @@ import Roster from './app/components/Roster/Roster';
 import PastQuiz from './app/components/PastQuiz/PastQuiz';
 import WriteQuiz from './app/components/WriteQuiz/WriteQuiz';
 
-
-
-
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
@@ -34,6 +31,7 @@ const client = new ApolloClient({
 
 export default class App extends Component {
   state = {
+    authToken: '',
     loggedIn: false,
     user: {
       firstName: '',
@@ -44,14 +42,13 @@ export default class App extends Component {
 
   render() {
     
-
     console.disableYellowBox = true;
     return (
       <WriteQuiz/>
     )
   
 
-    /*
+    if(!this.state.loggedIn) {
     if(this.state.loggedIn == false) {
       return (
         <ApolloProvider client={client}>

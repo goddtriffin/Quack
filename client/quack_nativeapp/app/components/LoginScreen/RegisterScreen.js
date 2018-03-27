@@ -30,6 +30,7 @@ class RegisterScreen extends Component {
         studentID: '',
         password: '',
         instructor: '',
+        authToken: '',
     }
     
 
@@ -39,9 +40,10 @@ class RegisterScreen extends Component {
 
             if(this.state.fullName != '' && this.state.email != '') {
                 client.mutate({ mutation: gql`
-                mutation userCreate($input: UserInput) {
-                  userCreate(input: $input) {
+                mutation userCreate($input: UserInput, $password: String!) {
+                  userCreate(input: $input, password: $password) {
                     id
+                    jwt
                   }
                 }
               `,
@@ -49,12 +51,14 @@ class RegisterScreen extends Component {
                 input : {
                     firstName: this.state.fullName.split(" ")[0],
                     lastName: this.state.fullName.split(" ")[1],
-                    email: this.state.email
+                    email: this.state.email,
+                    password: this.state.password
                 }
                }}).then( data => {
                this.state.studentID = data.data.userCreate.id;
+               this.state.authToken = data.data.userCreate.jwt;
             }).catch(function(error) {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
+                alert(error.message);
                  // ADD THIS THROW error
                 throw error;
             });
@@ -65,6 +69,7 @@ class RegisterScreen extends Component {
             await AsyncStorage.setItem('studentID', this.state.studentID);
             await AsyncStorage.setItem('fullName', this.state.fullName);
             await AsyncStorage.setItem('instructor', this.state.selectedIndex.toString());
+            await AsyncStorage.setItem('authToken', this.state.authToken);
 
                 this.props.navigation.navigate('Home');
             }else {
