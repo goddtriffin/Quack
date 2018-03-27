@@ -62,10 +62,9 @@ export default class App extends Component {
         </ApolloProvider>
       );
     }
-    */
+    }
   }
 }
-
 
 const LoginRoute = StackNavigator({
     Login: {
