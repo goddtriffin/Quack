@@ -23,6 +23,9 @@ class PastQuiz extends Component {
             secondInputText: '',
             selectedAnswer: '',
             image: '',
+            c: '',
+            d: '',
+            options: 'meh;meh;meh;meh',
             options: '',
             type: '',
             numberOfOptions: 2,
@@ -237,6 +240,32 @@ class PastQuiz extends Component {
                 </Col>
         </View>
 
+        const multipleQuizAnsCol1 =
+        <View>
+                <Col paddingRight={60} paddingTop={70}>
+                    
+                    <Text style={styles.quizAnswerText}>
+                        {'a.) ' + this.state.options.split(";")[0]}
+                    </Text>
+                    
+                    <Text style={styles.quizAnswerText}>
+                        {this.numberOfOptions > 2 ? 'c.) ' + this.state.options.split(";")[2] : null}
+                    </Text>
+                </Col>
+        </View>
+
+        const multipleQuizAnsCol2 =
+        <View>
+                <Col paddingRight={130} paddingTop={70}>
+                    <Text style={styles.quizAnswerText}>
+                        {'b.) ' + this.state.options.split(";")[1]}
+                    </Text>
+                    <Text style={styles.quizAnswerText}>
+                        {this.numberOfOptions > 3 ? 'd.) ' + this.state.options.split(";")[3] : null}
+                    </Text>
+                </Col>
+        </View>
+
         return (
         <Container>
             <Image
@@ -256,7 +285,10 @@ class PastQuiz extends Component {
             <Row size = {20}>
                 <Content>
                     {this.state.hasPicture ? null : quizQuestion}
+                    
                 </Content>
+                {this.state.multiChoice ? multipleQuizAnsCol1 : null}
+                {this.state.multiChoice ? multipleQuizAnsCol2 : null}
             </Row>
             <Row size = {10}>
                 {this.state.hasPicture ? quizQuestion : null}
