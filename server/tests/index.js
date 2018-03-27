@@ -31,7 +31,7 @@ function testCallback (json) {
 // VALIDATOR TESTING
 
 const v = require('../src/graphql/validators/validate');
-v.do_trigger(true);
+v.do_trigger(false);
 
 let overall = {};
 overall['score'] = 0;
@@ -41,21 +41,28 @@ let tally;
 
 console.log("==================");
 console.log("START UNIT TESTING")
-console.log("==================");
+console.log("==================\n");
 
 const answer = require('./answer');
 tally = answer.testall();
 overall['score'] += tally['score'];
 overall['total'] += tally['total'];
 
-console.log("==================");
+console.log("\n==================\n");
 
 const course = require('./course');
 tally = course.testall();
 overall['score'] += tally['score'];
 overall['total'] += tally['total'];
 
-console.log("==================");
+console.log("\n==================\n");
+
+const quiz = require('./quiz');
+tally = quiz.testall();
+overall['score'] += tally['score'];
+overall['total'] += tally['total'];
+
+console.log("\n==================");
 console.log("FINAL SCORE: " + overall['score'] + "/" + overall['total']);
 console.log("==================");
 

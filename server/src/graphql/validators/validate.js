@@ -1,10 +1,10 @@
 // for debugging: true=validate , false=skip_validation
-let trigger = true;
+let trigger = false;
 
 // EMAIL
 
 function validate_email (email) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     if (!validate_argument(email)) return arg_error(email, "that exists that is more than just whitespace");
 
@@ -14,7 +14,7 @@ function validate_email (email) {
 // PASSWORD
 
 function validate_password (password) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     if (!validate_argument(password)) return arg_error(password, "that exists that is more than just whitespace");
 
@@ -24,7 +24,7 @@ function validate_password (password) {
 // USER
 
 function validate_human_name (name) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     if (!validate_argument(name)) return arg_error(name, "that exists that is more than just whitespace");
 
@@ -34,7 +34,7 @@ function validate_human_name (name) {
 // COURSE
 
 function validate_course_name (name) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     if (!validate_argument(name)) return arg_error(name, "that exists that is more than just whitespace");
 
@@ -44,7 +44,7 @@ function validate_course_name (name) {
 // SECTION
 
 function validate_section_name (name) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     if (!validate_argument(name)) return arg_error(name, "that exists that is more than just whitespace");
 
@@ -54,7 +54,7 @@ function validate_section_name (name) {
 // ROLE
 
 function validate_role_type (type) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     if (!validate_argument(type)) return arg_error(type, "that exists that is more than just whitespace");
 
@@ -64,7 +64,7 @@ function validate_role_type (type) {
 // QUIZ
 
 function validate_quiz_type (type) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     if (!validate_argument(type)) return arg_error(type, "\'multiple-choice\' , \'short-answer\' , \'true-false\'");
 
@@ -74,8 +74,8 @@ function validate_quiz_type (type) {
     const format = ["multiple-choice" , "short-answer" , "true-false"]
     let matched = false;
 
-    for (option in format) {
-        if (option === type) matched = true;
+    for (i=0; i<format.length; i++) {
+        if (format[i] === type) matched = true;
     }
 
     // if (!matched) throw new Error("Unknown Quiz type: \'" + type + "\'; expected string: \'multiple-choice\' , \'short-answer\' , \'true-false\'");
@@ -85,7 +85,7 @@ function validate_quiz_type (type) {
 }
 
 function validate_quiz_question (question) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     if (!validate_argument(question)) return arg_error(question, "that exists that is more than just whitespace");
 
@@ -93,7 +93,7 @@ function validate_quiz_question (question) {
 }
 
 function validate_quiz_options (options) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     if (!validate_argument(options)) return arg_error(options, "option1;option2;option3;...");
 
@@ -101,7 +101,7 @@ function validate_quiz_options (options) {
 }
 
 function validate_quiz_correct_answer (answer) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     if (!validate_argument(answer)) return arg_error(answer, "that exists that is more than just whitespace");
     
@@ -111,7 +111,7 @@ function validate_quiz_correct_answer (answer) {
 // ANSWER
 
 function validate_answer_type (type) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     if (!validate_argument(type)) return arg_error(type, "that exists that is more than just whitespace");
 
@@ -119,7 +119,7 @@ function validate_answer_type (type) {
 }
 
 function validate_answer_content (content) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     if (!validate_argument(content)) return arg_error(content, "that exists that is more than just whitespace");
 
@@ -129,7 +129,7 @@ function validate_answer_content (content) {
 // OTHER
 
 function validate_date (date) {
-    if (!trigger) return 'ok';
+    if (trigger) return 'ok';
 
     // format: "MMDDYYYY"
     const format = "MMDDYYYY";
@@ -148,6 +148,10 @@ function validate_date (date) {
 }
 
 // UTILS
+
+function do_trigger (val) {
+    trigger = val;
+}
 
 // throw new Error("Improper argument format: \'" + arg + "\'; expected string: \'" + properFormat + "\'")
 function validate_argument (arg) {
@@ -170,10 +174,12 @@ function arg_error (arg, properFormat) {
 
 // EXPORT
 module.exports = {
-    validate_course_name,
     validate_answer_type,
     validate_answer_content,
-    do_trigger: function (val) {
-        trigger = val;
-    }
+    validate_course_name,
+    validate_quiz_type,
+    validate_quiz_question,
+    validate_quiz_options,
+    validate_quiz_correct_answer,
+    do_trigger
 }
