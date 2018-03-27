@@ -17,14 +17,14 @@ import WriteQuiz from './app/components/WriteQuiz/WriteQuiz';
 
 import { ApolloClient, createNetworkInterface ,ApolloProvider } from 'react-apollo'
 
-import { isLoggedIn } from './app/utils/AuthService';
 
 const client = new ApolloClient({
-  networkInterface: createNetworkInterface({ uri: 'http://localhost:4000/graphql'}),
+  networkInterface: createNetworkInterface({ uri: 'https://quack.localtunnel.me/graphql'}),
 })
 
 export default class App extends Component {
   state = {
+    authToken: '',
     loggedIn: false,
     user: {
       firstName: '',
@@ -35,10 +35,9 @@ export default class App extends Component {
 
   render() {
     
-
     console.disableYellowBox = true;
 
-    if(!isLoggedIn()) {
+    if(!this.state.loggedIn) {
       return (
         <ApolloProvider client={client}>
           <LoginRoute screenProps={this.state.user.firstName}/>

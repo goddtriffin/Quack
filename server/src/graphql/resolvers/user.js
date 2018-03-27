@@ -34,14 +34,14 @@ export default {
 
     user: async (args, context) => {
         // make sure User with given id actually exists
-        if(!getUser(headers)) {
+        /*if(!getUser(context.headers)) {
             return null;
         }
-        else  {
-            argSQL = {}
-            argSQL[0] = {name: 'email', type: TYPES.Int, arg: args.email};
-        return context.db.executeSQL("SELECT * FROM TestSchema.Users where @email = email", argSQL, true);
-        }
+        else{*/
+        argSQL = {}
+        argSQL[0] = {name: 'email', type: TYPES.NVarChar, arg: args.email};
+        return context.db.executeSQL("SELECT * FROM TestSchema.Users where email = @email", argSQL, false);
+        //}
     },
     
     // Mutation //
@@ -93,11 +93,13 @@ export default {
             argSQL[3] = {name: 'password', type: TYPES.NVarChar, arg: hash};
 
             //console.log(argSQL);
-            return context.db.executeSQL( 
+            const sql = await context.db.executeSQL( 
 
             "INSERT INTO TestSchema.Users (firstName, lastName, email, password) OUTPUT " + 
              "INSERTED.id, INSERTED.firstName, INSERTED.lastName, INSERTED.email VALUES (@firstName, @lastName, @email, @password);", 
             argSQL, false);
+            sql.jwt = jwt.sign({ id: sql.id }, context.JWT_SECRET);
+            return sql;
         }
     },
 
@@ -125,7 +127,7 @@ export default {
         return context.db.executeSQL("if not exists (select * from TestSchema.UsersCourses d where d.s_id = @s_id and d.c_id = @c_id) " + 
             "INSERT INTO TestSchema.UsersCourses (s_id, c_id) VALUES (@s_id, @c_id) " + 
             "SELECT c.id, name FROM TestSchema.UsersCourses sc " +  
-            "INNER JOIN TestSchema.Courses c ON c.id = sc.c_id WHERE sc.s_id = @s_id ", argSQL, false);
+            "INNER JOIN TestSchema.Courses c ON c.id = sc.c_id WHERE sc.s_id = @s_id ", argSQL, true);
     },
 
     userGetCourses: (args, context) => {

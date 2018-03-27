@@ -21,34 +21,38 @@ class LoginScreen extends Component {
     state = {
         email: '',
         password: '',
-        studentID: ''
+        studentID: '',
+        authToken: ''
     }
 
     render() {
         
         loginUser = async() => {
 
-            await this.props.client.query({
-                query: gql`query user($email: String!) {
-                    user( email: $email ) {
+            await this.props.client.mutate({
+                mutation: gql`mutation login($email: String!, $password: String!) {
+                    login( email: $email, password: $password) {
                         id
+                        jwt
                     }
                 }`,
                 variables: {
-                    email: this.state.email
+                    email: this.state.email,
+                    password: this.state.password
                 },
             }).then( data => { 
-                this.setState({studentID : data.data.user.id.toString()}); 
-                console.log(this.state.studentID);
+                console.log(data);
+                this.setState({studentID : data.data.login.id.toString()}); 
+                this.setState({authToken : data.data.login.jwt.toString()});
             }).catch(function(error) { 
-                console.log('There has been a problem with your fetch operation: ' + error.message); 
+                alert(error.message); 
                  // ADD THIS THROW error 
                 throw error; 
             });
             
             await AsyncStorage.setItem('studentID', this.state.studentID); 
             await AsyncStorage.setItem('email:key', this.state.email); 
-            await AsyncStorage.setItem('password', this.state.password); 
+            await AsyncStorage.setItem('authToken', this.state.authToken); 
 
             const resetAction = NavigationActions.reset({
                 index: 0,
