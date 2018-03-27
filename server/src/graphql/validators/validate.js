@@ -170,6 +170,7 @@ function arg_error (arg, properFormat) {
 
 // EXPORT
 module.exports = {
+    validate_course_name,
     validate_answer_type,
     validate_answer_content
 }

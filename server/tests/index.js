@@ -47,7 +47,10 @@ overall['total'] += tally['total'];
 
 console.log("==================");
 
-
+const course = require('./course');
+tally = course.testall();
+overall['score'] += tally['score'];
+overall['total'] += tally['total'];
 
 console.log("==================");
 console.log("FINAL SCORE: " + overall['score'] + "/" + overall['total']);
