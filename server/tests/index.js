@@ -1,3 +1,6 @@
+// API CALL TESTING
+
+/*
 import fetch from "node-fetch";
 
 const endpoint = "https://quack.localtunnel.me/graphql";
@@ -23,6 +26,9 @@ function testCallback (json) {
 
 // sendRequest(testQuery, testCallback);
 // sendRequest(testMutation, testCallback);
+*/
 
-// VALIDATOR
+// VALIDATOR TESTING
 
+var user_tests = require('./user');
+user_tests.testall();
