@@ -58,9 +58,10 @@ export default class Quiz extends Component {
                     <View style={styles.gradesListView}>
                     <ScrollView style={styles.gradesList}>
                         {
-                            this.state.grades.map(({assignment}) => {
+                            this.state.grades.map(({assignment, grade}) => {
                                 return (<View>
                                     <Text style={styles.gradeListText}>{assignment}</Text>
+                                    <Text style={styles.gradeDates}>{grade}</Text>
                                 </View>);
                                 }
                             ) 

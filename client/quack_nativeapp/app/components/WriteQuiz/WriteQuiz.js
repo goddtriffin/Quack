@@ -25,7 +25,6 @@ class PastQuiz extends Component {
             image: '',
             c: '',
             d: '',
-            options: 'meh;meh;meh;meh',
             options: '',
             type: '',
             numberOfOptions: 2,
@@ -79,7 +78,7 @@ class PastQuiz extends Component {
                 }
               `,
               variables: {
-                id : 3
+                id : 1
                }}).then( data => {
               
                 this.setState({
@@ -88,8 +87,11 @@ class PastQuiz extends Component {
                     options: data.data.quiz.options,
                     numberOfOptions: data.data.quiz.options.split(";").length,
                     type: data.data.quiz.type,
-                    quizID: data.data.quiz.id
+                    quizID: data.data.quiz.id,
+                    c: 'c.) ' + data.data.quiz.options.split(";")[2],
+                    d: 'd.) ' + data.data.quiz.options.split(";")[3]  
                 });
+                
 
                 console.log(this.state.quizID);
 
@@ -158,6 +160,7 @@ class PastQuiz extends Component {
                     multiline={true}
                     numberOfLines={5}
                     style={this.state.hasPicture ? {height:200} : {height:200}}
+                    onChangeText = {(text) => this.setState({selectedAnswer: text})}
                 />
                 </Item>
 
@@ -166,7 +169,7 @@ class PastQuiz extends Component {
                 <Input 
                 placeholder='Answer'
              //   style={this.state.hasPicture ? {height:200} : {height:200}}
-                
+                onChangeText = {(text) => this.setState({selectedAnswer: text})}
                 />
                 <Icon name = {this.state.firstTextCorrect ? 'checkmark-circle' : null}/>
             </Item>
@@ -249,7 +252,7 @@ class PastQuiz extends Component {
                     </Text>
                     
                     <Text style={styles.quizAnswerText}>
-                        {this.numberOfOptions > 2 ? 'c.) ' + this.state.options.split(";")[2] : null}
+                        {this.numberOfOptions > 2 ? this.state.c: null}
                     </Text>
                 </Col>
         </View>
@@ -261,7 +264,7 @@ class PastQuiz extends Component {
                         {'b.) ' + this.state.options.split(";")[1]}
                     </Text>
                     <Text style={styles.quizAnswerText}>
-                        {this.numberOfOptions > 3 ? 'd.) ' + this.state.options.split(";")[3] : null}
+                        {this.numberOfOptions > 3 ? this.state.d : null}
                     </Text>
                 </Col>
         </View>
