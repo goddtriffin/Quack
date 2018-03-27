@@ -30,5 +30,25 @@ function testCallback (json) {
 
 // VALIDATOR TESTING
 
-var user_tests = require('./user');
-user_tests.testall();
+let overall = {};
+overall['score'] = 0;
+overall['total'] = 0;
+
+let tally;
+
+console.log("==================");
+console.log("START UNIT TESTING")
+console.log("==================");
+
+const answer = require('./answer');
+tally = answer.testall();
+overall['score'] += tally['score'];
+overall['total'] += tally['total'];
+
+console.log("==================");
+
+
+
+console.log("==================");
+console.log("FINAL SCORE: " + overall['score'] + "/" + overall['total']);
+console.log("==================");

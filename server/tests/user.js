@@ -1,9 +1,20 @@
+function name_null () {
+    console.log("name is null");
+
+    return true;
+}
+
+function name_empty () {
+    console.log("name is empty");
+
+    return true;
+}
+
 module.exports = {
     testall: function () {
         console.log("Running User Testall");
         
-        // run all tests
-
+        // congregate all tests
         const tests = [name_null, name_empty]
 
         let score = 0;
@@ -11,18 +22,7 @@ module.exports = {
             score += (tests[i]())? 1 : 0;
         }
 
+        // print score
         console.log("Finished. Score: " + score + "/" + tests.length);
     }
 };
-
-function name_null () {
-    console.log("name is null");
-
-    return false;
-}
-
-function name_empty () {
-    console.log("name is empty");
-
-    return false;
-}
