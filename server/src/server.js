@@ -5,14 +5,6 @@ var { buildSchema } = require('graphql');
 import types from './graphql/types';
 import rootValue from './graphql/resolvers';
 import sqlConnector from './graphql/connectors';
-import Sequelize from 'sequelize';
-
-var Connection = require('tedious').Connection;
-var Request = require('tedious').Request;
-var TYPES = require('tedious').TYPES;
-var async = require('async');
-
-var sql = require('mssql');
 
 require('dotenv').config();
 
@@ -25,7 +17,9 @@ var prodConfig = {
   server: process.env.DB_P_ENDPOINT,
   database: process.env.DB_P_NAME,
   options: {
-      encrypt: true
+     encrypt: true,
+     database: process.env.DB_P_NAME,
+     rowCollectionOnRequestCompletion: true
   }
 }
 
@@ -63,14 +57,21 @@ const schema = buildSchema(types);
 
 const sqlDB = new sqlConnector(config);
 
+
 var app = express();
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue,
-  context: {
-    db: sqlDB 
-  },
-  graphiql: true,
-}));
-app.listen(4000);
+app.use('/graphql', (req, res) => {
+  return graphqlHTTP({
+    schema: schema,
+    rootValue,
+    context: { 
+      req,
+      res,
+      db: sqlDB,
+      JWT_SECRET: "quackmedaddy",
+    },
+    graphiql: true,
+  }) (req, res);
+})
+
+app.listen(4000, '0.0.0.0');
 console.log('Running a GraphQL API server at localhost:4000/graphql');
