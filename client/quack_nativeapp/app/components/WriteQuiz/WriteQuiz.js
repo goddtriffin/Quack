@@ -27,12 +27,12 @@ class PastQuiz extends Component {
             d: '',
             options: '',
             type: '',
-            numberOfOptions: 2,
+            numberOfOptions: 4,
             origA: require('../../images/quiz_resources/A_button.png'),
             origB: require('../../images/quiz_resources/B_button.png'),
             origC: require('../../images/quiz_resources/C_button.png'),
             origD: require('../../images/quiz_resources/D_button.png'),
-            fillinBlank: false,
+            fillinBlank: true,
             freeResp: false,
             multiChoice: false,
             quizID: 0
@@ -103,7 +103,7 @@ class PastQuiz extends Component {
                         this.setState({multiChoice: true});
                         break;
                     case "true-false": 
-                        this.setState({multiChoice: true});
+                        this.setState({fillinBlank: true});
                         break;
                 }
             }).catch(function(error) {

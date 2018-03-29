@@ -8,10 +8,11 @@ export default class Quiz extends Component {
         authToken: '',
         email: '',
         course: '',
-        grades: [],
+        grades: [{assignment: 'Quiz 1', grade: '80', key: 0},
+        {assignment: 'Quiz 2', grade: '23', key:1}],
     }
 
-    componentDidMount() {
+    /*componentDidMount() {
         let grades = this.state.grades;
         if(this.state.course == "CS 307"){
             grades.push({assignment: 'Quiz 1', grade: '100%', key: 0});
@@ -21,7 +22,7 @@ export default class Quiz extends Component {
             grades.push({assignment: 'No Grades', grade: '', key: 0})
             this.setState({grades});
         }
-    }
+    }*/
 
     
     render() {
