@@ -21,7 +21,6 @@ CREATE TABLE TestSchema.Quizzes (
 	isManual BIT
 );
 GO
-
 CREATE TABLE TestSchema.Users (
 	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	firstName NVARCHAR(50),
@@ -53,7 +52,7 @@ CREATE TABLE TestSchema.Answers (
 );
 GO
 
-CREATE TABLE TestSchema.Sections (
+CREATE TABLE TestSchema.Roles (
 	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	userID INT,
 	quizID INT,
