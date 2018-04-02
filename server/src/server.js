@@ -9,6 +9,8 @@ import sqlConnector from './graphql/connectors';
 require('dotenv').config();
 
 var config;
+var cors = require('cors');
+
 
 // Create connection to database
 var prodConfig = {
@@ -59,6 +61,9 @@ const sqlDB = new sqlConnector(config);
 
 
 var app = express();
+
+app.use(cors());
+
 app.use('/graphql', (req, res) => {
   return graphqlHTTP({
     schema: schema,
@@ -74,4 +79,4 @@ app.use('/graphql', (req, res) => {
 })
 
 app.listen(4000, '0.0.0.0');
-console.log('Running a GraphQL API server at localhost:4000/graphql');
+console.log('Running a GraphQL API server at http://endor-vm2.cs.purdue.edu:4000/graphql');
