@@ -12,7 +12,7 @@ import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'https://quack.localtunnel.me/graphql' }),
+  link: new HttpLink({ uri: 'http://endor-vm2.cs.purdue.edu:4000/graphql' }),
   cache: new InMemoryCache()
 });
 

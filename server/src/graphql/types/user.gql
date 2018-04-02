@@ -9,6 +9,7 @@ type User {
     firstName: String!
     lastName: String!
     email: String!
+    jwt: String!
     courses: [Course]
 }
 
@@ -18,8 +19,10 @@ type Query {
 }
 
 type Mutation {
-    userCreate(input: UserInput): User
+    login(email: String!, password: String): User
+    userCreate(input: UserInput, password: String!): User
     userUpdate(id: Int!, input: UserInput): User
-    userAddCourse(id: Int!, c_id: Int!): [Course]
+    userAddCourse(id: Int!, course: String!): [Course]
     userGetCourses(id: Int!): [Course]
+    userGetQuizzes(courseID: Int!): [Quiz]
 }

@@ -13,12 +13,11 @@ class sqlConnector {
 		    console.log(err);
 		  } else {
 		    console.log('Connected');
-		    //executeStatement();
 		  }
 		});
 	}
 
-	executeSQL(sqlString, args) {
+	executeSQL(sqlString, args, isIterable) {
     	return new Promise((resolve, reject) => {
 	        var request = new Request(sqlString, function(err, rowCount, rows) {
 	            
@@ -42,12 +41,10 @@ class sqlConnector {
 	                console.log(jsonArray[1]);
 	                console.log(jsonArray);
 
-	                if(jsonArray.length < 2 && rowCount < 2) {
-	                    console.log("sent first");
+	                if(!isIterable) {
 	                    resolve(jsonArray[0]);
 	                }
 	                else {
-	                    console.log("sent all");
 	                    resolve(jsonArray);
 	                }
 	            }

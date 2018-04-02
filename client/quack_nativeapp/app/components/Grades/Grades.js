@@ -1,63 +1,81 @@
 import React, { Component } from 'react';
 import { Col, Row, Grid } from "react-native-easy-grid"
-import { View, Image, StatusBar, Text, Dimensions, SectionList, TouchableHighlight, Alert, TouchableOpacity } from 'react-native';
+import { View, Image, Text, Dimensions, TouchableHighlight, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
 export default class Quiz extends Component {
-    dummyData = {
-        numbers: [
-            {'numbers': 'Quiz 1', 'id': 1},
-            {'numbers': 'Quiz 2', 'id': 2},
-            {'numbers': 'Quiz 3', 'id': 3},
-            {'numbers': 'Quiz 4', 'id': 4},
-            {'numbers': 'Quiz 5', 'id': 5},
-            {'numbers': 'Quiz 6', 'id': 6},
-            {'numbers': 'Quiz 7', 'id': 7},
-            {'numbers': 'Quiz 8', 'id': 8},
-        ]
+
+    state = {
+        authToken: '',
+        email: '',
+        course: '',
+        grades: [{assignment: 'Quiz 1', grade: '80', key: 0},
+        {assignment: 'Quiz 2', grade: '23', key:1}],
     }
 
-    onPress = () => {
-        
-    }
+    /*componentDidMount() {
+        let grades = this.state.grades;
+        if(this.state.course == "CS 307"){
+            grades.push({assignment: 'Quiz 1', grade: '100%', key: 0});
+            this.setState({grades});
+        }
+        else{
+            grades.push({assignment: 'No Grades', grade: '', key: 0})
+            this.setState({grades});
+        }
+    }*/
+
+    
     render() {
+        this.state.course = this.props.navigation.state.params.courses;
         return (
             <Grid>
-                <Row size={25}>
+                <Row size={15}>
                     <Col size={50}>
-                        {/* <Image
+                        { /*<Image onPress={() => this.props.navigation.navigate("Home")}
                         source={require('../../images/navigation_resources/back_button.png')}
                         style={styles.navigationButton}
-                        /> */}
-                        
+                        />*/}                        
                         <Text style = {styles.classHeaderText}>
-                        CS 307
+                        {this.state.course}
                         </Text>
-                        
-                        <Text style = {styles.classReminderText}>
-                        Next class today @ 11:30am
-                        </Text>
-                        <Text style = {styles.currentGrade}>
-                        Current Grade:  69%
-                        </Text>
+                        {/*<Text style = {styles.classReminderText}>
+                        Next class       @ 
+                        </Text>*/}
+                        {/*<Text style = {styles.currentGrade}>
+                        No Grades 
+                        </Text>*/}
 
                     </Col>
-                    <Col style={{alignItems: 'flex-end'}}>
+                    {/*<Col style={{alignItems: 'flex-end'}}>
                         <TouchableHighlight onPress={() => Alert.alert("Professor Quack's email is\nquack@quackers.edu")}>
                             <Text style={styles.liveQuizReminder}>
                             Contact Instructor
                             </Text>
                         </TouchableHighlight>
-                    </Col>
+                    </Col>*/}
                 </Row>
-                <Row size={50}>
+                <Row size={85}>
                     <Col size={50}>
-                        <Text style={styles.gradeTitle}>
+                    <View style={styles.gradesListView}>
+                    <ScrollView style={styles.gradesList}>
+                        {
+                            this.state.grades.map(({assignment, grade}) => {
+                                return (<View>
+                                    <Text style={styles.gradeListText}>{assignment}</Text>
+                                    <Text style={styles.gradeDates}>{grade}</Text>
+                                </View>);
+                                }
+                            ) 
+                        }
+                    </ScrollView>
+                    </View>
+                        {/*<Text style={styles.gradeTitle}>
                         Grades
                         </Text>
                         <Text style={styles.gradeQuizTitle}>
-                        Quiz 1
-                        </Text>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('PastQuiz')}>
+                        No Grades
+                        </Text>*/}
+                        {/*<TouchableOpacity onPress={() => this.props.navigation.navigate('PastQuiz')}>
                         <Text style={styles.scoreDescription}>
                         Score: 1/1
                         </Text>
@@ -73,17 +91,17 @@ export default class Quiz extends Component {
                         </Text>
                         <Text style={styles.scoreDescription}>
                         Score Hidden
-                        </Text> 
-                        <Image
+                        </Text>*/}
+                        {/*<Image
                         source={require('../../images/quiz_resources/quiz_backdrop_triple.png')}
                         style={styles.quizBackground}
-                        />
-                        <Text style={styles.beginQuizText}>
+                        />*/}
+                        {/*<Text style={styles.beginQuizText}>
                         Begin Quiz
-                        </Text>
+                        </Text>*/}
                     </Col>
                     <Col size={40}>
-                        <Text style={styles.firstgradeDate}>
+                        {/*<Text style={styles.firstgradeDate}>
                         1/29
                         </Text>
                         <Text style={styles.gradeDates}>
@@ -91,19 +109,16 @@ export default class Quiz extends Component {
                         </Text>
                         <Text style={styles.gradeDates}>
                         2/11
-                        </Text>
-                        <TouchableHighlight onPress={() => this.props.navigation.navigate('Quiz')}>
+                        </Text>*/}
+                        {/*<TouchableHighlight onPress={() => this.props.navigation.navigate('Quiz')}>
                             <Image
                                 source={require('../../images/navigation_resources/quiz_up.png')}
                                 style={styles.letsGoToQuiz}
                             />
-                        </TouchableHighlight>     
+                        </TouchableHighlight>*/}  
                     </Col>
                 </Row>
             </Grid>
-            
-        
-        
         );
     }
 }
