@@ -18,6 +18,7 @@ class CourseRoster extends Component {
         newCourseInput: '',
         columns: [],
         students: [],
+        students2: [],
         
     }
 
@@ -41,6 +42,7 @@ constructor(props) {
             {key: '2', dataField: 'email', text: "Email"}
         ],
         students: temp,
+        students2: temp,
 
     }
     
@@ -88,7 +90,17 @@ render() {
                                     columns={this.state.columns}
                                     />
                             </Tab.Pane>
-                            <Tab.Pane eventKey="second">Tab 2 content</Tab.Pane>
+                            <Tab.Pane eventKey="second">
+                                <BootstrapTable
+                                    striped
+                                    hover
+                                    condensed
+                                    bordered={false} 
+                                    keyField='key' 
+                                    data={this.state.students2} 
+                                    columns={this.state.columns}
+                                    />
+                            </Tab.Pane>
                         </Tab.Content>
                         </Col>
                     </Row>

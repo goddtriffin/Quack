@@ -12,6 +12,7 @@ import gql from 'graphql-tag';
 class PastQuiz extends Component {
     constructor(props) {
         super(props);
+        this.sendAnswers = this.sendAnswers.bind(this);
         this.state = { 
             text: 'Enter text here',
             picture: '../../images/quiz_resources/quiz_backdrop_triple.png',
@@ -20,21 +21,47 @@ class PastQuiz extends Component {
             firstTextCorrect: true,
             inputText: '',
             secondInputText: '',
+            selectedAnswer: '',
             image: '',
             c: '',
             d: '',
-            options: 'meh;meh;meh;meh',
-            numberOfOptions: 2,
+            options: '',
+            type: '',
+            numberOfOptions: 4,
             origA: require('../../images/quiz_resources/A_button.png'),
             origB: require('../../images/quiz_resources/B_button.png'),
             origC: require('../../images/quiz_resources/C_button.png'),
             origD: require('../../images/quiz_resources/D_button.png'),
-            fillinBlank: false,
+            fillinBlank: true,
             freeResp: false,
-            multiChoice: true,
+            multiChoice: false,
+            quizID: 0
         }
+    }
 
+    sendAnswers() {
 
+        this.props.client.mutate({
+                mutation: gql`mutation answerCreate($input: AnswerInput) {
+                    answerCreate( input: $input) {
+                        id
+                    }
+                }`,
+                variables: {
+                    input: {
+                        userID:1,
+                        quizID: parseInt(this.state.quizID),
+                        type:this.state.type,
+                        content: this.state.selectedAnswer
+                    }
+                }
+            }).then( data => { 
+                console.log(data.data.answerCreate.id);
+            }).catch(function(error) { 
+                alert(error.message); 
+                 // ADD THIS THROW error 
+                throw error; 
+            });
     }
 
     componentDidMount() {
@@ -42,8 +69,11 @@ class PastQuiz extends Component {
         this.props.client.query({ query: gql`
                 query quiz($id: Int!) {
                   quiz(id: $id) {
+                    id
                     image
                     question
+                    options
+                    type
                   }
                 }
               `,
@@ -53,36 +83,29 @@ class PastQuiz extends Component {
               
                 this.setState({
                     image: data.data.quiz.image,
-                    questionText : data.data.quiz.question
-                });
-            }).catch(function(error) {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
-                 // ADD THIS THROW error
-                throw error;
-        });
-    }
-
-    componentDidMountMult() {
-
-        this.props.client.query({ query: gql`
-                query quiz($id: Int!) {
-                  quiz(id: $id) {
-                    image
-                    question
-                    options
-                  }
-                }
-              `,
-              variables: {
-                id : 3
-               }}).then( data => {
-                console.log(data);
-              
-                this.setState({
-                    image: data.data.quiz.image,
                     questionText : data.data.quiz.question,
-                    options: data.data.quiz.options
+                    options: data.data.quiz.options,
+                    numberOfOptions: data.data.quiz.options.split(";").length,
+                    type: data.data.quiz.type,
+                    quizID: data.data.quiz.id,
+                    c: 'c.) ' + data.data.quiz.options.split(";")[2],
+                    d: 'd.) ' + data.data.quiz.options.split(";")[3]  
                 });
+                
+
+                console.log(this.state.quizID);
+
+                switch(this.state.type) {
+                    case "short-answer": 
+                        this.setState({freeResp: true});
+                        break;
+                    case "multiple-choice": 
+                        this.setState({multiChoice: true});
+                        break;
+                    case "true-false": 
+                        this.setState({fillinBlank: true});
+                        break;
+                }
             }).catch(function(error) {
                 console.log('There has been a problem with your fetch operation: ' + error.message);
                  // ADD THIS THROW error
@@ -124,6 +147,7 @@ class PastQuiz extends Component {
     }
 
     render() {
+
         const quizPicture = <Image
             source={{uri: (this.state.image)}}
             style={styles.pictureView}
@@ -136,6 +160,7 @@ class PastQuiz extends Component {
                     multiline={true}
                     numberOfLines={5}
                     style={this.state.hasPicture ? {height:200} : {height:200}}
+                    onChangeText = {(text) => this.setState({selectedAnswer: text})}
                 />
                 </Item>
 
@@ -144,7 +169,7 @@ class PastQuiz extends Component {
                 <Input 
                 placeholder='Answer'
              //   style={this.state.hasPicture ? {height:200} : {height:200}}
-                
+                onChangeText = {(text) => this.setState({selectedAnswer: text})}
                 />
                 <Icon name = {this.state.firstTextCorrect ? 'checkmark-circle' : null}/>
             </Item>
@@ -154,6 +179,7 @@ class PastQuiz extends Component {
         const A_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setAChoiceState();
+            this.setState({selectedAnswer: this.state.options.split(";")[0]})
         }}>
             <Image
             source={this.state.origA}
@@ -164,6 +190,7 @@ class PastQuiz extends Component {
         const B_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setBChoiceState();
+            this.setState({selectedAnswer: this.state.options.split(";")[1]})
         }}>
             <Image
             source={this.state.origB}
@@ -174,6 +201,7 @@ class PastQuiz extends Component {
         const C_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setCChoiceState();
+            this.setState({selectedAnswer: this.state.options.split(";")[2]})
         }}>
             <Image
             source={this.state.origC}
@@ -183,6 +211,7 @@ class PastQuiz extends Component {
         const D_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setDChoiceState();
+            this.setState({selectedAnswer: this.state.options.split(";")[3]})
         }}>
             <Image
             source={this.state.origD}
@@ -223,7 +252,7 @@ class PastQuiz extends Component {
                     </Text>
                     
                     <Text style={styles.quizAnswerText}>
-                        {this.numberOfOptions > 2 ? 'c.) ' + this.state.options.split(";")[2] : null}
+                        {this.numberOfOptions > 2 ? this.state.c: null}
                     </Text>
                 </Col>
         </View>
@@ -235,7 +264,7 @@ class PastQuiz extends Component {
                         {'b.) ' + this.state.options.split(";")[1]}
                     </Text>
                     <Text style={styles.quizAnswerText}>
-                        {this.numberOfOptions > 3 ? 'd.) ' + this.state.options.split(";")[3] : null}
+                        {this.numberOfOptions > 3 ? this.state.d : null}
                     </Text>
                 </Col>
         </View>
@@ -284,7 +313,7 @@ class PastQuiz extends Component {
                 />
     
             </TouchableOpacity>
-            <TouchableOpacity style={styles.nextButton} onPress={() => Alert.alert("Next question")}>
+            <TouchableOpacity style={styles.nextButton} onPress={() => this.sendAnswers()}>
                 <Image
                     source={require('../../images/quiz_resources/next_button.png')}
                     

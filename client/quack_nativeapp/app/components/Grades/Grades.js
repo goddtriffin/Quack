@@ -8,20 +8,21 @@ export default class Quiz extends Component {
         authToken: '',
         email: '',
         course: '',
-        grades: [],
+        grades: [{assignment: 'Quiz 1', grade: '80', key: 0},
+        {assignment: 'Quiz 2', grade: '23', key:1}],
     }
 
-    componentDidMount() {
+    /*componentDidMount() {
         let grades = this.state.grades;
         if(this.state.course == "CS 307"){
-            grades.push({assingment: 'Quiz 1', grade: '100%', key: 0});
+            grades.push({assignment: 'Quiz 1', grade: '100%', key: 0});
             this.setState({grades});
         }
         else{
-            grades.push({assingment: 'No Grades', grade: '', key: 0})
+            grades.push({assignment: 'No Grades', grade: '', key: 0})
             this.setState({grades});
         }
-    }
+    }*/
 
     
     render() {
@@ -58,9 +59,10 @@ export default class Quiz extends Component {
                     <View style={styles.gradesListView}>
                     <ScrollView style={styles.gradesList}>
                         {
-                            this.state.grades.map(({grade}) => {
+                            this.state.grades.map(({assignment, grade}) => {
                                 return (<View>
-                                    <Text style={styles.gradeListText}>{grade}</Text>
+                                    <Text style={styles.gradeListText}>{assignment}</Text>
+                                    <Text style={styles.gradeDates}>{grade}</Text>
                                 </View>);
                                 }
                             ) 

@@ -18,7 +18,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
+  link: new HttpLink({ uri: 'https://quack.localtunnel.me/graphql' }),
   cache: new InMemoryCache()
 });
 
@@ -43,12 +43,8 @@ export default class App extends Component {
     )
     */
 
-    return (
-      <ApolloProvider client={client}>
-      <WriteQuiz/>
-      </ApolloProvider>
-      );
-    /*if(this.state.loggedIn == false) {
+    
+    if(this.state.loggedIn == false) {
       return (
         <ApolloProvider client={client}>
           <LoginRoute screenProps={this.state.user.firstName}/>
@@ -60,17 +56,17 @@ export default class App extends Component {
           <HomeRoute />
         </ApolloProvider>
       );
-    }*/
+    }
   }
 }
 
 const LoginRoute = StackNavigator({
-    /*Login: {
+    Login: {
       screen: LoginScreen,
     },
     Register: {
       screen: RegisterScreen,
-    },*/
+    },
     Home: {
       screen: HomeScreen,
     },
