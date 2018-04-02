@@ -1,3 +1,8 @@
+input CourseInput {
+    id: Int!
+    name: String!	
+}
+
 type Course {
     id: Int!
     name: String!
@@ -6,4 +11,8 @@ type Course {
 type Query {
     courses: [Course]
     course(name: String!): Course
+}
+
+type Mutation {
+    courseCreate(input: CourseInput): Course
 }
