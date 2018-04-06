@@ -35,21 +35,29 @@ export default {
 
     user: async (args, context) => {
         // make sure User with given id actually exists
-        /*if(!getUser(context.headers)) {
-            return null;
-        }
-        else{*/
+       	console.log(context.headers);
+	if(!context.headers.hasOwnProperty('authorization')) {
+		return new Error("No authorization");
+	}else {
+		console.log(context.headers.authorization);
+		try {
+			var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+		} catch(err) {
+			return new Error(err);
+		}
 
-        argSQL = {}
-        argSQL[0] = {name: 'email', type: TYPES.NVarChar, arg: args.email};
-        return context.db.executeSQL("SELECT * FROM TestSchema.Users where email = @email", argSQL, false);
-        //}
+		argSQL = {}
+		argSQL[0] = {name: 'email', type: TYPES.NVarChar, arg: args.email};
+		return context.db.executeSQL("SELECT * FROM TestSchema.Users where email = @email", argSQL, false);
+        }
     },
     
     // Mutation //
 
     login: async (args, context) => {
-        argSQL = {};
+	
+
+	argSQL = {};
 
         const users = await context.db.executeSQL("SELECT email, password FROM TestSchema.Users", argSQL, true);
         var emails = users.map(a => a.email);

@@ -1,10 +1,10 @@
-
-DROP TABLE TestSchema.Courses;
+SELECT * FROM TestSchema.Users;
+/*DROP TABLE TestSchema.Courses;
 
 CREATE TABLE TestSchema.Courses (
         id INT,
         name NVARCHAR(50)
-);
+);*/
 
 
 /*CREATE SCHEMA TestSchema;
