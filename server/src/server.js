@@ -69,8 +69,7 @@ app.use('/graphql', (req, res) => {
     schema: schema,
     rootValue,
     context: { 
-      req,
-      res,
+      headers: req.headers,
       db: sqlDB,
       JWT_SECRET: "quackmedaddy",
     },

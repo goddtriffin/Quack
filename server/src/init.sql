@@ -1,4 +1,13 @@
-CREATE SCHEMA TestSchema;
+SELECT * FROM TestSchema.Users;
+/*DROP TABLE TestSchema.Courses;
+
+CREATE TABLE TestSchema.Courses (
+        id INT,
+        name NVARCHAR(50)
+);*/
+
+
+/*CREATE SCHEMA TestSchema;
 
 CREATE DATABASE quackDB;
 
@@ -54,6 +63,6 @@ CREATE TABLE TestSchema.Roles (
 	courseID INT,
 	type NVARCHAR(50)
 );
-
+*/
 
 
