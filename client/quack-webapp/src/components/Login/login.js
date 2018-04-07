@@ -64,7 +64,7 @@ class Login extends Component {
     }
 
     register() {
-
+        
     }
 
     saveUserData = token => {
@@ -100,7 +100,7 @@ render() {
                             <button onClick={ this.login } style={styles.loginButton}>Login</button>
                         </div>
                         <div style={{display: "flex", justifyContent: 'center'}}>
-                            <button onClick={ this.register } style={styles.registerButton}>Not a user? Register</button>
+                            <button style={styles.registerButton}><Link to={"/auth/register"} style={styles.link}><span style={styles.accent}>Not a user? </span> Register</Link></button>
                         </div>
                     </Col>
                 </Row>

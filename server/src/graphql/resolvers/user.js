@@ -25,31 +25,46 @@ class User {
 export default {
     // Query //
 
-    users: (args, context) => {
+    users: async (args, context) => {
         // Read all rows from table
-        argSQL = {}
-        //argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.id};
-        return context.db.executeSQL("SELECT * FROM TestSchema.Users", argSQL, true);
-
+        if(!context.headers.hasOwnProperty('authorization')) {
+                return new Error("No authorization");
+        }else {
+		try {
+                        var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+                } catch(err) {
+                        return new Error(err);
+                }
+		argSQL = {}
+		//argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.id};
+		return context.db.executeSQL("SELECT * FROM TestSchema.Users", argSQL, true);
+	}
     },
 
     user: async (args, context) => {
         // make sure User with given id actually exists
-        /*if(!getUser(context.headers)) {
-            return null;
-        }
-        else{*/
+	if(!context.headers.hasOwnProperty('authorization')) {
+		return new Error("No authorization");
+	}else {
+		console.log(context.headers.authorization);
+		try {
+			var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+		} catch(err) {
+			return new Error(err);
+		}
 
-        argSQL = {}
-        argSQL[0] = {name: 'email', type: TYPES.NVarChar, arg: args.email};
-        return context.db.executeSQL("SELECT * FROM TestSchema.Users where email = @email", argSQL, false);
-        //}
+		argSQL = {}
+		argSQL[0] = {name: 'email', type: TYPES.NVarChar, arg: args.email};
+		return context.db.executeSQL("SELECT * FROM TestSchema.Users where email = @email", argSQL, false);
+        }
     },
     
     // Mutation //
 
     login: async (args, context) => {
-        argSQL = {};
+	
+
+	argSQL = {};
 
         const users = await context.db.executeSQL("SELECT email, password FROM TestSchema.Users", argSQL, true);
         var emails = users.map(a => a.email);
@@ -111,83 +126,91 @@ export default {
         }
     },
 
-    userUpdate: (args, context) => {
+    userUpdate: async (args, context) => {
+	
+	if(!context.headers.hasOwnProperty('authorization')) {
+                return new Error("No authorization");
+        }else {
+		try {
+                        var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+                } catch(err) {
+                        return new Error(err);
+                }
+		// make sure User with given id actually exists
+		console.log("ARGUMENTS " + args.id);
+		argSQL = {};
+		argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.id};
+		argSQL[1] = {name: 'firstName', type: TYPES.NVarChar, arg: args.input.firstName};
+		argSQL[2] = {name: 'lastName', type: TYPES.NVarChar, arg: args.input.lastName};
+		argSQL[3] = {name: 'email', type: TYPES.NVarChar, arg: args.input.email};
 
-        // validate all user input
-        // validate_email(args.input.email);
-        // validate_human_name(args.input.firstName);
-        // validate_human_name(args.input.lastName);
-
-        // make sure User with given id actually exists
-        console.log("ARGUMENTS " + args.id);
-        argSQL = {};
-        argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.id};
-        argSQL[1] = {name: 'firstName', type: TYPES.NVarChar, arg: args.input.firstName};
-        argSQL[2] = {name: 'lastName', type: TYPES.NVarChar, arg: args.input.lastName};
-        argSQL[3] = {name: 'email', type: TYPES.NVarChar, arg: args.input.email};
-
-        return context.db.executeSQL( 
-            "UPDATE TestSchema.Users SET " + 
-             "firstName = @firstName, lastName = @lastName, email = @email " + 
-             "OUTPUT INSERTED.id, INSERTED.firstName, INSERTED.lastName, INSERTED.email WHERE id = @id;", 
-            argSQL, false);
+		return context.db.executeSQL( 
+		    "UPDATE TestSchema.Users SET " + 
+		     "firstName = @firstName, lastName = @lastName, email = @email " + 
+		     "OUTPUT INSERTED.id, INSERTED.firstName, INSERTED.lastName, INSERTED.email WHERE id = @id;", 
+		    argSQL, false);
+	}    
     },
 
     userAddCourse: async (args, context) => {
-        argSQL = {}
-        argSQL[0] = {name: 'name', type: TYPES.NVarChar, arg: args.course};
-        const course = await context.db.executeSQL("SELECT id FROM TestSchema.Courses where name = @name", argSQL, false);
-        if(!course) {
-            return new Error("Course does not exist");
-        }
+	if(!context.headers.hasOwnProperty('authorization')) {
+                return new Error("No authorization");
+        }else {
+		try {
+                        var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+                } catch(err) {
+                        return new Error(err);
+                }
 
-        const c_id = course.id;
-        argSQL = {}
-        argSQL[0] = {name: 's_id', type: TYPES.Int, arg: args.id};
-        argSQL[1] = {name: 'c_id', type: TYPES.Int, arg: c_id};
-        return context.db.executeSQL("if not exists (select * from TestSchema.UsersCourses d where d.s_id = @s_id and d.c_id = @c_id) " + 
-            "INSERT INTO TestSchema.UsersCourses (s_id, c_id) VALUES (@s_id, @c_id) " + 
-            "SELECT c.id, name FROM TestSchema.UsersCourses sc " +  
-            "INNER JOIN TestSchema.Courses c ON c.id = sc.c_id WHERE sc.s_id = @s_id ", argSQL, true);
+		argSQL = {}
+		argSQL[0] = {name: 'name', type: TYPES.NVarChar, arg: args.course};
+		const course = await context.db.executeSQL("SELECT id FROM TestSchema.Courses where name = @name", argSQL, false);
+		if(!course) {
+		    return new Error("Course does not exist");
+		}
+
+		const c_id = course.id;
+		argSQL = {}
+		argSQL[0] = {name: 's_id', type: TYPES.Int, arg: args.id};
+		argSQL[1] = {name: 'c_id', type: TYPES.Int, arg: c_id};
+		return context.db.executeSQL("if not exists (select * from TestSchema.UsersCourses d where d.s_id = @s_id and d.c_id = @c_id) " + 
+		    "INSERT INTO TestSchema.UsersCourses (s_id, c_id) VALUES (@s_id, @c_id) " + 
+		    "SELECT c.id, name FROM TestSchema.UsersCourses sc " +  
+		    "INNER JOIN TestSchema.Courses c ON c.id = sc.c_id WHERE sc.s_id = @s_id ", argSQL, true);
+	}
     },
 
-    userGetCourses: (args, context) => {
-        argSQL = {}
-        argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.id};
-        return context.db.executeSQL("SELECT c.id, name FROM TestSchema.UsersCourses sc " + 
-            "INNER JOIN TestSchema.Courses c ON c.id = sc.c_id WHERE sc.s_id = @id", argSQL, true);
+    userGetCourses: async(args, context) => {
+	if(!context.headers.hasOwnProperty('authorization')) {
+                return new Error("No authorization");
+        }else {
+		try {
+                        var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+                } catch(err) {
+                        return new Error(err);
+                }
+	
+		argSQL = {}
+		argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.id};
+		return context.db.executeSQL("SELECT c.id, name FROM TestSchema.UsersCourses sc " + 
+		    "INNER JOIN TestSchema.Courses c ON c.id = sc.c_id WHERE sc.s_id = @id", argSQL, true);
+	}
     },
 
-    userGetQuizzes: (args, context) => {
-        argSQL = {}
-        argSQL[0] = {name: 'courseID', type: TYPES.Int, arg: args.courseID};
-        return context.db.executeSQL("SELECT * FROM TestSchema.Quizzes where courseID = @courseID and isOpen = 1", argSQL, true);
+    userGetQuizzes: async(args, context) => {
+	if(!context.headers.hasOwnProperty('authorization')) {
+                return new Error("No authorization");
+        }else {
+		try {
+                        var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+                } catch(err) {
+                        return new Error(err);
+                }
+	
+		argSQL = {}
+		argSQL[0] = {name: 'courseID', type: TYPES.Int, arg: args.courseID};
+		return context.db.executeSQL("SELECT * FROM TestSchema.Quizzes where courseID = @courseID and isOpen = 1", argSQL, true);
+	}
     }
 }
 
-const getUser = async (args, context) => {
-    const { ok, result } = await new Promise(resolve =>
-      jwt.verify(token, secrets.JWT_SECRET, (err, result) => {
-        if (err) {
-          resolve({
-            ok: false,
-            result: err
-          });
-        } else {
-          resolve({
-            ok: true,
-            result
-          });
-        }
-      })
-    );
-
-    if (ok) {
-      return true;
-    } else {
-      console.error(result);
-      return false;
-    }
-  
-    return false;
-};
