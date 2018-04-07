@@ -41,6 +41,7 @@ class LoginScreen extends Component {
                 console.log(data);
                 this.setState({studentID : data.data.login.id.toString()}); 
                 this.setState({authToken : data.data.login.jwt.toString()});
+                console.log(this.state.authToken);
             }).catch(function(error) { 
                 alert(error.message); 
                  // ADD THIS THROW error 
@@ -49,7 +50,7 @@ class LoginScreen extends Component {
             
             await AsyncStorage.setItem('studentID', this.state.studentID); 
             await AsyncStorage.setItem('email:key', this.state.email); 
-            await AsyncStorage.setItem('authToken', this.state.authToken); 
+            await AsyncStorage.setItem('auth-token', this.state.authToken); 
 
             const resetAction = NavigationActions.reset({
                 index: 0,

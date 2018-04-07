@@ -32,6 +32,7 @@ class Login extends Component {
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.login = this.login.bind(this);
         this.register = this.register.bind(this);
+        this.saveUserData = this.saveUserData.bind(this);
     }
 
     handleChangeEmail(e) {
@@ -44,15 +45,22 @@ class Login extends Component {
 
     login = async () => {
         const { email, password } = this.state
-        const result = await this.props.login({
+        await this.props.login({
             variables: {
                 email,
                 password
             }
-        })
-        const { token } = result.data.login
-        this._saveUserData(token);
-        console.log("Token: " + token);
+        }).then( data => { 
+
+                const token = data.data.login.jwt;
+                this.saveUserData(token);
+                console.log(token);
+        }).catch(function(error) { 
+            alert(error.message); 
+             // ADD THIS THROW error 
+            throw error; 
+        });
+    
     }
 
     register() {
