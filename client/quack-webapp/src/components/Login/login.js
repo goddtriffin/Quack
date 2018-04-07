@@ -53,7 +53,7 @@ class Login extends Component {
         }).then( data => { 
                 console.log(data);
 
-                const { token } = data.data.login.jwt;
+                const token = data.data.login.jwt;
                 this.saveUserData(token);
                 console.log(token);
         }).catch(function(error) { 

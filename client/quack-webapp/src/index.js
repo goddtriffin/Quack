@@ -8,13 +8,38 @@ import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
+import { ApolloLink } from 'apollo-link';
+import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { AUTH_TOKEN } from './constants'
+
+
+const httpLink = createHttpLink({
+  uri: 'http://endor-vm2.cs.purdue.edu:4000/graphql',
+});
+
+const authToken = localStorage.getItem(AUTH_TOKEN);
+
+const middlewareLink = new ApolloLink((operation, forward) => {
+  	if (authToken) {
+	  operation.setContext({
+	    headers: {
+	      authorization: authToken
+	    }
+	  });
+	}
+	console.log(operation.getContext());
+  return forward(operation)
+})
+
+
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://endor-vm2.cs.purdue.edu:4000/graphql' }),
+  link: middlewareLink.concat(httpLink),
   cache: new InMemoryCache()
 });
+
+console.log("TOKEN: " + authToken);
 
 ReactDOM.render(
 <ApolloProvider client={client}>

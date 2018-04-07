@@ -9,11 +9,8 @@ import { AUTH_TOKEN } from './constants'
 import { Grid, Col, Row } from '../node_modules/react-bootstrap'
 import {
   Route,
-  BrowserRouter as Router,
   Switch,
-  withRouter,
   Redirect,
-  Link
 } from 'react-router-dom'
 
 
@@ -30,7 +27,6 @@ class App extends Component {
     const authToken = localStorage.getItem(AUTH_TOKEN);
     if(!authToken) {
       //go to login
-
     }
 
     const sidebar = <SidebarContent params={this.props.params}/>
