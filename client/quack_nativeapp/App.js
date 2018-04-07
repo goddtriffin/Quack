@@ -13,12 +13,44 @@ import CourseDetails from './app/components/CourseDetails/CourseDetails';
 import LoginForm from './app/components/LoginScreen/LoginForm';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
+import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { AsyncStorage } from 'react-native';
 import gql from 'graphql-tag';
 
+
+const httpLink = createHttpLink({
+  uri: 'http://endor-vm2.cs.purdue.edu:4000/graphql',
+});
+
+
+/*const middlewareLink = new ApolloLink((operation, forward) => {
+    console.log(this.state.authToken);
+    if (this.state.authToken) {
+    operation.setContext({
+      headers: {
+        authorization: this.state.authToken
+      }
+    });
+  }
+  console.log(operation.getContext());
+  return forward(operation);
+})*/
+let token;
+
+const withToken = setContext(operation => 
+  AsyncStorage.getItem('auth-token').then(userToken => {
+    return { 
+      headers: {
+        authorization : userToken || null
+      },
+    };
+  })
+);
+
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://endor-vm2.cs.purdue.edu:4000/graphql' }),
+  link: withToken.concat(httpLink),
   cache: new InMemoryCache()
 });
 
@@ -44,7 +76,7 @@ export default class App extends Component {
     */
 
     
-    if(this.state.loggedIn == false) {
+    if(!this.state.authToken) {
       return (
         <ApolloProvider client={client}>
           <LoginRoute screenProps={this.state.user.firstName}/>

@@ -51,7 +51,6 @@ class Login extends Component {
                 password
             }
         }).then( data => { 
-                console.log(data);
 
                 const token = data.data.login.jwt;
                 this.saveUserData(token);
