@@ -43,6 +43,43 @@ export const styles = {
         color: 'black',
         fontSize: '14pt',
         fontWeight: 'bold',
+    },
+    title: {
+        fontFamily: 'Fira Sans',
+        color: 'black',
+        fontSize: '30pt',
+        fontWeight: 'bold',
+        textAlign: 'left',
+    },
+    footerRow: {
+        backgroundColor: colors.qGreen,
+        position: "fixed",
+        left: "0",
+        bottom: "0",
+        height: "60px",
+        width: "100%",
+    },
+    saveButton: {
+        fontFamily: 'Fira Sans',
+        color: 'white',
+        fontSize: '13pt',
+        fontWeight: 'regular',
+        borderColor: colors.transparent,
+        backgroundColor: colors.transparent,
+        border: 'none',
+        marginRight:'30px',
+    },
+    questionTitle: {
+        fontFamily: 'Fira Sans',
+        color: 'black',
+        fontSize: '18pt',
+        fontWeight: 'regular',
+    },
+    questionOption: {
+        fontFamily: 'Fira Sans',
+        color: 'black',
+        fontSize: '12pt',
+        fontWeight: '400',
     }
     
     

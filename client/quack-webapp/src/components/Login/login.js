@@ -6,7 +6,7 @@ import logo from '../../assets/quack-logo-white.svg'
 import {  } from 'react-router-dom'
 import { AUTH_TOKEN } from '../../constants'
 import { graphql, compose } from 'react-apollo'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import gql from 'graphql-tag'
 import { Grid, Col, Row, FormGroup, ControlLabel, 
     FormControl, HelpBlock, Button } from '../../../node_modules/react-bootstrap';
@@ -56,6 +56,8 @@ class Login extends Component {
                 const { token } = data.data.login.jwt;
                 this.saveUserData(token);
                 console.log(token);
+                this.props.history.push("/");
+
         }).catch(function(error) { 
             alert(error.message); 
              // ADD THIS THROW error 
@@ -63,6 +65,8 @@ class Login extends Component {
         });
     
     }
+
+    
 
     register() {
         
@@ -92,7 +96,7 @@ render() {
                             <FormControl type="text" value={this.state.email} placeholder="johndoe@example.edu" onChange={this.handleChangeEmail}/>
                             <FormControl.Feedback/>
                             <h2 style={styles.label}>Password</h2>
-                            <FormControl type="text" value={this.state.password} placeholder="password" onChange={this.handleChangePassword}/>
+                            <FormControl type="password" value={this.state.password} placeholder="password" onChange={this.handleChangePassword}/>
                             <FormControl.Feedback/>
                             </FormGroup>
                         </form>
@@ -119,6 +123,6 @@ const LOGIN_MUTATION = gql`
   } 
 `
 
-export default compose(
+export default withRouter(compose(
     graphql(LOGIN_MUTATION, {name: 'login'})
-)(Login)
+)(Login))

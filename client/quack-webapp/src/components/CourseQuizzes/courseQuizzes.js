@@ -2,7 +2,7 @@ import React from 'react';
 import { Component, Button } from 'react';
 import { colors } from '../../styles/styles'
 import styles from './styles'
-import {  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Grid, Col, Row, Tabs, Tab, FormGroup, 
     ControlLabel, FormControl, HelpBlock, 
     Nav, NavItem, Table } from '../../../node_modules/react-bootstrap';
@@ -62,7 +62,14 @@ render() {
                     <h1 style={styles.header}>Recent Quizzes</h1>
                 </Col>
                 <Col sm={6} style={{paddingLeft: '0px'}}>
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <h1 style={styles.header}>Upcoming Quizzes</h1>
+                    <button style={styles.createButton}><Link 
+                        to={{
+                            pathname:  '/course/' + this.props.courseID + '/new',
+                            state: {courseID: this.props.courseID}
+                        }}  style={styles.createLink}>Create New Quiz</Link></button>
+                    </div>
                 </Col>
             </Row>
             <Row>
