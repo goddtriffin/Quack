@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, TextInput, Keyboard, SegmentedControlIOS, AsyncStorage } from 'react-native';
+import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, TextInput, Keyboard, SegmentedControlIOS, AsyncStorage, Platform } from 'react-native';
 import styles from './styles';
 import { colors } from '../../style/styles';
 import { StackNagivator } from 'react-navigation'
+import SegmentedControlTab from 'react-native-segmented-control-tab'
 
 import { ApolloProvider, createNetworkInterface} from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
@@ -35,6 +36,26 @@ class RegisterScreen extends Component {
     
 
     render() {
+
+        const iOSSegmentControl = 
+        <SegmentedControlIOS
+            values={['Student', 'Instructor']}
+            selectedIndex={this.state.selectedIndex}
+            onChange={(event) => {
+                this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
+            }}
+            tintColor='white'
+        />
+
+        const AndroidSegmentControl =
+        <SegmentedControlTab
+            values={['Student', 'Instructor']}
+            selectedIndex={this.state.selectedIndex}
+            onTabPress={(index) => {
+                this.setState({selectedIndex: index});
+            }}
+            tintColor='white'
+        />
 
         registerUser = async() => {
 
@@ -95,14 +116,7 @@ class RegisterScreen extends Component {
                         <Text style={styles.bigText}>I am a...</Text>
 
                         <View style={styles.HELLO}>
-                            <SegmentedControlIOS
-                                values={['Student', 'Instructor']}
-                                selectedIndex={this.state.selectedIndex}
-                                onChange={(event) => {
-                                    this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
-                                }}
-                                tintColor='white'
-                            />
+                            {Platform.OS == 'ios' ? iOSSegmentControl : AndroidSegmentControl}
                         </View>
                         <View>
                             <TextInput 
