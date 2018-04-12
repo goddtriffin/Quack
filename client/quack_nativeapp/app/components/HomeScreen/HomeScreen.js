@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, AsyncStorage, AlertIOS } from 'react-native';
+import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, AsyncStorage, AlertIOS, Platform } from 'react-native';
 import styles from './styles';
 import { StackNavigator } from 'react-navigation';
 
@@ -8,6 +8,7 @@ import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
+import Prompt from 'rn-prompt';
 
 class HomeScreen extends Component {
     static navigationOptions = {
@@ -24,6 +25,7 @@ class HomeScreen extends Component {
         studentID:'',
         email:'',
         isLoading: true,
+        promptVisible: false,
     };
 
     componentDidMount() {
@@ -122,6 +124,50 @@ class HomeScreen extends Component {
         let CourseDetails = <CourseDetails/>;
         AddCourseButton = <Text style={styles.addCourseText}>+ Add course</Text>
 
+        const androidPrompt = <Prompt
+        title="Enter course title"
+        placeholder="title"
+        visible={ this.state.promptVisible }
+        onCancel={ () => this.setState({
+          promptVisible: false,
+        }) }
+        onSubmit={ (text) => {
+            
+                console.log(text);
+                
+                this.props.client.mutate({ mutation: gql`
+                    mutation userAddCourse($id: Int!, $course: String!) {
+                      userAddCourse(id: $id, course: $course) {
+                        name
+                      }
+                    }
+                  `,
+                  variables: {
+                    id : this.state.studentID,
+                    course: text
+                   }
+                }).then( data => {
+                  courses = [];
+
+                  if(data.data.userAddCourse == null) {
+                    courses.push({'course' : 'No current classes'})
+                  }
+                  else {
+                    for(let i = 0; i < data.data.userAddCourse.length; i++) {
+                        courses.push({'course' : data.data.userAddCourse[i].name})
+                    }
+                  }
+                  this.setState({courses});
+                }).catch(function(error) {
+                    alert(error.message);
+                });
+
+                this.setState({
+                    promptVisible: false
+                })
+          }  
+          }/>
+
         if(this.state.isLoading) {
             return(<View><Text>Loading...</Text></View>);
         }else {
@@ -138,7 +184,8 @@ class HomeScreen extends Component {
                     <Text style={styles.bigTitle}>
                         Classes
                     </Text>
-                    <TouchableOpacity style={styles.addCourse} onPress={() => this.updateCourseList()}>
+                    {androidPrompt}
+                    <TouchableOpacity style={styles.addCourse} onPress={() => {Platform.OS == 'ios' ? this.updateCourseList() : this.setState({promptVisible: true})}}>
                         {AddCourseButton}
                     </TouchableOpacity>
                 </View>
