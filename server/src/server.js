@@ -53,6 +53,7 @@ else {
 }
 
 console.log(types);
+console.log(rootValue);
 
 
 const schema = buildSchema(types);
