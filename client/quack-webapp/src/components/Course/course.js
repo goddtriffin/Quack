@@ -23,11 +23,20 @@ class Course extends Component {
 constructor(props) {
     console.log(props.location);
     super(props);
-    this.state = {
-        courseTitle: props.location.state.courseTitle,
-        key: 1,
-        courseID: '123456',
+    if(props.location.state.courseTitle !== undefined) {
+        this.state = {
+            courseTitle: props.location.state.courseTitle,
+            key: 1,
+            courseID: '123456',
+        }
+    }else {
+        this.state = {
+            courseTitle: props.courseTitle,
+            key: 1,
+            courseID: '123456',
+        }
     }
+    
 
     this.handleSelect = this.handleSelect.bind(this);
     this.updateDetails = this.updateDetails.bind(this);
@@ -73,7 +82,7 @@ render() {
                             />
                     </Tab>
                     <Tab eventKey={2} title="Quizzes">
-                        <CourseQuizzes courseID={this.state.courseID}/>
+                        <CourseQuizzes courseID={this.state.courseID} courseTitle={this.state.courseTitle}/>
                     </Tab>
                     <Tab eventKey={3} title="Roster">
                         <CourseRoster/>

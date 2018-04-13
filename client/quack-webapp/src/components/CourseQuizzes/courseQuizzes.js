@@ -67,7 +67,7 @@ render() {
                     <button style={styles.createButton}><Link 
                         to={{
                             pathname:  '/course/' + this.props.courseID + '/new',
-                            state: {courseID: this.props.courseID}
+                            state: {courseID: this.props.courseID, courseTitle: this.props.courseTitle}
                         }}  style={styles.createLink}>Create New Quiz</Link></button>
                     </div>
                 </Col>

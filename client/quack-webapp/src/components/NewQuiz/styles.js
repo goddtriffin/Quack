@@ -98,7 +98,18 @@ export const styles = {
         fontSize: '13pt',
         fontWeight: '400',
         fontStyle: 'italic'
-    }
+    },
+    deleteButton: {
+        fontFamily: 'Fira Sans',
+        color: '#5A5A5A',
+        fontSize: '10pt',
+        fontWeight: 'regular',
+        borderColor: colors.transparent,
+        backgroundColor: colors.transparent,
+        border: 'none',
+        marginLeft: '10px',
+        marginBottom: '-5px'
+    },
     
     
 }

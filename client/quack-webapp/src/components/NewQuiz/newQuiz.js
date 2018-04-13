@@ -3,6 +3,7 @@ import styles from './styles';
 import { Grid, Col, Row, FormControl, FormGroup, 
     ListGroup, ListGroupItem, Modal, ControlLabel, 
     Button, DropdownButton, MenuItem, ButtonToolbar } from '../../../node_modules/react-bootstrap';
+import { Link } from 'react-router-dom';
 
 class NewQuiz extends Component {
 
@@ -54,6 +55,8 @@ class NewQuiz extends Component {
         this.handleQuestionType = this.handleQuestionType.bind(this);
         this.handleMCChange = this.handleMCChange.bind(this);
         this.addMCOption = this.addMCOption.bind(this);
+        this.save = this.save.bind(this);
+        this.deleteQuestion = this.deleteQuestion.bind(this);
     }
 
     handleQuizTitle(e) {
@@ -66,7 +69,20 @@ class NewQuiz extends Component {
     }
 
     deleteQuestion(q) {
-
+        var questions = this.state.quizQuestions.slice();
+        var i;
+        for(i = 0; i < questions.length; i++) {
+            if(questions[i].question == q) {
+                questions.splice(i, 1);
+                break;
+            }
+        }
+        
+        for(i; i < questions.length; i++) {
+            questions[i].key = questions[i].key - 1;
+        }
+        console.log(questions);
+        this.setState({quizQuestions: questions})
     }
 
     setAnswer(q, answer) {
@@ -214,6 +230,10 @@ class NewQuiz extends Component {
                 Choose question type</p>);
         }
     }
+
+    save() {
+        // Here's where you'll save the quiz to the server
+    }
     
     render() {
 
@@ -292,7 +312,9 @@ class NewQuiz extends Component {
                 </Grid>
                 <div style={styles.footerRow}>
                     <div style={{display:'flex', flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', height: '100%'}}>
-                        <button style={styles.saveButton}>Save and return <span>&#8594;</span></button>
+                        <Link to={{pathname: '/course/' + this.state.courseID, 
+                            state: {courseID: this.props.courseID, courseTitle: this.props.location.state.courseTitle}
+                        }} style={styles.saveButton} onClick={this.save}>Save and return <span>&#8594;</span></Link>
                     </div>
                 </div>
             </div>
@@ -308,14 +330,15 @@ class QuizForm extends Component {
         super(props);
 
         this.setAnswer = this.setAnswer.bind(this);
+        this.deleteQuestion = this.deleteQuestion.bind(this);
     }
 
     newQuestion() {
         this.props.addQuestion("test");
     }
 
-    deleteQuestion() {
-        this.props.deleteQuestion("test");
+    deleteQuestion(q) {
+        this.props.deleteQuestion(q);
     }
 
     setAnswer(question, answer) {
@@ -328,7 +351,7 @@ class QuizForm extends Component {
         const QuestionList = ({questions}) => (
             <Fragment>
                 {questions.map(question => (
-                    <QuizQuestion key={count++} question={question} setAnswer={this.setAnswer}/>
+                    <QuizQuestion key={count++} question={question} setAnswer={this.setAnswer} deleteQuestion={this.deleteQuestion}/>
                 ))}
             </Fragment>
         );
@@ -342,22 +365,42 @@ class QuizForm extends Component {
 class QuizQuestion extends Component {
 
     state = {
-        selected: ''
+        selected: '',
+        isHovering: false,
     }
 
     constructor(props) {
         super(props);
         this.state = {
             selected: '',
+            isHovering: false,
         }
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleMouseHover = this.handleMouseHover.bind(this);
+        this.toggleHoverState = this.toggleHoverState.bind(this);
+        this.deleteQuestion = this.deleteQuestion.bind(this);
+
     }
 
     handleChange(e, question) {
         var answer = e.target.value;
         this.setState({selected: e.target.value})
         this.props.setAnswer(question, answer); // pass data up to QuizForm
+    }
+
+    handleMouseHover() {
+        this.setState(this.toggleHoverState);
+    }
+
+    deleteQuestion(question) {
+        this.props.deleteQuestion(question);
+    }
+    
+    toggleHoverState(state) {
+        return {
+          isHovering: !state.isHovering,
+        };
     }
 
 
@@ -384,8 +427,15 @@ class QuizQuestion extends Component {
             );
 
             return(
-                <div style={{width: '60%'}}>
-                    <h1 style={styles.questionTitle}>{num}.) {question}</h1>
+                <div style={{width: '60%'}} onMouseEnter={this.handleMouseHover} onMouseLeave={this.handleMouseHover}>
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'baseline'}}>
+                        <h1 style={styles.questionTitle}>{num}.) {question}</h1>
+                        {this.state.isHovering &&
+                            <div>
+                                <button onClick={(e) => this.deleteQuestion(question)} style={styles.deleteButton}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg></button>
+                            </div>
+                        }
+                    </div>
                     <form>
                         {optionsList}
                     </form>
@@ -413,7 +463,14 @@ class QuizQuestion extends Component {
 
             return(
                 <div style={{width: '60%'}}>
-                    <h1 style={styles.questionTitle}>{num}.) {question}</h1>
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'baseline'}}>
+                        <h1 style={styles.questionTitle}>{num}.) {question}</h1>
+                        {this.state.isHovering &&
+                            <div>
+                                <button onClick={(e) => this.deleteQuestion(question)} style={styles.deleteButton}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg></button>
+                            </div>
+                        }
+                    </div>
                     <form>
                         {optionList}
                     </form>
@@ -425,7 +482,14 @@ class QuizQuestion extends Component {
 
             return (
                 <div style={{width: '60%'}}>
-                    <h1 style={styles.questionTitle}>{num}.) {question}</h1>
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'baseline'}}>
+                        <h1 style={styles.questionTitle}>{num}.) {question}</h1>
+                        {this.state.isHovering &&
+                            <div>
+                                <button onClick={(e) => this.deleteQuestion(question)} style={styles.deleteButton}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg></button>
+                            </div>
+                        }
+                    </div>
                     <h3 style={styles.accent}>Fill-in-the-blank question</h3>
                 </div>
             );
@@ -433,7 +497,14 @@ class QuizQuestion extends Component {
             // Short answer
             return (
                 <div style={{width: '60%'}}>
-                    <h1 style={styles.questionTitle}>{num}.) {question}</h1>
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'baseline'}}>
+                        <h1 style={styles.questionTitle}>{num}.) {question}</h1>
+                        {this.state.isHovering &&
+                            <div>
+                                <button onClick={(e) => this.deleteQuestion(question)} style={styles.deleteButton}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg></button>
+                            </div>
+                        }
+                    </div>
                     <h3 style={styles.accent}>Short answer question</h3>
                 </div>
             );
