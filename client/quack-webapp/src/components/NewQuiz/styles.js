@@ -18,16 +18,27 @@ export const styles = {
     button: {
         fontFamily: 'Fira Sans',
         color: '#5A5A5A',
-        fontSize: '10pt',
+        fontSize: '12pt',
         fontWeight: 'regular',
         borderColor: colors.transparent,
         backgroundColor: colors.transparent,
         border: 'none',
+        marginLeft: '120px',
+        marginBottom: '10px',
+        height: '100%',
     },
-    buttonText: {
-        position: 'absolute',
-        bottom: '10px',
-        right: '24px'
+    addQuestionButton: {
+        fontFamily: 'Fira Sans',
+        color: '#5A5A5A',
+        fontSize: '12pt',
+        fontWeight: 'regular',
+        borderColor: colors.transparent,
+        backgroundColor: colors.transparent,
+        border: 'none',
+        textAlign: 'center',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+        paddingTop: '10px'
     },
     createButton: {
         fontFamily: 'Fira Sans',
@@ -80,6 +91,13 @@ export const styles = {
         color: 'black',
         fontSize: '12pt',
         fontWeight: '400',
+    },
+    accent: {
+        fontFamily: 'Fira Sans',
+        color: colors.qDarkGrey,
+        fontSize: '13pt',
+        fontWeight: '400',
+        fontStyle: 'italic'
     }
     
     
