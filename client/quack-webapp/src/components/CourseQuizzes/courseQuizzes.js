@@ -21,8 +21,13 @@ ViewQuizButton = ({id}) => (
     <button style={styles.viewButton}><Link style={styles.viewButton} to={'/course/' + this.state.courseID + '/view/' + id}>View Results</Link></button>
 )
 
-EditQuizButton = ({id}) => (
-    <button style={styles.editButton}><Link style={styles.editButton} to={'/course/' + this.state.courseID + '/quiz/' + id}>Edit</Link></button>
+EditQuizButton = ({id, quizTitle}) => (
+    <button style={styles.editButton}><Link style={styles.editButton} 
+        to={{
+            pathname: '/course/' + this.state.courseID + '/quiz/' + id,
+            state: {courseID: this.state.courseID, quizTitle: quizTitle, courseTitle: this.props.courseTitle}
+        }}
+    >Edit</Link></button>
 )
 
 StartQuizButton = ({id}) => (
@@ -38,7 +43,7 @@ constructor(props) {
     var temp2 = [];
     for(var i = 0; i < 25; i++) {
         temp1.push(
-            {key: `${i}`, title: `Quiz ${i}`, date: "3/21/18", viewButton: <this.ViewQuizButton id={i}/>, editButton: <this.EditQuizButton id={i} />}
+            {key: `${i}`, title: `Quiz ${i}`, date: "3/21/18", viewButton: <this.ViewQuizButton id={i}/>, editButton: <this.EditQuizButton id={i} quizTitle={`Quiz ${i + 25}`} />}
         )
         temp2.push(
             {key: `${i}`, title: `Quiz ${i + 25}`, startButton: <this.StartQuizButton id={i} />}
@@ -83,7 +88,7 @@ render() {
                         to={{
                             pathname:  '/course/' + this.props.courseID + '/new',
                             state: {courseID: this.props.courseID, courseTitle: this.props.courseTitle}
-                        }}  style={styles.createLink}>Create New Quiz</Link></button>
+                        }}  style={styles.createLink}><span style={{fontFamily: 'Fira Sans', fontSize: '18pt', fontWeight: '800'}}>+ </span>Create New Quiz</Link></button>
                     </div>
                 </Col>
             </Row>

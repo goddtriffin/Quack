@@ -5,11 +5,12 @@ import { Grid, Col, Row, FormControl, FormGroup,
     Button, DropdownButton, MenuItem, ButtonToolbar } from '../../../node_modules/react-bootstrap';
 import { Link } from 'react-router-dom';
 
-class NewQuiz extends Component {
+class EditQuiz extends Component {
 
     state = {
         courseID: '',
         quizTitle: '',
+        quizID: '',
         quizQuestions: [],
         show: false,
         newQuestionText: "",
@@ -24,17 +25,10 @@ class NewQuiz extends Component {
     
     constructor(props) {
         super(props);
+        console.log(props)
         this.state = {
-            courseID: props.location.state.courseID,
-            quizTitle: '',
-            quizQuestionsX: [
-                {key: "1", type: 'mc', question: "What is the capital of Ohio?", options: ["Cleveland", "Dayton", "Columbus", "Cincinnati"], image: "", answer: ""},
-                {key: "2", type: 'mc', question: "What is the capital of Michigan?", options: ["Cleveland", "Dayton", "Columbus", "Cincinnati"], image: "", answer: ""},
-                {key: "3", type: 'mc', question: "What is the capital of Indiana?", options: ["Cleveland", "Dayton", "Columbus", "Cincinnati"], image: "", answer: ""},
-                {key: "4", type: 'mc', question: "What is the capital of New York?", options: ["Cleveland", "Dayton", "Columbus", "Cincinnati"], image: "", answer: ""},
-                {key: "5", type: 'mc', question: "What is the capital of Illinois?", options: ["Cleveland", "Dayton", "Columbus", "Cincinnati"], image: "", answer: ""},
-                {key: "6", type: 'mc', question: "What is the capital of Texas?", options: ["Cleveland", "Dayton", "Columbus", "Cincinnati"], image: "", answer: ""}
-            ],
+            courseID: props.match.params.courseID,
+            quizTitle: props.location.state.quizTitle,
             quizQuestions: [],
             show: false,
             newQuestionText: "",
@@ -45,6 +39,7 @@ class NewQuiz extends Component {
             newQuestionTypeText: "Question type",
             newQuestionMCoptions: ["", ""],
             newQuestionMCnum: 2,
+            quizID: props.match.params.quizID,
 
         }
         
@@ -314,7 +309,7 @@ class NewQuiz extends Component {
                 <div style={styles.footerRow}>
                     <div style={{display:'flex', flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', height: '100%'}}>
                         <Link to={{pathname: '/course/' + this.state.courseID, 
-                            state: {courseID: this.props.courseID, courseTitle: this.props.location.state.courseTitle}
+                            state: {courseID: this.state.courseID, courseTitle: this.props.location.state.courseTitle}
                         }} style={styles.saveButton} onClick={this.save}>Save and return <span>&#8594;</span></Link>
                     </div>
                 </div>
@@ -322,7 +317,7 @@ class NewQuiz extends Component {
         );
     }
 }
-export default NewQuiz;
+export default EditQuiz;
 
 
 class QuizForm extends Component {
