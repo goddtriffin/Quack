@@ -377,8 +377,9 @@ class QuizQuestion extends Component {
         }
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleMouseHover = this.handleMouseHover.bind(this);
-        this.toggleHoverState = this.toggleHoverState.bind(this);
+        this.handleMouseEnter = this.handleMouseEnter.bind(this);
+        this.handleMouseLeave = this.handleMouseLeave.bind(this);
+        //this.toggleHoverState = this.toggleHoverState.bind(this);
         this.deleteQuestion = this.deleteQuestion.bind(this);
 
     }
@@ -389,19 +390,25 @@ class QuizQuestion extends Component {
         this.props.setAnswer(question, answer); // pass data up to QuizForm
     }
 
-    handleMouseHover() {
-        this.setState(this.toggleHoverState);
+    handleMouseLeave() {
+        this.setState({isHovering: false});
     }
+
+    handleMouseEnter() {
+        this.setState({isHovering: true});
+    }
+
 
     deleteQuestion(question) {
         this.props.deleteQuestion(question);
+        this.setState({isHovering: false})
     }
     
-    toggleHoverState(state) {
-        return {
-          isHovering: !state.isHovering,
-        };
-    }
+    // toggleHoverState(state) {
+    //     return {
+    //       isHovering: !state.isHovering,
+    //     };
+    // }
 
 
     render() {
@@ -427,7 +434,7 @@ class QuizQuestion extends Component {
             );
 
             return(
-                <div style={{width: '60%'}} onMouseEnter={this.handleMouseHover} onMouseLeave={this.handleMouseHover}>
+                <div style={{width: '60%'}} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
                     <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'baseline'}}>
                         <h1 style={styles.questionTitle}>{num}.) {question}</h1>
                         {this.state.isHovering &&
@@ -462,7 +469,7 @@ class QuizQuestion extends Component {
             )
 
             return(
-                <div style={{width: '60%'}}>
+                <div style={{width: '60%'}} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
                     <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'baseline'}}>
                         <h1 style={styles.questionTitle}>{num}.) {question}</h1>
                         {this.state.isHovering &&
@@ -481,7 +488,7 @@ class QuizQuestion extends Component {
             // Fill in the blank
 
             return (
-                <div style={{width: '60%'}}>
+                <div style={{width: '60%'}} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
                     <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'baseline'}}>
                         <h1 style={styles.questionTitle}>{num}.) {question}</h1>
                         {this.state.isHovering &&
@@ -496,7 +503,7 @@ class QuizQuestion extends Component {
         }else if(type == "sa") {
             // Short answer
             return (
-                <div style={{width: '60%'}}>
+                <div style={{width: '60%'}} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
                     <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'baseline'}}>
                         <h1 style={styles.questionTitle}>{num}.) {question}</h1>
                         {this.state.isHovering &&

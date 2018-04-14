@@ -108,7 +108,7 @@ export const styles = {
         backgroundColor: colors.transparent,
         border: 'none',
         marginLeft: '10px',
-        marginBottom: '-5px'
+        marginBottom: '-10px'
     },
     
     
