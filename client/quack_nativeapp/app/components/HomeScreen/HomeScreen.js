@@ -20,7 +20,7 @@ class HomeScreen extends Component {
     }
 
     state = {
-        courses: [{course: 'CS 307', key: 1}],
+        courses: [],
         studentID:'',
         email:'',
         isLoading: true,
