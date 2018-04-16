@@ -9,6 +9,7 @@ import NewQuiz from './components/NewQuiz/newQuiz';
 import QuizResults from './components/QuizResults/quizResults';
 import EditQuiz from './components/EditQuiz/editQuiz';
 import StartQuiz from './components/StartQuiz/startQuiz';
+import Login from './components/Login/login';
 import { AUTH_TOKEN } from './constants'
 import { Grid, Col, Row } from '../node_modules/react-bootstrap'
 import {
