@@ -57,13 +57,12 @@ export default class App extends Component {
   render() {
     
     console.disableYellowBox = true;
-
+    
     /*
     return (
-      </>
+      <HomeScreen/>
     )
     */
-
     
     if(!this.state.authToken) {
       return (
