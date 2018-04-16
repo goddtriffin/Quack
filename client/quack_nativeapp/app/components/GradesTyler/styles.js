@@ -22,7 +22,6 @@ export default StyleSheet.create({
   },
   assignmentListView: {
     paddingLeft: 10,
-    flex: 2,
   },
   assignmentListText: {
     fontFamily: 'Fira Sans',
