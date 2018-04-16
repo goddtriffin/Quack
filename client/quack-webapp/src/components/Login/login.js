@@ -64,6 +64,12 @@ class Login extends Component {
     
     }
 
+    
+
+    register() {
+        
+    }
+
     saveUserData = token => {
         localStorage.setItem(AUTH_TOKEN, token)
     }
@@ -88,7 +94,7 @@ render() {
                             <FormControl type="text" value={this.state.email} placeholder="johndoe@example.edu" onChange={this.handleChangeEmail}/>
                             <FormControl.Feedback/>
                             <h2 style={styles.label}>Password</h2>
-                            <FormControl type="text" value={this.state.password} placeholder="password" onChange={this.handleChangePassword}/>
+                            <FormControl type="password" value={this.state.password} placeholder="password" onChange={this.handleChangePassword}/>
                             <FormControl.Feedback/>
                             </FormGroup>
                         </form>

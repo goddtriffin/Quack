@@ -12,7 +12,7 @@ import CourseQuizzes from '../CourseQuizzes/courseQuizzes';
 class Course extends Component {
 
     state = {
-        courseID: 6969,
+        courseID: "6969",
         courseTitle: "ABC123: Course Title",
         courseDescription: "Software Engineering",
         courseRoster: ['Theo', 'Mason', 'Justin', 'Todd', 'Tyler'],
@@ -23,10 +23,20 @@ class Course extends Component {
 constructor(props) {
     console.log(props.location);
     super(props);
-    this.state = {
-        courseTitle: props.location.state.courseTitle,
-        key: 1,
+    if(props.location.state.courseTitle !== undefined) {
+        this.state = {
+            courseTitle: props.location.state.courseTitle,
+            key: 1,
+            courseID: '123456',
+        }
+    }else {
+        this.state = {
+            courseTitle: props.courseTitle,
+            key: 1,
+            courseID: '123456',
+        }
     }
+    
 
     this.handleSelect = this.handleSelect.bind(this);
     this.updateDetails = this.updateDetails.bind(this);
@@ -72,7 +82,7 @@ render() {
                             />
                     </Tab>
                     <Tab eventKey={2} title="Quizzes">
-                        <CourseQuizzes/>
+                        <CourseQuizzes courseID={this.state.courseID} courseTitle={this.state.courseTitle}/>
                     </Tab>
                     <Tab eventKey={3} title="Roster">
                         <CourseRoster/>
