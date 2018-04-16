@@ -18,16 +18,27 @@ export const styles = {
     button: {
         fontFamily: 'Fira Sans',
         color: '#5A5A5A',
-        fontSize: '10pt',
+        fontSize: '12pt',
         fontWeight: 'regular',
         borderColor: colors.transparent,
         backgroundColor: colors.transparent,
         border: 'none',
+        marginLeft: '120px',
+        marginBottom: '10px',
+        height: '100%',
     },
-    buttonText: {
-        position: 'absolute',
-        bottom: '10px',
-        right: '24px'
+    addQuestionButton: {
+        fontFamily: 'Fira Sans',
+        color: '#5A5A5A',
+        fontSize: '12pt',
+        fontWeight: 'regular',
+        borderColor: colors.transparent,
+        backgroundColor: colors.transparent,
+        border: 'none',
+        textAlign: 'center',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+        paddingTop: '10px'
     },
     createButton: {
         fontFamily: 'Fira Sans',
@@ -44,33 +55,61 @@ export const styles = {
         fontSize: '14pt',
         fontWeight: 'bold',
     },
-    startButton: {
+    title: {
         fontFamily: 'Fira Sans',
-        color: colors.qDarkGreen,
-        fontSize: '10pt',
+        color: 'black',
+        fontSize: '30pt',
+        fontWeight: 'bold',
+        textAlign: 'left',
+    },
+    footerRow: {
+        backgroundColor: colors.qGreen,
+        position: "fixed",
+        left: "0",
+        bottom: "0",
+        height: "60px",
+        width: "100%",
+    },
+    saveButton: {
+        fontFamily: 'Fira Sans',
+        color: 'white',
+        fontSize: '13pt',
         fontWeight: 'regular',
         borderColor: colors.transparent,
         backgroundColor: colors.transparent,
         border: 'none',
+        marginRight:'30px',
     },
-    editButton: {
+    questionTitle: {
+        fontFamily: 'Fira Sans',
+        color: 'black',
+        fontSize: '18pt',
+        fontWeight: 'regular',
+    },
+    questionOption: {
+        fontFamily: 'Fira Sans',
+        color: 'black',
+        fontSize: '12pt',
+        fontWeight: '400',
+    },
+    accent: {
         fontFamily: 'Fira Sans',
         color: colors.qDarkGrey,
-        fontSize: '10pt',
-        fontWeight: 'regular',
-        borderColor: colors.transparent,
-        backgroundColor: colors.transparent,
-        border: 'none',
+        fontSize: '13pt',
+        fontWeight: '400',
+        fontStyle: 'italic'
     },
-    viewButton: {
+    deleteButton: {
         fontFamily: 'Fira Sans',
-        color: colors.qDarkGreen,
+        color: '#5A5A5A',
         fontSize: '10pt',
         fontWeight: 'regular',
         borderColor: colors.transparent,
         backgroundColor: colors.transparent,
         border: 'none',
-    }
+        marginLeft: '10px',
+        marginBottom: '-10px'
+    },
     
     
 }
