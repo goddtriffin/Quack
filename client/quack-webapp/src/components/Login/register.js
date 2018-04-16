@@ -3,7 +3,7 @@ import { Component } from 'react';
 import styles from './styles'
 import { colors } from '../../styles/styles'
 import logo from '../../assets/quack-logo-white.svg'
-import {  } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { AUTH_TOKEN } from '../../constants'
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -100,7 +100,7 @@ render() {
                             <button onClick={ () => this.register } style={styles.loginButton}>Register</button>
                         </div>
                         <div style={{display: "flex", justifyContent: 'center'}}>
-                            <button onClick={ this.login } style={styles.registerButton}>Already a user? Login</button>
+                            <button style={styles.registerButton}><Link to={"/auth/login"} style={styles.link}><span style={styles.accent}>Already a user? </span> Login</Link></button>
                         </div>
                     </Col>
                 </Row>
