@@ -12,6 +12,7 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* quack_nativeappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* quack_nativeappTests.m */; };
+		061EE2E26ABA41729DB6061D /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 211E6BA2DBEF49DE9362D5FB /* rubicon-icon-font.ttf */; };
 		12FA76ED7D184F68BBD308B8 /* FiraSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 35F0E74037344CE0B773673B /* FiraSans-Bold.otf */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
@@ -23,7 +24,9 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1635E95DE60A4D9A9F4F4DAB /* FiraSans-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0975561A5BF147C8A4D40806 /* FiraSans-Book.otf */; };
+		178405A7C17841799AEB2F5E /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 034CC7EA7EF94C61A1DA3519 /* libRNSVG.a */; };
 		18D3284764A946259C8E3047 /* FiraSans-TwoItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3002B07A73FA42C098DAAA87 /* FiraSans-TwoItalic.otf */; };
+		198A45506AA2480286344922 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F455CE5BAB3F48B7A24DE758 /* Roboto_medium.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -40,46 +43,44 @@
 		30A956CD10C341699E402E8C /* FiraSans-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 59B53CF8B16F44F5A0C49BE4 /* FiraSans-Medium.otf */; };
 		31C87F76FE734A59B9FCE79C /* FiraSans-FourItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 28913816B13E46848871BA68 /* FiraSans-FourItalic.otf */; };
 		3226B19344F3422C9CF99237 /* FiraSans-Ultra.otf in Resources */ = {isa = PBXBuildFile; fileRef = 79E208B3326B4E59BBED7FA6 /* FiraSans-Ultra.otf */; };
+		3DC0E6ECD4DA489398AA9C99 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C44E65AB4F324F41A28562B6 /* Ionicons.ttf */; };
 		3EC17497848644AFAB66DF36 /* FiraSans-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3D9AE19A816B4F5D89A118F2 /* FiraSans-ThinItalic.otf */; };
 		412D416092F148DC81E389B0 /* FiraSans-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2A345C2687F74F04A08D8328 /* FiraSans-LightItalic.otf */; };
 		41AD353614CF4F519027E0C2 /* FiraSans-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BBA15B08A2884F9598C78E4E /* FiraSans-HeavyItalic.otf */; };
 		4AC1DFA5CE124ADCAB6A70D1 /* FiraSans-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = C98031639B0C47B09D6F47E8 /* FiraSans-Heavy.otf */; };
 		53841D0F2542467BBA22D4B2 /* FiraSans-UltraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0082050D424D4D409D5BF90D /* FiraSans-UltraLight.otf */; };
+		54C9351BFBAB4E6ABC75AA56 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0E9E011FBE74087980DE432 /* Roboto.ttf */; };
 		5A9C7916C19247D0ADB963CD /* FiraSans-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 14FE9809E4C4465E8B55BBE7 /* FiraSans-ExtraLight.otf */; };
 		5C4C4BA3B76B4C24B88D627F /* FiraSans-SemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9ADF93700EAA410F9ABD5639 /* FiraSans-SemiBoldItalic.otf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		6B4F379ACB6A48BD9910BB9D /* FiraSans-EightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6CD2B69572344A6E9C840801 /* FiraSans-EightItalic.otf */; };
 		6BD01105F18E47EF8380C23F /* FiraSans-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 88B59CC708BE494EA12E6E22 /* FiraSans-BookItalic.otf */; };
+		719EECD272FF4805BDF461C8 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 82F28084D3924563A7E387B1 /* Foundation.ttf */; };
 		71F7D5CAC58A4103A3BB0A42 /* FiraSans-Eight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 128A849CF98B471CAFFA06B1 /* FiraSans-Eight.otf */; };
 		73093E17530A44E1BC0202EE /* FiraSans-ExtraBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B84E0738F344F4E9844062B /* FiraSans-ExtraBoldItalic.otf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		89E4C438EBF543A2A981CF25 /* FiraSans-ExtraLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 53F308D86EED4AE8B54D97B2 /* FiraSans-ExtraLightItalic.otf */; };
+		8A65104839EC49EB9373201C /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2255CD9772F749B2926DE486 /* MaterialIcons.ttf */; };
 		8C6490F2B3784B19808C1109 /* FiraSans-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9D42B0B3E0C34F51B86B3CFF /* FiraSans-Light.otf */; };
 		90240B1BA3CB4B8BB1B59204 /* FiraSans-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 037493FAF5FA4B2F8BE3967B /* FiraSans-BoldItalic.otf */; };
 		9283FC216A3F40A0A09BBC77 /* FiraSans-Four.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98BD7B310B184146980091BB /* FiraSans-Four.otf */; };
 		94EC86DAB0394E418E159AB0 /* FiraSans-UltraItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E0C7FA9F828D4691BE0198E3 /* FiraSans-UltraItalic.otf */; };
+		99A3CE90ABD94900852258D3 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 381B53B05C6F41D89D817908 /* FontAwesome.ttf */; };
 		9CA4D22B64994CFCA52D7D06 /* FiraSans-Two.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9DD041FF97014EB395AF7D76 /* FiraSans-Two.otf */; };
 		9DE31E81B97943B1A48F379E /* FiraSans-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 15D1819D63B040C0933E2394 /* FiraSans-MediumItalic.otf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		C27F8A49CB68442884C36BD7 /* FiraSans-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = EC35FDF04D99499BBE87BF32 /* FiraSans-ExtraBold.otf */; };
+		C4DEAF0F370B47B4B282E7FC /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 050F4A613C3B49A1B8D5FE8C /* EvilIcons.ttf */; };
+		C6DCFCC5E8B94BDC99A96CEB /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9C27E14849A4B6CB8D5A090 /* SimpleLineIcons.ttf */; };
 		C9483B51F6324A16908E85FA /* FiraSans-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2A0A7F68982D4F9EB43702E3 /* FiraSans-Regular.otf */; };
 		CC723AF67758402AAF609768 /* FiraSans-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 82C83DB89110418499A16F33 /* FiraSans-Italic.otf */; };
 		CD8E69F920784E7A84659AED /* FiraSans-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 26319FD120154CAD922E55C1 /* FiraSans-Thin.otf */; };
 		DB0BEFEF2919478A949F735E /* FiraSans-HairItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 43B5EF924814478A82D27040 /* FiraSans-HairItalic.otf */; };
 		DD7FCC20F8F74C8286CF68A1 /* FiraSans-Hair.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6BC768C510A049E98CC2DEA3 /* FiraSans-Hair.otf */; };
-		F2C2517484BF4643B9633DAB /* FiraSans-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B8F6AFA24A604A52939D912E /* FiraSans-SemiBold.otf */; };
-		F0FD99C82D57451F96DFEB73 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBD4B8DCF91A46A5B373C0E8 /* Entypo.ttf */; };
-		C4DEAF0F370B47B4B282E7FC /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 050F4A613C3B49A1B8D5FE8C /* EvilIcons.ttf */; };
-		99A3CE90ABD94900852258D3 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 381B53B05C6F41D89D817908 /* FontAwesome.ttf */; };
-		719EECD272FF4805BDF461C8 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 82F28084D3924563A7E387B1 /* Foundation.ttf */; };
-		3DC0E6ECD4DA489398AA9C99 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C44E65AB4F324F41A28562B6 /* Ionicons.ttf */; };
-		8A65104839EC49EB9373201C /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2255CD9772F749B2926DE486 /* MaterialIcons.ttf */; };
 		E09D07128C0C43549AB3474F /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4AA721602C2D457EA3F9DCE1 /* Octicons.ttf */; };
-		198A45506AA2480286344922 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F455CE5BAB3F48B7A24DE758 /* Roboto_medium.ttf */; };
-		54C9351BFBAB4E6ABC75AA56 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0E9E011FBE74087980DE432 /* Roboto.ttf */; };
-		061EE2E26ABA41729DB6061D /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 211E6BA2DBEF49DE9362D5FB /* rubicon-icon-font.ttf */; };
-		C6DCFCC5E8B94BDC99A96CEB /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9C27E14849A4B6CB8D5A090 /* SimpleLineIcons.ttf */; };
 		EBA096B00BB04C9C8045C144 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D933D9CADB44DC5870A5334 /* Zocial.ttf */; };
+		F0FD99C82D57451F96DFEB73 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBD4B8DCF91A46A5B373C0E8 /* Entypo.ttf */; };
+		F2C2517484BF4643B9633DAB /* FiraSans-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B8F6AFA24A604A52939D912E /* FiraSans-SemiBold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -321,6 +322,20 @@
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
 		};
+		54DBB7A12083CAAE007DE9BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B146EAC2D93419C85A50702 /* RNSVG.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
+			remoteInfo = RNSVG;
+		};
+		54DBB7A32083CAAE007DE9BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B146EAC2D93419C85A50702 /* RNSVG.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 94DDAC5C1F3D024300EED511;
+			remoteInfo = "RNSVG-tvOS";
+		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
@@ -369,7 +384,9 @@
 		00E356EE1AD99517003FC87E /* quack_nativeappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = quack_nativeappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* quack_nativeappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = quack_nativeappTests.m; sourceTree = "<group>"; };
+		034CC7EA7EF94C61A1DA3519 /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSVG.a; sourceTree = "<group>"; };
 		037493FAF5FA4B2F8BE3967B /* FiraSans-BoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-BoldItalic.otf"; path = "../app/assets/fonts/FiraSans-BoldItalic.otf"; sourceTree = "<group>"; };
+		050F4A613C3B49A1B8D5FE8C /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		0975561A5BF147C8A4D40806 /* FiraSans-Book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Book.otf"; path = "../app/assets/fonts/FiraSans-Book.otf"; sourceTree = "<group>"; };
 		128A849CF98B471CAFFA06B1 /* FiraSans-Eight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Eight.otf"; path = "../app/assets/fonts/FiraSans-Eight.otf"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -384,6 +401,8 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		14FE9809E4C4465E8B55BBE7 /* FiraSans-ExtraLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-ExtraLight.otf"; path = "../app/assets/fonts/FiraSans-ExtraLight.otf"; sourceTree = "<group>"; };
 		15D1819D63B040C0933E2394 /* FiraSans-MediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-MediumItalic.otf"; path = "../app/assets/fonts/FiraSans-MediumItalic.otf"; sourceTree = "<group>"; };
+		211E6BA2DBEF49DE9362D5FB /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
+		2255CD9772F749B2926DE486 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		26319FD120154CAD922E55C1 /* FiraSans-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Thin.otf"; path = "../app/assets/fonts/FiraSans-Thin.otf"; sourceTree = "<group>"; };
 		28913816B13E46848871BA68 /* FiraSans-FourItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-FourItalic.otf"; path = "../app/assets/fonts/FiraSans-FourItalic.otf"; sourceTree = "<group>"; };
 		2A0A7F68982D4F9EB43702E3 /* FiraSans-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Regular.otf"; path = "../app/assets/fonts/FiraSans-Regular.otf"; sourceTree = "<group>"; };
@@ -393,42 +412,40 @@
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3002B07A73FA42C098DAAA87 /* FiraSans-TwoItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-TwoItalic.otf"; path = "../app/assets/fonts/FiraSans-TwoItalic.otf"; sourceTree = "<group>"; };
 		35F0E74037344CE0B773673B /* FiraSans-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Bold.otf"; path = "../app/assets/fonts/FiraSans-Bold.otf"; sourceTree = "<group>"; };
+		381B53B05C6F41D89D817908 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		3D9AE19A816B4F5D89A118F2 /* FiraSans-ThinItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-ThinItalic.otf"; path = "../app/assets/fonts/FiraSans-ThinItalic.otf"; sourceTree = "<group>"; };
 		43B5EF924814478A82D27040 /* FiraSans-HairItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-HairItalic.otf"; path = "../app/assets/fonts/FiraSans-HairItalic.otf"; sourceTree = "<group>"; };
+		4AA721602C2D457EA3F9DCE1 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		53F308D86EED4AE8B54D97B2 /* FiraSans-ExtraLightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-ExtraLightItalic.otf"; path = "../app/assets/fonts/FiraSans-ExtraLightItalic.otf"; sourceTree = "<group>"; };
 		59B53CF8B16F44F5A0C49BE4 /* FiraSans-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Medium.otf"; path = "../app/assets/fonts/FiraSans-Medium.otf"; sourceTree = "<group>"; };
 		5B84E0738F344F4E9844062B /* FiraSans-ExtraBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-ExtraBoldItalic.otf"; path = "../app/assets/fonts/FiraSans-ExtraBoldItalic.otf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		6BC768C510A049E98CC2DEA3 /* FiraSans-Hair.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Hair.otf"; path = "../app/assets/fonts/FiraSans-Hair.otf"; sourceTree = "<group>"; };
 		6CD2B69572344A6E9C840801 /* FiraSans-EightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-EightItalic.otf"; path = "../app/assets/fonts/FiraSans-EightItalic.otf"; sourceTree = "<group>"; };
+		6D933D9CADB44DC5870A5334 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		79E208B3326B4E59BBED7FA6 /* FiraSans-Ultra.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Ultra.otf"; path = "../app/assets/fonts/FiraSans-Ultra.otf"; sourceTree = "<group>"; };
 		82C83DB89110418499A16F33 /* FiraSans-Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Italic.otf"; path = "../app/assets/fonts/FiraSans-Italic.otf"; sourceTree = "<group>"; };
+		82F28084D3924563A7E387B1 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		88B59CC708BE494EA12E6E22 /* FiraSans-BookItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-BookItalic.otf"; path = "../app/assets/fonts/FiraSans-BookItalic.otf"; sourceTree = "<group>"; };
+		8B146EAC2D93419C85A50702 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
 		98BD7B310B184146980091BB /* FiraSans-Four.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Four.otf"; path = "../app/assets/fonts/FiraSans-Four.otf"; sourceTree = "<group>"; };
 		9ADF93700EAA410F9ABD5639 /* FiraSans-SemiBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-SemiBoldItalic.otf"; path = "../app/assets/fonts/FiraSans-SemiBoldItalic.otf"; sourceTree = "<group>"; };
 		9D42B0B3E0C34F51B86B3CFF /* FiraSans-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Light.otf"; path = "../app/assets/fonts/FiraSans-Light.otf"; sourceTree = "<group>"; };
 		9DD041FF97014EB395AF7D76 /* FiraSans-Two.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Two.otf"; path = "../app/assets/fonts/FiraSans-Two.otf"; sourceTree = "<group>"; };
+		A9C27E14849A4B6CB8D5A090 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B8F6AFA24A604A52939D912E /* FiraSans-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-SemiBold.otf"; path = "../app/assets/fonts/FiraSans-SemiBold.otf"; sourceTree = "<group>"; };
 		BBA15B08A2884F9598C78E4E /* FiraSans-HeavyItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-HeavyItalic.otf"; path = "../app/assets/fonts/FiraSans-HeavyItalic.otf"; sourceTree = "<group>"; };
+		BBD4B8DCF91A46A5B373C0E8 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		C44E65AB4F324F41A28562B6 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		C98031639B0C47B09D6F47E8 /* FiraSans-Heavy.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-Heavy.otf"; path = "../app/assets/fonts/FiraSans-Heavy.otf"; sourceTree = "<group>"; };
 		E0C7FA9F828D4691BE0198E3 /* FiraSans-UltraItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-UltraItalic.otf"; path = "../app/assets/fonts/FiraSans-UltraItalic.otf"; sourceTree = "<group>"; };
+		E0E9E011FBE74087980DE432 /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		E63DA3C7AE8A4AFF8D682C61 /* FiraSans-UltraLightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-UltraLightItalic.otf"; path = "../app/assets/fonts/FiraSans-UltraLightItalic.otf"; sourceTree = "<group>"; };
 		EC35FDF04D99499BBE87BF32 /* FiraSans-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraSans-ExtraBold.otf"; path = "../app/assets/fonts/FiraSans-ExtraBold.otf"; sourceTree = "<group>"; };
-		BBD4B8DCF91A46A5B373C0E8 /* Entypo.ttf */ = {isa = PBXFileReference; name = "Entypo.ttf"; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		050F4A613C3B49A1B8D5FE8C /* EvilIcons.ttf */ = {isa = PBXFileReference; name = "EvilIcons.ttf"; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		381B53B05C6F41D89D817908 /* FontAwesome.ttf */ = {isa = PBXFileReference; name = "FontAwesome.ttf"; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		82F28084D3924563A7E387B1 /* Foundation.ttf */ = {isa = PBXFileReference; name = "Foundation.ttf"; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C44E65AB4F324F41A28562B6 /* Ionicons.ttf */ = {isa = PBXFileReference; name = "Ionicons.ttf"; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		2255CD9772F749B2926DE486 /* MaterialIcons.ttf */ = {isa = PBXFileReference; name = "MaterialIcons.ttf"; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4AA721602C2D457EA3F9DCE1 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		F455CE5BAB3F48B7A24DE758 /* Roboto_medium.ttf */ = {isa = PBXFileReference; name = "Roboto_medium.ttf"; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E0E9E011FBE74087980DE432 /* Roboto.ttf */ = {isa = PBXFileReference; name = "Roboto.ttf"; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		211E6BA2DBEF49DE9362D5FB /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A9C27E14849A4B6CB8D5A090 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6D933D9CADB44DC5870A5334 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F455CE5BAB3F48B7A24DE758 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -457,6 +474,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				178405A7C17841799AEB2F5E /* libRNSVG.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,6 +627,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		54DBB7772083CAA9007DE9BD /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				034CC7EA7EF94C61A1DA3519 /* libRNSVG.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		54DBB79D2083CAAE007DE9BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				54DBB7A22083CAAE007DE9BD /* libRNSVG.a */,
+				54DBB7A42083CAAE007DE9BD /* libRNSVG-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -642,6 +677,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				8B146EAC2D93419C85A50702 /* RNSVG.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -664,6 +700,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				B87C120863DE4594AAB6CFF0 /* Resources */,
+				54DBB7772083CAA9007DE9BD /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -904,6 +941,10 @@
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
+				{
+					ProductGroup = 54DBB79D2083CAAE007DE9BD /* Products */;
+					ProjectRef = 8B146EAC2D93419C85A50702 /* RNSVG.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1140,6 +1181,20 @@
 			remoteRef = 54689DCC2038E7E300F6CB5F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		54DBB7A22083CAAE007DE9BD /* libRNSVG.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSVG.a;
+			remoteRef = 54DBB7A12083CAAE007DE9BD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		54DBB7A42083CAAE007DE9BD /* libRNSVG-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNSVG-tvOS.a";
+			remoteRef = 54DBB7A32083CAAE007DE9BD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1358,9 +1413,18 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+				);
 				INFOPLIST_FILE = quack_nativeappTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1376,9 +1440,18 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 46HMG8GAVG;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+				);
 				INFOPLIST_FILE = quack_nativeappTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1395,6 +1468,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 46HMG8GAVG;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+				);
 				INFOPLIST_FILE = quack_nativeapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1413,6 +1490,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 46HMG8GAVG;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+				);
 				INFOPLIST_FILE = quack_nativeapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1438,8 +1519,17 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+				);
 				INFOPLIST_FILE = "quack_nativeapp-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1465,8 +1555,17 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+				);
 				INFOPLIST_FILE = "quack_nativeapp-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1492,6 +1591,11 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "quack_nativeapp-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.quack_nativeapp-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -1513,6 +1617,11 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "quack_nativeapp-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.quack_nativeapp-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;

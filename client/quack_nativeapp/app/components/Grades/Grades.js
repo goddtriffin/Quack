@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { Col, Row, Grid } from "react-native-easy-grid"
+import {Content } from 'native-base'
+import { StackNavigator } from 'react-navigation';
 import { View, Image, Text, Dimensions, TouchableHighlight, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
+import { colors } from '../../style/styles';
+import ReactDOM from 'react-dom';
+import * as V from 'victory';
+import {VictoryBar, VictoryChart, VictoryTheme, VictoryAxis, VictoryLabel} from 'victory-native';
 export default class Quiz extends Component {
 
     state = {
@@ -26,98 +32,58 @@ export default class Quiz extends Component {
 
     
     render() {
-        this.state.course = this.props.navigation.state.params.courses;
+       this.state.course = this.props.navigation.state.params.courses;
+       const data = [
+        {answer: 1, number: 13, opacity: 0.7},
+        {answer: 2, number: 20, fill: colors.qRed},
+        {answer: 3, number: 20, opacity: 0.7},
+        {answer: 4, number: 69, fill: 'white', opacity: .9}
+      ];
+       const quizzes = "Quiz 1 2/4\n\nQuiz 2 4/5\n\nQuiz 3 6/7\n\nQuiz 5  4/2\n\n\n\n\n\nQuiz 6 6/9"
+
         return (
-            <Grid>
-                <Row size={15}>
-                    <Col size={50}>
-                        { /*<Image onPress={() => this.props.navigation.navigate("Home")}
-                        source={require('../../images/navigation_resources/back_button.png')}
-                        style={styles.navigationButton}
-                        />*/}                        
+            <Grid style={styles.background}>
+                <Row size={15}>        
                         <Text style = {styles.classHeaderText}>
                         {this.state.course}
                         </Text>
-                        {/*<Text style = {styles.classReminderText}>
-                        Next class       @ 
-                        </Text>*/}
-                        {/*<Text style = {styles.currentGrade}>
-                        No Grades 
-                        </Text>*/}
-
-                    </Col>
-                    {/*<Col style={{alignItems: 'flex-end'}}>
-                        <TouchableHighlight onPress={() => Alert.alert("Professor Quack's email is\nquack@quackers.edu")}>
-                            <Text style={styles.liveQuizReminder}>
-                            Contact Instructor
-                            </Text>
-                        </TouchableHighlight>
-                    </Col>*/}
                 </Row>
-                <Row size={85}>
-                    <Col size={50}>
-                    <View style={styles.gradesListView}>
-                    <ScrollView style={styles.gradesList}>
-                        {
-                            this.state.grades.map(({assignment, grade}) => {
-                                return (<View>
-                                    <Text style={styles.gradeListText}>{assignment}</Text>
-                                    <Text style={styles.gradeDates}>{grade}</Text>
-                                </View>);
-                                }
-                            ) 
-                        }
-                    </ScrollView>
-                    </View>
-                        {/*<Text style={styles.gradeTitle}>
-                        Grades
-                        </Text>
-                        <Text style={styles.gradeQuizTitle}>
-                        No Grades
-                        </Text>*/}
-                        {/*<TouchableOpacity onPress={() => this.props.navigation.navigate('PastQuiz')}>
-                        <Text style={styles.scoreDescription}>
-                        Score: 1/1
-                        </Text>
-                        </TouchableOpacity>
-                        <Text style={styles.gradeQuizTitle}>
-                        Quiz 2
-                        </Text>
-                        <Text style={styles.scoreDescription}>
-                        No Score
-                        </Text>
-                        <Text style={styles.gradeQuizTitle}>
-                        Quiz 3
-                        </Text>
-                        <Text style={styles.scoreDescription}>
-                        Score Hidden
-                        </Text>*/}
-                        {/*<Image
-                        source={require('../../images/quiz_resources/quiz_backdrop_triple.png')}
-                        style={styles.quizBackground}
-                        />*/}
-                        {/*<Text style={styles.beginQuizText}>
-                        Begin Quiz
-                        </Text>*/}
-                    </Col>
-                    <Col size={40}>
-                        {/*<Text style={styles.firstgradeDate}>
-                        1/29
-                        </Text>
-                        <Text style={styles.gradeDates}>
-                        1/31
-                        </Text>
-                        <Text style={styles.gradeDates}>
-                        2/11
-                        </Text>*/}
-                        {/*<TouchableHighlight onPress={() => this.props.navigation.navigate('Quiz')}>
-                            <Image
-                                source={require('../../images/navigation_resources/quiz_up.png')}
-                                style={styles.letsGoToQuiz}
-                            />
-                        </TouchableHighlight>*/}  
-                    </Col>
-                </Row>
+                <Row size={50}>
+                    
+                    <VictoryChart
+                    domainPadding={20}
+                     >         
+                    <VictoryLabel text="Live Quiz" textAnchor="middle" x={Dimensions.get('window').width / 2} y={40}/>
+                    <VictoryAxis
+                      tickValues={[1, 2, 3, 4]}
+                      tickFormat={["A", "B", "C", "D"]}
+                    />
+                    <VictoryAxis
+                      dependentAxis
+                      //tickFormat={(x) => (`$${x / 1000}k`)}
+                    />
+                    <VictoryBar
+                      data={data}
+                      labels={(d) => d.y}
+                      x="answer"
+                      y="number"
+                      animate={{duration: 50}}
+                    />
+                    </VictoryChart>
+     
+            </Row>
+            <Row size={9}>
+                <Text style= {styles.recentIndicator}>
+                Past Quizzes
+                </Text>
+            </Row>
+            <Row size={30}>
+                <Content>
+                <Text style={styles.pastQuizIndicator}>
+                {quizzes}
+                </Text>
+                </Content>
+            </Row>
             </Grid>
         );
     }

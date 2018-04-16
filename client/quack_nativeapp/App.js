@@ -64,6 +64,7 @@ export default class App extends Component {
       email: '',
     }
   }
+  
 
   render() {
     
@@ -71,7 +72,7 @@ export default class App extends Component {
 
     /*
     return (
-      </>
+      <Grades/>
     )
     */
 
@@ -89,6 +90,7 @@ export default class App extends Component {
         </ApolloProvider>
       );
     }
+    
   }
 }
 
@@ -104,6 +106,12 @@ const LoginRoute = StackNavigator({
     },
     Grades: {
       screen: Grades,
+      navigationOptions: {
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#07A386'
+        }
+      }
     },
     Quiz: {
       screen: Quiz,
