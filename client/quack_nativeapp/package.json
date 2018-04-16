@@ -11,7 +11,7 @@
     "apollo-cache-inmemory": "^0.2.0-rc.4",
     "apollo-client": "^2.0.0-rc.7",
     "apollo-link": "^1.2.1",
-    "apollo-link-context": "^1.0.7",
+    "apollo-link-context": "^1.0.8",
     "apollo-link-http": "^1.5.3",
     "graphql": "^0.13.1",
     "jwt-decode": "^2.2.0",

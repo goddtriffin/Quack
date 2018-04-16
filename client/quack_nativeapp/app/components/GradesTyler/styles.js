@@ -3,16 +3,27 @@ import { colors } from '../../style/styles';
 
 export default StyleSheet.create({
   navigationButton: {
-    //flex: 1,
     resizeMode: 'contain',
-    paddingTop: 70,
-    paddingLeft: 70,
+    paddingTop: 75,
+    paddingLeft: 10,
   },
   gradesListView: {
-    paddingLeft: 10,
+    paddingRight: 10,
     flex: 2,
   },
   gradeListText: {
+    fontFamily: 'Fira Sans',
+    fontWeight: '600',
+    flex: 1,
+    fontSize: 30,
+    color: 'black',
+    textAlign: 'right',
+    paddingRight: 20,
+  },
+  assignmentListView: {
+    paddingLeft: 10,
+  },
+  assignmentListText: {
     fontFamily: 'Fira Sans',
     fontWeight: '600',
     flex: 1,
@@ -22,14 +33,13 @@ export default StyleSheet.create({
     paddingLeft: 20
   },
   classHeaderText: {
-    //flex: 1,
     fontFamily: 'Fira Sans',
     color: 'black',
-    fontWeight: 'bold',
-    fontSize: 60,
+    fontWeight: "800",
+    fontSize: 45,
     textAlign: 'left',
-    width: 200,
-    paddingLeft: 10,
+    width: 300,
+    paddingLeft: 20,
  },
   classReminderText: {
     fontFamily: 'Fira Sans',
