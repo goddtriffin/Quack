@@ -2,7 +2,19 @@ import React, { Component } from 'react';
 import { Col, Row, Grid } from "react-native-easy-grid"
 import { View, Image, Text, Dimensions, TouchableHighlight, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
-export default class Quiz extends Component {
+import { StackNavigator } from 'react-navigation';
+
+import { ApolloProvider, graphql, withApollo } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import gql from 'graphql-tag';
+
+
+class Grades extends Component {
+    static navigationOptions = {
+        header: null,
+    };
 
     state = {
         authToken: '',
@@ -29,96 +41,52 @@ export default class Quiz extends Component {
         this.state.course = this.props.navigation.state.params.courses;
         return (
             <Grid>
-                <Row size={15}>
-                    <Col size={50}>
-                        { /*<Image onPress={() => this.props.navigation.navigate("Home")}
+                <Row size={10}>
+                    <TouchableHighlight onPress={() => this.props.navigation.navigate("Home")}>
+                    <Image
                         source={require('../../images/navigation_resources/back_button.png')}
                         style={styles.navigationButton}
-                        />*/}                        
+                    />
+                    </TouchableHighlight>
+                </Row>
+                <Row size={10}>
                         <Text style = {styles.classHeaderText}>
                         {this.state.course}
                         </Text>
-                        {/*<Text style = {styles.classReminderText}>
-                        Next class       @ 
-                        </Text>*/}
-                        {/*<Text style = {styles.currentGrade}>
-                        No Grades 
-                        </Text>*/}
-
-                    </Col>
-                    {/*<Col style={{alignItems: 'flex-end'}}>
-                        <TouchableHighlight onPress={() => Alert.alert("Professor Quack's email is\nquack@quackers.edu")}>
-                            <Text style={styles.liveQuizReminder}>
-                            Contact Instructor
-                            </Text>
-                        </TouchableHighlight>
-                    </Col>*/}
                 </Row>
-                <Row size={85}>
+                <Row size={80}>
                     <Col size={50}>
-                    <View style={styles.gradesListView}>
-                    <ScrollView style={styles.gradesList}>
+                    <View style={styles.assignmentListView}>
+                    <ScrollView style={styles.assignmentListView}>
                         {
-                            this.state.grades.map(({assignment, grade}) => {
+                            this.state.grades.map(({assignment}) => {
                                 return (<View>
-                                    <Text style={styles.gradeListText}>{assignment}</Text>
-                                    <Text style={styles.gradeDates}>{grade}</Text>
+                                    <Text style={styles.assignmentListText}>{assignment}</Text>
                                 </View>);
                                 }
                             ) 
                         }
                     </ScrollView>
                     </View>
-                        {/*<Text style={styles.gradeTitle}>
-                        Grades
-                        </Text>
-                        <Text style={styles.gradeQuizTitle}>
-                        No Grades
-                        </Text>*/}
-                        {/*<TouchableOpacity onPress={() => this.props.navigation.navigate('PastQuiz')}>
-                        <Text style={styles.scoreDescription}>
-                        Score: 1/1
-                        </Text>
-                        </TouchableOpacity>
-                        <Text style={styles.gradeQuizTitle}>
-                        Quiz 2
-                        </Text>
-                        <Text style={styles.scoreDescription}>
-                        No Score
-                        </Text>
-                        <Text style={styles.gradeQuizTitle}>
-                        Quiz 3
-                        </Text>
-                        <Text style={styles.scoreDescription}>
-                        Score Hidden
-                        </Text>*/}
-                        {/*<Image
-                        source={require('../../images/quiz_resources/quiz_backdrop_triple.png')}
-                        style={styles.quizBackground}
-                        />*/}
-                        {/*<Text style={styles.beginQuizText}>
-                        Begin Quiz
-                        </Text>*/}
                     </Col>
-                    <Col size={40}>
-                        {/*<Text style={styles.firstgradeDate}>
-                        1/29
-                        </Text>
-                        <Text style={styles.gradeDates}>
-                        1/31
-                        </Text>
-                        <Text style={styles.gradeDates}>
-                        2/11
-                        </Text>*/}
-                        {/*<TouchableHighlight onPress={() => this.props.navigation.navigate('Quiz')}>
-                            <Image
-                                source={require('../../images/navigation_resources/quiz_up.png')}
-                                style={styles.letsGoToQuiz}
-                            />
-                        </TouchableHighlight>*/}  
+                    <Col size={50}>
+                    <View style={styles.gradesListView}>
+                    <ScrollView style={styles.gradesListView}>
+                        {
+                            this.state.grades.map(({grade}) => {
+                                return (<View>
+                                    <Text style={styles.gradeListText}>{grade}</Text>
+                                </View>);
+                                }
+                            ) 
+                        }
+                    </ScrollView>
+                    </View>
                     </Col>
                 </Row>
             </Grid>
         );
     }
 }
+
+export default withApollo(Grades)
