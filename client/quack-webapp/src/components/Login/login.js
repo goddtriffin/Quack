@@ -5,8 +5,8 @@ import { colors } from '../../styles/styles'
 import logo from '../../assets/quack-logo-white.svg'
 import {  } from 'react-router-dom'
 import { AUTH_TOKEN } from '../../constants'
-import { graphql, compose } from 'react-apollo'
-import { Link } from 'react-router-dom';
+import { graphql, withApollo } from 'react-apollo'
+import { Link, withRouter } from 'react-router-dom';
 import gql from 'graphql-tag'
 import { Grid, Col, Row, FormGroup, ControlLabel, 
     FormControl, HelpBlock, Button } from '../../../node_modules/react-bootstrap';
@@ -31,7 +31,6 @@ class Login extends Component {
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.login = this.login.bind(this);
-        this.register = this.register.bind(this);
         this.saveUserData = this.saveUserData.bind(this);
     }
 
@@ -45,7 +44,8 @@ class Login extends Component {
 
     login = async () => {
         const { email, password } = this.state
-        await this.props.login({
+        await this.props.client.mutate({
+            mutation: LOGIN_MUTATION,
             variables: {
                 email,
                 password
@@ -55,16 +55,13 @@ class Login extends Component {
                 const token = data.data.login.jwt;
                 this.saveUserData(token);
                 console.log(token);
+                this.props.history.push('/')
         }).catch(function(error) { 
             alert(error.message); 
              // ADD THIS THROW error 
-            throw error; 
+            //throw error; 
         });
     
-    }
-
-    register() {
-        
     }
 
     saveUserData = token => {
@@ -118,6 +115,5 @@ const LOGIN_MUTATION = gql`
   } 
 `
 
-export default compose(
-    graphql(LOGIN_MUTATION, {name: 'login'})
-)(Login)
+export default withRouter(withApollo(Login))
+

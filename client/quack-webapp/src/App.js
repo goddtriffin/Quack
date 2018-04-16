@@ -5,12 +5,14 @@ import Sidebar from './components/Sidebar/sidebar'
 import SidebarContent from './components/Sidebar/sidebar_content'
 import Blank from './components/Blank/blank';
 import Course from './components/Course/course';
+import Login from './components/Login/login'
 import { AUTH_TOKEN } from './constants'
 import { Grid, Col, Row } from '../node_modules/react-bootstrap'
 import {
   Route,
   Switch,
   Redirect,
+  withRouter
 } from 'react-router-dom'
 
 
@@ -19,15 +21,10 @@ class App extends Component {
   state = {
     userID: "",
     userEmail: "",
-    
+    loggedIn: false
   }
 
   render() {
-
-    const authToken = localStorage.getItem(AUTH_TOKEN);
-    if(!authToken) {
-      //go to login
-    }
 
     const sidebar = <SidebarContent params={this.props.params}/>
 
@@ -49,6 +46,12 @@ class App extends Component {
     }
     const SidebarParent = (props) => {
       return(<Sidebar {...sidebarProps} className="Sidebar" location={props.location}/>);
+    }
+    const authToken = localStorage.getItem(AUTH_TOKEN);
+    if(!authToken) {
+      return (
+          <Login/>
+      );
     }
     
 
@@ -78,4 +81,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
