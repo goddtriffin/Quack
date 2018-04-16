@@ -19,7 +19,7 @@ const httpLink = createHttpLink({
 });
 
 const authToken = localStorage.getItem(AUTH_TOKEN);
-localStorage.setItem(AUTH_TOKEN, "");
+//localStorage.setItem(AUTH_TOKEN, "");
 
 const middlewareLink = new ApolloLink((operation, forward) => {
   	if (authToken) {

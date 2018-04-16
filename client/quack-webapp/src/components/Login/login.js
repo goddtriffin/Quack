@@ -16,6 +16,7 @@ import { Grid, Col, Row, FormGroup, ControlLabel,
 class Login extends Component {
 
     state = {
+        userID: 0,
         email: "",
         password: "",
     }
@@ -24,6 +25,7 @@ class Login extends Component {
         super(props);
 
         this.state = {
+            userID: 0,
             email: "",
             password: ""
         }
@@ -53,8 +55,9 @@ class Login extends Component {
         }).then( data => { 
 
                 const token = data.data.login.jwt;
-                this.saveUserData(token);
-                console.log(token);
+                const id = data.data.login.id;
+
+                this.saveUserData(token, id);
                 this.props.history.push('/')
         }).catch(function(error) { 
             alert(error.message); 
@@ -64,14 +67,10 @@ class Login extends Component {
     
     }
 
-    
-
-    register() {
-        
-    }
-
-    saveUserData = token => {
+    saveUserData = (token, id) => {
         localStorage.setItem(AUTH_TOKEN, token)
+        localStorage.setItem("userID", id)
+        console.log(id);
     }
 
 render() {
@@ -117,6 +116,7 @@ const LOGIN_MUTATION = gql`
     mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       jwt
+      id
     }
   } 
 `

@@ -92,7 +92,14 @@ class SidebarContent extends React.PureComponent {
     show: false,
     newCourseInput: '',
     newCoursePrefix: '',
-    courseTitles: []
+    courseTitles: [],
+    courseID: 6969,
+    courseTitle: "ABC123: Course Title",
+    courseDescription: "Software Engineering",
+    courseRoster: ['Theo', 'Mason', 'Justin', 'Todd', 'Tyler'],
+    courseQuizzes: ['Quiz 1', 'Quiz 2', 'Quiz 3', 'Quiz 4'],
+    key: 1,
+    userID: localStorage.getItem("userID")
   }
   
   
@@ -101,9 +108,6 @@ class SidebarContent extends React.PureComponent {
 
 
     //Download course data and map onto links
-
-
-
 
     this.addCourse = this.addCourse.bind(this);
     this.handleShow = this.handleShow.bind(this);
@@ -130,12 +134,44 @@ class SidebarContent extends React.PureComponent {
         mutation: CREATE_COURSE,
         variables: {
           input: {
-            id: random,
-            name: this.state.newCourseInput
+            userID: this.state.userID,
+            courseID: random,
+            name: this.state.newCourseInput,
+            description: ""
           }
         }
       }).then( data => { 
         console.log(data);
+        this.setState({courseID : random});
+
+        this.setState({show: false});
+        if(this.state.newCourseInput.length > 0) {
+          var prefix = this.state.newCourseInput.split(":");
+          var tempTitles = this.state.courseTitles.slice();
+          tempTitles.push(this.state.newCourseInput);
+          var temp = this.state.links.slice();
+          temp.push(
+            <Link to={{
+              pathname: '/course/' + this.state.count,
+              state: {
+                courseTitle: this.state.newCourseInput,
+                courseID: this.state.courseID
+                },
+              }} 
+            key={this.state.count++} 
+            style={styles.sidebarLink}>{prefix[0]}</Link>
+          );
+          
+          
+          this.setState({
+            links: temp,
+            courseTitles: tempTitles,
+            newCourseInput: ''
+            
+          });
+
+        }
+
       });
       console.log(random);
     }).catch(function(error) { 
@@ -143,31 +179,6 @@ class SidebarContent extends React.PureComponent {
          // ADD THIS THROW error 
         //throw error; 
     });
-
-    this.setState({show: false});
-    if(this.state.newCourseInput.length > 0) {
-      var prefix = this.state.newCourseInput.split(":");
-      var tempTitles = this.state.courseTitles.slice();
-      tempTitles.push(this.state.newCourseInput);
-      var temp = this.state.links.slice();
-      temp.push(
-        <Link to={{
-          pathname: '/course/' + this.state.count,
-          state: {courseTitle: this.state.newCourseInput}
-          }} 
-        key={this.state.count++} 
-        style={styles.sidebarLink}>{prefix[0]}</Link>
-      );
-      
-      
-      this.setState({
-        links: temp,
-        courseTitles: tempTitles,
-        newCourseInput: ''
-        
-      });
-
-    }
 
   }
 

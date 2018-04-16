@@ -23,18 +23,10 @@ class Course extends Component {
 constructor(props) {
     console.log(props.location);
     super(props);
-    if(props.location.state.courseTitle !== undefined) {
-        this.state = {
-            courseTitle: props.location.state.courseTitle,
-            key: 1,
-            courseID: '123456',
-        }
-    }else {
-        this.state = {
-            courseTitle: props.courseTitle,
-            key: 1,
-            courseID: '123456',
-        }
+    this.state = {
+        courseTitle: props.location.state.courseTitle,
+        courseID: props.location.state.courseID,
+        key: 1,
     }
     
 
