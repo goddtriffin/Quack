@@ -2,10 +2,6 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { validate_answer_type, validate_answer_content } from '../validators/validate'
 
-// subscriptions
-import { PubSub } from 'graphql-subscriptions';
-export const pubsub = new PubSub();
-
 var Request = require('tedious').Request;
 var TYPES   = require('tedious').TYPES;
 var argSQL = {};
@@ -66,6 +62,17 @@ export default {
 			      argSQL[2] = {name: 'type', type: TYPES.NVarChar, arg: args.input.type};
 			      argSQL[3] = {name: 'content', type: TYPES.NVarChar, arg: args.input.content};
 
+				  	// publish the change
+					const payload = {
+							answerCreated: {
+								userID: argSQL[0].arg,
+								quizID: argSQL[1].arg,
+								type: argSQL[2].arg,
+								content: argSQL[3].arg
+							}
+					}
+
+				  	context.pubsub.publish('answerCreated', payload);
 
 			      //console.log(argSQL);
 			      return context.db.executeSQL( 
@@ -108,9 +115,11 @@ export default {
 		      } 
 	      },
 
-	      // Subscription
+	// Subscription
 
 	answerCreated: {
-		subscribe: () => pubsub.asyncIterator('answer_created')
+		subscribe: withFilter(() => pubsub.asyncIterator('answerCreated'), (payload, variables) => {
+			return payload.answerCreated.quizID === variables.quizID;
+		}),
 	}
 }

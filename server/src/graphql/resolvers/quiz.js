@@ -99,5 +99,11 @@ export default {
 		     "OUTPUT INSERTED.id, INSERTED.courseID, INSERTED.date, INSERTED.isOpen WHERE id = @id;", 
 		    argSQL, false);
     	}
-    }
+    },
+
+        // Subscription
+
+	quizOpened: {
+		subscribe: () => pubsub.asyncIterator('quizOpened')
+	}
 }

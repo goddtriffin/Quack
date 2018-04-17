@@ -1,10 +1,14 @@
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
-var { buildSchema } = require('graphql');
+var { buildSchema, execute, subscribe } = require('graphql');
 
 import types from './graphql/types';
 import rootValue from './graphql/resolvers';
 import sqlConnector from './graphql/connectors';
+
+// subscriptions
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { PubSub } from 'graphql-subscriptions';
 
 require('dotenv').config();
 
@@ -57,26 +61,57 @@ console.log(rootValue);
 
 
 const schema = buildSchema(types);
-
 const sqlDB = new sqlConnector(config);
-
-
 var app = express();
 
 app.use(cors());
 
 app.use('/graphql', (req, res) => {
-  return graphqlHTTP({
-    schema: schema,
-    rootValue,
-    context: { 
-      headers: req.headers,
-      db: sqlDB,
-      JWT_SECRET: "quackmedaddy",
-    },
-    graphiql: true,
-  }) (req, res);
+    return graphqlHTTP({
+        schema: schema,
+        rootValue,
+        context: { 
+        headers: req.headers,
+        db: sqlDB,
+        JWT_SECRET: "quackmedaddy",
+        pubsub
+        },
+        graphiql: true,
+    }) (req, res);
 })
 
 app.listen(4000, '0.0.0.0');
 console.log('Running a GraphQL API server at http://endor-vm2.cs.purdue.edu:4000/graphql');
+
+// start subscription stuff
+console.log('starting subscription stuff, pls work');
+const server = createServer(app);
+const pubsub = new PubSub();
+
+/*
+// Wrap the Express server
+app.listen(5000, () => {
+    console.log('ummm here');
+  // Set up the WebSocket for handling GraphQL subscriptions
+  new SubscriptionServer({
+    execute,
+    subscribe,
+    schema
+  }, {
+    server: ws,
+    path: '/subscriptions',
+  });
+});
+console.log('I got here');
+*/
+
+server.listen(5000, () => {
+    new SubscriptionServer({
+      execute,
+      subscribe,
+      schema,
+    }, {
+      server,
+      path: '/subscriptions',
+    });
+});
