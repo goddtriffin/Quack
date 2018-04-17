@@ -4,22 +4,33 @@ import { colors } from '../../style/styles';
 export default StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.qLightGreen,
   },
 
+  headerColor: {
+    backgroundColor: colors.qLightGreen,
+  },
   header: {
     height: 80,
     paddingTop: 30,
     paddingLeft: 10,
     flexDirection: 'row',
   },
+  headerText: {
+    fontFamily: 'Fira Sans',
+    color: 'white',
+    textAlign: 'right',
+    paddingTop: 10,
+  },
 
   bigTitle: {
     fontFamily: 'Fira Sans',
-    fontWeight: '800',
+    fontWeight: '600',
     flex: 3,
-    fontSize: 45,
-    color: 'black',
-    textAlign: 'left',
+    fontSize: 50,
+    color: 'white',
+    textAlign: 'center',
+    paddingBottom: 10,
   },
   courseListView: {
     paddingLeft: 10,
@@ -29,14 +40,14 @@ export default StyleSheet.create({
 
   },
   courseListRow: {
-    paddingVertical: 15,
+    paddingVertical: 30,
   },
   courseListText: {
     fontFamily: 'Fira Sans',
     fontWeight: '600',
     flex: 1,
     fontSize: 30,
-    color: 'black',
+    color: 'white',
     textAlign: 'left',
   },
   addCourse: {
@@ -51,7 +62,7 @@ export default StyleSheet.create({
     fontWeight: '400',
     flex: 1,
     fontSize: 20,
-    color: colors.qDarkGreen,
+    color: 'white',
     textAlign: 'right',
   }
   
