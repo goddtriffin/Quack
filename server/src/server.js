@@ -1,3 +1,6 @@
+require('dotenv').config();
+
+
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
 var { buildSchema } = require('graphql');
@@ -6,21 +9,20 @@ import types from './graphql/types';
 import rootValue from './graphql/resolvers';
 import sqlConnector from './graphql/connectors';
 
-require('dotenv').config();
 
 var config;
 var cors = require('cors');
 
-
+console.log(process.env.PLS_WORK);
 // Create connection to database
 var prodConfig = {
-  userName: process.env.DB_P_USER,
-  password: process.env.DB_P_PASS,
-  server: process.env.DB_P_ENDPOINT,
-  database: process.env.DB_P_NAME,
+  userName: "sa",//process.env.DB_P_USER,
+  password: "goddtriffin#1334",//process.env.DB_P_PASS,
+  server: "localhost",//process.env.DB_P_ENDPOINT,
+  database: "quackDB",//process.env.DB_P_NAME,
   options: {
      encrypt: true,
-     database: process.env.DB_P_NAME,
+     database: "quackDB",//process.env.DB_P_NAME,
      rowCollectionOnRequestCompletion: true
   }
 }
