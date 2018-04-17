@@ -64,6 +64,20 @@ export default {
 		argSQL[1] = {name: 'date', type: TYPES.NVarChar, arg: args.input.date};
 		argSQL[2] = {name: 'isOpen', type: TYPES.NVarChar, arg: (args.input.isOpen) ? 1 : 0};
 
+		// publish the change
+		const payload = {
+			quizOpened: {
+				courseID: argSQL[0].arg,
+				date: argSQL[1].arg,
+				isOpen: argSQL[2].arg,
+			}
+		}
+
+		// only pub if quiz is open
+		if (payload.quizOpened.isOpen) {
+			context.pubsub.publish('quizOpened', payload);
+		}
+
 		//console.log(argSQL);
 		return context.db.executeSQL( 
 		    "INSERT INTO TestSchema.Quizzes (courseID, date, isOpen) OUTPUT " + 
@@ -90,6 +104,20 @@ export default {
 		argSQL[1] = {name: 'courseID', type: TYPES.NVarChar, arg: args.input.courseID};
 		argSQL[2] = {name: 'date', type: TYPES.NVarChar, arg: args.input.date};
 		argSQL[3] = {name: 'isOpen', type: TYPES.NVarChar, arg: (args.input.isOpen) ? 1 : 0};
+
+		// publish the change
+		const payload = {
+			quizOpened: {
+				courseID: argSQL[0].arg,
+				date: argSQL[1].arg,
+				isOpen: argSQL[2].arg,
+			}
+		}
+
+		// only pub if quiz is open
+		if (payload.quizOpened.isOpen) {
+			context.pubsub.publish('quizOpened', payload);
+		}
 		
 
 		//console.log(argSQL);
@@ -104,6 +132,8 @@ export default {
         // Subscription
 
 	quizOpened: {
-		subscribe: () => pubsub.asyncIterator('quizOpened')
+		subscribe: withFilter(() => pubsub.asyncIterator('quizOpened'), (payload, variables) => {
+			return payload.quizOpened.courseID === variables.courseID;
+		}),
 	}
 }
