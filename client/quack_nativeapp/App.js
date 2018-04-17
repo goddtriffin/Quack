@@ -25,24 +25,13 @@ const httpLink = createHttpLink({
 });
 
 
-/*const middlewareLink = new ApolloLink((operation, forward) => {
-    console.log(this.state.authToken);
-    if (this.state.authToken) {
-    operation.setContext({
-      headers: {
-        authorization: this.state.authToken
-      }
-    });
-  }
-  console.log(operation.getContext());
-  return forward(operation);
-})*/
 let token;
 
 const withToken = setContext(operation => 
   AsyncStorage.getItem('auth-token').then(userToken => {
     return { 
       headers: {
+        type: "student",
         authorization : userToken || null
       },
     };
@@ -68,13 +57,12 @@ export default class App extends Component {
   render() {
     
     console.disableYellowBox = true;
-
+    
     /*
     return (
-      </>
+      <HomeScreen/>
     )
     */
-
     
     if(!this.state.authToken) {
       return (

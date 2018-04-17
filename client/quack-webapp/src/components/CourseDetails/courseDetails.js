@@ -8,7 +8,7 @@ import { Grid, Col, Row, Tabs, Tab, FormGroup, ControlLabel, FormControl, HelpBl
 class CourseDetails extends Component {
 
     state = {
-        courseID: '123456',
+        courseID: '',
         courseTitle: "ABC123: Course Title",
         courseDescription: "Software Engineering",
         newCourseInput: '',
@@ -18,7 +18,7 @@ constructor(props) {
     console.log(props.location);
     super(props);
     this.state = {
-        courseID: '123456',
+        courseID: props.courseID,
         courseTitle: props.courseTitle,
         courseDescription: props.courseDescription,
         newCourseInput: ''
