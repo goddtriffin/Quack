@@ -5,6 +5,7 @@
   "dependencies": {
     "apollo-boost": "^0.1.4",
     "apollo-client": "^2.2.8",
+    "awesome-bootstrap-checkbox": "^1.0.1",
     "bootstrap": "^3.3.7",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",

@@ -3,3 +3,7 @@
 server/node_modules/
 
 client/quack-nativeapp/node_modules/
+
+node_modules
+
+package-lock.json

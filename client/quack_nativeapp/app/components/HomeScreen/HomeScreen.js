@@ -22,7 +22,7 @@ class HomeScreen extends Component {
     }
 
     state = {
-        courses: [{course: 'CS 307', key: 1}],
+        courses: [],
         studentID:'',
         email:'',
         isLoading: true,
@@ -87,15 +87,15 @@ class HomeScreen extends Component {
                 console.log(text);
                 
                 this.props.client.mutate({ mutation: gql`
-                    mutation userAddCourse($id: Int!, $course: String!) {
-                      userAddCourse(id: $id, course: $course) {
+                    mutation userAddCourse($id: Int!, $courseID: Int!) {
+                      userAddCourse(id: $id, courseID: $courseID) {
                         name
                       }
                     }
                   `,
                   variables: {
                     id : this.state.studentID,
-                    course: text
+                    courseID: parseInt(text)
                    }
                 }).then( data => {
                   courses = [];
