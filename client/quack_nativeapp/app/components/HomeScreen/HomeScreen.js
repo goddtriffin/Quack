@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, AsyncStorage, AlertIOS } from 'react-native';
 import styles from './styles';
 import { StackNavigator } from 'react-navigation';
+import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
 
 import { ApolloProvider, graphql, withApollo } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
@@ -11,7 +12,7 @@ import gql from 'graphql-tag';
 
 class HomeScreen extends Component {
     static navigationOptions = {
-        header: null,
+        header: null
     };
 
     constructor(props) {
@@ -80,7 +81,7 @@ class HomeScreen extends Component {
         var title = "";
         let courses = this.state.courses;
         AlertIOS.prompt(
-            'Enter course title', null, (text) => {
+            'Enter Course ID', null, (text) => {
 
                 console.log(text);
                 
@@ -112,11 +113,21 @@ class HomeScreen extends Component {
                 }); 
             }
         );
-
     }
+
+    searchCourseList() {
+        AlertIOS.prompt(
+            'Enter Course Name', null, (text) => {
+                console.log(text);
+                
+            }
+        )
+    };
 
 
     render() {
+
+
 
         let AddCourseButton = <Text/>;
         let CourseDetails = <CourseDetails/>;
@@ -130,6 +141,25 @@ class HomeScreen extends Component {
 
         return (
             <View style={styles.container}>
+                <Header>
+                    <Left>
+                        <Button large transparent>
+                        <Icon name='menu'/>
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>Classes</Title>
+                    </Body>
+                    <Right>
+                        <Button large transparent>
+                        <Icon name='ios-search'/>
+                        </Button>
+                        <Button large transparent onPress={() => this.updateCourseList()}>
+                        <Icon name='add'/>
+                        </Button>
+                    </Right>
+                </Header>
+                
                 <StatusBar
                     barStyle="default"
                 />
@@ -138,7 +168,7 @@ class HomeScreen extends Component {
                     <Text style={styles.bigTitle}>
                         Classes
                     </Text>
-                    <TouchableOpacity style={styles.addCourse} onPress={() => this.updateCourseList()}>
+                    <TouchableOpacity style={styles.addCourse}>
                         {AddCourseButton}
                     </TouchableOpacity>
                 </View>

@@ -21,6 +21,7 @@
     "react-apollo": "^1.4.16",
     "react-native": "^0.53.0",
     "react-native-easy-grid": "^0.1.17",
+    "react-native-search-bar": "^3.4.1",
     "react-navigation": "^1.1.1",
     "react-router": "^4.2.0"
   },

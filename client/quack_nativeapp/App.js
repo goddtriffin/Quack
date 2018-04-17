@@ -3,7 +3,7 @@ import { Platform, StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import LoginScreen from './app/components/LoginScreen/LoginScreen';
 import Quiz from './app/components/Quiz/Quiz';
-import Grades from './app/components/Grades/Grades';
+//import Grades from './app/components/Grades/Grades';
 import RegisterScreen from './app/components/LoginScreen/RegisterScreen';
 import HomeScreen from './app/components/HomeScreen/HomeScreen';
 import Roster from './app/components/Roster/Roster';
@@ -90,9 +90,9 @@ const LoginRoute = StackNavigator({
     Home: {
       screen: HomeScreen,
     },
-    Grades: {
-      screen: Grades,
-    },
+    //Grades: {
+      //screen: Grades,
+    //},
     Quiz: {
       screen: Quiz,
     },

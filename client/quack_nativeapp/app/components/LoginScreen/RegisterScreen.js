@@ -68,7 +68,6 @@ class RegisterScreen extends Component {
             await AsyncStorage.setItem('password', this.state.password);
             await AsyncStorage.setItem('studentID', this.state.studentID);
             await AsyncStorage.setItem('fullName', this.state.fullName);
-            await AsyncStorage.setItem('instructor', this.state.selectedIndex.toString());
             await AsyncStorage.setItem('authToken', this.state.authToken);
 
                 this.props.navigation.navigate('Home');
@@ -91,19 +90,6 @@ class RegisterScreen extends Component {
                     
                     
                     <View style={styles.formContainer}>
-                        
-                        <Text style={styles.bigText}>I am a...</Text>
-
-                        <View style={styles.HELLO}>
-                            <SegmentedControlIOS
-                                values={['Student', 'Instructor']}
-                                selectedIndex={this.state.selectedIndex}
-                                onChange={(event) => {
-                                    this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
-                                }}
-                                tintColor='white'
-                            />
-                        </View>
                         <View>
                             <TextInput 
                                 placeholderTextColor='rgba(255,255,255,0.6)'
