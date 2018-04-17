@@ -1,0 +1,22 @@
+input FeedbackInput {
+    userID: Int!
+    content: String!
+    date: String!
+}
+
+type Feedback {
+    id: Int!
+    userID: Int!
+    content: String!
+    date: String!
+}
+
+type Query {
+    feedbacks: [Feedback]
+    feedback(id: Int!): Feedback
+}
+
+type Mutation {
+    feedbackCreate(input: FeedbackInput): Feedback
+    feedbackUpdate(id: Int!, input: FeedbackInput): Feedback
+}

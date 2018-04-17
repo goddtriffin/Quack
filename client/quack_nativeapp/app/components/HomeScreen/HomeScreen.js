@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, AsyncStorage, AlertIOS } from 'react-native';
 import styles from './styles';
 import { StackNavigator } from 'react-navigation';
-import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
+import { HeaderContainer, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
 
 import { ApolloProvider, graphql, withApollo } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
@@ -11,9 +11,11 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
 class HomeScreen extends Component {
+    
     static navigationOptions = {
         header: null
     };
+    
 
     constructor(props) {
         super(props);
@@ -141,6 +143,22 @@ class HomeScreen extends Component {
 
         return (
             <View style={styles.container}>
+                <Header style={styles.headerColor}>
+                    <Left>
+                        
+                        <Button transparent onPress={() => this.props.navigation.navigate('Feedback')}>
+                            <Icon style={{color: 'white', paddingTop: 25}} name='settings'/>
+                        </Button>
+                    </Left>
+                    <Body></Body>
+                    <Right>
+                        <Button transparent onPress={() => this.updateCourseList()}>
+                            <Icon style={{color: 'white', paddingTop: 25}} name='search'/>
+                        </Button>
+                        <Text style={styles.headerText}>Course search</Text>
+                    </Right>
+                </Header>
+{/*
                 <Header>
                     <Left>
                         <Button large transparent>
@@ -159,7 +177,7 @@ class HomeScreen extends Component {
                         </Button>
                     </Right>
                 </Header>
-                
+*/}
                 <StatusBar
                     barStyle="default"
                 />
@@ -168,9 +186,6 @@ class HomeScreen extends Component {
                     <Text style={styles.bigTitle}>
                         Classes
                     </Text>
-                    <TouchableOpacity style={styles.addCourse}>
-                        {AddCourseButton}
-                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.courseListView}>
@@ -188,6 +203,8 @@ class HomeScreen extends Component {
                     
                     </ScrollView>
                 </View>
+                
+            
             </View>
         );
     }

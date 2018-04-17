@@ -2,6 +2,10 @@ import { StyleSheet, Dimensions } from 'react-native';
 import { colors } from '../../style/styles';
 
 export default StyleSheet.create({
+<<<<<<< HEAD:client/quack_nativeapp/app/components/Grades/styles.js
+  background: {
+    backgroundColor: colors.qLightGreen
+=======
   navigationButton: {
     resizeMode: 'contain',
     paddingTop: 75,
@@ -10,6 +14,7 @@ export default StyleSheet.create({
   gradesListView: {
     paddingRight: 10,
     flex: 2,
+>>>>>>> Development:client/quack_nativeapp/app/components/GradesTyler/styles.js
   },
   gradeListText: {
     fontFamily: 'Fira Sans',
@@ -33,6 +38,13 @@ export default StyleSheet.create({
     paddingLeft: 20
   },
   classHeaderText: {
+<<<<<<< HEAD:client/quack_nativeapp/app/components/Grades/styles.js
+    flex: 1,
+    fontFamily: 'Fira Sans',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 60,
+=======
     fontFamily: 'Fira Sans',
     color: 'black',
     fontWeight: "800",
@@ -55,110 +67,32 @@ export default StyleSheet.create({
     color: 'red',
     fontWeight: 'bold',
     fontSize: 18,
+>>>>>>> Development:client/quack_nativeapp/app/components/GradesTyler/styles.js
     textAlign: 'center',
-    width: 200,
-    paddingTop: 200,
-    paddingRight: 10,
-    //paddingLeft: 20,
-  },
-  currentGrade: {
-    fontFamily: 'Fira Sans',
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 30,
-    textAlign: 'left',
-    width: 600,
+  //  width: 200,
     paddingTop: 10,
-    paddingLeft: 20,
-  },
-  gradeTitle: {
-    fontFamily: 'Fira Sans',
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 40,
-    textAlign: 'left',
-    width: 600,
-    paddingTop: 10,
-    paddingLeft: 20,
-  }, 
-  gradeQuizTitle: {
-    fontFamily: 'Fira Sans',
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 33,
-    paddingLeft: 20,
-    paddingTop: 15,
-    //textAlign: 'left',
-    //paddingTop: 10,
-    //paddingLeft: 20,
-  },
-  scoreDescription: {
-    fontFamily: 'Fira Sans',
-    color: 'black',
-    fontStyle: 'italic',
-    fontSize: 18,
-    textAlign: 'left',
-    width: 300,
-    paddingLeft: 20,
-    paddingTop: 3,
-  },
-  firstgradeDate: {
-    fontFamily: 'Fira Sans',
-    color: 'black',
-    //fontStyle: 'italic',
-    fontWeight: 'bold',
-    fontSize: 33,
-    textAlign: 'left',
-    width: 500,
-    paddingLeft: 20,
-    paddingTop: 72,
-  },
-  gradeDates: {
-    fontFamily: 'Fira Sans',
-    color: 'black',
-    //fontStyle: 'italic',
-    fontWeight: 'bold',
-    fontSize: 33,
-    textAlign: 'left',
-    width: 500,
-    paddingLeft: 20,
-    paddingTop: 40,
-  },
-  quizBackground: {
-    resizeMode: 'contain',
-    width: Dimensions.get('window').width - 10,
-    height: Dimensions.get('window').height,
-    position: 'absolute',
-    top: 320,
-    bottom: 0,
-    left: 5,
-    right: 5,
-  },
-  beginQuizText: {
+ },
+ recentIndicator: {
+    flex: 1,
     fontFamily: 'Fira Sans',
     color: 'white',
-    //fontStyle: 'italic',
     fontWeight: 'bold',
-    fontSize: 35,
-    textAlign: 'left',
-    width: 500,
-    paddingLeft: 20,
-    paddingTop: 40,
-    position: 'absolute',
-    top: 305,
-    bottom: 0,
-    left: 5,
-    right: 5,
-  },
-  letsGoToQuiz: {
-    resizeMode: 'contain',
-    //paddingLeft: 20,
-    paddingTop: 40,
-    paddingRight: 20,
-    //position: 'center',
-    top: 75,
-    bottom: 0,
-    left: 80,
-    right: 20,
-  }
+    fontSize: 25,
+    textAlign: 'center',
+   // width: 500,
+ },
+ pastQuizIndicator: {
+  //flex: 1,
+  fontFamily: 'Fira Sans',
+  color: 'white',
+  //fontWeight: 'bold',
+  fontSize: 25,
+  textAlign: 'center',
+
+},
+line: {
+  borderBottomColor: 'black', 
+  borderBottomWidth: 1,
+  paddingLeft: 100
+}
 });

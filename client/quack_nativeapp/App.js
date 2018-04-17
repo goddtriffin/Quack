@@ -3,7 +3,8 @@ import { Platform, StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import LoginScreen from './app/components/LoginScreen/LoginScreen';
 import Quiz from './app/components/Quiz/Quiz';
-//import Grades from './app/components/Grades/Grades';
+import Grades from './app/components/Grades/Grades';
+import Feedback from './app/components/Feedback/Feedback';
 import RegisterScreen from './app/components/LoginScreen/RegisterScreen';
 import HomeScreen from './app/components/HomeScreen/HomeScreen';
 import Roster from './app/components/Roster/Roster';
@@ -53,6 +54,7 @@ export default class App extends Component {
       email: '',
     }
   }
+  
 
   render() {
     
@@ -60,7 +62,7 @@ export default class App extends Component {
     
     /*
     return (
-      <HomeScreen/>
+        <Feedback/>
     )
     */
     
@@ -77,6 +79,7 @@ export default class App extends Component {
         </ApolloProvider>
       );
     }
+    
   }
 }
 
@@ -90,9 +93,15 @@ const LoginRoute = StackNavigator({
     Home: {
       screen: HomeScreen,
     },
-    //Grades: {
-      //screen: Grades,
-    //},
+    Grades: {
+      screen: Grades,
+      navigationOptions: {
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#07A386'
+        }
+      }
+    },
     Quiz: {
       screen: Quiz,
     },
@@ -105,7 +114,15 @@ const LoginRoute = StackNavigator({
     CourseDetails: {
       screen: CourseDetails,
     },
-});
+    Feedback: {
+      screen: Feedback,
+      navigationOptions: {
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#07A386'
+        }
+    }
+}});
 
 const HomeRoute = StackNavigator({
   Home: {
