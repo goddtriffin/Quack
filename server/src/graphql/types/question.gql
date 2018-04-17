@@ -1,0 +1,31 @@
+input QuestionInput {
+    quizID: Int!
+    type: String!
+    question: String!
+    image: String!
+    options: String!
+    correctAnswer: String!
+    isManual: Boolean!
+}
+
+type Question {
+    id: Int!
+    quizID: Int!
+    type: String!
+    question: String!
+    image: String!
+    options: String!
+    correctAnswer: String!
+    isManual: Boolean!
+}
+
+type Query {
+    questions: [Question]
+    question(id: Int!): Question
+}
+
+type Mutation {
+    questionCreate(input: QuestionInput): Quiz
+    questionUpdate(id: Int!, input: QuestionInput): Quiz
+}
+ 

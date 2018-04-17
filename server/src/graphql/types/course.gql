@@ -1,11 +1,14 @@
 input CourseInput {
-    id: Int!
+    userID: Int!
+    courseID: Int!
     name: String!	
+    description: String!
 }
 
 type Course {
     id: Int!
     name: String!
+    description: String!
 }
 
 type Query {

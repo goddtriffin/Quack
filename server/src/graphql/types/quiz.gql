@@ -1,26 +1,14 @@
 input QuizInput {
     courseID: Int!
-    type: String!
     date: String!
-    question: String!
-    image: String!
-    options: String!
-    correctAnswer: String!
     isOpen: Boolean!
-    isManual: Boolean!
 }
 
 type Quiz {
     id: Int!
     courseID: Int!
-    type: String!
     date: String!
-    question: String!
-    image: String!
-    options: String!
-    correctAnswer: String!
     isOpen: Boolean!
-    isManual: Boolean!
 }
 
 type Query {
