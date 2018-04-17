@@ -9,7 +9,11 @@ import { ApolloProvider, graphql, withApollo } from 'react-apollo';
 
 import gql from 'graphql-tag';
 
-class PastQuiz extends Component {
+class WriteQuiz extends Component {
+    static navigationOptions = ({ navigation }) => ({
+        header: null,
+      })
+    
     constructor(props) {
         super(props);
         this.sendAnswers = this.sendAnswers.bind(this);
@@ -333,4 +337,4 @@ class PastQuiz extends Component {
     }
 }
 
-export default withApollo(PastQuiz);
+export default withApollo(WriteQuiz);

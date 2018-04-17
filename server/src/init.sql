@@ -35,6 +35,23 @@ CREATE TABLE TestSchema.Courses (
 	description NVARCHAR(3000)
 );
 
+DROP TABLE TestSchema.Feedback;
+
+CREATE TABLE TestSchema.Feedbacks (
+	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	userID INT,
+	date NVARCHAR(10),
+	content NVARCHAR(4000)
+
+);
+
+/*DROP TABLE TestSchema.Courses;
+
+CREATE TABLE TestSchema.Courses (
+        id INT,
+        name NVARCHAR(50)
+);
+
 
 CREATE SCHEMA TestSchema;
 
