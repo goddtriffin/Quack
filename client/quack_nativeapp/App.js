@@ -4,6 +4,7 @@ import { StackNavigator } from 'react-navigation';
 import LoginScreen from './app/components/LoginScreen/LoginScreen';
 import Quiz from './app/components/Quiz/Quiz';
 import Grades from './app/components/Grades/Grades';
+import Feedback from './app/components/Feedback/Feedback';
 import RegisterScreen from './app/components/LoginScreen/RegisterScreen';
 import HomeScreen from './app/components/HomeScreen/HomeScreen';
 import Roster from './app/components/Roster/Roster';
@@ -72,7 +73,7 @@ export default class App extends Component {
 
     /*
     return (
-      <Grades/>
+        <Feedback/>
     )
     */
 
@@ -125,7 +126,15 @@ const LoginRoute = StackNavigator({
     CourseDetails: {
       screen: CourseDetails,
     },
-});
+    Feedback: {
+      screen: Feedback,
+      navigationOptions: {
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#07A386'
+        }
+    }
+}});
 
 const HomeRoute = StackNavigator({
   Home: {

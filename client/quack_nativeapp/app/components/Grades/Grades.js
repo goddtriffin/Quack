@@ -18,19 +18,6 @@ export default class Quiz extends Component {
         {assignment: 'Quiz 2', grade: '23', key:1}],
     }
 
-    /*componentDidMount() {
-        let grades = this.state.grades;
-        if(this.state.course == "CS 307"){
-            grades.push({assignment: 'Quiz 1', grade: '100%', key: 0});
-            this.setState({grades});
-        }
-        else{
-            grades.push({assignment: 'No Grades', grade: '', key: 0})
-            this.setState({grades});
-        }
-    }*/
-
-    
     render() {
        this.state.course = this.props.navigation.state.params.courses;
        const data = [
@@ -49,7 +36,6 @@ export default class Quiz extends Component {
                         </Text>
                 </Row>
                 <Row size={50}>
-                    
                     <VictoryChart
                     domainPadding={20}
                      >         
