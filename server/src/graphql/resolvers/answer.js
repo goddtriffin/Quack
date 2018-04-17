@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { validate_answer_type, validate_answer_content } from '../validators/validate'
 
+import { withFilter } from 'graphql-subscriptions';
+
 var Request = require('tedious').Request;
 var TYPES   = require('tedious').TYPES;
 var argSQL = {};

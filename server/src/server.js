@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+import { createServer } from 'http';
 
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
@@ -109,6 +110,7 @@ console.log('I got here');
 */
 
 server.listen(5000, () => {
+	console.log('starting subscriptions server at *:5000/subscriptions');
     new SubscriptionServer({
       execute,
       subscribe,
