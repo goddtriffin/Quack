@@ -1,3 +1,17 @@
+// set up socket.io
+var app = require('express')();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+io.on('connection', function (socket) {
+    console.log('socket connected');
+
+    socket.on('disconnect', function () {
+        console.log('disconnected');
+    });
+});
+server.listen(5000);
+// setup the rest of the server
+
 require('dotenv').config();
 
 var express = require('express');
@@ -53,6 +67,7 @@ else {
     console.log("Incorrect server type. Use either 'p' or 'l' to connect to local or production database ");
     process.exit(1);
 }
+
 console.log(types);
 console.log(rootValue);
 
