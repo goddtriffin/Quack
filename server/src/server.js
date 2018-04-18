@@ -1,18 +1,12 @@
 require('dotenv').config();
 
-import { createServer } from 'http';
-
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
-var { buildSchema, execute, subscribe } = require('graphql');
+var { buildSchema } = require('graphql');
 
 import types from './graphql/types';
 import rootValue from './graphql/resolvers';
 import sqlConnector from './graphql/connectors';
-
-// subscriptions
-import { SubscriptionServer } from 'subscriptions-transport-ws';
-import { PubSub } from 'graphql-subscriptions';
 
 require('dotenv').config();
 
@@ -59,10 +53,8 @@ else {
     console.log("Incorrect server type. Use either 'p' or 'l' to connect to local or production database ");
     process.exit(1);
 }
-
 console.log(types);
 console.log(rootValue);
-
 
 const schema = buildSchema(types);
 const sqlDB = new sqlConnector(config);
@@ -75,10 +67,10 @@ app.use('/graphql', (req, res) => {
         schema: schema,
         rootValue,
         context: { 
-        headers: req.headers,
-        db: sqlDB,
-        JWT_SECRET: "quackmedaddy",
-        pubsub
+            headers: req.headers,
+            db: sqlDB,
+            JWT_SECRET: "quackmedaddy",
+            pubsub
         },
         graphiql: true,
     }) (req, res);
@@ -86,37 +78,3 @@ app.use('/graphql', (req, res) => {
 
 app.listen(4000, '0.0.0.0');
 console.log('Running a GraphQL API server at http://endor-vm2.cs.purdue.edu:4000/graphql');
-
-// start subscription stuff
-console.log('starting subscription stuff, pls work');
-const server = createServer(app);
-const pubsub = new PubSub();
-
-/*
-// Wrap the Express server
-app.listen(5000, () => {
-    console.log('ummm here');
-  // Set up the WebSocket for handling GraphQL subscriptions
-  new SubscriptionServer({
-    execute,
-    subscribe,
-    schema
-  }, {
-    server: ws,
-    path: '/subscriptions',
-  });
-});
-console.log('I got here');
-*/
-
-server.listen(5000, () => {
-	console.log('starting subscriptions server at *:5000/subscriptions');
-    new SubscriptionServer({
-      execute,
-      subscribe,
-      schema,
-    }, {
-      server,
-      path: '/subscriptions',
-    });
-});
