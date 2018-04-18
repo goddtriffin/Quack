@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { validate_answer_type, validate_answer_content } from '../validators/validate'
+import answerSubscriptions from './graphql/subscriptions/answer';
 
 var Request = require('tedious').Request;
 var TYPES   = require('tedious').TYPES;
@@ -68,7 +69,7 @@ export default {
 						type:		argSQL[2].arg,
 						content:	argSQL[3].arg
 				  	};
-				  	answersSubscriptions.sendAnswerCreationEvent(quizID, answer);
+				  	answerSubscriptions.sendAnswerCreationEvent(quizID, answer);
 
 			      //console.log(argSQL);
 			      return context.db.executeSQL( 
