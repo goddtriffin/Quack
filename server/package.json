@@ -14,6 +14,7 @@
   "author": "Todd Griffin, Justin Hartman",
   "license": "ISC",
   "dependencies": {
+    "array-flatten": "^2.1.1",
     "async": "^2.6.0",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
