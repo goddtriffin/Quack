@@ -79,8 +79,8 @@ export default {
 				      return new Error(err);
 			      }
 			      // validate all user input
-			      validate_answer_type(args.input.type);
-			      validate_answer_content(args.input.content);
+			      // validate_answer_type(args.input.type);
+			      // validate_answer_content(args.input.content);
 
 			      // update database of existing Role (async task)
 

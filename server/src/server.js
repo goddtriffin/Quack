@@ -84,8 +84,7 @@ app.use('/graphql', (req, res) => {
         context: { 
             headers: req.headers,
             db: sqlDB,
-            JWT_SECRET: "quackmedaddy",
-            pubsub
+            JWT_SECRET: "quackmedaddy"
         },
         graphiql: true,
     }) (req, res);

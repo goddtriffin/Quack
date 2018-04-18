@@ -20,7 +20,3 @@ type Mutation {
     quizCreate(input: QuizInput): Quiz
     quizUpdate(id: Int!, input: QuizInput): Quiz
 }
-
-type Subscription {
-    quizOpened(courseID: Int!): Quiz
-}

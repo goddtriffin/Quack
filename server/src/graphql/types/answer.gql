@@ -22,7 +22,3 @@ type Mutation {
     answerCreate(input: AnswerInput): Answer
     answerUpdate(id: Int!, input: AnswerInput): Answer
 }
-
-type Subscription {
-    answerCreated(quizID: Int!): Answer
-}
