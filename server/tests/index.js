@@ -64,6 +64,13 @@ overall['total'] += tally['total'];
 
 console.log("\n==================\n");
 
+const role = require('./role');
+tally = role.testall();
+overall['score'] += tally['score'];
+overall['total'] += tally['total'];
+
+console.log("\n==================\n");
+
 const subscriptions = require('./subscriptions');
 tally = subscriptions.testall();
 overall['score'] += tally['score'];
