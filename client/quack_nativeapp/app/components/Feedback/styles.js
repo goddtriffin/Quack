@@ -5,6 +5,10 @@ export default StyleSheet.create({
   background: {
     backgroundColor: colors.qLightGreen
   },
+  header: {
+    backgroundColor: colors.qLightGreen,
+    height: 80,
+  },
   gradeListText: {
     fontFamily: 'Fira Sans',
     fontWeight: '600',
