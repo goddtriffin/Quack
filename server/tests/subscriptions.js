@@ -7,6 +7,10 @@
 // "Given a client subscribes to an event, it gets their updates.""
 // "Given a subscription is successfully implemented, all the test cases will pass.""
 
+// 1 hr     |   new quiz answer
+// "Given quiz results can be viewed in real-time, an instructor should be able to see responses from their quiz for non-free response questions (true/false & multiple choice)."
+// "Given quiz results can be viewed in real-time, a user should only be able to see their own answer and not any others for that quiz."
+// "Given quiz results can be viewed in real-time, a user should only be able to see the class results once the instructor has made it available to view."
 
 const v = require('../src/graphql/validators/validate');
 
