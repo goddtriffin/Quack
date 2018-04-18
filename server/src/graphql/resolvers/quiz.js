@@ -1,5 +1,5 @@
 import { validate_quiz_type, validate_quiz_question, validate_quiz_options, validate_quiz_correct_answer, validate_date } from '../validators/validate';
-import { sendQuizUpdateEvent } from '../subscriptions/quiz';
+import sendQuizUpdateEvent from '../subscriptions/quiz';
 import jwt from 'jsonwebtoken';
 
 var Request = require('tedious').Request;

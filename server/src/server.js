@@ -1,3 +1,4 @@
+
 require('dotenv').config();
 
 var express = require('express');
@@ -88,7 +89,8 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
 // var { subscribeToQuizUpdate, unsubscribeToQuizUpdate } = require('./graphql/resolvers/quiz');
-import { subscribeToQuizUpdate, unsubscribeToQuizUpdate } from './graphql/subscriptions/quiz';
+import subscribeToQuizUpdate from './graphql/subscriptions/quiz';
+import unsubscribeToQuizUpdate from './graphql/subscriptions/quiz';
 
 // handles newly connected socket
 io.on('connection', function (socket) {
@@ -105,8 +107,6 @@ io.on('connection', function (socket) {
         if (event === 'quiz_answer_created') {
             // TODO
         }
-
-        socket.emit(event, {hello: 'world'});
     })
 
     // listen for unsubscribe events
