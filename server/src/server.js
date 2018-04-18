@@ -1,8 +1,8 @@
 require('dotenv').config();
 
-const express = require('express');
-const graphqlHTTP = require('express-graphql');
-const { buildSchema } = require('graphql');
+var express = require('express');
+var graphqlHTTP = require('express-graphql');
+var { buildSchema } = require('graphql');
 
 import types from './graphql/types';
 import rootValue from './graphql/resolvers';
@@ -83,9 +83,9 @@ console.log('Running a GraphQL API server at http://endor-vm2.cs.purdue.edu:4000
 // SOCKET.IO
 //
 
-const app = require('express')();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+var app = require('express')();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 
 const { subscribeToQuizUpdate, unsubscribeToQuizUpdate } = require('./graphql/resolvers/quiz');
 
