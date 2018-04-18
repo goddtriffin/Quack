@@ -32,7 +32,7 @@ function unsubscribeToQuizUpdate (socket, courseID) {
     }
 
     // everything gucci, remove socket from courseID subscriber list
-    array.splice(index, 1);
+    quizUpdateSubscribers.splice(index, 1);
 }
 
 // send newly updated quiz information to all sockets
