@@ -91,7 +91,7 @@ io.on('connection', function (socket) {
 
     // listen for subscribe events
     socket.on('subscribe', function (event, data) {
-        console.log(socket.id, 'subscribed to', event, 'event.');
+        console.log('Socket', socket.id, 'subscribed to', event, 'event.');
 
         if (event === 'quiz_updated') {
             // TODO
@@ -99,11 +99,13 @@ io.on('connection', function (socket) {
         if (event === 'quiz_answer_created') {
             // TODO
         }
+
+        socket.emit(event, {hello: 'world'});
     })
 
     // listen for unsubscribe events
     socket.on('unsubscribe', function (event) {
-        console.log(socket.id, 'unsubscribed from', event, 'event.');
+        console.log('Socket', socket.id, 'unsubscribed from', event, 'event.');
 
         if (event === 'quiz_updated') {
             // TODO
