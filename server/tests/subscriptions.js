@@ -12,6 +12,16 @@
 // "Given quiz results can be viewed in real-time, a user should only be able to see their own answer and not any others for that quiz."
 // "Given quiz results can be viewed in real-time, a user should only be able to see the class results once the instructor has made it available to view."
 
+const socket = require('socket.io-client')('http://endor-vm2.cs.purdue.edu:5000');
+
+socket.on('connect', function () {
+    console.log('I connected');
+});
+
+socket.on('disconnect', function () {
+    console.log('I disconnected');
+});
+
 const v = require('../src/graphql/validators/validate');
 
 // TEST
