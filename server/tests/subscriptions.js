@@ -102,7 +102,7 @@ function handleUpdatedQuiz (socket, quiz) {
     console.log('quiz updated:', quiz);
 
     // unsubscribe from the quiz_updated event
-    socket.emit('unsubscribe', 'quiz_updated');
+    socket.emit('unsubscribe', 'quiz_updated', 123123);
 
     // close when done
     socket.disconnect();
@@ -191,7 +191,7 @@ function handleQuizAnswerCreated (socket, quizAnswer) {
     console.log('quiz answer created:', quizAnswer);
 
     // unsubscribe from the quiz_updated event
-    socket.emit('unsubscribe', 'quiz_answer_created');
+    socket.emit('unsubscribe', 'quiz_answer_created', 1);
 
     // close when done
     socket.disconnect();
