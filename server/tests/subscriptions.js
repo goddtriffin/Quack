@@ -1,69 +1,74 @@
-// 1 hr     |   manually opened Quiz
-// "Given that the second task is completed successfully, a user should see an option to take a quiz when it is started."
+// 1 hr     |   Quiz updated
+// "Given the server receives the correct request, a client can subscribe to a certain event."
+// "Given a client subscribes to an event, it gets their updates."
+// "Given a subscription is successfully implemented, all the test cases will pass."
 
-
-// 1 hr     |   updated Quiz
-// "Given the server receives the correct request, a client can subscribe to a certain event.""
-// "Given a client subscribes to an event, it gets their updates.""
-// "Given a subscription is successfully implemented, all the test cases will pass.""
-
-// 1 hr     |   new quiz answer
+// 1 hr     |   Quiz Answer created
 // "Given quiz results can be viewed in real-time, an instructor should be able to see responses from their quiz for non-free response questions (true/false & multiple choice)."
 // "Given quiz results can be viewed in real-time, a user should only be able to see their own answer and not any others for that quiz."
 // "Given quiz results can be viewed in real-time, a user should only be able to see the class results once the instructor has made it available to view."
 
-const socket = require('socket.io-client')('http://endor-vm2.cs.purdue.edu:5000');
+// INITIAL
 
-socket.on('connect', function () {
-    console.log('I connected');
-});
+// returns socket for automatic testing use
+function createSocket (type) {
+    // create
+    const socket = require('socket.io-client')('http://endor-vm2.cs.purdue.edu:5000');
 
-socket.on('disconnect', function () {
-    console.log('I disconnected');
-});
+    // handle new connection
+    socket.on('connect', function () {
+        console.log('Connected to subscriptions:', type);
+    });
 
-const v = require('../src/graphql/validators/validate');
+    // handle disconnection
+    socket.on('disconnect', function () {
+        console.log('Disconnected from subscriptions:', type);
+    });
 
-// TEST
+    // ready
+    return socket;
+}
 
-function subscription_dummy () {
-    // const msg = v.validate_subscription_dummy(var);
-    const msg = 'ok';
+// QUIZ UPDATED
 
-    if (msg !== 'ok') return "Should've returned ok.";
-    return 'ok';
+function subscription_quiz_updated (courseID) {
+    // init
+    const socket = createSocket('quiz_updated');
+
+    // attach quiz updated listener
+    socket.on('quiz_updated', function () {
+
+
+        // close when done
+        socket.disconnect();
+    });
+
+    // subscribe to the quiz_updated event,
+    // send what course to watch
+    socket.emit('subscribe quiz_updated', courseID);
+}
+
+// QUIZ ANSWER CREATED
+
+function subscription_quiz_answer_created (quizID) {
+    // init
+    const socket = createSocket('quiz_answer_created');
+
+    // attach quiz answer created listener
+    socket.on('quiz_answer_created', function () {
+
+
+        // close when done
+        socket.disconnect();
+    });
+
+    // subscribe to the quiz_answer_created event,
+    // send what quiz to watch
+    socket.emit('subscribe quiz_answer_created', quizID);
 }
 
 // TESTALL
 
-module.exports = {
-    testall: function () {
-        console.log("Running Subscription Testall");
-        
-        // congregate all tests
-        const tests = [
-            subscription_dummy
-        ]
+subscription_quiz_updated(123123);
 
-        // cycle through tests counting the scores
-        let score = 0;
-        for (i=0; i<tests.length; i++) {
-            const msg = tests[i]();
-
-            if (msg === 'ok') {
-                score++;
-            } else {
-                console.log("" + tests[i] + ": " + msg);
-            }
-        }
-
-        // print score
-        console.log("Finished. Score: " + score + "/" + tests.length);
-
-        // let the big momma know about the points
-        let tally = {};
-        tally['score'] = score;
-        tally['total'] = tests.length;
-        return tally;
-    }
-};
+subscription_quiz_answer_created(1);

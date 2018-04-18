@@ -3,10 +3,13 @@ var app = require('express')();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 io.on('connection', function (socket) {
-    console.log('socket connected');
+    console.log('Socket connected:', socket.id);
+
+    // connection homemade graphql subscriptions
+    // TODO
 
     socket.on('disconnect', function () {
-        console.log('disconnected');
+        console.log('Socket disconnected:', socket.id);
     });
 });
 server.listen(5000);
