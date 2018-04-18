@@ -2,12 +2,9 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { validate_answer_type, validate_answer_content } from '../validators/validate'
 
-import { withFilter } from 'graphql-subscriptions';
-
 var Request = require('tedious').Request;
 var TYPES   = require('tedious').TYPES;
 var argSQL = {};
-
 
 export default {
 
@@ -64,18 +61,6 @@ export default {
 			      argSQL[2] = {name: 'type', type: TYPES.NVarChar, arg: args.input.type};
 			      argSQL[3] = {name: 'content', type: TYPES.NVarChar, arg: args.input.content};
 
-				  	// publish the change
-					const payload = {
-							answerCreated: {
-								userID: argSQL[0].arg,
-								quizID: argSQL[1].arg,
-								type: argSQL[2].arg,
-								content: argSQL[3].arg
-							}
-					}
-
-				  	context.pubsub.publish('answerCreated', payload);
-
 			      //console.log(argSQL);
 			      return context.db.executeSQL( 
 					      "INSERT INTO TestSchema.Answers (userID, quizID, type, content) OUTPUT " + 
@@ -116,12 +101,4 @@ export default {
 					      argSQL, false);
 		      } 
 	      },
-
-	// Subscription
-
-	answerCreated: {
-		subscribe: withFilter(() => pubsub.asyncIterator('answerCreated'), (payload, variables) => {
-			return payload.answerCreated.quizID === variables.quizID;
-		}),
-	}
 }
