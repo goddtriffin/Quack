@@ -1,5 +1,5 @@
 import { validate_quiz_type, validate_quiz_question, validate_quiz_options, validate_quiz_correct_answer, validate_date } from '../validators/validate';
-import sendQuizUpdateEvent from '../subscriptions/quiz';
+import quizSubscriptions from '../subscriptions/quiz';
 import jwt from 'jsonwebtoken';
 
 var Request = require('tedious').Request;
@@ -99,7 +99,7 @@ export default {
                         date:           argSQL[2].arg,
                         isOpen:         argSQL[3].arg
                 };
-                sendQuizUpdateEvent(courseID, quiz);
+                quizSubscriptions.sendQuizUpdateEvent(courseID, quiz);
 		
 		//console.log(argSQL);
 		return context.db.executeSQL( 

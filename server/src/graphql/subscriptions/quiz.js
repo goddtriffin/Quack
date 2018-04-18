@@ -5,12 +5,12 @@ const quizUpdateSubscribers = {}; //  key:value  |  courseID:[socket]
 function subscribeToQuizUpdate (socket, courseID) {
     // if courseID isn't subscribed to yet,
     // create it as a key and pair it with an empty socket list
-    if (!quizUpdateSubscribers.hasOwnProperty(socketID)) {
+    if (!quizUpdateSubscribers.hasOwnProperty(courseID)) {
             quizUpdateSubscribers[socketID] = [];
     }
 
     // push the socket into the subscriber list attached to the specific courseID
-    quizUpdateSubscribers[socketID].push(socketID);
+    quizUpdateSubscribers[socketID].push(courseID);
 }
 
 // unsubscribes a socket to quiz updates from a specific course
