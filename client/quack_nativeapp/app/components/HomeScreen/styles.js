@@ -41,7 +41,7 @@ export default StyleSheet.create({
     height: 50,
   },
   courseListRow: {
-    paddingVertical: 30,
+    paddingVertical: 10,
   },
   courseListText: {
     fontFamily: 'Fira Sans',
