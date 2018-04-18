@@ -1,12 +1,9 @@
 import { validate_quiz_type, validate_quiz_question, validate_quiz_options, validate_quiz_correct_answer, validate_date } from '../validators/validate'
 import jwt from 'jsonwebtoken';
 
-import { withFilter } from 'graphql-subscriptions';
-
 var Request = require('tedious').Request;
 var TYPES   = require('tedious').TYPES;
 var argSQL = {};
-
 
 /*
  *Different types of quizzes: multiple-choice, short-answer, true-false
@@ -66,20 +63,6 @@ export default {
 		argSQL[1] = {name: 'date', type: TYPES.NVarChar, arg: args.input.date};
 		argSQL[2] = {name: 'isOpen', type: TYPES.NVarChar, arg: (args.input.isOpen) ? 1 : 0};
 
-		// publish the change
-		const payload = {
-			quizOpened: {
-				courseID: argSQL[0].arg,
-				date: argSQL[1].arg,
-				isOpen: argSQL[2].arg,
-			}
-		}
-
-		// only pub if quiz is open
-		if (payload.quizOpened.isOpen) {
-			context.pubsub.publish('quizOpened', payload);
-		}
-
 		//console.log(argSQL);
 		return context.db.executeSQL( 
 		    "INSERT INTO TestSchema.Quizzes (courseID, date, isOpen) OUTPUT " + 
@@ -106,22 +89,7 @@ export default {
 		argSQL[1] = {name: 'courseID', type: TYPES.NVarChar, arg: args.input.courseID};
 		argSQL[2] = {name: 'date', type: TYPES.NVarChar, arg: args.input.date};
 		argSQL[3] = {name: 'isOpen', type: TYPES.NVarChar, arg: (args.input.isOpen) ? 1 : 0};
-
-		// publish the change
-		const payload = {
-			quizOpened: {
-				courseID: argSQL[0].arg,
-				date: argSQL[1].arg,
-				isOpen: argSQL[2].arg,
-			}
-		}
-
-		// only pub if quiz is open
-		if (payload.quizOpened.isOpen) {
-			context.pubsub.publish('quizOpened', payload);
-		}
 		
-
 		//console.log(argSQL);
 		return context.db.executeSQL( 
 		    "UPDATE TestSchema.Quizzes SET " + 
@@ -130,12 +98,4 @@ export default {
 		    argSQL, false);
     	}
     },
-
-        // Subscription
-
-	quizOpened: {
-		subscribe: withFilter(() => pubsub.asyncIterator('quizOpened'), (payload, variables) => {
-			return payload.quizOpened.courseID === variables.courseID;
-		}),
-	}
 }
