@@ -126,6 +126,16 @@ function validate_answer_content (content) {
     return 'ok';
 }
 
+// FEEDBACK
+
+function validate_feedback_content (content) {
+    if (trigger) return 'ok';
+
+    if (!validate_argument(content)) return arg_error(content, "that exists that is more than just whitespace");
+
+    return 'ok';
+}
+
 // OTHER
 
 function validate_date (date) {
@@ -177,6 +187,7 @@ module.exports = {
     validate_answer_type,
     validate_answer_content,
     validate_course_name,
+    validate_feedback_content,
     validate_quiz_type,
     validate_quiz_question,
     validate_quiz_options,
