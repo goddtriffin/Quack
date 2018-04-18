@@ -6,11 +6,11 @@ function subscribeToQuizUpdate (socket, courseID) {
     // if courseID isn't subscribed to yet,
     // create it as a key and pair it with an empty socket list
     if (!quizUpdateSubscribers.hasOwnProperty(courseID)) {
-            quizUpdateSubscribers[socketID] = [];
+            quizUpdateSubscribers[courseID] = [];
     }
 
     // push the socket into the subscriber list attached to the specific courseID
-    quizUpdateSubscribers[socketID].push(courseID);
+    quizUpdateSubscribers[courseID].push(socket);
 }
 
 // unsubscribes a socket to quiz updates from a specific course
@@ -18,7 +18,7 @@ function unsubscribeToQuizUpdate (socket, courseID) {
     // if courseID doesn't exist in quiz update subscriber list,
     // error, don't do anything
     if (!quizUpdateSubscribers.hasOwnProperty(courseID)) {
-            console.log('quiz update (un)subscriber error: courseID', courseID, 'doesn\'t exist.');
+            console.error('quiz update (un)subscriber error: courseID', courseID, 'doesn\'t exist.');
             return;
     }
 
@@ -27,7 +27,7 @@ function unsubscribeToQuizUpdate (socket, courseID) {
 
     // check if socket exists within courseID subscriber list
     if (index === -1) {
-            console.log('quiz update (un)subscriber error: socket', socket.id, 'isn\'t subscribed to ', courseID,'.');
+            console.error('quiz update (un)subscriber error: socket', socket.id, 'isn\'t subscribed to ', courseID,'.');
             return;
     }
 
