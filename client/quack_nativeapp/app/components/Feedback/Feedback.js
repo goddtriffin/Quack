@@ -13,6 +13,10 @@ import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 class Feedback extends Component {
 
+    static navigationOptions = {
+        backgroundColor: '#07A386',
+    };
+
     constructor(props) {
         super(props);
         this.sendFeedback = this.sendFeedback.bind(this);
