@@ -182,5 +182,6 @@ module.exports = {
     validate_quiz_options,
     validate_quiz_correct_answer,
     validate_role_type,
+    validate_section_name,
     do_trigger
 }
