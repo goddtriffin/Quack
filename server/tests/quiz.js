@@ -9,22 +9,6 @@
 
 const v = require('../src/graphql/validators/validate');
 
-// QUIZ TYPE
-
-function quiz_type_null () {
-    const msg = v.validate_quiz_type(null);
-
-    if (msg === 'ok') return "Should've returned false due to null variable.";
-    return 'ok';
-}
-
-function quiz_type_fine () {
-    const msg = v.validate_quiz_type("short-answer");
-
-    if (msg !== 'ok') return msg;
-    return 'ok';
-}
-
 // QUIZ QUESTION
 
 function quiz_question_null () {
@@ -81,7 +65,6 @@ module.exports = {
         
         // congregate all tests
         const tests = [
-            quiz_type_null, quiz_type_fine,
             quiz_question_null, quiz_question_fine,
             quiz_options_null, quiz_options_fine,
             quiz_correct_answer_null, quiz_correct_answer_fine
@@ -104,8 +87,8 @@ module.exports = {
 
         // let the big momma know about the points
         let tally = {};
-        tally['score'] = score + 4;
-        tally['total'] = tests.length + 2;
+        tally['score'] = score;
+        tally['total'] = tests.length;
         return tally;
     }
 };

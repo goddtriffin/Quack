@@ -163,8 +163,8 @@ export default {
                 }
 
 		argSQL = {}
-		argSQL[0] = {name: 'name', type: TYPES.NVarChar, arg: args.course};
-		const course = await context.db.executeSQL("SELECT id FROM TestSchema.Courses where name = @name", argSQL, false);
+		argSQL[0] = {name: 'id', type: TYPES.NVarChar, arg: args.courseID};
+		const course = await context.db.executeSQL("SELECT * FROM TestSchema.Courses where id = @id", argSQL, false);
 		if(!course) {
 		    return new Error("Course does not exist");
 		}
@@ -209,8 +209,25 @@ export default {
 	
 		argSQL = {}
 		argSQL[0] = {name: 'courseID', type: TYPES.Int, arg: args.courseID};
-		return context.db.executeSQL("SELECT * FROM TestSchema.Quizzes where courseID = @courseID and isOpen = 1", argSQL, true);
+        // return context.db.executeSQL("SELECT * FROM TestSchema.Quizzes where courseID = @courseID and isOpen = 1", argSQL, true);
+        return context.db.executeSQL("SELECT * FROM TestSchema.Quizzes where courseID = @courseID", argSQL, true);
 	}
+    },
+   
+     userGetRoles: async(args, context) => {
+        if(!context.headers.hasOwnProperty('authorization')) {
+                return new Error("No authorization");
+        }else {
+                try {
+                        var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+                } catch(err) {
+                        return new Error(err);
+                }
+
+                argSQL = {}
+                argSQL[0] = {name: 'userID', type: TYPES.Int, arg: args.id};
+                return context.db.executeSQL("SELECT * FROM TestSchema.Roles where userID = @userID", argSQL, true);
+        }
     }
 }
 
