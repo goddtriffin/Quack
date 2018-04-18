@@ -1,20 +1,3 @@
-// set up socket.io
-var app = require('express')();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-io.on('connection', function (socket) {
-    console.log('Socket connected:', socket.id);
-
-    // connection homemade graphql subscriptions
-    // TODO
-
-    socket.on('disconnect', function () {
-        console.log('Socket disconnected:', socket.id);
-    });
-});
-server.listen(5000);
-// setup the rest of the server
-
 require('dotenv').config();
 
 var express = require('express');
@@ -95,3 +78,43 @@ app.use('/graphql', (req, res) => {
 
 app.listen(4000, '0.0.0.0');
 console.log('Running a GraphQL API server at http://endor-vm2.cs.purdue.edu:4000/graphql');
+
+//
+// SOCKET.IO
+//
+
+var app = require('express')();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+io.on('connection', function (socket) {
+    console.log('Socket connected:', socket.id);
+
+    // listen for subscribe events
+    socket.on('subscribe', function (event, data) {
+        console.log(socket.id, 'subscribed to', event, 'event.');
+
+        if (event === 'quiz_updated') {
+            // TODO
+        } else
+        if (event === 'quiz_answer_created') {
+            // TODO
+        }
+    })
+
+    // listen for unsubscribe events
+    socket.on('unsubscribe', function (event) {
+        console.log(socket.id, 'unsubscribed from', event, 'event.');
+
+        if (event === 'quiz_updated') {
+            // TODO
+        } else
+        if (event === 'quiz_answer_created') {
+            // TODO
+        }
+    })
+
+    socket.on('disconnect', function () {
+        console.log('Socket disconnected:', socket.id);
+    });
+});
+server.listen(5000);
