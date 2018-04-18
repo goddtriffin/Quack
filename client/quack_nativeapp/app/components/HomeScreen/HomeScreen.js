@@ -199,13 +199,13 @@ class HomeScreen extends Component {
                                 }
                             )
                             : this.state.searchResults.map(({name, id}) => {
-                                    return (<View>
+                                    return (<View style={{paddingVertical: 10}}>
                                         <Grid>
                                             <Col size={85}>
                                                 <Text style={styles.courseListText}>{name}</Text>
                                             </Col>
                                             <Col size={15}>
-                                                <TouchableOpacity style={styles.courseListRow} onPress={() => this.addCourse(id)}>
+                                                <TouchableOpacity onPress={() => this.addCourse(id)}>
                                                     <Icon style={styles.addButton} name='add'/>
                                                 </TouchableOpacity>
                                             </Col>
