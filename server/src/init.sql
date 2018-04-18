@@ -1,5 +1,40 @@
 SELECT * FROM TestSchema.Users;
 
+CREATE TABLE TestSchema.Grades (
+	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	questionID INT,
+	answerID INT,
+	userID INT,
+	points FLOAT,
+	totalPoints FLOAT
+)
+
+/*DROP TABLE TestSchema.Quizzes;
+CREATE TABLE TestSchema.Quizzes (
+        id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+        courseID INT,
+        date NVARCHAR(10),
+        isOpen BIT,
+);
+CREATE TABLE TestSchema.Questions (
+	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	quizID INT,
+	type NVARCHAR(5),
+	question NVARCHAR(1000),
+	image NVARCHAR(1000),
+	options NVARCHAR(1000),
+	correctAnswer NVARCHAR(1000),
+	isManual BIT
+);
+
+DROP TABLE TestSchema.Courses;
+
+CREATE TABLE TestSchema.Courses (
+        id INT,
+        name NVARCHAR(50),
+	description NVARCHAR(3000)
+);
+
 DROP TABLE TestSchema.Feedback;
 
 CREATE TABLE TestSchema.Feedbacks (

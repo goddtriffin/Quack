@@ -1,5 +1,8 @@
 .DS_Store
 
+node_modules/
+package-lock.json
+
 server/node_modules/
 
 client/quack-nativeapp/node_modules/
