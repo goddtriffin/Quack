@@ -62,6 +62,13 @@ tally = quiz.testall();
 overall['score'] += tally['score'];
 overall['total'] += tally['total'];
 
+console.log("\n==================\n");
+
+const subscriptions = require('./subscriptions');
+tally = subscriptions.testall();
+overall['score'] += tally['score'];
+overall['total'] += tally['total'];
+
 console.log("\n==================");
 console.log("FINAL SCORE: " + overall['score'] + "/" + overall['total']);
 console.log("==================");
