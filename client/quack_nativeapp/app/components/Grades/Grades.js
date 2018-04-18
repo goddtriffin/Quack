@@ -20,13 +20,11 @@ class Grades extends Component {
         authToken: '',
         email: '',
         course: '',
-        courseID: '',
+        courseID: 0,
         quizzes: [],
     }
 
     componentDidMount() {
-        this.setState({course:this.props.navigation.state.params.course});
-        this.setState({courseID:this.props.navigation.state.params.id});
         this.props.client.mutate({ mutation: gql`
                 mutation userGetQuizzes($courseID: Int!) {
                     userGetQuizzes(courseID: $courseID) {
@@ -37,23 +35,26 @@ class Grades extends Component {
                 }
             `,
             variables: {
-                courseID : parseInt(this.state.courseID),
+                courseID : this.props.navigation.state.params.id,
             }
             }).then( data => {
                 quizzes = [];
 
                 if(data.data.userGetQuizzes == null) {
-                    courses.push({id : 'No Quizzes', isOpen:false, date:'', key:0})
+                    quizzes.push({id : 'No Quizzes', isOpen:false, date:'', key:0})
                 }
                 else {
                     for(let i = 0; i < data.data.userGetQuizzes.length; i++) {
-                        courses.push({id : data.data.userGetQuizzes[i].id, isOpen:data.data.userGetQuizzes[i].isOpen, date:data.data.userGetQuizzes[i].date, key:i})
+                        quizzes.push({id : data.data.userGetQuizzes[i].id, isOpen:data.data.userGetQuizzes[i].isOpen, date:data.data.userGetQuizzes[i].date, key:i})
                     }
                 }
                 this.setState({quizzes});
             }).catch(function(error) {
                 alert(error.message);
             });
+            this.setState({course:this.props.navigation.state.params.course});
+            this.setState({courseID:this.props.navigation.state.params.id});
+            console.log(this.state.courseID);
     }
 
     
