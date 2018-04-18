@@ -209,7 +209,8 @@ export default {
 	
 		argSQL = {}
 		argSQL[0] = {name: 'courseID', type: TYPES.Int, arg: args.courseID};
-		return context.db.executeSQL("SELECT * FROM TestSchema.Quizzes where courseID = @courseID and isOpen = 1", argSQL, true);
+        // return context.db.executeSQL("SELECT * FROM TestSchema.Quizzes where courseID = @courseID and isOpen = 1", argSQL, true);
+        return context.db.executeSQL("SELECT * FROM TestSchema.Quizzes where courseID = @courseID", argSQL, true);
 	}
     },
    
