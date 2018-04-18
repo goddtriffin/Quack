@@ -36,9 +36,11 @@ function login (onSuccessCallbacks) {
             });
 
             // run success callbacks w/ authed client
-            onSuccessCallbacks.forEach(function (callback) {
-                callback(client);
-            });
+            for (let i=0; i<onSuccessCallbacks.length; i++) {
+                setTimeout(function () {
+                    onSuccessCallbacks[i](client);
+                }, 4000 * i);
+            }
         })
         .catch(err => {
             console.log(err);
@@ -67,22 +69,44 @@ function createSocket (type) {
 // QUIZ UPDATED
 
 function subscription_quiz_updated (client) {
+    console.log('Running Quiz Updated Tests');
+    console.log('==========================');
+
     // open a quiz
     openQuiz(client);
 
-    // init
-    const socket = createSocket('quiz_updated');
+    // prep socket for data transfer
+    setTimeout(function () {
+        // init
+        const socket = createSocket('quiz_updated');
 
-    // subscribe to the quiz_updated event,
-    // send what course to watch
-    socket.emit('subscribe', 'quiz_updated', 123123);
+        // subscribe to the quiz_updated event,
+        // send what course to watch
+        socket.emit('subscribe', 'quiz_updated', 123123);
 
-    // attach quiz updated listener
-    socket.on('quiz_updated', handleUpdatedQuiz);
+        // attach quiz updated listener
+        socket.on('quiz_updated', handleUpdatedQuiz);
 
-    // close a quiz
-    const boundCloseQuiz = closeQuiz.bind(null, client);
-    setTimeout(boundCloseQuiz, 1000);
+        // close a quiz
+        setTimeout(function () {
+            closeQuiz(client);
+        }, 1000);
+    }, 1000);
+}
+
+// handles updated quiz
+function handleUpdatedQuiz (quiz) {
+    // show data from updated quiz
+    console.log('quiz updated:', quiz);
+
+    // unsubscribe from the quiz_updated event
+    socket.emit('unsubscribe', 'quiz_updated');
+
+    // close when done
+    socket.disconnect();
+
+    // done
+    console.log('Done\n');
 }
 
 // opens a quiz in the database
@@ -135,35 +159,67 @@ function closeQuiz (client) {
         });
 }
 
-// handles updated quiz
-function handleUpdatedQuiz (quiz) {
-    // show data from updated quiz
-    console.log('quiz updated:', quiz);
-
-    // unsubscribe from the quiz_updated event
-    socket.emit('unsubscribe', 'quiz_updated');
-
-    // close when done
-    socket.disconnect();
-}
-
 // QUIZ ANSWER CREATED
 
-function subscription_quiz_answer_created (quizID) {
+function subscription_quiz_answer_created (client) {
+    console.log('Running Quiz Answer Created Tests');
+    console.log('=================================');
+
     // init
     const socket = createSocket('quiz_answer_created');
 
-    // attach quiz answer created listener
-    socket.on('quiz_answer_created', function () {
-        // TODO
-
-        // close when done
-        socket.disconnect();
-    });
-
     // subscribe to the quiz_answer_created event,
     // send what quiz to watch
-    socket.emit('subscribe quiz_answer_created', quizID);
+    socket.emit('subscribe', 'quiz_answer_created', 1);
+
+    // attach quiz answer created listener
+    socket.on('quiz_answer_created', handleQuizAnswerCreated);
+
+    // close a quiz
+    setTimeout(function () {
+        createQuizAnswer(client);
+    }, 2000);
+}
+
+// handles quiz answer created
+function handleQuizAnswerCreated (quizAnswer) {
+    // show data from created quiz answer
+    console.log('quiz answer created:', quizAnswer);
+
+    // unsubscribe from the quiz_updated event
+    socket.emit('unsubscribe', 'quiz_answer_created');
+
+    // close when done
+    socket.disconnect();
+
+    // done
+    console.log('Done\n');
+}
+
+function createQuizAnswer (client) {
+    // create query
+    const query = `mutation {
+        answerCreate (input: {
+            userID: 6
+            quizID: 1
+            type: "true-false"
+            content: "true"
+        }) {
+            userID
+            quizID
+            type
+            content
+        }
+    }`
+
+    // send request
+    client.request(query)
+        .then(response => {
+            console.log('Attempted to create quiz answer...');
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
 
 // TESTALL
