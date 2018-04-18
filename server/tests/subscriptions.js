@@ -85,7 +85,9 @@ function subscription_quiz_updated (client) {
         socket.emit('subscribe', 'quiz_updated', 123123);
 
         // attach quiz updated listener
-        socket.on('quiz_updated', handleUpdatedQuiz);
+        socket.on('quiz_updated', function (quiz) {
+            handleUpdatedQuiz(socket, quiz);
+        });
 
         // close a quiz
         setTimeout(function () {
@@ -95,7 +97,7 @@ function subscription_quiz_updated (client) {
 }
 
 // handles updated quiz
-function handleUpdatedQuiz (quiz) {
+function handleUpdatedQuiz (socket, quiz) {
     // show data from updated quiz
     console.log('quiz updated:', quiz);
 
@@ -173,7 +175,9 @@ function subscription_quiz_answer_created (client) {
     socket.emit('subscribe', 'quiz_answer_created', 1);
 
     // attach quiz answer created listener
-    socket.on('quiz_answer_created', handleQuizAnswerCreated);
+    socket.on('quiz_answer_created', function (quizAnswer) {
+        handleQuizAnswerCreated(socket, quizAnswer);
+    });
 
     // close a quiz
     setTimeout(function () {
@@ -182,7 +186,7 @@ function subscription_quiz_answer_created (client) {
 }
 
 // handles quiz answer created
-function handleQuizAnswerCreated (quizAnswer) {
+function handleQuizAnswerCreated (socket, quizAnswer) {
     // show data from created quiz answer
     console.log('quiz answer created:', quizAnswer);
 
