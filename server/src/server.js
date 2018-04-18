@@ -87,14 +87,17 @@ var app = require('express')();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
-const { subscribeToQuizUpdate, unsubscribeToQuizUpdate } = require('./graphql/resolvers/quiz');
+// var { subscribeToQuizUpdate, unsubscribeToQuizUpdate } = require('./graphql/resolvers/quiz');
+import { subscribeToQuizUpdate, unsubscribeToQuizUpdate } from './graphql/subscriptions/quiz';
 
+// handles newly connected socket
 io.on('connection', function (socket) {
     console.log('Socket connected:', socket.id);
 
     // listen for subscribe events
     socket.on('subscribe', function (event, data) {
         console.log('Socket', socket.id, 'subscribed to', event, 'event.');
+        console.log('data:', data);
 
         if (event === 'quiz_updated') {
             subscribeToQuizUpdate(socket, data);
@@ -109,6 +112,7 @@ io.on('connection', function (socket) {
     // listen for unsubscribe events
     socket.on('unsubscribe', function (event, data) {
         console.log('Socket', socket.id, 'unsubscribed from', event, 'event.');
+        console.log('data:', data);
 
         if (event === 'quiz_updated') {
             unsubscribeToQuizUpdate(socket, data);
@@ -118,6 +122,7 @@ io.on('connection', function (socket) {
         }
     })
 
+    // handles socket disconnecting
     socket.on('disconnect', function () {
         console.log('Socket disconnected:', socket.id);
     });
