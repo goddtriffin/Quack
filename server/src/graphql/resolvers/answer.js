@@ -59,7 +59,16 @@ export default {
 			      argSQL[0] = {name: 'userID', type: TYPES.NVarChar, arg: args.input.userID};
 			      argSQL[1] = {name: 'quizID', type: TYPES.NVarChar, arg: args.input.quizID};
 			      argSQL[2] = {name: 'type', type: TYPES.NVarChar, arg: args.input.type};
-			      argSQL[3] = {name: 'content', type: TYPES.NVarChar, arg: args.input.content};
+				  argSQL[3] = {name: 'content', type: TYPES.NVarChar, arg: args.input.content};
+				  
+				  	// send subscription
+				  	const quizID = argSQL[1].arg;
+				  	const answer = {
+						userID:		argSQL[0].arg,
+						type:		argSQL[2].arg,
+						content:	argSQL[3].arg
+				  	};
+				  	answersSubscriptions.sendAnswerCreationEvent(quizID, answer);
 
 			      //console.log(argSQL);
 			      return context.db.executeSQL( 

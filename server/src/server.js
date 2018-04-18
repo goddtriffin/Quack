@@ -88,8 +88,8 @@ var app = require('express')();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
-// var { subscribeToQuizUpdate, unsubscribeToQuizUpdate } = require('./graphql/resolvers/quiz');
 import quizSubscriptions from './graphql/subscriptions/quiz';
+import answerSubscriptions from './graphql/subscriptions/answer';
 
 // handles newly connected socket
 io.on('connection', function (socket) {
@@ -104,7 +104,7 @@ io.on('connection', function (socket) {
             quizSubscriptions.subscribeToQuizUpdate(socket, data);
         } else
         if (event === 'quiz_answer_created') {
-            // TODO
+            answerSubscriptions.subscribeToAnswerCreation(socket, data);
         }
     })
 
@@ -117,7 +117,7 @@ io.on('connection', function (socket) {
             quizSubscriptions.unsubscribeToQuizUpdate(socket, data);
         } else
         if (event === 'quiz_answer_created') {
-            // TODO
+            answerSubscriptions.unsubscribeToAnswerCreation(socket, data);
         }
     })
 
