@@ -4,6 +4,8 @@ import { StackNavigator } from 'react-navigation';
 import LoginScreen from './app/components/LoginScreen/LoginScreen';
 import Quiz from './app/components/Quiz/Quiz';
 import Grades from './app/components/Grades/Grades';
+import QuizResults from './app/components/QuizResults/QuizResults';
+import Feedback from './app/components/Feedback/Feedback';
 import RegisterScreen from './app/components/LoginScreen/RegisterScreen';
 import HomeScreen from './app/components/HomeScreen/HomeScreen';
 import Roster from './app/components/Roster/Roster';
@@ -25,24 +27,13 @@ const httpLink = createHttpLink({
 });
 
 
-/*const middlewareLink = new ApolloLink((operation, forward) => {
-    console.log(this.state.authToken);
-    if (this.state.authToken) {
-    operation.setContext({
-      headers: {
-        authorization: this.state.authToken
-      }
-    });
-  }
-  console.log(operation.getContext());
-  return forward(operation);
-})*/
 let token;
 
 const withToken = setContext(operation => 
   AsyncStorage.getItem('auth-token').then(userToken => {
     return { 
       headers: {
+        type: "student",
         authorization : userToken || null
       },
     };
@@ -64,17 +55,17 @@ export default class App extends Component {
       email: '',
     }
   }
+  
 
   render() {
     
     console.disableYellowBox = true;
-
+    
     /*
     return (
-      </>
+        <Feedback/>
     )
     */
-
     
     if(!this.state.authToken) {
       return (
@@ -89,6 +80,7 @@ export default class App extends Component {
         </ApolloProvider>
       );
     }
+    
   }
 }
 
@@ -105,6 +97,15 @@ const LoginRoute = StackNavigator({
     Grades: {
       screen: Grades,
     },
+    QuizResults: {
+      screen: QuizResults,
+      navigationOptions: {
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#07A386'
+        }
+      }
+    },
     Quiz: {
       screen: Quiz,
     },
@@ -117,7 +118,15 @@ const LoginRoute = StackNavigator({
     CourseDetails: {
       screen: CourseDetails,
     },
-});
+    Feedback: {
+      screen: Feedback,
+      navigationOptions: {
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#07A386'
+        }
+    }
+}});
 
 const HomeRoute = StackNavigator({
   Home: {

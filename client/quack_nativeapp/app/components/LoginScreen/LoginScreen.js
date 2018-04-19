@@ -97,6 +97,7 @@ class LoginScreen extends Component {
                         style={styles.input}
                         ref={(input) => this.passwordInput = input}
                         onChangeText={(password) => this.setState({password})}
+                        onSubmitEditing = {() => loginUser()}
                     />
 
                     <TouchableOpacity style={styles.button} onPress ={() => loginUser()}>
