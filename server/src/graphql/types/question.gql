@@ -1,5 +1,6 @@
 input QuestionInput {
     quizID: Int!
+    qIndex: Int!
     type: String!
     question: String!
     image: String!
@@ -11,6 +12,7 @@ input QuestionInput {
 type Question {
     id: Int!
     quizID: Int!
+    qIndex: Int!
     type: String!
     question: String!
     image: String!
@@ -27,5 +29,6 @@ type Query {
 type Mutation {
     questionCreate(input: QuestionInput): Quiz
     questionUpdate(id: Int!, input: QuestionInput): Quiz
+    questionGetUserAnswer(questionID: Int!, userID: Int!): Answer
 }
  

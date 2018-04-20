@@ -23,6 +23,7 @@ type Mutation {
     userCreate(input: UserInput, password: String!): User
     userUpdate(id: Int!, input: UserInput): User
     userAddCourse(id: Int!, courseID: Int!): [Course]
+    userAddSection(id: Int!, sectionID: Int!): [Section]
     userGetCourses(id: Int!): [Course]
     userGetQuizzes(courseID: Int!): [Quiz]
     userGetRoles(id: Int!): [Role]

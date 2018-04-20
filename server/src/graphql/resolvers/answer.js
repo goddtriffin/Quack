@@ -58,7 +58,7 @@ export default {
 			      // return newly created User to client
 			      argSQL = {};
 			      argSQL[0] = {name: 'userID', type: TYPES.NVarChar, arg: args.input.userID};
-			      argSQL[1] = {name: 'quizID', type: TYPES.NVarChar, arg: args.input.quizID};
+			      argSQL[1] = {name: 'questionID', type: TYPES.NVarChar, arg: args.input.questionID};
 			      argSQL[2] = {name: 'type', type: TYPES.NVarChar, arg: args.input.type};
 				  argSQL[3] = {name: 'content', type: TYPES.NVarChar, arg: args.input.content};
 				  
@@ -73,8 +73,8 @@ export default {
 
 			      //console.log(argSQL);
 			      return context.db.executeSQL( 
-					      "INSERT INTO TestSchema.Answers (userID, quizID, type, content) OUTPUT " + 
-					      "INSERTED.id, INSERTED.userID, INSERTED.quizID, INSERTED.type, INSERTED.content VALUES (@userID, @quizID, @type, @content);", 
+					      "INSERT INTO TestSchema.Answers (userID, questionID, type, content) OUTPUT " + 
+					      "INSERTED.id, INSERTED.userID, INSERTED.questionID, INSERTED.type, INSERTED.content VALUES (@userID, @questionID, @type, @content);", 
 					      argSQL, false);
 		      }
 	      }, 
@@ -98,7 +98,7 @@ export default {
 			      argSQL = {};
 			      argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.id};
 			      argSQL[1] = {name: 'userID', type: TYPES.NVarChar, arg: args.input.userID};
-			      argSQL[2] = {name: 'quizID', type: TYPES.NVarChar, arg: args.input.quizID};
+			      argSQL[2] = {name: 'questionID', type: TYPES.NVarChar, arg: args.input.questionID};
 			      argSQL[3] = {name: 'type', type: TYPES.NVarChar, arg: args.input.type};
 			      argSQL[4] = {name: 'content', type: TYPES.NVarChar, arg: args.input.content};
 
@@ -106,8 +106,8 @@ export default {
 			      //console.log(argSQL);
 			      return context.db.executeSQL( 
 					      "UPDATE TestSchema.Answers SET " + 
-					      "userID = @userID, quizID = @quizID, type = @type, content = @content   " + 
-					      "OUTPUT INSERTED.id, INSERTED.userID, INSERTED.quizID, INSERTED.type, INSERTED.content WHERE id = @id;", 
+					      "userID = @userID, questionID = @questionID, type = @type, content = @content   " + 
+					      "OUTPUT INSERTED.id, INSERTED.userID, INSERTED.questionID, INSERTED.type, INSERTED.content WHERE id = @id;", 
 					      argSQL, false);
 		      } 
 	      },
