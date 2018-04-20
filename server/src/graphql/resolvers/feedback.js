@@ -65,7 +65,7 @@ export default {
         }
     }, 
 
-    quizUpdate: async (args, context) => {
+    feedbackUpdate: async (args, context) => {
 	    if (!context.headers.hasOwnProperty('authorization')) {
                 return new Error("No authorization");
         } else {
