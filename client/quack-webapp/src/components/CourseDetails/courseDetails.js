@@ -2,7 +2,9 @@ import React from 'react';
 import { Component } from 'react';
 import { colors } from '../../styles/styles'
 import styles from './styles'
-import {  } from 'react-router-dom';
+import { graphql, withApollo } from 'react-apollo'
+import gql from 'graphql-tag'
+import moment from 'moment'
 import { Grid, Col, Row, Tabs, Tab, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Modal } from '../../../node_modules/react-bootstrap'
 
 class CourseDetails extends Component {
@@ -26,6 +28,7 @@ constructor(props) {
         newCourseInput: '',
         show: false,
         feedback: "",
+        userID: localStorage.getItem("userID")
     }
     this.handleChangeT = this.handleChangeT.bind(this);
     this.handleChangeD = this.handleChangeD.bind(this);
@@ -71,14 +74,29 @@ constructor(props) {
     this.setState({show: false, feedback: ""})
   }
 
-  submit() {
+  submit = async() => {
     var feedback = this.state.feedback;
       if(feedback == "") {
           this.setState({show: false, feedback: ""})
       }else {
           // submit feedback
-          console.log("SUBMITTING")
-          this.setState({show: false})
+         await this.props.client.mutate({
+            mutation: gql`mutation feedbackCreate($input: FeedbackInput) {
+                feedbackCreate( input: $input) {
+                    id
+                }
+            }`,
+            variables: {
+                input: {
+                    userID: this.state.userID,
+                    content: this.state.feedback,
+                    date: 'now'
+                }
+            }
+        }).then( data => { 
+            console.log(data);
+            this.setState({show: false})
+        })
       }
   }
 
@@ -142,6 +160,5 @@ render() {
     );
 }
 
-
 }
-export default CourseDetails;
+export default withApollo(CourseDetails);

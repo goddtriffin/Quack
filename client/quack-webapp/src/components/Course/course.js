@@ -8,6 +8,8 @@ import CourseDetails from '../CourseDetails/courseDetails';
 import CourseRoster from '../CourseRoster/courseRoster'
 import CourseRoles from '../CourseRoles/courseRoles';
 import CourseQuizzes from '../CourseQuizzes/courseQuizzes';
+import { graphql, withApollo } from 'react-apollo'
+import gql from 'graphql-tag'
 
 class Course extends Component {
 
@@ -18,6 +20,7 @@ class Course extends Component {
         courseRoster: ['Theo', 'Mason', 'Justin', 'Todd', 'Tyler'],
         courseQuizzes: ['Quiz 1', 'Quiz 2', 'Quiz 3', 'Quiz 4'],
         key: 1,
+        courseSections: [],
     }
 
 constructor(props) {
@@ -25,8 +28,9 @@ constructor(props) {
     super(props);
     this.state = {
         courseTitle: props.location.state.courseTitle,
-        courseID: props.location.state.courseID,
+        courseID: props.courseID,
         key: 1,
+        courseSections: [],
     }
     
 
@@ -36,6 +40,30 @@ constructor(props) {
 
 handleSelect(key) {
     this.setState({ key: key });
+    if(key == 3) {
+        // download roster data
+        this.props.client.mutate({
+            mutation: gql`
+                mutation courseGetSections($id: Int!) {
+                courseGetSections(id: $id) {
+                  id
+                  name
+                }
+              }`,
+            variables: {
+                id: this.state.courseID,
+            }
+        }).then( data => {
+            console.log(data);
+            var s = data.data.courseGetSections;
+            var temp = [];
+            for(var i = 0; i < s.length; i++) {
+                temp.push({key: s[i].id, title: s[i].name})
+            }
+
+            this.setState({courseSections: temp});
+        })
+    }
 }
 
 updateDetails(title, description) {
@@ -46,6 +74,7 @@ updateDetails(title, description) {
         courseDescription: description
     })
 }
+
 
 render() {
     
@@ -77,7 +106,7 @@ render() {
                         <CourseQuizzes courseID={this.state.courseID} courseTitle={this.state.courseTitle}/>
                     </Tab>
                     <Tab eventKey={3} title="Roster">
-                        <CourseRoster/>
+                        <CourseRoster courseID={this.state.courseID} />
                     </Tab>
                     <Tab eventKey={4} title="Roles">
                         <CourseRoles/>
@@ -94,4 +123,4 @@ render() {
 
 
 }
-export default Course;
+export default withApollo(Course);

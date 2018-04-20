@@ -4,6 +4,8 @@ import { Grid, Col, Row, FormControl, FormGroup,
     ListGroup, ListGroupItem, Modal, ControlLabel, 
     Button, DropdownButton, MenuItem, ButtonToolbar } from '../../../node_modules/react-bootstrap';
 import { Link } from 'react-router-dom';
+import { graphql, withApollo } from 'react-apollo'
+import gql from 'graphql-tag'
 
 class EditQuiz extends Component {
 
@@ -63,6 +65,33 @@ class EditQuiz extends Component {
         this.handleChangeImg = this.handleChangeImg.bind(this);
     }
 
+    componentDidMount() {
+        console.log("mounting");
+        this.props.client.mutate({
+            mutation: gql`mutation quizGetQuestions($id: Int!) {
+                quizGetQuestions(id: $id) {
+                    id
+                    type
+                    question
+                    image
+                    options
+                    correctAnswer            
+                }
+            }`,
+            variables: {
+                id: this.state.quizID,
+            }
+        }).then(data => {
+            var q = [];
+            var qs = data.data.quizGetQuestions;
+            for(var i = 0; i < qs.length; i++) {
+                q.push({key: i + 1, num: i+1, type: qs[i].type, question: qs[i].question, options: qs[i].options.split(";"), image: qs[i].image, answer: qs[i].correctAnswer})
+            }
+            console.log(qs)
+            this.setState({quizQuestions: qs})
+        })
+    }
+
     handleQuizTitle(e) {
         this.setState({quizTitle: e.target.value})
     }
@@ -120,7 +149,7 @@ class EditQuiz extends Component {
         var questions = this.state.quizQuestions.slice();
         questions.map((question) => {
             if(question.question == q) {
-                question.answer = answer;
+                question.correctAnswer = answer;
                 return;
             }
         });
@@ -261,8 +290,81 @@ class EditQuiz extends Component {
         }
     }
 
-    save() {
+    save = async() => {
         // Here's where you'll save the quiz to the server
+        await this.props.client.mutate({
+            mutation: gql`mutation quizUpdate($id: Int!, $input: QuizInput) {
+                quizUpdate(id: $id, input: $input) {
+                    id
+                }
+            }`,
+            variables: {
+                id: this.state.quizID,
+                input: {
+                    title: this.state.quizTitle,
+                    courseID: this.state.courseID,
+                    qCount: this.state.quizQuestions.length,
+                    date: '',
+                    isOpen: false
+
+                }
+            }
+        }).then( data => { 
+            console.log(this.state.quizQuestions);
+            for(var i = 0; i < this.state.quizQuestions.length; i++) {
+                console.log(this.state.quizQuestions[i].id);
+
+                if(this.state.quizQuestions[i].id == null) {
+                    this.props.client.mutate({
+                        mutation: gql`mutation questionCreate($input: QuestionInput) {
+                            questionCreate( input: $input) {
+                                id
+                            }
+                        }`,
+                        variables: {
+                            input: {
+                                quizID: this.state.quizID,
+                                qIndex: this.state.quizQuestions[i].key,
+                                type: this.state.quizQuestions[i].type,
+                                question: this.state.quizQuestions[i].question,
+                                image: this.state.quizQuestions[i].image,
+                                options: this.state.quizQuestions[i].options.toString(),
+                                correctAnswer: this.state.quizQuestions[i].answer,
+                                isManual: false
+                            }
+                        }
+                    }).then(quest => {
+                        console.log(quest);
+                    })
+                }
+                else {
+                    console.log(this.state.quizQuestions[i].id)
+                    this.props.client.mutate({
+                        mutation: gql`mutation questionUpdate($id: Int!, $input: QuestionInput) {
+                            questionUpdate(id: $id, input: $input) {
+                                id
+                            }
+                        }`,
+                        variables: {
+                            id: this.state.quizQuestions[i].id,
+                            input: {
+                                quizID: data.data.quizUpdate.id,
+                                qIndex: this.state.quizQuestions[i].key,
+                                type: this.state.quizQuestions[i].type,
+                                question: this.state.quizQuestions[i].question,
+                                image: this.state.quizQuestions[i].image,
+                                options: this.state.quizQuestions[i].options.toString(),
+                                correctAnswer: this.state.quizQuestions[i].answer,
+                                isManual: false
+                            }
+                        }
+                    }).then(quest => {
+                        console.log(quest);
+                    })
+                }
+            }
+            this.setState({show: false})
+        })
     }
     
     render() {
@@ -337,7 +439,7 @@ class EditQuiz extends Component {
                 <Grid style={{height: '92vh', width: 'auto', margin: '0px', padding: '0px', marginBottom: '-30px', marginLeft: '20px'}}>
                     <Row>
                     <div style={{margin: '0px', padding: '0px'}}>
-                    <h1 style={styles.title}>Create a new quiz</h1>
+                    <h1 style={styles.title}>Edit quiz</h1>
                     </div>
                     </Row>
                     <Row> 
@@ -370,7 +472,7 @@ class EditQuiz extends Component {
         );
     }
 }
-export default EditQuiz;
+export default withApollo(EditQuiz);
 
 
 class QuizForm extends Component {
@@ -405,7 +507,7 @@ class QuizForm extends Component {
         const QuestionList = ({questions}) => (
             <Fragment>
                 {questions.map(question => (
-                    <QuizQuestion key={count++} question={question} setAnswer={this.setAnswer} deleteQuestion={this.deleteQuestion} addImage={this.addImage}/>
+                    <QuizQuestion key={count++} num={count} question={question} setAnswer={this.setAnswer} deleteQuestion={this.deleteQuestion} addImage={this.addImage}/>
                 ))}
             </Fragment>
         );
@@ -426,7 +528,7 @@ class QuizQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected: '',
+            selected: "",
             isHovering: false,
         }
 
@@ -472,21 +574,21 @@ class QuizQuestion extends Component {
 
 
     render() {
-        
+        console.log(this.props)
         const question = this.props.question.question;
-        var options = this.props.question.options;
+        var options = this.props.question.options.split(",");
         const image = this.props.question.image;
         const type = this.props.question.type;
-        const num = this.props.question.key;
-        const answer = this.props.question.answer;
-
+        const num = this.props.num;
+        const answer = this.props.question.correctAnswer;
+        
         // MC
         if(type == "mc") {
             const optionsList = options.map((choice) =>
                 
                 <div key={choice.toString()} className="radio">
                     <label>
-                    <input id={question} type="radio" value={`${choice}`} checked={answer===`${choice}`} onChange={(e) => this.handleChange(e, question)} />
+                    <input id={question} type="radio" value={`${choice}`} checked={answer ===`${choice}`} onChange={(e) => this.handleChange(e, question)} />
                         {choice}
                     </label>
                 </div>

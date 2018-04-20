@@ -8,6 +8,8 @@ import { Grid, Col, Row, Tabs, Tab, FormGroup,
     Nav, NavItem, Table, Modal, Button } from '../../../node_modules/react-bootstrap';
 
 import BootstrapTable from 'react-bootstrap-table-next';
+import { graphql, withApollo } from 'react-apollo'
+import gql from 'graphql-tag'
 
 class CourseRoster extends Component {
 
@@ -17,7 +19,7 @@ class CourseRoster extends Component {
         courseDescription: "Software Engineering",
         newCourseInput: '',
         columns: [],
-        courseSections: [],
+        courseSections: [{id: 0}],
         rosters: [],
         newSectionTitle: '',
         show: false,
@@ -41,27 +43,54 @@ constructor(props) {
         )
     }
 
+    var cs = [];
+    if(props.courseSections == null) {
+        cs = [];
+    }else {
+        cs = props.courseSections;
+    }
 
     this.state = {
+        courseID: props.courseID,
         columns: [
             {key: '1', dataField: 'name', text: "Name"},
             {key: '2', dataField: 'email', text: "Email"}
         ],
-        courseSections: [
-            {key: '1', title: 'Section 1 - 11am'},
-            {key: '2', title: 'Section 2 - 3pm'},
-            {key: '3', title: 'Section 3 - 1pm'}
-        ],
+        
         rosters: [temp, temp2, temp],
         show: false,
         newSectionTitle: '',
-        
+        courseSections: [{id: 0, title: ""}]
+                
     }
     
     this.handleChangeSection = this.handleChangeSection.bind(this);
     this.handleClose = this.handleClose.bind(this)
 }
 
+componentDidMount() {
+    this.props.client.mutate({
+            mutation: gql`
+                mutation courseGetSections($id: Int!) {
+                courseGetSections(id: $id) {
+                  id
+                  name
+                }
+              }`,
+            variables: {
+                id: this.state.courseID,
+            }
+        }).then( data => {
+            console.log(data);
+            var s = data.data.courseGetSections;
+            var temp = [];
+            for(var i = 0; i < s.length; i++) {
+                temp.push({key: s[i].id, title: s[i].name})
+            }
+
+           this.setState({courseSections: temp});
+        })
+}
 
 handleChangeSection(e) {
     this.setState({newSectionTitle: e.target.value})
@@ -93,26 +122,32 @@ handleClose() {
 
 
 render() {
-
-    const tabs = this.state.courseSections.map(section => (
+    console.log(this.state.courseSections)
+    var tabs = [];
+    var pages = [];
+    if(this.state.courseSections == null) {
+        return(<div></div>);
+    }
+    
+    tabs = this.state.courseSections.map(section => (
         <NavItem key={section.key} eventKey={section.key}>{section.title}</NavItem>
-    ));
+        ));
 
-    const pages = this.state.courseSections.map((section) => {
-        return(
-            <Tab.Pane key={section.key} eventKey={section.key} style={{width: '80%', height: '70vh', overflowY: 'scroll'}} >
-                <BootstrapTable
-                    striped
-                    hover
-                    condensed
-                    bordered={false} 
-                    keyField='key' 
-                    data={this.state.rosters[`${section.key - 1}`]} 
-                    columns={this.state.columns}
-                    />
-            </Tab.Pane>
-        );
-    });
+        pages = this.state.courseSections.map((section) => {
+            return(
+                <Tab.Pane key={section.key} eventKey={section.key} style={{width: '80%', height: '70vh', overflowY: 'scroll'}} >
+                    <BootstrapTable
+                        striped
+                        hover
+                        condensed
+                        bordered={false} 
+                        keyField='key' 
+                        data={this.state.courseSections} 
+                        columns={this.state.columns}
+                        />
+                </Tab.Pane>
+            );
+        });
 
     return(
         <div>
@@ -148,7 +183,7 @@ render() {
                 </Col>
             </Row>
             <Row>
-                <Tab.Container id="left-tabs-example" defaultActiveKey="1">
+                <Tab.Container id="left-tabs-example" >
                     <Row className="clearfix">
                         <Col sm={3}>
                         <Nav bsStyle="pills" stacked>
@@ -170,4 +205,4 @@ render() {
 }
 
 
-} export default CourseRoster;
+} export default withApollo(CourseRoster);
