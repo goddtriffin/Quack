@@ -24,10 +24,17 @@ export default StyleSheet.create({
     fontFamily: 'Fira Sans',
     color: 'white',
     textAlign: 'center',
-    //paddingTop: 10,
+    paddingTop: 10,
     fontSize: 30,
   },
-  
+  quizTextLive: {
+    fontFamily: 'Fira Sans',
+    color: 'white',
+    textAlign: 'center',
+    paddingTop: 10,
+    fontSize: 30,
+    color: 'red'
+  },
   headerText: {
     fontFamily: 'Fira Sans',
     color: 'white',
@@ -40,6 +47,15 @@ export default StyleSheet.create({
     fontWeight: '600',
     flex: 3,
     fontSize: 50,
+    color: 'white',
+    textAlign: 'center',
+    paddingBottom: 25,
+  },
+  subTitle: {
+    fontFamily: 'Fira Sans',
+    fontWeight: '600',
+    flex: 3,
+    fontSize: 30,
     color: 'white',
     textAlign: 'center',
     paddingBottom: 10,

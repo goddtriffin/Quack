@@ -115,6 +115,9 @@ const LoginRoute = StackNavigator({
     WriteQuiz: {
       screen: WriteQuiz,
     },
+    QuizResults: {
+      screen: QuizResults,
+    },
     CourseDetails: {
       screen: CourseDetails,
     },
