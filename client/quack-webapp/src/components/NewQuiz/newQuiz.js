@@ -4,6 +4,8 @@ import { Grid, Col, Row, FormControl, FormGroup,
     ListGroup, ListGroupItem, Modal, ControlLabel, 
     Button, DropdownButton, MenuItem, ButtonToolbar } from '../../../node_modules/react-bootstrap';
 import { Link } from 'react-router-dom';
+import { graphql, withApollo } from 'react-apollo'
+import gql from 'graphql-tag'
 
 class NewQuiz extends Component {
 
@@ -264,8 +266,51 @@ class NewQuiz extends Component {
         }
     }
 
-    save() {
+    save = async() => {
         // Here's where you'll save the quiz to the server
+        await this.props.client.mutate({
+            mutation: gql`mutation quizCreate($input: QuizInput) {
+                quizCreate( input: $input) {
+                    id
+                }
+            }`,
+            variables: {
+                input: {
+                    title: this.state.quizTitle,
+                    courseID: this.state.courseID,
+                    qCount: this.state.quizQuestions.length,
+                    date: '',
+                    isOpen: false
+
+                }
+            }
+        }).then( data => { 
+            console.log(data);
+            for(var i = 0; i < this.state.quizQuestions.length; i++) {
+                this.props.client.mutate({
+                    mutation: gql`mutation questionCreate($input: QuestionInput) {
+                        questionCreate( input: $input) {
+                            id
+                        }
+                    }`,
+                    variables: {
+                        input: {
+                            quizID: data.data.quizCreate.id,
+                            qIndex: this.state.quizQuestions[i].key,
+                            type: this.state.quizQuestions[i].type,
+                            question: this.state.quizQuestions[i].question,
+                            image: this.state.quizQuestions[i].image,
+                            options: this.state.quizQuestions[i].options.toString(),
+                            correctAnswer: this.state.quizQuestions[i].answer,
+                            isManual: false
+                        }
+                    }
+                }).then(quest => {
+                    console.log(quest);
+                })
+            }
+            this.setState({show: false})
+        })
     }
     
     render() {
@@ -373,7 +418,7 @@ class NewQuiz extends Component {
         );
     }
 }
-export default NewQuiz;
+export default withApollo(NewQuiz);
 
 
 class QuizForm extends Component {

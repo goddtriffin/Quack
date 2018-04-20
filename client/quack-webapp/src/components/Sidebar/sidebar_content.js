@@ -106,21 +106,26 @@ class SidebarContent extends React.PureComponent {
   constructor(props) {
     super(props);
 
-
-    //Download course data and map onto links
+      
+    
 
     this.addCourse = this.addCourse.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
+
+
   }
 
  
 
   addCourse = async() => {
-    
+
     await this.props.client.query({
-      query: GET_ALL_COURSES
+      query: GET_ALL_COURSES,
+      variables: {
+        id: this.state.userID
+      }
     }).then( data => { 
       var id = data.data.courses.map(a => a.id);
       var name = data.data.courses.map(a => a.name);
@@ -129,6 +134,7 @@ class SidebarContent extends React.PureComponent {
       while(id.includes(random)) {
         random = Math.floor(Math.random() * Math.floor(899999)) + 100000;
       }
+    
 
       this.props.client.mutate({
         mutation: CREATE_COURSE,
@@ -144,6 +150,14 @@ class SidebarContent extends React.PureComponent {
         console.log(data);
         this.setState({courseID : random});
 
+        this.props.client.mutate({
+          mutation: ADD_COURSE,
+          variables: {
+              id : this.state.userID,
+              courseID: random,
+          }
+        })
+
         this.setState({show: false});
         if(this.state.newCourseInput.length > 0) {
           var prefix = this.state.newCourseInput.split(":");
@@ -152,10 +166,10 @@ class SidebarContent extends React.PureComponent {
           var temp = this.state.links.slice();
           temp.push(
             <Link to={{
-              pathname: '/course/' + this.state.count,
+              pathname: '/course/' + random,
               state: {
                 courseTitle: this.state.newCourseInput,
-                courseID: this.state.courseID
+                courseID: random
                 },
               }} 
             key={this.state.count++} 
@@ -180,6 +194,42 @@ class SidebarContent extends React.PureComponent {
         //throw error; 
     });
 
+  }
+
+  componentDidMount() {
+    var links = [];
+    this.props.client.mutate({
+        mutation: GET_COURSES,
+        variables: {
+          id: this.state.userID
+        }
+      }).then(data => {
+        console.log(data);
+        var d = data.data.userGetCourses;
+        for(var i = 0; i < d.length; i++) {
+          var prefix = d[i].name.split(":");
+          var title = d[i].name;
+          console.log(d)
+          links.push(
+            <Link to={{
+              pathname: '/course/' + d[i].id,
+              state: {
+                courseTitle: title,
+                courseID: d[i].id
+              }
+            }}
+            key={i++}
+            style={styles.sidebarLink}>{prefix[0]}</Link>
+          )
+        }
+        
+        this.setState({
+          links: links,
+          newCourseInput: "",
+          newCoursePrefix: "",
+        });
+        console.log(links);
+      })
   }
 
   handleShow() {
@@ -249,13 +299,29 @@ SidebarContent.propTypes = {
   style: PropTypes.object,
 };
 
-const GET_ALL_COURSES = gql`
-  query courses {
-    courses {
+const GET_COURSES = gql` 
+  mutation userGetCourses($id: Int!) { 
+    userGetCourses(id: $id) { 
       id
-      name
+      name 
+    } 
+  }   
+` 
+
+const GET_ALL_COURSES = gql` 
+  query courses { 
+    courses { 
+      id 
     }
-  } 
+  }
+`
+
+const ADD_COURSE = gql`
+  mutation userAddCourse($id: Int!, $courseID: Int!) {
+      userAddCourse(id: $id, courseID: $courseID) {
+          name
+      }
+  }
 `
 
 const CREATE_COURSE = gql`

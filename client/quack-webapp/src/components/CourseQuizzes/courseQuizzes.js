@@ -8,6 +8,8 @@ import { Grid, Col, Row, Tabs, Tab, FormGroup,
     Nav, NavItem, Table } from '../../../node_modules/react-bootstrap';
 
 import BootstrapTable from 'react-bootstrap-table-next';
+import { graphql, withApollo } from 'react-apollo'
+import gql from 'graphql-tag'
 
 class CourseQuizzes extends Component {
 
@@ -47,15 +49,6 @@ constructor(props) {
 
     var temp1 = [];
     var temp2 = [];
-    for(var i = 0; i < 25; i++) {
-        temp1.push(
-            {key: `${i}`, title: `Quiz ${i}`, date: "3/21/18", viewButton: <this.ViewQuizButton id={i} quizTitle={`Quiz ${i}`}/>, editButton: <this.EditQuizButton id={i} quizTitle={`Quiz ${i}`} />}
-        )
-        temp2.push(
-            {key: `${i}`, title: `Quiz ${i + 25}`, startButton: <this.StartQuizButton id={i} quizTitle={`Quiz ${i + 25}`} />, editButton: <this.EditQuizButton id={(i + 25)} quizTitle={`Quiz ${i + 25}`} />}
-        )
-
-    }
 
 
     this.state = {
@@ -77,6 +70,38 @@ constructor(props) {
 
     }
     
+}
+
+componentDidMount() {
+    var temp1 = [];
+    var temp2 = [];
+    console.log("COURSE ID: " + this.state.courseID);
+    this.props.client.mutate({
+        mutation: gql`
+            mutation courseGetQuizzes($id: Int!) {
+            courseGetQuizzes(id: $id) {
+              id
+              title
+              date
+            }
+          }`,
+        variables: {
+            id: this.state.courseID,
+        }
+    }).then( data => { 
+        var quizzes = data.data.courseGetQuizzes;
+        for(var i = 0; i < quizzes.length; i++) {
+            if(quizzes[i].date == "") {
+                temp2.push(
+                    {key: i, title: quizzes[i].title, startButton: <this.StartQuizButton id={quizzes[i].id} quizTitle={quizzes[i].title} />, editButton: <this.EditQuizButton id={quizzes[i].id} quizTitle={quizzes[i].title} />}
+                );
+            }else {
+                temp1.push({key: `${i}`, title: quizzes[i].title, date: quizzes[i].date, viewButton: <this.ViewQuizButton id={quizzes[i].id} quizTitle={quizzes[i].title}/>, editButton: <this.EditQuizButton id={quizzes[i].id} quizTitle={quizzes[i].title} />})
+            }
+        }
+
+        this.setState({recentQuizzes: temp1, upcomingQuizzes: temp2})
+    })
 }
 
 
@@ -129,6 +154,5 @@ render() {
     );
 }
 
-
 }
-export default CourseQuizzes;
+export default withApollo(CourseQuizzes);

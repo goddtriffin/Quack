@@ -25,7 +25,7 @@ constructor(props) {
     super(props);
     this.state = {
         courseTitle: props.location.state.courseTitle,
-        courseID: props.location.state.courseID,
+        courseID: props.courseID,
         key: 1,
     }
     
