@@ -25,7 +25,7 @@ export default StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     //paddingTop: 10,
-    fontSize: 20,
+    fontSize: 30,
   },
   
   headerText: {
