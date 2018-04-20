@@ -1,4 +1,4 @@
-DROP TABLE TestSchema.Quizzes;
+/*DROP TABLE TestSchema.Quizzes;
 CREATE TABLE TestSchema.Quizzes (
         id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
         title NVARCHAR(60),
@@ -6,8 +6,17 @@ CREATE TABLE TestSchema.Quizzes (
         qCount INT,
         date NVARCHAR(10),
         isOpen BIT,
+);*/
+DROP TABLE TestSchema.Answers;
+CREATE TABLE TestSchema.Answers (
+        id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+        userID INT,
+        quizID INT,
+	questionID INT,
+        type NVARCHAR(50),
+        content NVARCHAR(50)
 );
-
+SELECT * FROM TestSchema.Answers;
 
 /*DROP TABLE TestSchema.Grades;
 
