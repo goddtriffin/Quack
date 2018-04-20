@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import styles from './styles';
-import { Grid, Col, Row, Button} from '../../../node_modules/react-bootstrap';
+import { Grid, Col, Row, Button, Modal} from '../../../node_modules/react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Doughnut, Bar } from 'react-chartjs-2';
 import io from 'socket.io-client';
@@ -16,6 +16,10 @@ class StartQuiz extends Component {
         attendance: 0,
         sectionSize: 0,
         data: [],
+        showOptions: false,
+        password: false,
+        quizPassword: "",
+        
     }
 
     labels = ['Finished', 'Incomplete'];
@@ -36,9 +40,15 @@ class StartQuiz extends Component {
             quizQuestions: [],
             answers: [],
             data: [0, 69],
+            showOptions: true,
+            password: false,
+            quizPassword: "",
         }
 
         this.update = this.update.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.yes = this.yes.bind(this);
+        this.no = this.no.bind(this);
 
         const socket = io('http://endor-vm2.cs.purdue.edu:5000');
         socket.emit("subscribe", "quiz_answer_created", props.match.params.quizID);
@@ -53,12 +63,24 @@ class StartQuiz extends Component {
         a.push(answer);
         this.setState({answers: a});
     }
+    
+    handleClose() {
+        this.setState({ showOptions: false })
+    }
 
+    yes() {
+        this.setState({ showOptions: false, password: true })
+    }
+
+    no() {
+        this.setState({ showOptions: false, password: false })
+    }
     
 
     render() {
 
-        var r = this.parseAnswers();        
+        var r = this.parseAnswers();
+        var quizPassword = "";        
         var count = 0;
         const QuestionList = ({questions}) => (
             <Fragment>
@@ -77,8 +99,26 @@ class StartQuiz extends Component {
             }]
         }
 
+        if(this.state.password) {
+            // generate password
+
+            quizPassword = "password"
+        }
+
         return(
             <div>
+                <Modal show={this.state.showOptions} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Quiz Options</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <h1>Do you want to start the quiz with a password?</h1>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.yes}>Yes</Button>
+                        <Button onClick={this.no}>No</Button>
+                    </Modal.Footer>
+                </Modal>
                 <Grid style={{height: '92vh', width: 'auto', margin: '0px', padding: '0px', marginBottom: '-30px', marginLeft: '20px'}} ref="mainGrid">
                     <Row>
                         <div style={{margin: '0px', padding: '0px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'baseline'}}>
@@ -90,7 +130,12 @@ class StartQuiz extends Component {
                         </div>
                     </Row>
                     <Row>
-                        <h2 style={styles.attendance}>Responses: {this.state.attendance}/{this.state.sectionSize}</h2>
+                        <div style={{margin: '0px', padding: '0px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'baseline'}}>
+                            <h2 style={styles.attendance}>Responses: {this.state.attendance}/{this.state.sectionSize}</h2>
+                            {this.state.password &&
+                                <h2 style={styles.attendance}>Quiz Password: {quizPassword}</h2>
+                            }
+                        </div>
                     </Row>
                     <Row>
                         <Col sm={6} >
