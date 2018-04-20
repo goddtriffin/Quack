@@ -67,6 +67,7 @@ export default {
 				  	const quizID = argSQL[2].arg;
 				  	const answer = {
 						userID:		argSQL[0].arg,
+						questionID:	argSQL[1].arg,
 						type:		argSQL[3].arg,
 						content:	argSQL[4].arg
 				  	};
