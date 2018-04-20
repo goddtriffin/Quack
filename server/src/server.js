@@ -90,6 +90,7 @@ var io = require('socket.io')(server);
 
 import quizSubscriptions from './graphql/subscriptions/quiz';
 import answerSubscriptions from './graphql/subscriptions/answer';
+import feedbackSubscriptions from './graphql/subscriptions/feedback';
 
 // handles newly connected socket
 io.on('connection', function (socket) {
@@ -105,6 +106,9 @@ io.on('connection', function (socket) {
         } else
         if (event === 'quiz_answer_created') {
             answerSubscriptions.subscribeToAnswerCreation(socket, data);
+        } else
+        if (event === 'feedback_created') {
+            feedbackSubscriptions.subscribeToFeedbackCreation(socket);
         }
     })
 
@@ -118,6 +122,9 @@ io.on('connection', function (socket) {
         } else
         if (event === 'quiz_answer_created') {
             answerSubscriptions.unsubscribeToAnswerCreation(socket, data);
+        } else
+        if (event === 'feedback_created') {
+            feedbackSubscriptions.unsubscribeToFeedbackCreation(socket);
         }
     })
 

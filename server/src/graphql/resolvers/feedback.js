@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import feedbackSubscriptions from '../subscriptions/feedback';
 
 var Request = require('tedious').Request;
 var TYPES   = require('tedious').TYPES;
@@ -55,6 +56,14 @@ export default {
             argSQL[0] = {name: 'userID', type: TYPES.NVarChar, arg: args.input.userID};
             argSQL[1] = {name: 'content', type: TYPES.NVarChar, arg: args.input.content};
             argSQL[2] = {name: 'date', type: TYPES.NVarChar, arg: args.input.date};
+
+            // send subscription
+            const feedback = {
+                userID:		argSQL[0].arg,
+                content:	argSQL[1].arg,
+                data:       argSQL[2].arg
+            };
+            feedbackSubscriptions.sendFeedbackCreationEvent(feedback);
 
             return context.db.executeSQL( 
                 "INSERT INTO TestSchema.Feedbacks (userID, content, date) OUTPUT " + 
