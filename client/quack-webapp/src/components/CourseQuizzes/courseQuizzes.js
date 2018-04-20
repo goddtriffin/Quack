@@ -17,8 +17,11 @@ class CourseQuizzes extends Component {
         courseID: '',
     }
 
-ViewQuizButton = ({id}) => (
-    <button style={styles.viewButton}><Link style={styles.viewButton} to={'/course/' + this.state.courseID + '/view/' + id}>View Results</Link></button>
+ViewQuizButton = ({id, quizTitle}) => (
+    <button style={styles.viewButton}><Link style={styles.viewButton} to={{
+        pathname: '/course/' + this.state.courseID + '/view/' + id,
+        state: {courseID: this.state.courseID, quizTitle: quizTitle}
+        }}>View Results</Link></button>
 )
 
 EditQuizButton = ({id, quizTitle}) => (
@@ -30,8 +33,11 @@ EditQuizButton = ({id, quizTitle}) => (
     >Edit</Link></button>
 )
 
-StartQuizButton = ({id}) => (
-    <button style={styles.startButton}><Link style={styles.startButton} to={'/course/' + this.state.courseID + '/start/' + id}>Start Quiz</Link></button>
+StartQuizButton = ({id, quizTitle}) => (
+    <button style={styles.startButton}><Link style={styles.startButton} to={{
+        pathname: '/course/' + this.state.courseID + '/start/' + id,
+        state: {courseID: this.state.courseID, quizTitle: quizTitle, courseTitle: this.props.courseTitle}
+        }}>Start Quiz</Link></button>
 )
 
 constructor(props) {
@@ -43,10 +49,10 @@ constructor(props) {
     var temp2 = [];
     for(var i = 0; i < 25; i++) {
         temp1.push(
-            {key: `${i}`, title: `Quiz ${i}`, date: "3/21/18", viewButton: <this.ViewQuizButton id={i}/>, editButton: <this.EditQuizButton id={i} quizTitle={`Quiz ${i + 25}`} />}
+            {key: `${i}`, title: `Quiz ${i}`, date: "3/21/18", viewButton: <this.ViewQuizButton id={i} quizTitle={`Quiz ${i}`}/>, editButton: <this.EditQuizButton id={i} quizTitle={`Quiz ${i}`} />}
         )
         temp2.push(
-            {key: `${i}`, title: `Quiz ${i + 25}`, startButton: <this.StartQuizButton id={i} />}
+            {key: `${i}`, title: `Quiz ${i + 25}`, startButton: <this.StartQuizButton id={i} quizTitle={`Quiz ${i + 25}`} />, editButton: <this.EditQuizButton id={(i + 25)} quizTitle={`Quiz ${i + 25}`} />}
         )
 
     }
@@ -62,7 +68,8 @@ constructor(props) {
         ],
         columnsUpcoming: [
             {key: '1', dataField: 'title', text: "Title"},
-            {key: '2', dataField: 'startButton', text: ""}
+            {key: '2', dataField: 'startButton', text: ""},
+            {key: '3', dataField: 'editButton', text: ""}
         ],
         recentQuizzes: temp1,
         upcomingQuizzes: temp2,

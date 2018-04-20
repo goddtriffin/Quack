@@ -24,6 +24,19 @@ export default StyleSheet.create({
   //  width: 200,
     paddingTop: 10,
  },
+ button: {
+  backgroundColor: colors.qDarkGreen,
+  paddingVertical: 15,
+  borderRadius: 40,
+
+},
+buttonText: {
+  fontFamily: 'Fira Sans',
+  fontWeight: '700',
+  fontSize: 20,
+  color: 'white',
+  textAlign: 'center',
+},
  recentIndicator: {
     flex: 1,
     fontFamily: 'Fira Sans',

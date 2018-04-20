@@ -37,10 +37,20 @@ class Grades extends Component {
                 }
             `,
             variables: {
+<<<<<<< HEAD
                 courseID : this.props.navigation.state.params.key,
             }
             }).then( data => {
                 quizzes = [];
+=======
+                courseID : this.props.navigation.state.params.id,
+            },
+        variables: {
+        courseID : this.props.navigation.state.params.id,
+    }
+    }).then( data => {
+        quizzes = [];
+>>>>>>> Development
 
                 if(data.data.userGetQuizzes == null) {
                     quizzes.push({'name' : 'No Quizzes', 'isOpen':false, 'date':'', 'key':0})
@@ -60,12 +70,14 @@ class Grades extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Header style={styles.header}>
+                <Header style={styles.headerTop}>
                     <Left>
                         <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Home'})]}))}>
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
                     </Left>
+                    <Body></Body>
+                    <Right></Right>
                 </Header>
 
                 <View style={styles.header}>
@@ -80,12 +92,18 @@ class Grades extends Component {
                             return (
                                 <View>
                                     <Grid>
+<<<<<<< HEAD
                                         <Col size={65}>
                                             <Text>{name}</Text>
                                         </Col>
                                         <Col size={35}>
                                             <Text> {date.substring(0,2)} / {date.substring(2,4)} </Text>
                                         </Col>
+=======
+                                        <Row>
+                                            <Text style={styles.quizText}>Quiz {id} {date.substring(0,2)} / {date.substring(2,4)}</Text>
+                                        </Row>
+>>>>>>> Development
                                     </Grid>
                                 </View>);
                                 }
