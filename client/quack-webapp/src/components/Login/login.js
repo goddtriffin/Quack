@@ -44,6 +44,13 @@ class Login extends Component {
     }
 
     login = async () => {
+        if(this.state.email == "" || this.state.password == "") {
+            alert("Please fill out email and password")
+            return;
+        }else if(!this.state.email.includes("@")) {
+            alert("Invalid email address");
+            return;
+        }
         const { email, password } = this.state
         await this.props.login({
             variables: {
