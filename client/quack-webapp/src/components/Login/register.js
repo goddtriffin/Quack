@@ -60,6 +60,13 @@ class Register extends Component {
     }
 
     register = async () => {
+        if(this.state.email == "" || this.state.password == "" || this.state.firstName == "" || this.state.lastName == "") {
+            alert("Please fill out all fields")
+            return;
+        }else if(!this.state.email.includes("@")) {
+            alert("Invalid email address")
+            return;
+        }
         
     }
 

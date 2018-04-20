@@ -87,5 +87,21 @@ export default {
 			"OUTPUT INSERTED.id, INSERTED.courseID, INSERTED.name WHERE id = @id;", 
 		    argSQL, false);
     	}
-    }
+    },
+    sectionGetUsers: async(args, context) => {
+        if(!context.headers.hasOwnProperty('authorization')) {
+                return new Error("No authorization");
+        }else {
+                try {
+                        var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+                } catch(err) {
+                        return new Error(err);
+                }
+
+                argSQL = {}
+                argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.id};
+                return context.db.executeSQL("SELECT c.id, * FROM TestSchema.UsersSections sc " + 
+  			"INNER JOIN TestSchema.Users c ON c.id = sc.u_id WHERE sc.s_id = @id;", argSQL, true);
+        }
+    },
 }

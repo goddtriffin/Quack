@@ -1,33 +1,52 @@
-SELECT * FROM TestSchema.Users;
-
-CREATE TABLE TestSchema.Grades (
-	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	questionID INT,
-	answerID INT,
-	userID INT,
-	points FLOAT,
-	totalPoints FLOAT
-)
-
-/*DROP TABLE TestSchema.Quizzes;
+DROP TABLE TestSchema.Quizzes;
 CREATE TABLE TestSchema.Quizzes (
         id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-        courseID INT,
+        title NVARCHAR(60),
+	courseID INT,
+        qCount INT,
         date NVARCHAR(10),
         isOpen BIT,
 );
-CREATE TABLE TestSchema.Questions (
+
+
+/*DROP TABLE TestSchema.Grades;
+
+CREATE TABLE TestSchema.Grades (
 	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+        userID INT,
 	quizID INT,
-	type NVARCHAR(5),
-	question NVARCHAR(1000),
-	image NVARCHAR(1000),
-	options NVARCHAR(1000),
-	correctAnswer NVARCHAR(1000),
-	isManual BIT
+	questionID INT,
+	answerID INT,
+	points FLOAT,
+	totalPoints FLOAT
+)*/
+/*CREATE TABLE TestSchema.Questions (
+        id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+        quizID INT,
+        qIndex INT,
+        type NVARCHAR(5),
+        question NVARCHAR(1000),
+        image NVARCHAR(1000),
+        options NVARCHAR(1000),
+        correctAnswer NVARCHAR(1000),
+        isManual BIT
+);
+CREATE TABLE TestSchema.UsersSections (
+        u_id INT,
+        s_id INT,
+
 );
 
-DROP TABLE TestSchema.Courses;
+DROP TABLE TestSchema.Quizzes;
+CREATE TABLE TestSchema.Quizzes (
+        id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+        courseID INT,
+        qCount INT,
+	date NVARCHAR(10),
+        isOpen BIT,
+);*/
+
+/*DROP TABLE TestSchema.Courses;
 
 CREATE TABLE TestSchema.Courses (
         id INT,
@@ -43,7 +62,7 @@ CREATE TABLE TestSchema.Feedbacks (
 	date NVARCHAR(10),
 	content NVARCHAR(4000)
 
-);
+);*/
 
 /*DROP TABLE TestSchema.Courses;
 

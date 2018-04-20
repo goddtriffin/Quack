@@ -46,8 +46,8 @@ export default {
 
 		argSQL = {};
                 argSQL[0] = {name: 'type', type: TYPES.NVarChar, arg: "instructor"};
-                argSQL[1] = {name: 'courseID', type: TYPES.NVarChar, arg: args.input.courseID};
-                argSQL[2] = {name: 'userID', type: TYPES.NVarChar, arg: args.input.userID};
+                argSQL[1] = {name: 'courseID', type: TYPES.Int, arg: args.input.courseID};
+                argSQL[2] = {name: 'userID', type: TYPES.Int, arg: args.input.userID};
 
 
                 //console.log(argSQL);
@@ -57,7 +57,7 @@ export default {
                     argSQL, false);
 
 	    	argSQL = {};
-	    	argSQL[0] = {name: 'id', type: TYPES.NVarChar, arg: args.input.courseID};
+	    	argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.input.courseID};
 	    	argSQL[1] = {name: 'name', type: TYPES.NVarChar, arg: args.input.name};
 		argSQL[2] = {name: 'description', type: TYPES.NVarChar, arg: args.input.description};
 		//console.log(argSQL);
@@ -67,5 +67,31 @@ export default {
 		    "VALUES (@id, @name, @description);", 
 		    argSQL, false);
 	}
-    }
+    },
+    courseGetSections: async (args, context) => {
+        if(!context.headers.hasOwnProperty('authorization')) {
+                return new Error("No authorization");
+        }else {
+                try {
+                        var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+                } catch(err) {
+                        return new Error(err);
+                }
+                argSQL[0] = {name: "id", type: TYPES.Int, arg: args.id};
+                return context.db.executeSQL("SELECT * FROM TestSchema.Sections where courseID = @id", argSQL, true);
+        }
+    },
+    courseGetQuizzes: async (args, context) => {
+        if(!context.headers.hasOwnProperty('authorization')) {
+                return new Error("No authorization");
+        }else {
+                try {
+                        var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+                } catch(err) {
+                        return new Error(err);
+                }
+                argSQL[0] = {name: "id", type: TYPES.Int, arg: args.id};
+		return context.db.executeSQL("SELECT * FROM TestSchema.Quizzes where courseID = @id", argSQL, true);
+        }
+    },
 }
