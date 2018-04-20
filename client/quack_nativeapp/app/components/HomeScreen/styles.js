@@ -6,16 +6,15 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: colors.qLightGreen,
   },
-
-  headerColor: {
-    backgroundColor: colors.qLightGreen,
+  searchButton: {
+    height: 30,
+    width: 30,
   },
   header: {
+    backgroundColor: colors.qLightGreen,
     height: 80,
-    paddingTop: 30,
-    paddingLeft: 10,
-    flexDirection: 'row',
   },
+  
   headerText: {
     fontFamily: 'Fira Sans',
     color: 'white',
@@ -36,11 +35,14 @@ export default StyleSheet.create({
     paddingLeft: 10,
     flex: 2,
   },
-  courseList: {
-
+  addButton: {
+    color: 'white',
+    width: 50,
+    height: 50,
+    paddingBottom: 30,
   },
   courseListRow: {
-    paddingVertical: 30,
+    paddingVertical: 10,
   },
   courseListText: {
     fontFamily: 'Fira Sans',

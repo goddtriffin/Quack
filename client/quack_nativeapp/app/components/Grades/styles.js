@@ -1,50 +1,82 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { colors } from '../../style/styles';
 
 export default StyleSheet.create({
-  background: {
-    backgroundColor: colors.qLightGreen
+  container: {
+    flex: 1,
+    backgroundColor: colors.qLightGreen,
   },
-  gradeListText: {
+  backButton: {
+    color: 'white',
+    
+    height: 30,
+    width: 30,
+  },
+  header: {
+    backgroundColor: colors.qLightGreen,
+    height: 80,
+  },
+  headerTop: {
+    backgroundColor: colors.qLightGreen,
+    //height: 80,
+  },
+  quizText: {
+    fontFamily: 'Fira Sans',
+    color: 'white',
+    textAlign: 'center',
+    //paddingTop: 10,
+    fontSize: 30,
+  },
+  
+  headerText: {
+    fontFamily: 'Fira Sans',
+    color: 'white',
+    textAlign: 'right',
+    paddingTop: 10,
+  },
+
+  bigTitle: {
+    fontFamily: 'Fira Sans',
+    fontWeight: '600',
+    flex: 3,
+    fontSize: 50,
+    color: 'white',
+    textAlign: 'center',
+    paddingBottom: 10,
+  },
+  gradesListView: {
+    paddingLeft: 10,
+    flex: 2,
+  },
+  addButton: {
+    color: 'white',
+    width: 50,
+    height: 50,
+  },
+  gradesListRow: {
+    paddingVertical: 30,
+  },
+  courseListText: {
     fontFamily: 'Fira Sans',
     fontWeight: '600',
     flex: 1,
     fontSize: 30,
-    color: 'black',
+    color: 'white',
     textAlign: 'left',
-    paddingLeft: 20
   },
-  classHeaderText: {
-    flex: 1,
+  addCourse: {
+    flex: 3,
+    flexDirection: 'row',
+    paddingRight: 10,
+    paddingBottom: 5,
+    alignItems: 'flex-end',
+  },
+  addCourseText: {
     fontFamily: 'Fira Sans',
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 60,
-    textAlign: 'center',
-  //  width: 200,
-    paddingTop: 10,
- },
- recentIndicator: {
+    fontWeight: '400',
     flex: 1,
-    fontFamily: 'Fira Sans',
+    fontSize: 20,
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 25,
-    textAlign: 'center',
-   // width: 500,
- },
- pastQuizIndicator: {
-  //flex: 1,
-  fontFamily: 'Fira Sans',
-  color: 'white',
-  //fontWeight: 'bold',
-  fontSize: 25,
-  textAlign: 'center',
-
-},
-line: {
-  borderBottomColor: 'black', 
-  borderBottomWidth: 1,
-  paddingLeft: 100
-}
+    textAlign: 'right',
+  }
 });

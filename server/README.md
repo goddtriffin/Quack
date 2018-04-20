@@ -16,6 +16,12 @@
 
 `yarn serve` (`npm run serve`)
 
+## Test
+
+Queries/Mutations: `yarn test`
+
+Subscriptions: `yarn 'test subscriptions'`
+
 ## Setup Docker for Mac 
 
 Install Docker for Mac here: https://docs.docker.com/docker-for-mac/install/

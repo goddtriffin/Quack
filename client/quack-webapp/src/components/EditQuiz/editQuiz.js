@@ -13,6 +13,7 @@ class EditQuiz extends Component {
         quizID: '',
         quizQuestions: [],
         show: false,
+        showImg: false,
         newQuestionText: "",
         newQuestionType: "",
         newQuestionOptions: [],
@@ -20,7 +21,9 @@ class EditQuiz extends Component {
         newQuestionAnswer: "",
         newQuestionTypeText: "",
         newQuestionMCoptions: ["", ""],
-        newQuestionMCnum: 2
+        newQuestionMCnum: 2,
+        newImage: "",
+        newImgQuestion: {},
     }
     
     constructor(props) {
@@ -31,6 +34,7 @@ class EditQuiz extends Component {
             quizTitle: props.location.state.quizTitle,
             quizQuestions: [],
             show: false,
+            showImg: false,
             newQuestionText: "",
             newQuestionType: 0,
             newQuestionOptions: [],
@@ -39,6 +43,7 @@ class EditQuiz extends Component {
             newQuestionTypeText: "Question type",
             newQuestionMCoptions: ["", ""],
             newQuestionMCnum: 2,
+            newImg: "",
             quizID: props.match.params.quizID,
 
         }
@@ -53,6 +58,9 @@ class EditQuiz extends Component {
         this.addMCOption = this.addMCOption.bind(this);
         this.save = this.save.bind(this);
         this.deleteQuestion = this.deleteQuestion.bind(this);
+        this.addImage = this.addImage.bind(this);
+        this.handleCloseImg = this.handleCloseImg.bind(this);
+        this.handleChangeImg = this.handleChangeImg.bind(this);
     }
 
     handleQuizTitle(e) {
@@ -79,6 +87,32 @@ class EditQuiz extends Component {
         }
         console.log(questions);
         this.setState({quizQuestions: questions})
+    }
+
+    addImage(q) {
+        this.setState({showImg: true, newImgQuestion: q})
+    }
+
+    handleCloseImg() {
+        var url = this.state.newImg;
+        var q = this.state.newImgQuestion;
+        var questions = this.state.quizQuestions.slice();
+        if(url == "") {
+            this.setState({showImg: false, newImg: ""})
+        }else {
+            for(var i = 0; i < questions.length; i++) {
+                if(questions[i].question == q) {
+                    questions[i].image = url;
+                    break;
+                }
+            }
+            console.log(questions)
+            this.setState({showImg: false, newImg: "", quizQuestions: questions});
+        }
+    }
+
+    handleChangeImg(e) {
+        this.setState({newImg: e.target.value})
     }
 
     setAnswer(q, answer) {
@@ -280,6 +314,25 @@ class EditQuiz extends Component {
                             <Button onClick={this.handleClose}>Add</Button>
                         </Modal.Footer>
                     </Modal>
+
+                    <Modal show={this.state.showImg} onHide={this.handleCloseImg}>
+                        <Modal.Header closeButton>
+                        <Modal.Title>Add image</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <form>
+                                <FormGroup>
+                                <ControlLabel>Enter Image URL</ControlLabel>
+                                <FormControl type="text" value={this.state.newImg} placeholder="" onChange={this.handleChangeImg}/>
+                                <FormControl.Feedback/>
+                                </FormGroup>
+                            </form>
+                           
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button onClick={this.handleCloseImg}>Add</Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
                 <Grid style={{height: '92vh', width: 'auto', margin: '0px', padding: '0px', marginBottom: '-30px', marginLeft: '20px'}}>
                     <Row>
@@ -303,7 +356,7 @@ class EditQuiz extends Component {
                         </button>
                     </Row>
                     <Row>
-                        <QuizForm quizQuestions={this.state.quizQuestions} addQuestion={this.addQuestion} deleteQuestion={this.deleteQuestion} setAnswer={this.setAnswer}/>
+                        <QuizForm quizQuestions={this.state.quizQuestions} addQuestion={this.addQuestion} deleteQuestion={this.deleteQuestion} setAnswer={this.setAnswer} addImage={this.addImage}/>
                     </Row>
                 </Grid>
                 <div style={styles.footerRow}>
@@ -327,6 +380,7 @@ class QuizForm extends Component {
 
         this.setAnswer = this.setAnswer.bind(this);
         this.deleteQuestion = this.deleteQuestion.bind(this);
+        this.addImage = this.addImage.bind(this);
     }
 
     newQuestion() {
@@ -335,6 +389,10 @@ class QuizForm extends Component {
 
     deleteQuestion(q) {
         this.props.deleteQuestion(q);
+    }
+
+    addImage(q) {
+        this.props.addImage(q);
     }
 
     setAnswer(question, answer) {
@@ -347,7 +405,7 @@ class QuizForm extends Component {
         const QuestionList = ({questions}) => (
             <Fragment>
                 {questions.map(question => (
-                    <QuizQuestion key={count++} question={question} setAnswer={this.setAnswer} deleteQuestion={this.deleteQuestion}/>
+                    <QuizQuestion key={count++} question={question} setAnswer={this.setAnswer} deleteQuestion={this.deleteQuestion} addImage={this.addImage}/>
                 ))}
             </Fragment>
         );
@@ -377,6 +435,7 @@ class QuizQuestion extends Component {
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
         //this.toggleHoverState = this.toggleHoverState.bind(this);
         this.deleteQuestion = this.deleteQuestion.bind(this);
+        this.addImage = this.addImage.bind(this);
 
     }
 
@@ -398,6 +457,11 @@ class QuizQuestion extends Component {
     deleteQuestion(question) {
         this.props.deleteQuestion(question);
         this.setState({isHovering: false})
+    }
+
+    addImage(question) {
+        this.props.addImage(question);
+        this.setState({isHovering: false});
     }
     
     // toggleHoverState(state) {
@@ -436,6 +500,12 @@ class QuizQuestion extends Component {
                         {this.state.isHovering &&
                             <div>
                                 <button onClick={(e) => this.deleteQuestion(question)} style={styles.deleteButton}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg></button>
+                                <button onClick={(e) => this.addImage(question)} style={styles.imageButton}><svg width="24" height="24" viewBox="0 -10 100 100"><path style={{fill: 'black'}} d="M50,40c-8.285,0-15,6.718-15,15c0,8.285,6.715,15,15,15c8.283,0,15-6.715,15-15
+                                    C65,46.718,58.283,40,50,40z M90,25H78c-1.65,0-3.428-1.28-3.949-2.846l-3.102-9.309C70.426,11.28,68.65,10,67,10H33
+                                    c-1.65,0-3.428,1.28-3.949,2.846l-3.102,9.309C25.426,23.72,23.65,25,22,25H10C4.5,25,0,29.5,0,35v45c0,5.5,4.5,10,10,10h80
+                                    c5.5,0,10-4.5,10-10V35C100,29.5,95.5,25,90,25z M50,80c-13.807,0-25-11.193-25-25c0-13.806,11.193-25,25-25
+                                    c13.805,0,25,11.194,25,25C75,68.807,63.805,80,50,80z M86.5,41.993c-1.932,0-3.5-1.566-3.5-3.5c0-1.932,1.568-3.5,3.5-3.5
+                                    c1.934,0,3.5,1.568,3.5,3.5C90,40.427,88.433,41.993,86.5,41.993z"/></svg></button>
                             </div>
                         }
                     </div>
@@ -471,6 +541,12 @@ class QuizQuestion extends Component {
                         {this.state.isHovering &&
                             <div>
                                 <button onClick={(e) => this.deleteQuestion(question)} style={styles.deleteButton}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg></button>
+                                <button onClick={(e) => this.addImage(question)} style={styles.imageButton}><svg width="24" height="24" viewBox="0 -10 100 100"><path style={{fill: 'black'}} d="M50,40c-8.285,0-15,6.718-15,15c0,8.285,6.715,15,15,15c8.283,0,15-6.715,15-15
+                                    C65,46.718,58.283,40,50,40z M90,25H78c-1.65,0-3.428-1.28-3.949-2.846l-3.102-9.309C70.426,11.28,68.65,10,67,10H33
+                                    c-1.65,0-3.428,1.28-3.949,2.846l-3.102,9.309C25.426,23.72,23.65,25,22,25H10C4.5,25,0,29.5,0,35v45c0,5.5,4.5,10,10,10h80
+                                    c5.5,0,10-4.5,10-10V35C100,29.5,95.5,25,90,25z M50,80c-13.807,0-25-11.193-25-25c0-13.806,11.193-25,25-25
+                                    c13.805,0,25,11.194,25,25C75,68.807,63.805,80,50,80z M86.5,41.993c-1.932,0-3.5-1.566-3.5-3.5c0-1.932,1.568-3.5,3.5-3.5
+                                    c1.934,0,3.5,1.568,3.5,3.5C90,40.427,88.433,41.993,86.5,41.993z"/></svg></button>
                             </div>
                         }
                     </div>
@@ -490,6 +566,12 @@ class QuizQuestion extends Component {
                         {this.state.isHovering &&
                             <div>
                                 <button onClick={(e) => this.deleteQuestion(question)} style={styles.deleteButton}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg></button>
+                                <button onClick={(e) => this.addImage(question)} style={styles.imageButton}><svg width="24" height="24" viewBox="0 -10 100 100"><path style={{fill: 'black'}} d="M50,40c-8.285,0-15,6.718-15,15c0,8.285,6.715,15,15,15c8.283,0,15-6.715,15-15
+                                    C65,46.718,58.283,40,50,40z M90,25H78c-1.65,0-3.428-1.28-3.949-2.846l-3.102-9.309C70.426,11.28,68.65,10,67,10H33
+                                    c-1.65,0-3.428,1.28-3.949,2.846l-3.102,9.309C25.426,23.72,23.65,25,22,25H10C4.5,25,0,29.5,0,35v45c0,5.5,4.5,10,10,10h80
+                                    c5.5,0,10-4.5,10-10V35C100,29.5,95.5,25,90,25z M50,80c-13.807,0-25-11.193-25-25c0-13.806,11.193-25,25-25
+                                    c13.805,0,25,11.194,25,25C75,68.807,63.805,80,50,80z M86.5,41.993c-1.932,0-3.5-1.566-3.5-3.5c0-1.932,1.568-3.5,3.5-3.5
+                                    c1.934,0,3.5,1.568,3.5,3.5C90,40.427,88.433,41.993,86.5,41.993z"/></svg></button>
                             </div>
                         }
                     </div>
@@ -505,6 +587,12 @@ class QuizQuestion extends Component {
                         {this.state.isHovering &&
                             <div>
                                 <button onClick={(e) => this.deleteQuestion(question)} style={styles.deleteButton}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg></button>
+                                <button onClick={(e) => this.addImage(question)} style={styles.imageButton}><svg width="24" height="24" viewBox="0 -10 100 100"><path style={{fill: 'black'}} d="M50,40c-8.285,0-15,6.718-15,15c0,8.285,6.715,15,15,15c8.283,0,15-6.715,15-15
+                                    C65,46.718,58.283,40,50,40z M90,25H78c-1.65,0-3.428-1.28-3.949-2.846l-3.102-9.309C70.426,11.28,68.65,10,67,10H33
+                                    c-1.65,0-3.428,1.28-3.949,2.846l-3.102,9.309C25.426,23.72,23.65,25,22,25H10C4.5,25,0,29.5,0,35v45c0,5.5,4.5,10,10,10h80
+                                    c5.5,0,10-4.5,10-10V35C100,29.5,95.5,25,90,25z M50,80c-13.807,0-25-11.193-25-25c0-13.806,11.193-25,25-25
+                                    c13.805,0,25,11.194,25,25C75,68.807,63.805,80,50,80z M86.5,41.993c-1.932,0-3.5-1.566-3.5-3.5c0-1.932,1.568-3.5,3.5-3.5
+                                    c1.934,0,3.5,1.568,3.5,3.5C90,40.427,88.433,41.993,86.5,41.993z"/></svg></button>
                             </div>
                         }
                     </div>

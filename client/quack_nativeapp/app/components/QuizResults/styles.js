@@ -5,10 +5,6 @@ export default StyleSheet.create({
   background: {
     backgroundColor: colors.qLightGreen
   },
-  header: {
-    backgroundColor: colors.qLightGreen,
-    height: 80,
-  },
   gradeListText: {
     fontFamily: 'Fira Sans',
     fontWeight: '600',
@@ -18,34 +14,29 @@ export default StyleSheet.create({
     textAlign: 'left',
     paddingLeft: 20
   },
-  button: {
-    backgroundColor: colors.qDarkGreen,
-    paddingVertical: 15,
-    borderRadius: 40,
-
-  },
-  buttonText: {
-    fontFamily: 'Fira Sans',
-    fontWeight: '700',
-    fontSize: 20,
-    color: 'white',
-    textAlign: 'center',
-  },
-  textArea: {
-    borderColor: 'white',
-    color: 'white',
-    
-  },
   classHeaderText: {
     flex: 1,
     fontFamily: 'Fira Sans',
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 40,
+    fontSize: 60,
     textAlign: 'center',
   //  width: 200,
     paddingTop: 10,
  },
+ button: {
+  backgroundColor: colors.qDarkGreen,
+  paddingVertical: 15,
+  borderRadius: 40,
+
+},
+buttonText: {
+  fontFamily: 'Fira Sans',
+  fontWeight: '700',
+  fontSize: 20,
+  color: 'white',
+  textAlign: 'center',
+},
  recentIndicator: {
     flex: 1,
     fontFamily: 'Fira Sans',

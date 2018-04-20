@@ -4,6 +4,7 @@ import { StackNavigator } from 'react-navigation';
 import LoginScreen from './app/components/LoginScreen/LoginScreen';
 import Quiz from './app/components/Quiz/Quiz';
 import Grades from './app/components/Grades/Grades';
+import QuizResults from './app/components/QuizResults/QuizResults';
 import Feedback from './app/components/Feedback/Feedback';
 import RegisterScreen from './app/components/LoginScreen/RegisterScreen';
 import HomeScreen from './app/components/HomeScreen/HomeScreen';
@@ -95,6 +96,9 @@ const LoginRoute = StackNavigator({
     },
     Grades: {
       screen: Grades,
+    },
+    QuizResults: {
+      screen: QuizResults,
       navigationOptions: {
         headerTintColor: 'white',
         headerStyle: {
