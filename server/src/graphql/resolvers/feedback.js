@@ -61,7 +61,7 @@ export default {
             const feedback = {
                 userID:		argSQL[0].arg,
                 content:	argSQL[1].arg,
-                data:       argSQL[2].arg
+                date:       argSQL[2].arg
             };
             feedbackSubscriptions.sendFeedbackCreationEvent(feedback);
 

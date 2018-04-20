@@ -1,5 +1,5 @@
 // containers
-const feedbackCreationSubscribers = []; //  [socket]
+const feedbackCreationSubscribers = []; // [socket]
 
 // subscribes a socket to feedback creations
 function subscribeToFeedbackCreation (socket) {
@@ -26,7 +26,7 @@ function unsubscribeToFeedbackCreation (socket) {
 function sendFeedbackCreationEvent (feedback) {
     // send updated feedback info to socket
     feedbackCreationSubscribers.forEach(function (socket) {
-		socket.emit('quiz_feedback_created', feedback);
+		socket.emit('feedback_created', feedback);
 	});
 }
 
