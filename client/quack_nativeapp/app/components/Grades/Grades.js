@@ -20,41 +20,44 @@ class Grades extends Component {
         authToken: '',
         email: '',
         course: '',
-        courseID: '',
+        courseID: 0,
         quizzes: [],
     }
 
     componentDidMount() {
         this.props.client.mutate({ mutation: gql`
-        mutation userGetQuizzes($courseID: Int!) {
-            userGetQuizzes(courseID: $courseID) {
-                id
-                isOpen
-                date
-            }
-        }
-    `,
-    variables: {
+                mutation userGetQuizzes($courseID: Int!) {
+                    userGetQuizzes(courseID: $courseID) {
+                        id
+                        isOpen
+                        date
+                    }
+                }
+            `,
+            variables: {
+                courseID : this.props.navigation.state.params.id,
+            },
+        variables: {
         courseID : this.props.navigation.state.params.id,
     }
     }).then( data => {
         quizzes = [];
 
-        if(data.data.userGetQuizzes == null) {
-            quizzes.push({id : 'No Quizzes', isOpen:false, date:'', key:0})
-        }
-        else {
-            for(let i = 0; i < data.data.userGetQuizzes.length; i++) {
-                quizzes.push({id : data.data.userGetQuizzes[i].id, isOpen:data.data.userGetQuizzes[i].isOpen, date:data.data.userGetQuizzes[i].date, key:i})
-            }
-        }
-        this.setState({quizzes});
-    }).catch(function(error) {
-        alert(error.message);
-    });
-    this.setState({course:this.props.navigation.state.params.course});
-    this.setState({courseID:this.props.navigation.state.params.id});
-    console.log(this.state.courseID);
+                if(data.data.userGetQuizzes == null) {
+                    quizzes.push({id : 'No Quizzes', isOpen:false, date:'', key:0})
+                }
+                else {
+                    for(let i = 0; i < data.data.userGetQuizzes.length; i++) {
+                        quizzes.push({id : data.data.userGetQuizzes[i].id, isOpen:data.data.userGetQuizzes[i].isOpen, date:data.data.userGetQuizzes[i].date, key:i})
+                    }
+                }
+                this.setState({quizzes});
+            }).catch(function(error) {
+                alert(error.message);
+            });
+            this.setState({course:this.props.navigation.state.params.course});
+            this.setState({courseID:this.props.navigation.state.params.id});
+            console.log(this.state.courseID);
     }
 
     

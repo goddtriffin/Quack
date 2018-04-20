@@ -26,7 +26,7 @@ class HomeScreen extends Component {
     state = {
         title: 'Courses', 
         courses: [],
-        studentID:'',
+        studentID: 0,
         email:'',
         isLoading: true,
         isSearching: false,
@@ -42,7 +42,7 @@ class HomeScreen extends Component {
                 isLoading: false
             });
 
-            console.log(this.state.studentID);
+            //console.log(this.state.studentID);
 
             this.props.client.mutate({ mutation: gql`
                 mutation userGetCourses($id: Int!) {
@@ -59,11 +59,11 @@ class HomeScreen extends Component {
               courses = [];
 
               if(data.data.userGetCourses.length == 0) {
-                courses.push({course : 'Search for a course to join it.' , id: 0, key: 0})
+                courses.push({'course': 'Search for a course to join it.' , 'id': 0, 'key': 0})
               }
               else {
                 for(let i = 0; i < data.data.userGetCourses.length; i++) {
-                    courses.push({course : data.data.userGetCourses[i].name, id: data.data.userGetCourses[i].id, key: i})
+                    courses.push({'course': data.data.userGetCourses[i].name, 'id': data.data.userGetCourses[i].id, 'key': i})
                 }
               }
               this.setState({courses});
@@ -99,11 +99,11 @@ class HomeScreen extends Component {
                 courses = [];
 
                 if(data.data.userAddCourse.length == 0) {
-                    courses.push({course : 'Search for a course to join it.', id: 0, key: 1})
+                    courses.push({'course': 'Search for a course to join it.', 'id': 0, 'key': 1})
                 }
                 else {
                     for(let i = 0; i < data.data.userAddCourse.length; i++) {
-                        courses.push({course : data.data.userAddCourse[i].name, id: data.data.userAddCourse[i].id, key:i})
+                        courses.push({'course': data.data.userAddCourse[i].name, 'id': data.data.userAddCourse[i].id, 'key':i})
                     }
                 }
                 this.setState({courses})
@@ -134,11 +134,11 @@ class HomeScreen extends Component {
 
         for(let i = 0; i < data.data.courses.length; i++) {
             if(data.data.courses[i].name.toLowerCase().match(this.state.search.toLowerCase()))
-            searchResults.push({name : data.data.courses[i].name, id: data.data.courses[i].id, key: i})
+            searchResults.push({'name' : data.data.courses[i].name, 'id': data.data.courses[i].id, 'key': i})
         }
         
         if(searchResults.length == 0) {
-            searchResults.push({name : 'Your search had no matches.', id:0, key:0})
+            searchResults.push({'name' : 'Your search had no matches.', 'id':0, 'key':0})
         }
 
         this.setState({isSearching:true})
@@ -170,7 +170,7 @@ class HomeScreen extends Component {
                             onChangeText={(search) => this.setState({search})}
                             onSubmitEditing={() => this.handleSearch()} 
                             autoCorrect={false}
-                            autoCapitalize={false}
+                            autoCapitalize="none"
                             returnKeyType="search"
                             value={this.state.search}
                             />
@@ -190,10 +190,11 @@ class HomeScreen extends Component {
                 <View style={styles.courseListView}>
                     <ScrollView style={styles.courseList}>
                         { (this.state.isSearching == false) ?
-                            this.state.courses.map(({course, id}) => {
+                            this.state.courses.map(({course, id, key}) => {
                                     return (<View>
                                     <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades', {course, id})}>
                                         <Text style={styles.courseListText}>{course}</Text>
+                                        <Text style={styles.courseListText}>{id}</Text>
                                     </TouchableOpacity>
                                 </View>);
                                 }

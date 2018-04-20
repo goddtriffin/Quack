@@ -110,6 +110,17 @@ export const styles = {
         marginLeft: '10px',
         marginBottom: '-10px'
     },
+    imageButton: {
+        fontFamily: 'Fira Sans',
+        color: '#5A5A5A',
+        fontSize: '10pt',
+        fontWeight: 'regular',
+        borderColor: colors.transparent,
+        backgroundColor: colors.transparent,
+        border: 'none',
+        marginLeft: '10px',
+        
+    },
     
     
 }
