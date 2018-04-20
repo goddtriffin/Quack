@@ -1,4 +1,5 @@
 input GradeInput {
+    quizID: Int!
     questionID: Int!
     answerID: Int!
     userID: Int!
@@ -8,6 +9,7 @@ input GradeInput {
 
 type Grade {
     id: Int!
+    quizID: Int!
     questionID: Int!
     answerID: Int!
     userID: Int!

@@ -20,7 +20,7 @@ const socketEndpoint = "http://endor-vm2.cs.purdue.edu:5000";
 function login (onSuccessCallbacks) {
     // create query
     const query = `mutation {
-        login (email: "todd@griffin", password: "bees") {
+        login (email: "frontend@purdue", password: "abc") {
             jwt
         }
     }`
@@ -28,6 +28,8 @@ function login (onSuccessCallbacks) {
     // send request
     return request(graphqlEndpoint, query)
         .then(response => {
+            console.log('logged in:', response);
+
             // create client with auth
             const client = new GraphQLClient(graphqlEndpoint, {
                 headers: {
@@ -82,7 +84,7 @@ function subscription_quiz_updated (client) {
 
         // subscribe to the quiz_updated event,
         // send what course to watch
-        socket.emit('subscribe', 'quiz_updated', 123123);
+        socket.emit('subscribe', 'quiz_updated', 828831);
 
         // attach quiz updated listener
         socket.on('quiz_updated', function (quiz) {
@@ -102,7 +104,7 @@ function handleUpdatedQuiz (socket, quiz) {
     console.log('quiz updated:', quiz);
 
     // unsubscribe from the quiz_updated event
-    socket.emit('unsubscribe', 'quiz_updated', 123123);
+    socket.emit('unsubscribe', 'quiz_updated', 828831);
 
     // close when done
     socket.disconnect();
@@ -115,12 +117,17 @@ function handleUpdatedQuiz (socket, quiz) {
 function openQuiz (client) {
     // create query
     const query = `mutation {
-        quizUpdate (id: 1, input: {
-            courseID: 123123,
-            date: "04182018"
+        quizUpdate (id: 12, input: {
+            title: "Subscriptions Test"
+            courseID: 828831
+            qCount: 5
+            date: "04202018"
             isOpen: true
         }) {
+            id
+            title
             courseID
+            qCount
             date
             isOpen
         }
@@ -129,7 +136,7 @@ function openQuiz (client) {
     // send request
     client.request(query)
         .then(response => {
-            console.log('Attempted to open quiz 1...');
+            console.log('Attempted to open quiz 12 in course 828831...', response);
         })
         .catch(err => {
             console.log(err);
@@ -140,12 +147,17 @@ function openQuiz (client) {
 function closeQuiz (client) {
     // create query
     const query = `mutation {
-        quizUpdate (id: 1, input: {
-            courseID: 123123,
-            date: "04182018"
+        quizUpdate (id: 12, input: {
+            title: "Subscriptions Test"
+            courseID: 828831
+            qCount: 5
+            date: "04202018"
             isOpen: false
         }) {
+            id
+            title
             courseID
+            qCount
             date
             isOpen
         }
@@ -154,7 +166,7 @@ function closeQuiz (client) {
     // send request
     client.request(query)
         .then(response => {
-            console.log('Attempted to close quiz 1...');
+            console.log('Attempted to close quiz 12 in course 828831...', response);
         })
         .catch(err => {
             console.log(err);
@@ -200,16 +212,20 @@ function handleQuizAnswerCreated (socket, quizAnswer) {
     console.log('Done\n');
 }
 
+// handles creating a quiz answer
 function createQuizAnswer (client) {
     // create query
     const query = `mutation {
         answerCreate (input: {
-            userID: 6
+            userID: 1
+            questionID: 1
             quizID: 1
-            type: "true-false"
-            content: "true"
+            type: "tf"
+            content: "True"
         }) {
+            id
             userID
+            questionID
             quizID
             type
             content
@@ -219,7 +235,70 @@ function createQuizAnswer (client) {
     // send request
     client.request(query)
         .then(response => {
-            console.log('Attempted to create quiz answer...');
+            console.log('Attempted to create quiz answer...', response);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+// FEEDBACK CREATED
+
+function subscription_feedback_created (client) {
+    console.log('Running Feedback Created Tests');
+    console.log('=================================');
+
+    // init
+    const socket = createSocket('feedback_created');
+
+    // subscribe to the feedback_created event
+    socket.emit('subscribe', 'feedback_created');
+
+    // attach feedback created listener
+    socket.on('feedback_created', function (feedback) {
+        handleFeedbackCreated(socket, feedback);
+    });
+
+    // create a Feedback
+    setTimeout(function () {
+        createFeedback(client);
+    }, 2000);
+}
+
+// handles feedback created
+function handleFeedbackCreated (socket, feedback) {
+    // show data from created feedback
+    console.log('feedback created:', feedback);
+
+    // unsubscribe from the feedback_created event
+    socket.emit('unsubscribe', 'feedback_created');
+
+    // close when done
+    socket.disconnect();
+
+    // done
+    console.log('Done\n');
+}
+
+function createFeedback (client) {
+    // create query
+    const query = `mutation {
+        feedbackCreate (input: {
+            userID: 6
+            content: "Subscriptions Test"
+            date: "04202018"
+        }) {
+            id
+            userID
+            content
+            date
+        }
+    }`
+
+    // send request
+    client.request(query)
+        .then(response => {
+            console.log('Attempted to create feedback...', response);
         })
         .catch(err => {
             console.log(err);
@@ -228,4 +307,4 @@ function createQuizAnswer (client) {
 
 // TESTALL
 
-login([subscription_quiz_updated, subscription_quiz_answer_created]);
+login([subscription_quiz_updated, subscription_quiz_answer_created, subscription_feedback_created]);
