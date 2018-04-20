@@ -49,10 +49,9 @@ class StartQuiz extends Component {
         console.log(answer);
         console.log("Quiz update received");
 
-        var d = this.state.data;
-        d[0] = d[0] + 1;
-        d[1] = d[1] - 1;
-        this.setState({data: d});
+        var a = this.state.answers;
+        a.push(answer);
+        this.setState({answers: a});
     }
 
     
