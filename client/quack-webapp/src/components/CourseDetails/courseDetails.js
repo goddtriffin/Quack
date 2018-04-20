@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { colors } from '../../styles/styles'
 import styles from './styles'
 import {  } from 'react-router-dom';
-import { Grid, Col, Row, Tabs, Tab, FormGroup, ControlLabel, FormControl, HelpBlock, Button } from '../../../node_modules/react-bootstrap'
+import { Grid, Col, Row, Tabs, Tab, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Modal } from '../../../node_modules/react-bootstrap'
 
 class CourseDetails extends Component {
 
@@ -12,6 +12,8 @@ class CourseDetails extends Component {
         courseTitle: "ABC123: Course Title",
         courseDescription: "Software Engineering",
         newCourseInput: '',
+        show: false,
+        feedback: "",
     }
 
 constructor(props) {
@@ -21,15 +23,21 @@ constructor(props) {
         courseID: props.courseID,
         courseTitle: props.courseTitle,
         courseDescription: props.courseDescription,
-        newCourseInput: ''
+        newCourseInput: '',
+        show: false,
+        feedback: "",
     }
     this.handleChangeT = this.handleChangeT.bind(this);
     this.handleChangeD = this.handleChangeD.bind(this);
     this.save = this.save.bind(this);
     this.getValidationState = this.getValidationState.bind(this);
+    this.handleChangeFeedback = this.handleChangeFeedback.bind(this);
+    this.showFeedback = this.showFeedback.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.submit = this.submit.bind(this)
 }
 
-getValidationState() {
+  getValidationState() {
     if(this.state.newCourseInput.length === 0) {
       return null;
     }
@@ -55,10 +63,51 @@ getValidationState() {
     this.props.callback(this.state.courseTitleInput, this.state.courseDescriptionInput);
   }
 
+  handleChangeFeedback(e) {
+      this.setState({feedback: e.target.value})
+  }
+
+  handleClose() {
+    this.setState({show: false, feedback: ""})
+  }
+
+  submit() {
+    var feedback = this.state.feedback;
+      if(feedback == "") {
+          this.setState({show: false, feedback: ""})
+      }else {
+          // submit feedback
+          console.log("SUBMITTING")
+          this.setState({show: false})
+      }
+  }
+
+  showFeedback() {
+      this.setState({show: true})
+  }
+
 render() {
     
     return(
-        <div >
+        <div>
+            <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title>Send Feedback</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form>
+                        <FormGroup>
+                        <ControlLabel>Type a response</ControlLabel>
+                        <FormControl style={{height: '120px'}} type="text" componentClass="textarea" value={this.state.feedback} placeholder="" onChange={this.handleChangeFeedback}/>
+                        <FormControl.Feedback/>
+                        </FormGroup>
+                    </form>
+                    
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={this.submit}>Submit</Button>
+                </Modal.Footer>
+            </Modal>
         <Grid style={{width: 'auto'}}>
             <Row>
                 <Col>
@@ -83,6 +132,11 @@ render() {
                 </Col>
             </Row>
         </Grid>
+        <div style={styles.footerRow}>
+            <div style={{display:'flex', flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', height: '100%'}}>
+                <button onClick={this.showFeedback} style={styles.button}><div style={styles.buttonText}>Submit Feedback to Quack</div></button>
+            </div>
+        </div>
         </div>
         
     );
