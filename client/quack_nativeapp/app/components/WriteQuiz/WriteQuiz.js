@@ -193,7 +193,7 @@ class WriteQuiz extends Component {
         const A_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setAChoiceState();
-            this.setState({selectedAnswer: this.state.questions.options.split(";")[0]})
+            //this.setState({selectedAnswer: this.state.questions.options.split(";")[0]})
         }}>
             <Image
             source={this.state.origA}
@@ -204,7 +204,7 @@ class WriteQuiz extends Component {
         const B_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setBChoiceState();
-            this.setState({selectedAnswer: this.state.questions.options.split(";")[1]})
+            //this.setState({selectedAnswer: this.state.questions.options.split(";")[1]})
         }}>
             <Image
             source={this.state.origB}
@@ -215,7 +215,7 @@ class WriteQuiz extends Component {
         const C_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setCChoiceState();
-            this.setState({selectedAnswer: this.state.questions.options.split(";")[2]})
+            //this.setState({selectedAnswer: this.state.questions.options.split(";")[2]})
         }}>
             <Image
             source={this.state.origC}
@@ -225,7 +225,7 @@ class WriteQuiz extends Component {
         const D_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setDChoiceState();
-            this.setState({selectedAnswer: this.state.questions.ptions.split(";")[3]})
+            //this.setState({selectedAnswer: this.state.questions.options.split(";")[3]})
         }}>
             <Image
             source={this.state.origD}
@@ -262,7 +262,8 @@ class WriteQuiz extends Component {
                 <Col paddingRight={60} paddingTop={70}>
                     
                     <Text style={styles.quizAnswerText}>
-                        {'a.) ' + this.state.questions.options.split(";")[0]}
+                        test
+                        
                     </Text>
                     
                     <Text style={styles.quizAnswerText}>
@@ -275,7 +276,7 @@ class WriteQuiz extends Component {
         <View>
                 <Col paddingRight={130} paddingTop={70}>
                     <Text style={styles.quizAnswerText}>
-                        {'b.) ' + this.state.questions.options.split(";")[1]}
+                        test
                     </Text>
                     <Text style={styles.quizAnswerText}>
                         {this.numberOfOptions > 3 ? this.state.d : null}
@@ -303,10 +304,10 @@ class WriteQuiz extends Component {
 
         return (
         <Container>
-            <Image
-                source={require('../../images/quiz_resources/quiz_backdrop_triple.png')}
+            {/*<Image
+                source={require(this.state.questions[0].image)}
                 style={styles.quizBackground}
-            />
+            />*/}
             <Text style={styles.quizText}>
                 
             </Text>
@@ -348,13 +349,13 @@ class WriteQuiz extends Component {
     
             </TouchableOpacity>
             <TouchableOpacity style={styles.nextButton} onPress={() => this.sendAnswers()}>
-                {(numQuestions == numCurrent)
+                {(0 == 0)
                 ? <Image source={require('../../images/quiz_resources/next_button.png')}/>
                 : <Image source={require('../../images/quiz_resources/next_button.png')}/>
                 }
             </TouchableOpacity>
             <TouchableOpacity style={styles.prevButton} onPress={() => Alert.alert("Previous question")}>
-                {(numCurrent == 0)
+                {(0 == 0)
                 ?<Image source={require('../../images/quiz_resources/previous_button.png')}/>
                 :null
                 }

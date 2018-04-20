@@ -99,15 +99,15 @@ class QuizResults extends Component {
                      >         
                     <VictoryLabel text="Live Quiz" textAnchor="middle" x={Dimensions.get('window').width / 2} y={40}/>
                     <VictoryAxis
-                      tickValues={[1, 2]}
-                      tickFormat={["true", "false"]}
+                      tickValues={[1, 2, 3, 4]}
+                      tickFormat={["A", "B", "C", "D"]}
                     />
                     <VictoryAxis
                       dependentAxis
                       //tickFormat={(x) => (`$${x / 1000}k`)}
                     />
                     <VictoryBar
-                      data={this.state.data}
+                      data={data}
                       labels={(d) => d.y}
                       x="answer"
                       y="number"
