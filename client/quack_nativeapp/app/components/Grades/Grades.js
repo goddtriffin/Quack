@@ -36,9 +36,12 @@ class Grades extends Component {
             `,
             variables: {
                 courseID : this.props.navigation.state.params.id,
-            }
-            }).then( data => {
-                quizzes = [];
+            },
+        variables: {
+        courseID : this.props.navigation.state.params.id,
+    }
+    }).then( data => {
+        quizzes = [];
 
                 if(data.data.userGetQuizzes == null) {
                     quizzes.push({id : 'No Quizzes', isOpen:false, date:'', key:0})
@@ -61,12 +64,14 @@ class Grades extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Header style={styles.header}>
+                <Header style={styles.headerTop}>
                     <Left>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
                     </Left>
+                    <Body></Body>
+                    <Right></Right>
                 </Header>
 
                 <View style={styles.header}>
@@ -81,12 +86,9 @@ class Grades extends Component {
                             return (
                                 <View>
                                     <Grid>
-                                        <Col size={65}>
-                                            <Text>Quiz {id}</Text>
-                                        </Col>
-                                        <Col size={35}>
-                                            <Text> {date.substring(0,2)} / {date.substring(2,4)} </Text>
-                                        </Col>
+                                        <Row>
+                                            <Text style={styles.quizText}>Quiz {id} {date.substring(0,2)} / {date.substring(2,4)}</Text>
+                                        </Row>
                                     </Grid>
                                 </View>);
                                 }
