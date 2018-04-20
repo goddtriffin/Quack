@@ -1,0 +1,28 @@
+input GradeInput {
+    quizID: Int!
+    questionID: Int!
+    answerID: Int!
+    userID: Int!
+    points: Float!
+    totalPoints: Float!
+}
+
+type Grade {
+    id: Int!
+    quizID: Int!
+    questionID: Int!
+    answerID: Int!
+    userID: Int!
+    points: Float!
+    totalPoints: Float!
+}
+
+type Query {
+    grades: [Grade]
+    grade(id: Int!): Grade
+}
+
+type Mutation {
+    gradeCreate(input: GradeInput): Grade
+    gradeUpdate(id: Int!, input: GradeInput): Grade
+}

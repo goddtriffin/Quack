@@ -1,9 +1,23 @@
+input CourseInput {
+    userID: Int!
+    courseID: Int!
+    name: String!	
+    description: String!
+}
+
 type Course {
     id: Int!
     name: String!
+    description: String!
 }
 
 type Query {
     courses: [Course]
     course(name: String!): Course
+}
+
+type Mutation {
+    courseCreate(input: CourseInput): Course
+    courseGetSections(id: Int!): [Section]
+    courseGetQuizzes(id: Int!): [Quiz]
 }

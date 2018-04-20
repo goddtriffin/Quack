@@ -1,27 +1,19 @@
 input QuizInput {
+    title: String!
     courseID: Int!
-    type: String!
+    qCount: Int!
     date: String!
-    question: String!
-    image: String!
-    options: String!
-    correctAnswer: String!
     isOpen: Boolean!
-    isManual: Boolean!
 }
 
 type Quiz {
     id: Int!
+    title: String!
     courseID: Int!
-    type: String!
+    qCount: Int!
     date: String!
-    question: String!
-    image: String!
-    options: String!
-    correctAnswer: String!
     isOpen: Boolean!
-    isManual: Boolean!
-}
+} 
 
 type Query {
     quizzes: [Quiz]
@@ -31,4 +23,6 @@ type Query {
 type Mutation {
     quizCreate(input: QuizInput): Quiz
     quizUpdate(id: Int!, input: QuizInput): Quiz
+    quizGetQuestions(id: Int!): [Question]
+    quizGetStats(questionID: Int!): [Int!]
 }

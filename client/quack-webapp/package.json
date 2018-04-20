@@ -5,16 +5,20 @@
   "dependencies": {
     "apollo-boost": "^0.1.4",
     "apollo-client": "^2.2.8",
+    "awesome-bootstrap-checkbox": "^1.0.1",
     "bootstrap": "^3.3.7",
+    "chart.js": "^2.7.2",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",
     "react": "^16.2.0",
     "react-apollo": "^2.1.1",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-table-next": "^0.1.5",
+    "react-chartjs-2": "^2.7.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.0"
+    "react-scripts": "1.1.0",
+    "socket.io-client": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

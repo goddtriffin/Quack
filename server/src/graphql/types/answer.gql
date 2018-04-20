@@ -1,6 +1,7 @@
 input AnswerInput {
     userID: Int!
     quizID: Int!
+    questionID: Int!
     type: String!
     content: String!
 }
@@ -9,6 +10,7 @@ type Answer {
     id: Int
     userID: Int!
     quizID: Int!
+    questionID: Int!
     type: String!
     content: String!
 }

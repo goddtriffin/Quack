@@ -34,7 +34,7 @@ export default StyleSheet.create({
   input: {
       height: 50,
       //backgroundColor: 'rgba(255,255,255,0.8)',
-      marginBottom: 20,
+      marginBottom: 30,
       borderBottomColor: 'rgba(255,255,255,0.8)',
       borderBottomWidth: 1.5,
       fontFamily: 'Fira Sans',
