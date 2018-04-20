@@ -9,6 +9,7 @@ import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
+import { NavigationActions } from 'react-navigation';
 
 
 class Grades extends Component {
@@ -25,6 +26,7 @@ class Grades extends Component {
     }
 
     componentDidMount() {
+        this.setState({course:this.props.navigation.state.params.course})
         this.props.client.mutate({ mutation: gql`
                 mutation userGetQuizzes($courseID: Int!) {
                     userGetQuizzes(courseID: $courseID) {
@@ -35,38 +37,47 @@ class Grades extends Component {
                 }
             `,
             variables: {
-                courseID : this.props.navigation.state.params.id,
+<<<<<<< HEAD
+                courseID : this.props.navigation.state.params.key,
             }
             }).then( data => {
                 quizzes = [];
+=======
+                courseID : this.props.navigation.state.params.id,
+            },
+        variables: {
+        courseID : this.props.navigation.state.params.id,
+    }
+    }).then( data => {
+        quizzes = [];
+>>>>>>> Development
 
                 if(data.data.userGetQuizzes == null) {
-                    quizzes.push({id : 'No Quizzes', isOpen:false, date:'', key:0})
+                    quizzes.push({'name' : 'No Quizzes', 'isOpen':false, 'date':'', 'key':0})
                 }
                 else {
                     for(let i = 0; i < data.data.userGetQuizzes.length; i++) {
-                        quizzes.push({id : data.data.userGetQuizzes[i].id, isOpen:data.data.userGetQuizzes[i].isOpen, date:data.data.userGetQuizzes[i].date, key:i})
+                        quizzes.push({name: 'QUIZ' + data.data.userGetQuizzes[i].id, isOpen:data.data.userGetQuizzes[i].isOpen, date:data.data.userGetQuizzes[i].date, key:data.data.userGetQuizzes[i].id})
                     }
                 }
                 this.setState({quizzes});
             }).catch(function(error) {
                 alert(error.message);
             });
-            this.setState({course:this.props.navigation.state.params.course});
-            this.setState({courseID:this.props.navigation.state.params.id});
-            console.log(this.state.courseID);
     }
 
     
     render() {
         return (
             <View style={styles.container}>
-                <Header style={styles.header}>
+                <Header style={styles.headerTop}>
                     <Left>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
+                        <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Home'})]}))}>
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
                     </Left>
+                    <Body></Body>
+                    <Right></Right>
                 </Header>
 
                 <View style={styles.header}>
@@ -77,16 +88,22 @@ class Grades extends Component {
 
                 <View style={styles.gradesListView}>
                     <ScrollView style={styles.gradesListRow}>
-                        {this.state.quizzes.map(({id, isOpen, date}) => {
+                        {this.state.quizzes.map(({name, isOpen, date, key}) => {
                             return (
                                 <View>
                                     <Grid>
+<<<<<<< HEAD
                                         <Col size={65}>
-                                            <Text>Quiz {id}</Text>
+                                            <Text>{name}</Text>
                                         </Col>
                                         <Col size={35}>
                                             <Text> {date.substring(0,2)} / {date.substring(2,4)} </Text>
                                         </Col>
+=======
+                                        <Row>
+                                            <Text style={styles.quizText}>Quiz {id} {date.substring(0,2)} / {date.substring(2,4)}</Text>
+                                        </Row>
+>>>>>>> Development
                                     </Grid>
                                 </View>);
                                 }
