@@ -4,6 +4,8 @@ import { Grid, Col, Row, Button, Modal} from '../../../node_modules/react-bootst
 import { Link } from 'react-router-dom';
 import { Doughnut, Bar } from 'react-chartjs-2';
 import io from 'socket.io-client';
+import { graphql, withApollo } from 'react-apollo'
+import gql from 'graphql-tag'
 
 class StartQuiz extends Component {
 
@@ -55,6 +57,53 @@ class StartQuiz extends Component {
         socket.on("quiz_answer_created", this.update);
     }
 
+    componentDidMount() {
+
+
+        this.props.client.mutate({
+            mutation: gql`mutation quizGetQuestions($id: Int!) {
+                quizGetQuestions(id: $id) {
+                    id
+                    type
+                    question
+                    image
+                    options
+                    correctAnswer            
+                }
+            }`,
+            variables: {
+                id: this.state.quizID,
+            }
+        }).then(data => {
+            var q = [];
+            var qs = data.data.quizGetQuestions;
+            for(var i = 0; i < qs.length; i++) {
+                if(qs[i].type == "tf") {
+                    q.push({key: i + 1, num: i+1, type: qs[i].type, question: qs[i].question, options: ["True", "False"], image: qs[i].image, answer: qs[i].correctAnswer})
+                }else {
+                    q.push({key: i + 1, num: i+1, type: qs[i].type, question: qs[i].question, options: qs[i].options.split(";"), image: qs[i].image, answer: qs[i].correctAnswer})
+                }
+                
+            }
+            console.log(qs)
+            this.setState({quizQuestions: q})
+
+            this.props.client.query({
+                query: gql`query quiz($id: Int!) {
+                    quiz(id: $id) {
+                        qCount           
+                    }
+                }`,
+                variables: {
+                    id: this.state.quizID,
+                }
+            }).then(data => {
+                console.log(data.data.quiz.qCount)
+                this.setState({qCount: data.data.quiz.qCount})
+            })
+        })
+    }
+
     update(answer) {
         console.log(answer);
         console.log("Quiz update received");
@@ -79,6 +128,7 @@ class StartQuiz extends Component {
 
     render() {
 
+        console.log(this.state.quizQuestions);
         var r = this.parseAnswers();
         var quizPassword = "";        
         var count = 0;
@@ -106,19 +156,8 @@ class StartQuiz extends Component {
         }
 
         return(
-            <div>
-                <Modal show={this.state.showOptions} onHide={this.handleClose}>
-                    <Modal.Header closeButton>
-                    <Modal.Title>Quiz Options</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <h1>Do you want to start the quiz with a password?</h1>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={this.yes}>Yes</Button>
-                        <Button onClick={this.no}>No</Button>
-                    </Modal.Footer>
-                </Modal>
+            <div style={{width: '100%', margin: '0px', padding: '0px', overflowY: 'scroll', overflowX: 'hidden'}}>
+                
                 <Grid style={{height: '92vh', width: 'auto', margin: '0px', padding: '0px', marginBottom: '-30px', marginLeft: '20px'}} ref="mainGrid">
                     <Row>
                         <div style={{margin: '0px', padding: '0px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'baseline'}}>
@@ -162,12 +201,7 @@ class StartQuiz extends Component {
 
         var answers = this.state.answers;
         var questions = this.state.quizQuestions;
-        var numQuestions = 0;
-        for(var i = 0; i < answers.length; i++) {
-            if(answers[i].qNum > numQuestions) {
-                numQuestions = answers[i].qNum;
-            }
-        }
+        var numQuestions = this.state.qCount;
 
         var results = [];   // {key: 1, options: [x, x, x, x, etc.]}
         for(var i = 0; i < numQuestions; i++) {
@@ -179,6 +213,8 @@ class StartQuiz extends Component {
         console.log(results)
 
         for(var i = 0; i < answers.length; i++) {
+            console.log(questions)
+            console.log(answers)
             var choice = questions[answers[i].qNum - 1].options.indexOf(answers[i].content);
             var numOptions = questions[answers[i].qNum - 1].options.length;
             var temp = results[answers[i].qNum - 1].options;
@@ -188,17 +224,17 @@ class StartQuiz extends Component {
             results[answers[i].qNum - 1].options = temp;
         }
 
-        if(this.refs.mainGrid) {
-            this.setState({
-                results: results,
-            })
-        }
+        // if(this.refs.mainGrid) {
+        //     this.setState({
+        //         results: results,
+        //     })
+        // }
 
         return results;
         
     }
 }
-export default StartQuiz
+export default withApollo(StartQuiz)
 
 class Question extends Component {
 
@@ -216,6 +252,13 @@ class Question extends Component {
         var borderColors = [];
         var labels = [];
         var results = this.props.results;
+        var d = [];
+        console.log(results)
+        if(results.length == 0) {
+            d = null;
+        }else {
+            d = results[this.props.question.key - 1].options;
+        }
         var correctIndex = this.props.question.options.indexOf(this.props.question.answer);
         for(var i = 0; i < this.props.question.options.length; i++) {
             if(i == correctIndex) {
@@ -235,7 +278,7 @@ class Question extends Component {
                 backgroundColor: bgColors,
                 borderColor: borderColors,
                 borderWidth: 1,
-                data: results[this.props.question.key - 1].options,
+                data: d,
             }]
         }
 

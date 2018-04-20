@@ -149,7 +149,7 @@ class EditQuiz extends Component {
         var questions = this.state.quizQuestions.slice();
         questions.map((question) => {
             if(question.question == q) {
-                question.answer = answer;
+                question.correctAnswer = answer;
                 return;
             }
         });
@@ -312,28 +312,56 @@ class EditQuiz extends Component {
         }).then( data => { 
             console.log(this.state.quizQuestions);
             for(var i = 0; i < this.state.quizQuestions.length; i++) {
-                this.props.client.mutate({
-                    mutation: gql`mutation questionUpdate($id: Int!, $input: QuestionInput) {
-                        questionUpdate(id: $id, input: $input) {
-                            id
+                console.log(this.state.quizQuestions[i].id);
+
+                if(this.state.quizQuestions[i].id == null) {
+                    this.props.client.mutate({
+                        mutation: gql`mutation questionCreate($input: QuestionInput) {
+                            questionCreate( input: $input) {
+                                id
+                            }
+                        }`,
+                        variables: {
+                            input: {
+                                quizID: this.state.quizID,
+                                qIndex: this.state.quizQuestions[i].key,
+                                type: this.state.quizQuestions[i].type,
+                                question: this.state.quizQuestions[i].question,
+                                image: this.state.quizQuestions[i].image,
+                                options: this.state.quizQuestions[i].options.toString(),
+                                correctAnswer: this.state.quizQuestions[i].answer,
+                                isManual: false
+                            }
                         }
-                    }`,
-                    variables: {
-                        id: this.state.quizQuestions[i].id,
-                        input: {
-                            quizID: data.data.quizUpdate.id,
-                            qIndex: this.state.quizQuestions[i].key,
-                            type: this.state.quizQuestions[i].type,
-                            question: this.state.quizQuestions[i].question,
-                            image: this.state.quizQuestions[i].image,
-                            options: this.state.quizQuestions[i].options.toString(),
-                            correctAnswer: this.state.quizQuestions[i].answer,
-                            isManual: false
+                    }).then(quest => {
+                        console.log(quest);
+                    })
+                }
+                else {
+                    console.log(this.state.quizQuestions[i].id)
+                    this.props.client.mutate({
+                        mutation: gql`mutation questionUpdate($id: Int!, $input: QuestionInput) {
+                            questionUpdate(id: $id, input: $input) {
+                                id
+                            }
+                        }`,
+                        variables: {
+                            id: this.state.quizQuestions[i].id,
+                            input: {
+                                quizID: data.data.quizUpdate.id,
+                                qIndex: this.state.quizQuestions[i].key,
+                                type: this.state.quizQuestions[i].type,
+                                question: this.state.quizQuestions[i].question,
+                                image: this.state.quizQuestions[i].image,
+                                options: this.state.quizQuestions[i].options.toString(),
+                                correctAnswer: this.state.quizQuestions[i].answer,
+                                isManual: false
+                            }
                         }
-                    }
-                }).then(quest => {
-                    console.log(quest);
-                })
+                    }).then(quest => {
+                        console.log(quest);
+                    })
+                }
             }
             this.setState({show: false})
         })
@@ -411,7 +439,7 @@ class EditQuiz extends Component {
                 <Grid style={{height: '92vh', width: 'auto', margin: '0px', padding: '0px', marginBottom: '-30px', marginLeft: '20px'}}>
                     <Row>
                     <div style={{margin: '0px', padding: '0px'}}>
-                    <h1 style={styles.title}>Create a new quiz</h1>
+                    <h1 style={styles.title}>Edit quiz</h1>
                     </div>
                     </Row>
                     <Row> 
@@ -500,7 +528,7 @@ class QuizQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected: '',
+            selected: "",
             isHovering: false,
         }
 
@@ -548,19 +576,19 @@ class QuizQuestion extends Component {
     render() {
         console.log(this.props)
         const question = this.props.question.question;
-        var options = this.props.question.options;
+        var options = this.props.question.options.split(",");
         const image = this.props.question.image;
         const type = this.props.question.type;
         const num = this.props.num;
         const answer = this.props.question.correctAnswer;
-
+        
         // MC
         if(type == "mc") {
             const optionsList = options.map((choice) =>
                 
                 <div key={choice.toString()} className="radio">
                     <label>
-                    <input id={question} type="radio" value={`${choice}`} checked={answer===`${choice}`} onChange={(e) => this.handleChange(e, question)} />
+                    <input id={question} type="radio" value={`${choice}`} checked={answer ===`${choice}`} onChange={(e) => this.handleChange(e, question)} />
                         {choice}
                     </label>
                 </div>

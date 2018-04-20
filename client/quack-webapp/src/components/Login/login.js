@@ -76,7 +76,7 @@ class Login extends Component {
 
     saveUserData = (token, id) => {
         localStorage.setItem(AUTH_TOKEN, token)
-        localStorage.setItem("userID", id)
+        localStorage.setItem("userID", 7)
         console.log(id);
     }
 
