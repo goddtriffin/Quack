@@ -37,26 +37,6 @@ class RegisterScreen extends Component {
 
     render() {
 
-        const iOSSegmentControl = 
-        <SegmentedControlIOS
-            values={['Student', 'Instructor']}
-            selectedIndex={this.state.selectedIndex}
-            onChange={(event) => {
-                this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
-            }}
-            tintColor='white'
-        />
-
-        const AndroidSegmentControl =
-        <SegmentedControlTab
-            values={['Student', 'Instructor']}
-            selectedIndex={this.state.selectedIndex}
-            onTabPress={(index) => {
-                this.setState({selectedIndex: index});
-            }}
-            tintColor='white'
-        />
-
         registerUser = async() => {
 
             if(this.state.fullName != '' && this.state.email != '' && this.state.password == this.state.passwordConfirmed) {

@@ -127,7 +127,7 @@ class HomeScreen extends Component {
         this.setState({search:''})
     }
 
-    async handleSearch() {
+    handleSearch() {
         if(this.state.search == ""){
             return
         }
@@ -203,7 +203,7 @@ class HomeScreen extends Component {
                                     return (<View>
                                     <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades', {course, key})}>
                                         <Text style={styles.courseListText}>{course}</Text>
-                                        <Text style={styles.courseListText}>{key}</Text>
+                                        <Text style={styles.courseIDListText}>{key}</Text>
                                     </TouchableOpacity>
                                 </View>);
                                 }
@@ -213,7 +213,7 @@ class HomeScreen extends Component {
                                         <Grid>
                                             <Col size={85}>
                                                 <Text style={styles.courseListText}>{name}</Text>
-                                                <Text style={styles.courseListText}>{key}</Text>
+                                                <Text style={styles.courseIDListText}>{key}</Text>
                                             </Col>
                                             <Col size={15}>
                                                 <TouchableOpacity onPress={() => this.addCourse(name, key)}>

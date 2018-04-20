@@ -3,21 +3,27 @@ import { Col, Row, Grid } from "react-native-easy-grid"
 import { Input, Item, Content, Container, Icon } from "native-base"
 import { View, Image, StatusBar, Text, Dimensions, TouchableHighlight, TouchableOpacity, TextInput, Alert } from 'react-native';
 import styles from './styles';
-
-
+import { NavigationActions } from 'react-navigation';
 import { ApolloProvider, graphql, withApollo } from 'react-apollo';
-
 import gql from 'graphql-tag';
 
 class WriteQuiz extends Component {
     static navigationOptions = ({ navigation }) => ({
         header: null,
       })
-    
+
     constructor(props) {
         super(props);
         this.sendAnswers = this.sendAnswers.bind(this);
         this.state = { 
+            course: '',
+            courseID: '',
+            title: '',
+            date: '',
+            quizID: '',
+            numCurrent: 0,
+            numQuestions: 0,
+            questions: [{
             text: 'Enter text here',
             picture: '../../images/quiz_resources/quiz_backdrop_triple.png',
             questionText: 'What color is the dog? and what is the meaning of life',
@@ -36,11 +42,64 @@ class WriteQuiz extends Component {
             origB: require('../../images/quiz_resources/B_button.png'),
             origC: require('../../images/quiz_resources/C_button.png'),
             origD: require('../../images/quiz_resources/D_button.png'),
-            fillinBlank: true,
             freeResp: false,
-            multiChoice: false,
+            multiChoice: true,
             quizID: 0
+            }],
         }
+    }
+
+    componentDidMount() {
+        this.setState({title:this.props.navigation.state.params.title})
+        this.setState({course:this.props.navigation.state.params.course})
+        this.setState({course:this.props.navigation.state.params.courseID})
+        this.setState({course:this.props.navigation.state.params.date})
+        this.setState({course:this.props.navigation.state.params.quizID})
+
+        this.props.client.mutate({ mutation: gql`
+                mutation quizGetQuestion($courseID: Int!) {
+                    quizGetQuestions(ID: $quizID){
+                        id
+                        type
+                        options
+                        image
+                        isManual
+                        quizID
+                        qIndex
+                        options
+                        question
+                        correctAnswer
+                    }
+                }
+            `,
+            variables: {
+                courseID : this.props.navigation.state.params.quizID,
+            }
+            }).then( data => {
+                questions = [];
+
+                for(let i = 0; i < data.data.quizGetQuestions.length; i++) {
+                    questions.push({questionText: data.data.userGetQuestions[i].question, 
+                        type:data.data.userGetQuizzes[i].type, options:data.data.userGetQuizzes[i].options, image:data.data.userGetQuizzes[i].image,
+                        })
+                }
+
+                switch(questions[0].type) {
+                    case "SA": 
+                        this.setState({freeResp: true});
+                        break;
+                    case "MC": 
+                        this.setState({multiChoice: true});
+                        break;
+                    case "TF": 
+                        this.setState({multiChoice: true});
+                        break;
+                }
+
+            this.setState({questions});
+            }).catch(function(error) {
+                alert(error.message);
+            });
     }
 
     sendAnswers() {
@@ -66,55 +125,6 @@ class WriteQuiz extends Component {
                  // ADD THIS THROW error 
                 throw error; 
             });
-    }
-
-    componentDidMount() {
-
-        this.props.client.query({ query: gql`
-                query quiz($id: Int!) {
-                  quiz(id: $id) {
-                    id
-                    image
-                    question
-                    options
-                    type
-                  }
-                }
-              `,
-              variables: {
-                id : 1
-               }}).then( data => {
-              
-                this.setState({
-                    image: data.data.quiz.image,
-                    questionText : data.data.quiz.question,
-                    options: data.data.quiz.options,
-                    numberOfOptions: data.data.quiz.options.split(";").length,
-                    type: data.data.quiz.type,
-                    quizID: data.data.quiz.id,
-                    c: 'c.) ' + data.data.quiz.options.split(";")[2],
-                    d: 'd.) ' + data.data.quiz.options.split(";")[3]  
-                });
-                
-
-                console.log(this.state.quizID);
-
-                switch(this.state.type) {
-                    case "short-answer": 
-                        this.setState({freeResp: true});
-                        break;
-                    case "multiple-choice": 
-                        this.setState({multiChoice: true});
-                        break;
-                    case "true-false": 
-                        this.setState({fillinBlank: true});
-                        break;
-                }
-            }).catch(function(error) {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
-                 // ADD THIS THROW error
-                throw error;
-        });
     }
 
     setAChoiceState() {
@@ -183,7 +193,7 @@ class WriteQuiz extends Component {
         const A_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setAChoiceState();
-            this.setState({selectedAnswer: this.state.options.split(";")[0]})
+            this.setState({selectedAnswer: this.state.questions.options.split(";")[0]})
         }}>
             <Image
             source={this.state.origA}
@@ -194,7 +204,7 @@ class WriteQuiz extends Component {
         const B_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setBChoiceState();
-            this.setState({selectedAnswer: this.state.options.split(";")[1]})
+            this.setState({selectedAnswer: this.state.questions.options.split(";")[1]})
         }}>
             <Image
             source={this.state.origB}
@@ -205,7 +215,7 @@ class WriteQuiz extends Component {
         const C_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setCChoiceState();
-            this.setState({selectedAnswer: this.state.options.split(";")[2]})
+            this.setState({selectedAnswer: this.state.questions.options.split(";")[2]})
         }}>
             <Image
             source={this.state.origC}
@@ -215,7 +225,7 @@ class WriteQuiz extends Component {
         const D_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setDChoiceState();
-            this.setState({selectedAnswer: this.state.options.split(";")[3]})
+            this.setState({selectedAnswer: this.state.questions.ptions.split(";")[3]})
         }}>
             <Image
             source={this.state.origD}
@@ -252,7 +262,7 @@ class WriteQuiz extends Component {
                 <Col paddingRight={60} paddingTop={70}>
                     
                     <Text style={styles.quizAnswerText}>
-                        {'a.) ' + this.state.options.split(";")[0]}
+                        {'a.) ' + this.state.questions.options.split(";")[0]}
                     </Text>
                     
                     <Text style={styles.quizAnswerText}>
@@ -265,12 +275,30 @@ class WriteQuiz extends Component {
         <View>
                 <Col paddingRight={130} paddingTop={70}>
                     <Text style={styles.quizAnswerText}>
-                        {'b.) ' + this.state.options.split(";")[1]}
+                        {'b.) ' + this.state.questions.options.split(";")[1]}
                     </Text>
                     <Text style={styles.quizAnswerText}>
                         {this.numberOfOptions > 3 ? this.state.d : null}
                     </Text>
                 </Col>
+        </View>
+
+        const TrueAnswer =
+        <View>
+            <Col paddingRight={130} paddingTop={70}>
+                <Text style={styles.quizAnswerText}>
+                    True
+                </Text>
+            </Col>
+        </View>
+
+        const FalseAnswer =
+        <View>
+            <Col paddingRight={130} paddingTop={70}>
+                <Text style={styles.quizAnswerText}>
+                    False
+                </Text>
+            </Col>
         </View>
 
         return (
@@ -280,7 +308,7 @@ class WriteQuiz extends Component {
                 style={styles.quizBackground}
             />
             <Text style={styles.quizText}>
-                Quiz 1
+                
             </Text>
             
         <Grid>
@@ -296,6 +324,8 @@ class WriteQuiz extends Component {
                 </Content>
                 {this.state.multiChoice ? multipleQuizAnsCol1 : null}
                 {this.state.multiChoice ? multipleQuizAnsCol2 : null}
+                {this.state.TrueFalse ? TrueAnswer : null}
+                {this.state.TrueFalse ? FalseAnswer : null}
             </Row>
             <Row size = {10}>
                 {this.state.hasPicture ? quizQuestion : null}
@@ -310,7 +340,7 @@ class WriteQuiz extends Component {
 
             </Row>    
         </Grid>
-        <TouchableOpacity style={styles.downIndicator} onPress={ () => Alert.alert("Answers saved. You can go back now") }>
+        <TouchableOpacity style={styles.downIndicator} onPress={ () => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Home'})]})) }>
                 <Image
                     source={require('../../images/quiz_resources/close_quiz_indicator_triple.png')}
                   //  style={styles.downIndicator}
@@ -318,18 +348,16 @@ class WriteQuiz extends Component {
     
             </TouchableOpacity>
             <TouchableOpacity style={styles.nextButton} onPress={() => this.sendAnswers()}>
-                <Image
-                    source={require('../../images/quiz_resources/next_button.png')}
-                    
-                />
-    
+                {(numQuestions == numCurrent)
+                ? <Image source={require('../../images/quiz_resources/next_button.png')}/>
+                : <Image source={require('../../images/quiz_resources/next_button.png')}/>
+                }
             </TouchableOpacity>
             <TouchableOpacity style={styles.prevButton} onPress={() => Alert.alert("Previous question")}>
-                <Image
-                    source={require('../../images/quiz_resources/previous_button.png')}
-                    
-            />
-    
+                {(numCurrent == 0)
+                ?<Image source={require('../../images/quiz_resources/previous_button.png')}/>
+                :null
+                }
             </TouchableOpacity>
             {this.state.hasPicture ? quizPicture : null}
         </Container>

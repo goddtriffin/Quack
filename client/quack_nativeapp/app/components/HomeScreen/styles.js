@@ -52,6 +52,14 @@ export default StyleSheet.create({
     color: 'white',
     textAlign: 'left',
   },
+  courseIDListText: {
+    fontFamily: 'Fira Sans',
+    fontWeight: '600',
+    flex: 1,
+    fontSize: 20,
+    color: 'white',
+    textAlign: 'left',
+  },
   addCourse: {
     flex: 3,
     flexDirection: 'row',
