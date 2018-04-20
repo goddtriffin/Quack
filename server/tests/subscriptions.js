@@ -20,7 +20,7 @@ const socketEndpoint = "http://endor-vm2.cs.purdue.edu:5000";
 function login (onSuccessCallbacks) {
     // create query
     const query = `mutation {
-        login (email: "todd@griffin", password: "bees") {
+        login (email: "frontend@purdue", password: "abc") {
             jwt
         }
     }`
@@ -283,7 +283,7 @@ function createFeedback (client) {
     // send request
     client.request(query)
         .then(response => {
-            console.log('Attempted to create quiz answer...');
+            console.log('Attempted to create feedback...');
         })
         .catch(err => {
             console.log(err);
