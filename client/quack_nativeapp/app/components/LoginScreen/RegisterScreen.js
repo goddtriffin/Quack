@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, TextInput, Keyboard, SegmentedControlIOS, AsyncStorage } from 'react-native';
+import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, TextInput, Keyboard, SegmentedControlIOS, AsyncStorage, Platform } from 'react-native';
 import styles from './styles';
 import { colors } from '../../style/styles';
 import { StackNagivator } from 'react-navigation'
+
 
 import { ApolloProvider, createNetworkInterface} from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
@@ -29,7 +30,7 @@ class RegisterScreen extends Component {
         email: '',
         studentID: '',
         password: '',
-        instructor: '',
+        passwordConfirmed: '',
         authToken: '',
     }
     
@@ -38,7 +39,7 @@ class RegisterScreen extends Component {
 
         registerUser = async() => {
 
-            if(this.state.fullName != '' && this.state.email != '') {
+            if(this.state.fullName != '' && this.state.email != '' && this.state.password == this.state.passwordConfirmed) {
                 client.mutate({ mutation: gql`
                 mutation userCreate($input: UserInput, $password: String!) {
                   userCreate(input: $input, password: $password) {
@@ -66,13 +67,16 @@ class RegisterScreen extends Component {
 
             await AsyncStorage.setItem('email:key', this.state.email);
             await AsyncStorage.setItem('password', this.state.password);
-            await AsyncStorage.setItem('studentID', this.state.studentID);
+            await AsyncStorage.setItem('passwordConfirmed', this.state.passwordConfirmed);
             await AsyncStorage.setItem('fullName', this.state.fullName);
-            await AsyncStorage.setItem('instructor', this.state.selectedIndex.toString());
             await AsyncStorage.setItem('authToken', this.state.authToken);
 
                 this.props.navigation.navigate('Home');
-            }else {
+
+            }else if (this.state.password != this.state.passwordConfirmed){
+                alert("Passwords do not match.")
+            }
+            else{
                 alert("Please enter something in every field.");
             }
             
@@ -91,19 +95,6 @@ class RegisterScreen extends Component {
                     
                     
                     <View style={styles.formContainer}>
-                        
-                        <Text style={styles.bigText}>I am a...</Text>
-
-                        <View style={styles.HELLO}>
-                            <SegmentedControlIOS
-                                values={['Student', 'Instructor']}
-                                selectedIndex={this.state.selectedIndex}
-                                onChange={(event) => {
-                                    this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
-                                }}
-                                tintColor='white'
-                            />
-                        </View>
                         <View>
                             <TextInput 
                                 placeholderTextColor='rgba(255,255,255,0.6)'
@@ -128,20 +119,8 @@ class RegisterScreen extends Component {
                                 placeholderStyle={styles.input}
                                 style={styles.input}
                                 ref={(input) => this.emailInput = input}
-                                onSubmitEditing={() => this.idInput.focus()}
-                                onChangeText={(email) => this.setState({email})}
-                            />
-                            <TextInput 
-                                placeholderTextColor='rgba(255,255,255,0.6)'
-                                placeholder="Student ID"
-                                returnKeyType='next'
-                                autoCapitalize='none'
-                                autoCorrect={false}
-                                placeholderStyle={styles.input}
-                                style={styles.input}
-                                ref={(input) => this.idInput = input}
                                 onSubmitEditing={() => this.passwordInput.focus()}
-                                onChangeText={(studentID) => this.setState({studentID})}
+                                onChangeText={(email) => this.setState({email})}
                             />
                             <TextInput 
                                 secureTextEntry={true}
@@ -152,9 +131,22 @@ class RegisterScreen extends Component {
                                 autoCapitalize='none'
                                 autoCorrect={false}
                                 style={styles.input}
-                                onSubmitEditing={Keyboard.dismiss}
                                 ref={(input) => this.passwordInput = input}
+                                onSubmitEditing={() => this.passwordConfirmedInput.focus()}
                                 onChangeText={(password) => this.setState({password})}
+                            />
+                            <TextInput 
+                                secureTextEntry={true}
+                                placeholderStyle={styles.input}
+                                placeholderTextColor='rgba(255,255,255,0.6)'
+                                placeholder="Confirm Password"
+                                returnKeyType='next'
+                                autoCapitalize='none'
+                                autoCorrect={false}
+                                style={styles.input}
+                                onSubmitEditing={Keyboard.dismiss}
+                                ref={(input) => this.passwordConfirmedInput = input}
+                                onChangeText={(passwordConfirmed) => this.setState({passwordConfirmed})}
                             />
                             
                         </View>

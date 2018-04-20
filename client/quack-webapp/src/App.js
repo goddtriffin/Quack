@@ -5,15 +5,18 @@ import Sidebar from './components/Sidebar/sidebar'
 import SidebarContent from './components/Sidebar/sidebar_content'
 import Blank from './components/Blank/blank';
 import Course from './components/Course/course';
+import NewQuiz from './components/NewQuiz/newQuiz';
+import QuizResults from './components/QuizResults/quizResults';
+import EditQuiz from './components/EditQuiz/editQuiz';
+import StartQuiz from './components/StartQuiz/startQuiz';
+import Login from './components/Login/login';
 import { AUTH_TOKEN } from './constants'
 import { Grid, Col, Row } from '../node_modules/react-bootstrap'
 import {
   Route,
-  BrowserRouter as Router,
   Switch,
-  withRouter,
   Redirect,
-  Link
+  withRouter
 } from 'react-router-dom'
 
 
@@ -22,16 +25,10 @@ class App extends Component {
   state = {
     userID: "",
     userEmail: "",
-    
+    loggedIn: false
   }
 
   render() {
-
-    const authToken = localStorage.getItem(AUTH_TOKEN);
-    if(!authToken) {
-      //go to login
-
-    }
 
     const sidebar = <SidebarContent params={this.props.params}/>
 
@@ -54,13 +51,19 @@ class App extends Component {
     const SidebarParent = (props) => {
       return(<Sidebar {...sidebarProps} className="Sidebar" location={props.location}/>);
     }
+    const authToken = localStorage.getItem(AUTH_TOKEN);
+    if(!authToken) {
+      return (
+          <Login/>
+      );
+    }
     
 
     return (
         <div>
           <Grid fluid={true}>
             <Row >
-              <Col md={1} style={{height: '100vh', width: '175px'}}>
+              <Col md={1} style={{height: '100vh', width: '175px', overflowY: 'scroll'}}>
                 {/* <Sidebar {...sidebarProps} className="Sidebar" location={location}/> */}
                   <div>
                     <Route render={({ location }) => (
@@ -71,7 +74,11 @@ class App extends Component {
               <Col md={10}>
                   <Switch>
                     <Route exact path="/" component={Blank}/>
-                    <Route path="/course/:courseID" component={CourseParent}/> 
+                    <Route path="/course/:courseID/new" component={NewQuiz}/> 
+                    <Route path="/course/:courseID/view/:quizID" component={QuizResults} />
+                    <Route path="/course/:courseID/quiz/:quizID" component={EditQuiz} />
+                    <Route path="/course/:courseID/start/:quizID" component={StartQuiz} />
+                    <Route path="/course/:courseID" component={CourseParent}/>
                     <Redirect to="/" />
                   </Switch>
               </Col>
@@ -82,4 +89,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

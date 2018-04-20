@@ -4,6 +4,8 @@ import { StackNavigator } from 'react-navigation';
 import LoginScreen from './app/components/LoginScreen/LoginScreen';
 import Quiz from './app/components/Quiz/Quiz';
 import Grades from './app/components/Grades/Grades';
+import QuizResults from './app/components/QuizResults/QuizResults';
+import Feedback from './app/components/Feedback/Feedback';
 import RegisterScreen from './app/components/LoginScreen/RegisterScreen';
 import HomeScreen from './app/components/HomeScreen/HomeScreen';
 import Roster from './app/components/Roster/Roster';
@@ -13,12 +15,33 @@ import CourseDetails from './app/components/CourseDetails/CourseDetails';
 import LoginForm from './app/components/LoginScreen/LoginForm';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
+import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { AsyncStorage } from 'react-native';
 import gql from 'graphql-tag';
 
+
+const httpLink = createHttpLink({
+  uri: 'http://endor-vm2.cs.purdue.edu:4000/graphql',
+});
+
+
+let token;
+
+const withToken = setContext(operation => 
+  AsyncStorage.getItem('auth-token').then(userToken => {
+    return { 
+      headers: {
+        type: "student",
+        authorization : userToken || null
+      },
+    };
+  })
+);
+
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'https://quack.localtunnel.me/graphql' }),
+  link: withToken.concat(httpLink),
   cache: new InMemoryCache()
 });
 
@@ -32,19 +55,19 @@ export default class App extends Component {
       email: '',
     }
   }
+  
 
   render() {
     
     console.disableYellowBox = true;
-
+    
     /*
     return (
-      </>
+        <Feedback/>
     )
     */
-
     
-    if(this.state.loggedIn == false) {
+    if(!this.state.authToken) {
       return (
         <ApolloProvider client={client}>
           <LoginRoute screenProps={this.state.user.firstName}/>
@@ -57,6 +80,7 @@ export default class App extends Component {
         </ApolloProvider>
       );
     }
+    
   }
 }
 
@@ -73,6 +97,15 @@ const LoginRoute = StackNavigator({
     Grades: {
       screen: Grades,
     },
+    QuizResults: {
+      screen: QuizResults,
+      navigationOptions: {
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#07A386'
+        }
+      }
+    },
     Quiz: {
       screen: Quiz,
     },
@@ -82,10 +115,21 @@ const LoginRoute = StackNavigator({
     WriteQuiz: {
       screen: WriteQuiz,
     },
+    QuizResults: {
+      screen: QuizResults,
+    },
     CourseDetails: {
       screen: CourseDetails,
     },
-});
+    Feedback: {
+      screen: Feedback,
+      navigationOptions: {
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: '#07A386'
+        }
+    }
+}});
 
 const HomeRoute = StackNavigator({
   Home: {

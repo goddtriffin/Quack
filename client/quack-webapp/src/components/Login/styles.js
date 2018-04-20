@@ -24,13 +24,16 @@ export const styles = {
     },
     loginButton: {
         marginTop: '20px',
-        backgroundColor: colors.transparent,
+        backgroundColor: colors.qDarkGreen,
         border: 0,
         fontFamily: 'Fira Sans',
         color: 'white',
-        fontSize: '16pt',
+        fontSize: '15pt',
         textAlign: 'center',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        borderRadius: '25px',
+        width: '120%',
+        height: '40px'
     },
     registerButton: {
         marginTop: '10px',
@@ -40,7 +43,18 @@ export const styles = {
         color: "white",
         fontSize: '13pt',
         textAlign: 'center',
-        fontWeight: '500'
+        fontWeight: '500',
+        textDecoration: 'none',
+    },
+    accent: {
+        fontFamily: 'Fira Sans',
+        color: "white",
+        fontSize: '13pt',
+        fontWeight: '300'
+    },
+    link: {
+        textDecoration: 'none',
+        color: 'white'
     }
     
 }
