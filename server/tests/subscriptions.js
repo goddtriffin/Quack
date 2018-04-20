@@ -219,12 +219,14 @@ function createQuizAnswer (client) {
         answerCreate (input: {
             userID: 1
             questionID: 1
+            quizID: 1
             type: "tf"
             content: "True"
         }) {
             id
             userID
             questionID
+            quizID
             type
             content
         }
