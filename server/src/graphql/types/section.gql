@@ -17,4 +17,5 @@ type Query {
 type Mutation {
     sectionCreate(input: SectionInput): Section
     sectionUpdate(id: Int!, input: SectionInput): Section
+    sectionGetUsers(id: Int!): [User]
 }

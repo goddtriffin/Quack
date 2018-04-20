@@ -49,12 +49,12 @@ export default {
 		argSQL[2] = {name: 'userID', type: TYPES.Int, arg: args.input.userID};
 		argSQL[3] = {name: 'points', type: TYPES.Float, arg: args.input.points};
 		argSQL[4] = {name: 'totalPoints', type: TYPES.Float, arg: args.input.totalPoints};
-        
+       		argSQL[5] = {name: 'quizID', type: TYPES.Float, arg: args.input.quizID}; 
 		//console.log(argSQL);
 		return context.db.executeSQL( 
-			"INSERT INTO TestSchema.Grades (questionID, answerID, userID, points, totalPoints) OUTPUT " + 
-		    "INSERTED.id, INSERTED.questionID, INSERTED.answerID, INSERTED.userID, INSERTED.points, INSERTED.totalPoints " + 
-		    "VALUES (@questionID, @answerID, @userID, @points, @totalPoints);", argSQL, false);
+			"INSERT INTO TestSchema.Grades (questionID, answerID, userID, points, totalPoints, quizID) OUTPUT " + 
+		    "INSERTED.id, INSERTED.questionID, INSERTED.answerID, INSERTED.userID, INSERTED.points, INSERTED.totalPoints, INSERTED.quizID " + 
+		    "VALUES (@questionID, @answerID, @userID, @points, @totalPoints, @quizID);", argSQL, false);
 	}
     },
     gradeUpdate: async (args, context) => {
@@ -73,12 +73,12 @@ export default {
                 argSQL[3] = {name: 'userID', type: TYPES.Int, arg: args.input.userID};
                 argSQL[4] = {name: 'points', type: TYPES.Float, arg: args.input.points};
                 argSQL[5] = {name: 'totalPoints', type: TYPES.Float, arg: args.input.totalPoints};
-
+		argSQL[6] = {name: 'quizID', type: TYPES.Float, arg: args.input.quizID}; 
                 //console.log(argSQL);
                 return context.db.executeSQL(
 			"UPDATE TestSchema.Grades SET " + 
 			"questionID=@questionID, answerID=@answerID, userID=@userID, " +
-			"points=@points, totalPoints=@totalPoints OUTPUT INSERTED.id, INSERTED.questionID, INSERTED.answerID, INSERTED.userID, INSERTED.points, INSERTED.totalPoints " + 
+			"points=@points, totalPoints=@totalPoints, quizID=@quizID OUTPUT INSERTED.id, INSERTED.questionID, INSERTED.answerID, INSERTED.userID, INSERTED.points, INSERTED.totalPoints, INSERTED.quizID " + 
 			"WHERE id=@id", argSQL, false);        
 	}
     }

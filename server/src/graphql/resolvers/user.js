@@ -180,6 +180,34 @@ export default {
 	}
     },
 
+     userAddSection: async (args, context) => {
+	if(!context.headers.hasOwnProperty('authorization')) {
+                return new Error("No authorization");
+        }else {
+		try {
+                        var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+                } catch(err) {
+                        return new Error(err);
+                }
+
+		argSQL = {}
+		argSQL[0] = {name: 'id', type: TYPES.NVarChar, arg: args.sectionID};
+		const section = await context.db.executeSQL("SELECT * FROM TestSchema.Sections where id = @id", argSQL, false);
+		if(!section) {
+		    return new Error("Section does not exist");
+		}
+
+		const s_id = section.id;
+		argSQL = {}
+		argSQL[0] = {name: 'u_id', type: TYPES.Int, arg: args.id};
+		argSQL[1] = {name: 's_id', type: TYPES.Int, arg: s_id};
+		return context.db.executeSQL("if not exists (select * from TestSchema.UsersSections d where d.u_id = @u_id and d.s_id = @s_id) " + 
+		    "INSERT INTO TestSchema.UsersSections (u_id, s_id) VALUES (@u_id, @s_id) " + 
+		    "SELECT c.id, name FROM TestSchema.UsersSections sc " +  
+		    "INNER JOIN TestSchema.Sections c ON c.id = sc.s_id WHERE sc.u_id = @u_id ", argSQL, true);
+	   }
+    },
+
     userGetCourses: async(args, context) => {
 	if(!context.headers.hasOwnProperty('authorization')) {
                 return new Error("No authorization");
