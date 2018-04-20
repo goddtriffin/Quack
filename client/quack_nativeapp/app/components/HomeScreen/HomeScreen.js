@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, AsyncStorage, AlertIOS } from 'react-native';
+import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, AsyncStorage, Alert } from 'react-native';
 import styles from './styles';
 import { StackNavigator } from 'react-navigation';
 import { HeaderContainer, Header, Left, Body, Right, Button, Icon, Title, Item, Input } from 'native-base';
@@ -21,6 +21,7 @@ class HomeScreen extends Component {
         super(props);
         this.updateCourseList = this.addCourse.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.reset = this.reset.bind(this);
     }
 
     state = {
@@ -59,11 +60,11 @@ class HomeScreen extends Component {
               courses = [];
 
               if(data.data.userGetCourses.length == 0) {
-                courses.push({'course': 'Search for a course to join it.' , 'id': 0, 'key': 0})
+                courses.push({'course': 'Search for a course to join it.' , 'key': 0})
               }
               else {
                 for(let i = 0; i < data.data.userGetCourses.length; i++) {
-                    courses.push({'course': data.data.userGetCourses[i].name, 'id': data.data.userGetCourses[i].id, 'key': i})
+                    courses.push({'course': data.data.userGetCourses[i].name, 'key': data.data.userGetCourses[i].id})
                 }
               }
               this.setState({courses});
@@ -79,10 +80,22 @@ class HomeScreen extends Component {
         });
     }
 
-    addCourse(id) {
+    addCourse(name, id) {
 
         var title = "";
         let courses = this.state.courses;
+        var i = _.findIndex(courses, {'course':name, 'key':id})
+        if(i != -1){
+            Alert.alert(
+                'Course Enrollment Error',
+                'You are already enrolled in ' + name,
+                [
+                  {text: 'OK', onPress: () => this.reset()},
+                ],
+                { cancelable: false }
+            )
+            return;
+        }
                 
             this.props.client.mutate({ mutation: gql`
                 mutation userAddCourse($id: Int!, $courseID: Int!) {
@@ -99,11 +112,11 @@ class HomeScreen extends Component {
                 courses = [];
 
                 if(data.data.userAddCourse.length == 0) {
-                    courses.push({'course': 'Search for a course to join it.', 'id': 0, 'key': 1})
+                    courses.push({'course': 'Search for a course to join it.', 'key': 0})
                 }
                 else {
                     for(let i = 0; i < data.data.userAddCourse.length; i++) {
-                        courses.push({'course': data.data.userAddCourse[i].name, 'id': data.data.userAddCourse[i].id, 'key':i})
+                        courses.push({'course': data.data.userAddCourse[i].name, 'key': data.data.userAddCourse[i].id})
                     }
                 }
                 this.setState({courses})
@@ -114,11 +127,12 @@ class HomeScreen extends Component {
         this.setState({search:''})
     }
 
-    handleSearch() {
+    async handleSearch() {
         if(this.state.search == ""){
             return
         }
-        let searchResults = [];
+        
+        this.state.searchResults = [];
         this.props.client
             .query({
                 query: gql`
@@ -134,16 +148,11 @@ class HomeScreen extends Component {
 
         for(let i = 0; i < data.data.courses.length; i++) {
             if(data.data.courses[i].name.toLowerCase().match(this.state.search.toLowerCase()))
-            searchResults.push({'name' : data.data.courses[i].name, 'id': data.data.courses[i].id, 'key': i})
+            this.state.searchResults.push({'name' : data.data.courses[i].name, 'key': data.data.courses[i].id})
+            
         }
-        
-        if(searchResults.length == 0) {
-            searchResults.push({'name' : 'Your search had no matches.', 'id':0, 'key':0})
-        }
-
         this.setState({isSearching:true})
         this.setState({title:'Search Results'})
-        this.setState({searchResults})
         });
     }
 
@@ -190,23 +199,24 @@ class HomeScreen extends Component {
                 <View style={styles.courseListView}>
                     <ScrollView style={styles.courseList}>
                         { (this.state.isSearching == false) ?
-                            this.state.courses.map(({course, id, key}) => {
+                            this.state.courses.map(({course, key}) => {
                                     return (<View>
-                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades', {course, id})}>
+                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades', {course, key})}>
                                         <Text style={styles.courseListText}>{course}</Text>
-                                        <Text style={styles.courseListText}>{id}</Text>
+                                        <Text style={styles.courseListText}>{key}</Text>
                                     </TouchableOpacity>
                                 </View>);
                                 }
                             )
-                            : this.state.searchResults.map(({name, id}) => {
+                            : this.state.searchResults.map(({name, key}) => {
                                     return (<View style={{paddingVertical: 10}}>
                                         <Grid>
                                             <Col size={85}>
                                                 <Text style={styles.courseListText}>{name}</Text>
+                                                <Text style={styles.courseListText}>{key}</Text>
                                             </Col>
                                             <Col size={15}>
-                                                <TouchableOpacity onPress={() => this.addCourse(id)}>
+                                                <TouchableOpacity onPress={() => this.addCourse(name, key)}>
                                                     <Icon style={styles.addButton} name='add'/>
                                                 </TouchableOpacity>
                                             </Col>
