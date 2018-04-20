@@ -200,6 +200,7 @@ function handleQuizAnswerCreated (socket, quizAnswer) {
     console.log('Done\n');
 }
 
+// handles creating a quiz answer
 function createQuizAnswer (client) {
     // create query
     const query = `mutation {
@@ -226,6 +227,69 @@ function createQuizAnswer (client) {
         });
 }
 
+// FEEDBACK CREATED
+
+function subscription_feedback_created (client) {
+    console.log('Running Feedback Created Tests');
+    console.log('=================================');
+
+    // init
+    const socket = createSocket('feedback_created');
+
+    // subscribe to the feedback_created event
+    socket.emit('subscribe', 'feedback_created');
+
+    // attach feedback created listener
+    socket.on('feedback_created', function (feedback) {
+        handleFeedbackCreated(socket, feedback);
+    });
+
+    // create a Feedback
+    setTimeout(function () {
+        createFeedback(client);
+    }, 2000);
+}
+
+// handles feedback created
+function handleQuizAnswerCreated (socket, feedback) {
+    // show data from created feedback
+    console.log('feedback created:', feedback);
+
+    // unsubscribe from the feedback_created event
+    socket.emit('unsubscribe', 'feedback_created');
+
+    // close when done
+    socket.disconnect();
+
+    // done
+    console.log('Done\n');
+}
+
+function createFeedback (client) {
+    // create query
+    const query = `mutation {
+        feedbackCreate (input: {
+            userID: 6
+            content: "I love your app!"
+            date: "04202018"
+        }) {
+            id
+            userID
+            content
+            date
+        }
+    }`
+
+    // send request
+    client.request(query)
+        .then(response => {
+            console.log('Attempted to create quiz answer...');
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
 // TESTALL
 
-login([subscription_quiz_updated, subscription_quiz_answer_created]);
+login([subscription_quiz_updated, subscription_quiz_answer_created, subscription_feedback_created]);
