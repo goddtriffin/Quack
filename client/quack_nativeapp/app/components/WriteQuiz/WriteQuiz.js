@@ -193,7 +193,7 @@ class WriteQuiz extends Component {
         const A_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setAChoiceState();
-            //this.setState({selectedAnswer: this.state.questions.options.split(";")[0]})
+            this.setState({selectedAnswer: this.state.questions.options.split(";")[0]})
         }}>
             <Image
             source={this.state.origA}
@@ -204,7 +204,7 @@ class WriteQuiz extends Component {
         const B_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setBChoiceState();
-            //this.setState({selectedAnswer: this.state.questions.options.split(";")[1]})
+            this.setState({selectedAnswer: this.state.questions.options.split(";")[1]})
         }}>
             <Image
             source={this.state.origB}
@@ -215,7 +215,7 @@ class WriteQuiz extends Component {
         const C_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setCChoiceState();
-            //this.setState({selectedAnswer: this.state.questions.options.split(";")[2]})
+            this.setState({selectedAnswer: this.state.questions.options.split(";")[2]})
         }}>
             <Image
             source={this.state.origC}
@@ -225,7 +225,7 @@ class WriteQuiz extends Component {
         const D_button = <TouchableOpacity onPress={() => {
             this.resetState();
             this.setDChoiceState();
-            //this.setState({selectedAnswer: this.state.questions.options.split(";")[3]})
+            this.setState({selectedAnswer: this.state.questions.options.split(";")[3]})
         }}>
             <Image
             source={this.state.origD}
