@@ -10,6 +10,7 @@ import gql from 'graphql-tag';
 class WriteQuiz extends Component {
     static navigationOptions = ({ navigation }) => ({
         header: null,
+        guesturesEnabled: false,
       })
 
     constructor(props) {
@@ -113,17 +114,17 @@ class WriteQuiz extends Component {
                 this.setState({numQuestions: data.data.quizGetQuestions.length})
                 console.log(questions)
                 switch(questions[0].type) {
-                    case "SA": 
+                    case "sa": 
                         this.setState({freeResp: true});
                         break;
-                    case "MC": 
+                    case "mc": 
                         this.setState({multiChoice: true});
                         break;
-                    case "TF": 
+                    case "tf": 
                         console.log("meh")
                         this.setState({multiChoice: true});
                         break;
-                    case "FB":
+                    case "fb":
                         this.setState({fillinBlank: true});
                         break;
                 }
@@ -211,17 +212,17 @@ class WriteQuiz extends Component {
             this.setState({numCurrent: index, freeResp: false, multiChoice: false, fillinBlank: false}, function() {
                 console.log(this.state.numCurrent)
                 switch(this.state.questions[this.state.numCurrent].type) {
-                    case "SA": 
+                    case "sa": 
                         this.setState({freeResp: true});
                         break;
-                    case "MC": 
+                    case "mc": 
                         this.setState({multiChoice: true});
                         break;
-                    case "TF": 
+                    case "tf": 
                         console.log("meh")
                         this.setState({multiChoice: true});
                         break;
-                    case "FB":
+                    case "fb":
                         this.setState({fillinBlank: true});
                         break;
                 }
@@ -473,7 +474,7 @@ class WriteQuiz extends Component {
                 }
             </TouchableOpacity>
             <TouchableOpacity style={styles.prevButton} onPress={() => this.updateState(false)}>
-                {(0 == 0)
+                {(this.state.numCurrent > 0)
                 ?<Image source={require('../../images/quiz_resources/previous_button.png')}/>
                 :null
                 }

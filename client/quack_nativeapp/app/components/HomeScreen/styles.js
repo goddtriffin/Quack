@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { colors } from '../../style/styles';
 
 export default StyleSheet.create({
@@ -21,7 +21,11 @@ export default StyleSheet.create({
     textAlign: 'right',
     paddingTop: 10,
   },
-
+  feedbackButton: {
+    flex: 1, 
+    paddingTop: Platform.OS == 'ios' ? 0 : 90,
+    paddingLeft: Platform.OS == 'ios' ? 0 : 5,
+  },
   bigTitle: {
     fontFamily: 'Fira Sans',
     fontWeight: '600',

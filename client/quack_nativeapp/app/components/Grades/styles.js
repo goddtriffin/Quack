@@ -22,14 +22,15 @@ export default StyleSheet.create({
   quizText: {
     fontFamily: 'Fira Sans',
     color: 'white',
+    fontWeight: '400',
     textAlign: 'center',
     paddingTop: 10,
-    fontSize: 30,
+    fontSize: 25,
   },
   quizTextLive: {
     fontFamily: 'Fira Sans',
     color: 'white',
-    textAlign: 'center',
+    
     paddingTop: 10,
     fontSize: 30,
     color: 'red'

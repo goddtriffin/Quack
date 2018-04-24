@@ -113,15 +113,15 @@ class Grades extends Component {
                             return (
                                 <View>
                                     <Grid>
-                                        <Row>
+                                        <Row style={{justifyContent: 'center', alignItems: 'center'}}>
                                             {(title == "No Quizzes") ?
                                                 <Text style={styles.quizText}>{title}</Text>
                                             :<TouchableOpacity onPress={()=> this.handleQuiz(title, date, key, isOpen)}>
                                                 {(isOpen == true) ?
-                                                <Text style={styles.quizTextLive}>{title} Live</Text>
+                                                <Text style={styles.quizTextLive}>{title.split(";")[0]} Live</Text>
                                                 :(date == "") ?
                                                 <Text style={styles.quizText}>{title} Upcoming</Text>
-                                                :<Text style={styles.quizText}>{title} {date.substring(0,2)} / {date.substring(2,4)}</Text>
+                                                :<Text style={styles.quizText}>{title} {date.substring(0,5)}</Text>
                                                 }
                                             </TouchableOpacity>
                                             }

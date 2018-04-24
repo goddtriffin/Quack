@@ -96,10 +96,10 @@ class Questions extends Component {
                 }
             }
             let userAnswer = this.state.userAnswer;
-        if( type == "MC"){
+        if( type == "mc"){
             this.props.navigation.navigate('QuizResults', {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options})
         }
-        else if(type == "TF"){
+        else if(type == "tf"){
             this.props.navigation.navigate('QuizResults', {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options})
         }
     });
@@ -109,11 +109,13 @@ class Questions extends Component {
         return (
             <View style={styles.container}>
                 <Header style={styles.headerTop}>
-                    <Left>
+                    <Left style={{flex: 1}}>
                         <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Home'})]}))}>
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
                     </Left>
+                    <Body style={{flex: 1}}></Body>
+                    <Right style={{flex: 1}}></Right>
                 </Header>
 
                 <View style={styles.header}>
@@ -127,9 +129,9 @@ class Questions extends Component {
                             return (
                                 <View>
                                     <Grid>
-                                        <Row>
+                                        <Row style={{justifyContent: 'center', alignItems: 'center'}}>
                                             <TouchableOpacity onPress={()=> this.handleQuestion(id, options, type, key, correctAnswer)}>
-                                                <Text style={styles.quizText}>question {key+1} {type}</Text>
+                                                <Text style={styles.quizText}>Question {key+1} {type.toUpperCase()}</Text>
                                             </TouchableOpacity>
                                         </Row>
                                     </Grid>

@@ -174,7 +174,7 @@ class HomeScreen extends Component {
         return (
             <View style={styles.container}>
                 <Header searchBar rounded style={styles.header}>
-                    <Item>
+                    <Item style={{flex: 5}}>
                         <Icon name="ios-search"/>
                             <Input placeholder="Search Courses"
                             onChangeText={(search) => this.setState({search})}
@@ -186,7 +186,7 @@ class HomeScreen extends Component {
                             />
                         <Icon name="close" onPress={()=> this.reset()}/>
                     </Item>
-                    <Button transparent onPress={() => this.props.navigation.navigate('Feedback')}>
+                    <Button style={styles.feedbackButton} transparent onPress={() => this.props.navigation.navigate('Feedback')}>
                         <Icon style={{color: 'white'}} name='settings'/>
                     </Button>
                 </Header>
