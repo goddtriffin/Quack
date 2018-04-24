@@ -28,10 +28,12 @@ class Grades extends Component {
         course: '',
         courseID: 0,
         quizzes: [],
+        studentID: 0,
     }
 
     componentDidMount() {
         this.setState({course:this.props.navigation.state.params.course})
+        this.setState({studentID:this.props.navigation.state.params.studentID})
         this.props.client.mutate({ mutation: gql`
                 mutation userGetQuizzes($courseID: Int!) {
                     userGetQuizzes(courseID: $courseID) {
@@ -63,14 +65,15 @@ class Grades extends Component {
             });
     }
 
-    handleQuiz(title, date, quizID, isOpen) {
+    handleQuiz (title, date, quizID, isOpen) {
         let course = this.state.course;
         let courseID = this.state.courseID;
+        let studentID = this.state.studentID;
         if(isOpen == true){
-            this.props.navigation.navigate('WriteQuiz', {course, courseID, title, date, quizID})
+            this.props.navigation.navigate('WriteQuiz', {course, courseID, title, date, quizID, studentID})
         }
         else if(date != ""){
-            this.props.navigation.navigate('QuizResults', {course, courseID, title, date, quizID})
+            this.props.navigation.navigate('Questions', {course, courseID, title, date, quizID, studentID})
         }
         else{
             Alert.alert(
@@ -93,8 +96,6 @@ class Grades extends Component {
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
                     </Left>
-                    <Body></Body>
-                    <Right></Right>
                 </Header>
 
                 <View style={styles.header}>
@@ -113,16 +114,17 @@ class Grades extends Component {
                                 <View>
                                     <Grid>
                                         <Row>
-                                            <TouchableOpacity onPress={()=> this.handleQuiz(title, date, key, isOpen)}>
+                                            {(title == "No Quizzes") ?
+                                                <Text style={styles.quizText}>{title}</Text>
+                                            :<TouchableOpacity onPress={()=> this.handleQuiz(title, date, key, isOpen)}>
                                                 {(isOpen == true) ?
                                                 <Text style={styles.quizTextLive}>{title} Live</Text>
-                                                :(title == 'No Quizzes') ?
-                                                <Text style={styles.quizText}>{title}</Text>
                                                 :(date == "") ?
                                                 <Text style={styles.quizText}>{title} Upcoming</Text>
                                                 :<Text style={styles.quizText}>{title} {date.substring(0,2)} / {date.substring(2,4)}</Text>
                                                 }
                                             </TouchableOpacity>
+                                            }
                                         </Row>
                                     </Grid>
                                 </View>);

@@ -13,6 +13,7 @@ import PastQuiz from './app/components/PastQuiz/PastQuiz';
 import WriteQuiz from './app/components/WriteQuiz/WriteQuiz';
 import CourseDetails from './app/components/CourseDetails/CourseDetails';
 import LoginForm from './app/components/LoginScreen/LoginForm';
+import Questions from './app/components/Questions/Questions';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { setContext } from 'apollo-link-context';
@@ -121,6 +122,9 @@ const LoginRoute = StackNavigator({
     CourseDetails: {
       screen: CourseDetails,
     },
+    Questions: {
+      screen: Questions,
+    },
     Feedback: {
       screen: Feedback,
       navigationOptions: {
@@ -128,7 +132,7 @@ const LoginRoute = StackNavigator({
         headerStyle: {
           backgroundColor: '#07A386'
         }
-    }
+    },
 }});
 
 const HomeRoute = StackNavigator({

@@ -131,7 +131,6 @@ class HomeScreen extends Component {
         if(this.state.search == ""){
             return
         }
-        
         this.state.searchResults = [];
         this.props.client
             .query({
@@ -170,6 +169,8 @@ class HomeScreen extends Component {
             //alert(this.state.email);
         }
 
+        let studentID = this.state.studentID;
+
         return (
             <View style={styles.container}>
                 <Header searchBar rounded style={styles.header}>
@@ -201,7 +202,7 @@ class HomeScreen extends Component {
                         { (this.state.isSearching == false) ?
                             this.state.courses.map(({course, key}) => {
                                     return (<View>
-                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades', {course, key})}>
+                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades', {course, key, studentID})}>
                                         <Text style={styles.courseListText}>{course}</Text>
                                         <Text style={styles.courseIDListText}>{key}</Text>
                                     </TouchableOpacity>
