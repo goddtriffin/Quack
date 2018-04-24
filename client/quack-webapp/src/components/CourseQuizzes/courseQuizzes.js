@@ -5,7 +5,7 @@ import styles from './styles'
 import { Link } from 'react-router-dom';
 import { Grid, Col, Row, Tabs, Tab, FormGroup, 
     ControlLabel, FormControl, HelpBlock, 
-    Nav, NavItem, Table } from '../../../node_modules/react-bootstrap';
+    Nav, NavItem, Table, Modal } from '../../../node_modules/react-bootstrap';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 import { graphql, withApollo } from 'react-apollo'
@@ -68,6 +68,7 @@ constructor(props) {
         recentQuizzes: temp1,
         upcomingQuizzes: temp2,
         courseID: props.courseID,
+        show: false,
 
     }
     
@@ -111,10 +112,22 @@ componentDidMount() {
     setTimeout(this.getCourseQuizzes, 200);
 }
 
+yes() {
+    this.setState({ password: true })
+}
+
+no() {
+    this.setState({ password: false })
+}
+
+handleClose() {
+    this.setState({show: false})
+}
+
 
 render() {
     return(
-        <div >
+        <div>
         <Grid style={{width: 'auto'}}>
             <Row style={{marginTop: '20px'}}>
                 <Col sm={6} style={{paddingLeft: '0px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>

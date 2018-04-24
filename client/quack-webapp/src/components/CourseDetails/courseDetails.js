@@ -5,7 +5,7 @@ import styles from './styles'
 import { graphql, withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import moment from 'moment'
-import { Grid, Col, Row, Tabs, Tab, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Modal } from '../../../node_modules/react-bootstrap'
+import { Grid, Col, Row, Tabs, Tab, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Modal, Panel } from '../../../node_modules/react-bootstrap'
 
 class CourseDetails extends Component {
 
@@ -24,7 +24,7 @@ constructor(props) {
     this.state = {
         courseID: props.courseID,
         courseTitle: props.courseTitle,
-        courseDescription: props.courseDescription,
+        courseDescription: "",
         newCourseInput: '',
         show: false,
         feedback: "",
@@ -32,12 +32,12 @@ constructor(props) {
     }
     this.handleChangeT = this.handleChangeT.bind(this);
     this.handleChangeD = this.handleChangeD.bind(this);
-    this.save = this.save.bind(this);
     this.getValidationState = this.getValidationState.bind(this);
     this.handleChangeFeedback = this.handleChangeFeedback.bind(this);
     this.showFeedback = this.showFeedback.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.submit = this.submit.bind(this)
+    this.getCourseInfo = this.getCourseInfo.bind(this);
 }
 
   getValidationState() {
@@ -61,9 +61,25 @@ constructor(props) {
     this.setState({courseDescriptionInput: e.target.value})
   }
 
-  save() {
-    console.log("saving...")
-    this.props.callback(this.state.courseTitleInput, this.state.courseDescriptionInput);
+  getCourseInfo() {
+    this.props.client.query({
+        query: gql`query course($id: Int!) {
+            course(id: $id) {
+                description
+                name
+            }
+        }`,
+        variables: {
+            id: this.state.courseID
+        }
+    }).then(data => {
+        console.log(data);
+        this.setState({courseDescription: data.data.course.description})
+    })
+  }
+
+  componentDidMount() {
+    setTimeout(this.getCourseInfo, 200);
   }
 
   handleChangeFeedback(e) {
@@ -130,23 +146,13 @@ render() {
             <Row>
                 <Col>
                     <h1 style={styles.emphasis}>Course ID: {this.state.courseID}</h1>
-                    <h1 style={styles.header}>Course title</h1>
-                    <form style={{width: '500px'}}>
-                        <FormGroup validationState={this.getValidationState()}>
-                        <FormControl type="text" value={this.state.courseTitleInput} placeholder={this.state.courseTitle} onChange={this.handleChangeT}/>
-                        <FormControl.Feedback/>
-                        <HelpBlock>Example: "CS307: Software Engineering"</HelpBlock>
-                        </FormGroup>
-                    </form>
-
+                
                     <h1 style={styles.header}>Course description</h1>
-                    <form style={{width: '500px'}}>
-                        <FormGroup controlId="formControlsTextarea">
-                        <FormControl style={{height: '120px'}} componentClass="textarea" value={this.state.courseDescriptionInput} placeholder={this.state.courseDescription} onChange={this.handleChangeD}/>
-                        <FormControl.Feedback/>
-                        </FormGroup>
-                    </form>
-                    <Button style={{color: '#057B65'}} onClick={this.save}>Save</Button>
+                    
+                    <div >
+                       <Panel style={{width: '60%', height: '200px'}}><Panel.Body>{this.state.courseDescription}</Panel.Body></Panel>
+                    </div>
+                    
                 </Col>
             </Row>
         </Grid>

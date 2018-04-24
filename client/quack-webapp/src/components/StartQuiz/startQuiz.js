@@ -127,7 +127,7 @@ class StartQuiz extends Component {
         if(mm<10){
             mm='0'+mm;
         } 
-        var today = dd+'/'+mm+'/'+yyyy;
+        var today = mm+'/'+dd+'/'+yyyy;
 
         await this.props.client.mutate({
             mutation: gql`mutation quizUpdate($id: Int!, $input: QuizInput) {

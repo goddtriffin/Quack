@@ -577,7 +577,7 @@ class QuizQuestion extends Component {
     render() {
         console.log(this.props)
         const question = this.props.question.question;
-        var options = this.props.question.options.split(",");
+        var options = this.props.question.options.split(";");
         const image = this.props.question.image;
         const type = this.props.question.type;
         const num = this.props.num;

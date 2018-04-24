@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { Modal, Button, ControlLabel, FormControl, FormGroup, HelpBlock } from '../../../node_modules/react-bootstrap'
 import { graphql, withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
+import { AUTH_TOKEN } from '../../constants'
 
 const styles = {
   sidebar: {
@@ -80,6 +81,22 @@ const styles = {
     fontWeight: 'bold',
     textAlign: 'left',
     marginLeft: '10px',
+  },
+  logoutButton: {
+    position: 'absolute',
+    bottom: '15px',
+    left: '35%',
+    border: 0,
+    fontFamily: 'Fira Sans',
+    fontWeight: '400',
+    color: 'white',
+    fontSize: '11pt',
+    textAlign: 'center',
+    backgroundColor: colors.transparent,
+    textDecoration: 'none'
+  },
+  link: {
+    color: 'white'
   }
 };
 
@@ -99,7 +116,8 @@ class SidebarContent extends React.PureComponent {
     courseRoster: ['Theo', 'Mason', 'Justin', 'Todd', 'Tyler'],
     courseQuizzes: ['Quiz 1', 'Quiz 2', 'Quiz 3', 'Quiz 4'],
     key: 1,
-    userID: localStorage.getItem("userID")
+    userID: localStorage.getItem("userID"),
+    courseDescriptionInput: "",
   }
   
   
@@ -113,7 +131,8 @@ class SidebarContent extends React.PureComponent {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
-
+    this.logout = this.logout.bind(this);
+    this.handleChangeD = this.handleChangeD.bind(this);
 
   }
 
@@ -143,7 +162,7 @@ class SidebarContent extends React.PureComponent {
             userID: this.state.userID,
             courseID: random,
             name: this.state.newCourseInput,
-            description: ""
+            description: this.state.courseDescriptionInput,
           }
         }
       }).then( data => { 
@@ -218,7 +237,7 @@ class SidebarContent extends React.PureComponent {
                 courseID: d[i].id
               }
             }}
-            key={i++}
+            key={i + 1}
             style={styles.sidebarLink}>{prefix[0]}</Link>
           )
         }
@@ -258,6 +277,14 @@ class SidebarContent extends React.PureComponent {
     this.setState({newCourseInput: e.target.value})
   }
 
+  handleChangeD(e) {
+    this.setState({courseDescriptionInput: e.target.value})
+  }
+
+  logout() {
+    localStorage.setItem(AUTH_TOKEN, "");
+  }
+
   render() {
 
     return(
@@ -275,6 +302,13 @@ class SidebarContent extends React.PureComponent {
               <HelpBlock>Example: "CS307: Software Engineering"</HelpBlock>
             </FormGroup>
           </form>
+          <form style={{width: '100%'}}>
+              <FormGroup controlId="formControlsTextarea">
+              <ControlLabel>Enter Course Description</ControlLabel>
+              <FormControl style={{height: '120px'}} componentClass="textarea" value={this.state.courseDescriptionInput} placeholder="" onChange={this.handleChangeD}/>
+              <FormControl.Feedback/>
+              </FormGroup>
+          </form>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.addCourse}>Create</Button>
@@ -287,7 +321,10 @@ class SidebarContent extends React.PureComponent {
             <h1 style={styles.title}>Courses</h1>
             <div style={styles.divider}/>
                 {this.state.links}
-            <button onClick={ this.handleShow } style={styles.addCourseButton}>+ Add course</button>  
+            <button onClick={ this.handleShow } style={styles.addCourseButton}>+ New course</button>  
+        </div>
+        <div>
+          <button onClick={ this.logout } style={styles.logoutButton}><Link style={{color: 'white'}} to="/auth/login">Logout</Link></button>
         </div>
       </div>
     );
