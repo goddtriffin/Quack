@@ -1,4 +1,7 @@
 {
   "name": "quack_nativeapp",
-  "displayName": "quack_nativeapp"
+  "displayName": "quack_nativeapp",
+  "expo":{ "version": "2.24.3", "releaseDate": "2018-04-03T07:08:24.844Z",
+  "url": "https://github.com/expo/xde/releases/download/v2.24.3/xde-2.24.3-mac.zip"
+	}
 }
