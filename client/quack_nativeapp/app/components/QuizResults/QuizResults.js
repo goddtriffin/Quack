@@ -14,10 +14,6 @@ import gql from 'graphql-tag';
 import { NavigationActions } from 'react-navigation';
 
 class QuizResults extends Component {
-    static navigationOptions = {
-        header: null,
-    };
-
     state = {
         title: '',
         course: '',
@@ -76,12 +72,20 @@ class QuizResults extends Component {
     }
 
     render() {
-
+        let title = this.state.title;
+        let course = this.state.course;
+        let courseID = this.state.courseID;
+        let date = this.state.date;
+        let quizID = this.state.quizID;
+        let id = this.state.id;
+        let correctAnswer = this.state.correctAnswer;
+        let userAnswer = this.state.userAnswer;
+        let options = this.state.options;
         return (
             <Grid style={styles.background}>
                 <Header style={styles.headerTop}>
                     <Left>
-                        <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Home'})]}))}>
+                        <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Questions', params:  {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options}})]}))}>
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
                     </Left>

@@ -13,14 +13,16 @@ import { NavigationActions } from 'react-navigation';
 
 
 class Questions extends Component {
+
+    static navigationOptions = {
+        header: null,
+        gesturesEnabled: false,
+    };
+
     constructor(props) {
         super(props);
         this.handleQuestion = this.handleQuestion.bind(this);
     }
-
-    static navigationOptions = {
-        header: null,
-    };
     
     state = {
         studentID: 0,
@@ -106,11 +108,15 @@ class Questions extends Component {
     }
     
     render() {
+        let course = this.state.course;
+        let key = this.state.courseID;
+        console.log(key);
+        let studentID = this.state.studentID;
         return (
             <View style={styles.container}>
                 <Header style={styles.headerTop}>
-                    <Left style={{flex: 1}}>
-                        <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Home'})]}))}>
+                    <Left>
+                        <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({routeName: 'Grades', params: {course, key, studentID}})]}))}>
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
                     </Left>
