@@ -13,14 +13,16 @@ import { NavigationActions } from 'react-navigation';
 
 
 class Questions extends Component {
+
+    static navigationOptions = {
+        header: null,
+        gesturesEnabled: false,
+    };
+
     constructor(props) {
         super(props);
         this.handleQuestion = this.handleQuestion.bind(this);
     }
-
-    static navigationOptions = {
-        header: null,
-    };
     
     state = {
         studentID: 0,
@@ -96,21 +98,25 @@ class Questions extends Component {
                 }
             }
             let userAnswer = this.state.userAnswer;
-        if( type == "MC"){
+        if( type == "mc"){
             this.props.navigation.navigate('QuizResults', {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options})
         }
-        else if(type == "TF"){
+        else if(type == "tf"){
             this.props.navigation.navigate('QuizResults', {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options})
         }
     });
     }
     
     render() {
+        let course = this.state.course;
+        let key = this.state.courseID;
+        console.log(key);
+        let studentID = this.state.studentID;
         return (
             <View style={styles.container}>
                 <Header style={styles.headerTop}>
                     <Left>
-                        <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Home'})]}))}>
+                        <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({routeName: 'Grades', params: {course, key, studentID}})]}))}>
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
                     </Left>

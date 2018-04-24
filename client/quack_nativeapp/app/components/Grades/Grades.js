@@ -15,6 +15,7 @@ import { NavigationActions } from 'react-navigation';
 class Grades extends Component {
     static navigationOptions = {
         header: null,
+        gesturesEnabled: false,
     };
 
     constructor(props) {
@@ -34,6 +35,7 @@ class Grades extends Component {
     componentDidMount() {
         this.setState({course:this.props.navigation.state.params.course})
         this.setState({studentID:this.props.navigation.state.params.studentID})
+        this.setState({courseID:this.props.navigation.state.params.key})
         this.props.client.mutate({ mutation: gql`
                 mutation userGetQuizzes($courseID: Int!) {
                     userGetQuizzes(courseID: $courseID) {

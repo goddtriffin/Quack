@@ -101,6 +101,8 @@ const LoginRoute = StackNavigator({
     QuizResults: {
       screen: QuizResults,
       navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
         headerTintColor: 'white',
         headerStyle: {
           backgroundColor: '#07A386'
@@ -109,21 +111,38 @@ const LoginRoute = StackNavigator({
     },
     Quiz: {
       screen: Quiz,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
+      },
     },
     PastQuiz: {
       screen: PastQuiz,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
+      },
     },
     WriteQuiz: {
       screen: WriteQuiz,
-    },
-    QuizResults: {
-      screen: QuizResults,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
+      },
     },
     CourseDetails: {
       screen: CourseDetails,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
+      },
     },
     Questions: {
       screen: Questions,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false
+      },
     },
     Feedback: {
       screen: Feedback,
