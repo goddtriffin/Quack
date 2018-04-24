@@ -14,7 +14,12 @@ export default StyleSheet.create({
     backgroundColor: colors.qLightGreen,
     height: 80,
   },
-  
+  noCourses: {
+    textAlign: 'justify',
+    color: 'white',
+    fontFamily: 'Fira Sans',
+    fontSize: 25,
+  },
   headerText: {
     fontFamily: 'Fira Sans',
     color: 'white',

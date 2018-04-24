@@ -13,6 +13,7 @@ import PastQuiz from './app/components/PastQuiz/PastQuiz';
 import WriteQuiz from './app/components/WriteQuiz/WriteQuiz';
 import CourseDetails from './app/components/CourseDetails/CourseDetails';
 import LoginForm from './app/components/LoginScreen/LoginForm';
+import Questions from './app/components/Questions/Questions';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { setContext } from 'apollo-link-context';
@@ -100,6 +101,8 @@ const LoginRoute = StackNavigator({
     QuizResults: {
       screen: QuizResults,
       navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
         headerTintColor: 'white',
         headerStyle: {
           backgroundColor: '#07A386'
@@ -108,18 +111,38 @@ const LoginRoute = StackNavigator({
     },
     Quiz: {
       screen: Quiz,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
+      },
     },
     PastQuiz: {
       screen: PastQuiz,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
+      },
     },
     WriteQuiz: {
       screen: WriteQuiz,
-    },
-    QuizResults: {
-      screen: QuizResults,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
+      },
     },
     CourseDetails: {
       screen: CourseDetails,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false,
+      },
+    },
+    Questions: {
+      screen: Questions,
+      navigationOptions: {
+        header: null,
+        gesturesEnabled: false
+      },
     },
     Feedback: {
       screen: Feedback,
@@ -128,7 +151,7 @@ const LoginRoute = StackNavigator({
         headerStyle: {
           backgroundColor: '#07A386'
         }
-    }
+    },
 }});
 
 const HomeRoute = StackNavigator({
