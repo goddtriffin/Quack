@@ -50,6 +50,7 @@ constructor(props) {
     var temp1 = [];
     var temp2 = [];
 
+    this.getCourseQuizzes = this.getCourseQuizzes.bind(this);
 
     this.state = {
         courseSections: [],
@@ -72,7 +73,7 @@ constructor(props) {
     
 }
 
-componentDidMount() {
+getCourseQuizzes() {
     var temp1 = [];
     var temp2 = [];
     console.log("COURSE ID: " + this.state.courseID);
@@ -89,6 +90,8 @@ componentDidMount() {
             id: this.state.courseID,
         }
     }).then( data => { 
+        console.log("DOWNLOADING COURSE QUIZZES");
+        console.log(data);
         var quizzes = data.data.courseGetQuizzes;
         for(var i = 0; i < quizzes.length; i++) {
             if(quizzes[i].date == "") {
@@ -102,6 +105,10 @@ componentDidMount() {
 
         this.setState({recentQuizzes: temp1, upcomingQuizzes: temp2})
     })
+}
+
+componentDidMount() {
+    setTimeout(this.getCourseQuizzes, 200);
 }
 
 

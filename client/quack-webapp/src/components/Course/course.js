@@ -40,30 +40,30 @@ constructor(props) {
 
 handleSelect(key) {
     this.setState({ key: key });
-    if(key == 3) {
-        // download roster data
-        this.props.client.mutate({
-            mutation: gql`
-                mutation courseGetSections($id: Int!) {
-                courseGetSections(id: $id) {
-                  id
-                  name
-                }
-              }`,
-            variables: {
-                id: this.state.courseID,
-            }
-        }).then( data => {
-            console.log(data);
-            var s = data.data.courseGetSections;
-            var temp = [];
-            for(var i = 0; i < s.length; i++) {
-                temp.push({key: s[i].id, title: s[i].name})
-            }
+    // if(key == 3) {
+    //     // download roster data
+    //     this.props.client.mutate({
+    //         mutation: gql`
+    //             mutation courseGetSections($id: Int!) {
+    //             courseGetSections(id: $id) {
+    //               id
+    //               name
+    //             }
+    //           }`,
+    //         variables: {
+    //             id: this.state.courseID,
+    //         }
+    //     }).then( data => {
+    //         console.log(data);
+    //         var s = data.data.courseGetSections;
+    //         var temp = [];
+    //         for(var i = 0; i < s.length; i++) {
+    //             temp.push({key: s[i].id, title: s[i].name})
+    //         }
 
-            this.setState({courseSections: temp});
-        })
-    }
+    //         this.setState({courseSections: temp});
+    //     })
+    // }
 }
 
 updateDetails(title, description) {

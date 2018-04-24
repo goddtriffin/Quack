@@ -152,7 +152,7 @@ class NewQuiz extends Component {
         }else if(qType == 2) {
             // add t/f question
             var newQ = {key: this.state.quizQuestions.length + 1, type: "tf", 
-                question: this.state.newQuestionText, options: "",
+                question: this.state.newQuestionText, options: ["True", "False"],
                 image: "", answer: "" };
             questions.push(newQ);
             this.setState({
@@ -162,7 +162,7 @@ class NewQuiz extends Component {
         }else if(qType == 3) {
             // add fill-in-the-blank quetion
             var newQ = {key: this.state.quizQuestions.length + 1, type: "fb", 
-                question: this.state.newQuestionText, options: "",
+                question: this.state.newQuestionText, options: [],
                 image: "", answer: "" };
             questions.push(newQ);
             this.setState({
@@ -172,7 +172,7 @@ class NewQuiz extends Component {
         }else if(qType == 4) {
             // add short answer question
             var newQ = {key: this.state.quizQuestions.length + 1, type: "sa", 
-                question: this.state.newQuestionText, options: "",
+                question: this.state.newQuestionText, options: [],
                 image: "", answer: "" };
 
             questions.push(newQ);
@@ -268,6 +268,7 @@ class NewQuiz extends Component {
 
     save = async() => {
         // Here's where you'll save the quiz to the server
+        var data;
         await this.props.client.mutate({
             mutation: gql`mutation quizCreate($input: QuizInput) {
                 quizCreate( input: $input) {
@@ -284,10 +285,14 @@ class NewQuiz extends Component {
 
                 }
             }
-        }).then( data => { 
-            console.log(data);
+        }).then( d => { 
+            data = d;
+        })
+
+        console.log(data);
+            console.log(this.state.quizQuestions);
             for(var i = 0; i < this.state.quizQuestions.length; i++) {
-                this.props.client.mutate({
+                await this.props.client.mutate({
                     mutation: gql`mutation questionCreate($input: QuestionInput) {
                         questionCreate( input: $input) {
                             id
@@ -300,7 +305,7 @@ class NewQuiz extends Component {
                             type: this.state.quizQuestions[i].type,
                             question: this.state.quizQuestions[i].question,
                             image: this.state.quizQuestions[i].image,
-                            options: this.state.quizQuestions[i].options.toString(),
+                            options: this.state.quizQuestions[i].options.join(";"),
                             correctAnswer: this.state.quizQuestions[i].answer,
                             isManual: false
                         }
@@ -310,7 +315,6 @@ class NewQuiz extends Component {
                 })
             }
             this.setState({show: false})
-        })
     }
     
     render() {

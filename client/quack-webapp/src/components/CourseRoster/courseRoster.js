@@ -60,7 +60,7 @@ constructor(props) {
         rosters: [temp, temp2, temp],
         show: false,
         newSectionTitle: '',
-        courseSections: [{id: 0, title: ""}]
+        courseSections: [{key: 0, id: 0, title: ""}]
                 
     }
     

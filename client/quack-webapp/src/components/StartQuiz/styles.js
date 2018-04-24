@@ -62,7 +62,15 @@ export const styles = {
         fontSize: '18pt',
         fontWeight: '500',
         textAlign: 'left',
+    },
+    loading: {
+        fontFamily: 'Fira Sans',
+        color: 'black',
+        fontSize: '15pt',
+        fontWeight: '400',
+        textAlign: 'left',
     }
+    
 }
 
 export default styles;
