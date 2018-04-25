@@ -145,22 +145,22 @@ class Grades extends Component {
                                 return (
                                     <View>
                                         <Grid>
-                                            <TouchableOpacity onPress={()=> this.handleQuiz(title, date, key, isOpen)}>
+                                                <TouchableOpacity style={{flex: 1}} onPress={()=> this.handleQuiz(title, date, key, isOpen)}>
                                                 <Row style={{justifyContent: 'center', alignItems: 'center'}}>
-                                                    <Col size={80}>
+                                                        <Col size={80}>
                                                         <Text style={styles.quizText}>{title}</Text>
-                                                    </Col>
-                                                    <Col size={20}>
-                                                        {( isOpen == true) ?
+                                                        </Col>
+                                                        <Col size={20}>
+                                                        {(isOpen == true) ?
                                                             <Text style={styles.quizTextLive}>Live</Text>
-                                                        :(date == "") ?
-                                                            <Text style={styles.quizText}>Upcoming</Text>
+                                                        : (date == "") ?
+                                                            <Text style={styles.quizText}></Text>
                                                         :
                                                             <Text style={styles.quizText}>{date.substring(0,5)}</Text>
                                                         }
-                                                    </Col>
+                                                        </Col>
                                                 </Row>
-                                            </TouchableOpacity>
+                                                </TouchableOpacity>
                                         </Grid>
                                     </View>
                                 );
