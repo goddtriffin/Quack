@@ -4,7 +4,7 @@ import {Content } from 'native-base'
 import { StackNavigator } from 'react-navigation';
 import { View, Image, Text, Dimensions, TouchableHighlight, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
-import { HeaderContainer, Header, Left, Body, Right, Button, Icon, Title, Item, Input } from 'native-base';
+import { HeaderContainer, Header, Left, Body, Right, Button, Icon, Title, Item, Input, Spinner} from 'native-base';
 import { colors } from '../../style/styles';
 import ReactDOM from 'react-dom';
 import * as V from 'victory';
@@ -22,9 +22,11 @@ class QuizResults extends Component {
         quizID: '',
         options: '',
         options2: [],
+        options3: ['A', 'B', 'C', 'D'],
         numoptions: 0,
         stats: [],
         correctAnswer: '',
+        isLoading: true,
     }
 
     componentDidMount () {
@@ -56,11 +58,11 @@ class QuizResults extends Component {
         this.setState({stats});
         
         for( let i=0; i<numOptions; i++){
-            this.state.options2.push(this.state.options.split(";")[i]);
+            this.state.options2.push({'Option': this.state.options.split(";")[i], 'letter': this.state.options3[i]});
         }
-        console.log(userAnswer)
-        console.log(correctAnswer)
-        console.log(options2)
+        console.log(this.state.userAnswer)
+        console.log(this.state.correctAnswer)
+        console.log(this.state.options2)
         for(let i=0; i<numOptions; i++){
             if(this.state.userAnswer == options2[i]){
                 if(this.state.correctAnswer == options2[i]){
@@ -68,6 +70,7 @@ class QuizResults extends Component {
                 }
             }
         }
+        this.setState({isLoading:false})
         });
     }
 
@@ -81,6 +84,24 @@ class QuizResults extends Component {
         let correctAnswer = this.state.correctAnswer;
         let userAnswer = this.state.userAnswer;
         let options = this.state.options;
+
+        if(this.state.isLoading == true){
+            return(
+                <View>
+                <Header style={styles.headerTop}>
+                    <Left>
+                        <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Questions', params:  {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options}})]}))}>
+                        <Icon name='arrow-back' style={styles.backButton}/>
+                        </TouchableOpacity>
+                    </Left>
+                </Header>
+                    <Content color = {colors.qLightGreen}>
+                        <Spinner color = 'white' />
+                    </Content>
+                </View>
+            );
+        }
+        else{
         return (
             <Grid style={styles.background}>
                 <Header style={styles.headerTop}>
@@ -122,17 +143,28 @@ class QuizResults extends Component {
             </Row>
             <Row size={9}>
                 <Text style= {styles.recentIndicator}>
-                
+                    Options
                 </Text>
             </Row>
             <Row size={30}>
                 <Content>
-                <Text style={styles.pastQuizIndicator}>
-                </Text>
+                {this.state.options2.map(({Option, letter}) => {
+                    return (
+                        <View>
+                            <Grid>
+                                <Row style={{justifyContent: 'center', alignItems: 'center'}}>
+                                    <Text style={styles.pastQuizIndicator}> {letter} ). {Option}</Text>
+                                </Row>
+                            </Grid>
+                        </View>);
+                        }
+                    )
+                }
                 </Content>
             </Row>
             </Grid>
         );
+    }
     }
 }
 

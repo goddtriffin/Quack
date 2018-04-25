@@ -157,15 +157,11 @@ class HomeScreen extends Component {
     }
 
     render() {
-
+        let studentID = this.state.studentID;
         if(this.state.isLoading) {
             return(<View style={styles.loading}><Spinner color='white'/></View>);
-        }else {
-            //alert(this.state.email);
         }
-
-        let studentID = this.state.studentID;
-
+        
         return (
             <View style={styles.container}>
                 <Header searchBar rounded style={styles.header}>

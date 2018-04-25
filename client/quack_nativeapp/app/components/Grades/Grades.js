@@ -10,7 +10,9 @@ import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 import { NavigationActions } from 'react-navigation';
+import io from 'socket.io-client';
 
+const socket = io('http://endor-vm2.cs.purdue.edu:5000')
 
 class Grades extends Component {
     static navigationOptions = {
@@ -32,7 +34,14 @@ class Grades extends Component {
         studentID: 0,
     }
 
+    componentWillUnmount(){
+        socket.emit('unsubscribe', 'quiz_updated', this.props.navigation.state.params.key)
+    }
+
     componentDidMount() {
+        socket.emit('subscribe', 'quiz_updated', this.props.navigation.state.params.key);
+        socket.on('quiz_updated', function(quiz){console.log(quiz)})
+
         this.setState({course:this.props.navigation.state.params.course})
         this.setState({studentID:this.props.navigation.state.params.studentID})
         this.setState({courseID:this.props.navigation.state.params.key})
@@ -66,7 +75,6 @@ class Grades extends Component {
                 alert(error.message);
             });
     }
-
     handleQuiz (title, date, quizID, isOpen) {
         let course = this.state.course;
         let courseID = this.state.courseID;

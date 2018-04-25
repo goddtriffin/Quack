@@ -4,7 +4,6 @@ import styles from './styles';
 import { colors } from '../../style/styles';
 import { StackNagivator } from 'react-navigation'
 
-
 import { ApolloProvider, createNetworkInterface} from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
@@ -53,14 +52,13 @@ class RegisterScreen extends Component {
                     firstName: this.state.fullName.split(" ")[0],
                     lastName: this.state.fullName.split(" ")[1],
                     email: this.state.email,
-                    password: this.state.password
-                }
+                },
+                password: this.state.password,
                }}).then( data => {
                this.state.studentID = data.data.userCreate.id;
                this.state.authToken = data.data.userCreate.jwt;
             }).catch(function(error) {
                 alert(error.message);
-                 // ADD THIS THROW error
                 throw error;
             });
 
@@ -70,8 +68,11 @@ class RegisterScreen extends Component {
             await AsyncStorage.setItem('passwordConfirmed', this.state.passwordConfirmed);
             await AsyncStorage.setItem('fullName', this.state.fullName);
             await AsyncStorage.setItem('authToken', this.state.authToken);
-
-                this.props.navigation.navigate('Home');
+            console.log(this.state.fullName.split(" ")[0])
+            console.log(this.state.fullName.split(" ")[1])
+            console.log(this.state.email)
+            console.log(this.state.password)
+            this.props.navigation.navigate('Home');
 
             }else if (this.state.password != this.state.passwordConfirmed){
                 alert("Passwords do not match.")
