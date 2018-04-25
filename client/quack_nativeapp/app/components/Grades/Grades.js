@@ -23,6 +23,7 @@ class Grades extends Component {
     constructor(props) {
         super(props);
         this.handleQuiz = this.handleQuiz.bind(this);
+        this.handleSocket()
     }
 
     state = {
@@ -32,6 +33,33 @@ class Grades extends Component {
         courseID: 0,
         quizzes: [],
         studentID: 0,
+        updatedQuiz: [],
+        plzUpdate: '',
+    }
+
+    handleSocket() {
+        socket.emit('subscribe', 'quiz_updated', this.props.navigation.state.params.key);
+        socket.on('quiz_updated', (quiz) => this.updateQuiz(quiz))
+    }
+
+    updateQuiz(quiz) {
+        
+        this.setState({updatedQuiz: quiz}, function() {
+            
+            for (let i = 0; i < this.state.quizzes.length; i++) {
+                if (this.state.quizzes[i].key == this.state.updatedQuiz.id) {
+                    console.log("gotcha bitch")
+                    this.state.quizzes[i].date = this.state.updatedQuiz.date;
+                    this.state.quizzes[i].isOpen = this.state.updatedQuiz.isOpen == 1 ? true : false
+                    this.state.quizzes[i].key = this.state.updatedQuiz.id;
+                    this.state.quizzes[i].title = this.state.updatedQuiz.title;
+
+                }
+            }
+            console.log("meh")
+            console.log(this.state.quizzes)
+            this.setState({plzUpdate: 'ok'})
+        })
     }
 
     componentWillUnmount(){
@@ -39,8 +67,8 @@ class Grades extends Component {
     }
 
     componentDidMount() {
-        socket.emit('subscribe', 'quiz_updated', this.props.navigation.state.params.key);
-        socket.on('quiz_updated', function(quiz){console.log(quiz)})
+        
+        
 
         this.setState({course:this.props.navigation.state.params.course})
         this.setState({studentID:this.props.navigation.state.params.studentID})
@@ -128,9 +156,9 @@ class Grades extends Component {
                                                 <Text style={styles.quizText}>{title}</Text>
                                             :<TouchableOpacity onPress={()=> this.handleQuiz(title, date, key, isOpen)}>
                                                 {(isOpen == true) ?
-                                                <Text style={styles.quizTextLive}>{title.split(";")[0]} Live</Text>
+                                                <Text style={styles.quizTextLive}>{title}</Text>
                                                 :(date == "") ?
-                                                <Text style={styles.quizText}>{title} Upcoming</Text>
+                                                <Text style={styles.quizText}>{title}</Text>
                                                 :<Text style={styles.quizText}>{title} {date.substring(0,5)}</Text>
                                                 }
                                             </TouchableOpacity>
