@@ -449,7 +449,9 @@ class WriteQuiz extends Component {
         />
 
         const spin = 
-            <Spinner color = 'white'/>
+            <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
+                <Spinner color="white"/>
+            </View>
        
         
         
@@ -505,9 +507,7 @@ class WriteQuiz extends Component {
                 
 
             </Row>
-            <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
-                {this.state.loading ? spin : null}
-            </View>
+            {this.state.loading ? spin : null}
 
             <TouchableOpacity style={styles.nextButton} onPress={() => this.updateState(true)}>
                 {this.state.loading
@@ -523,7 +523,7 @@ class WriteQuiz extends Component {
             </TouchableOpacity>
             </Grid>
             </View>
-            </Content>
+            </Content> 
         </Container>
         );
     }
