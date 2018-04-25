@@ -54,8 +54,9 @@ class QuizResults extends Component {
             for(let i = 0; i < data.data.quizGetStats.length; i++) {
                 stats.push({answer: (i+1), number: data.data.quizGetStats[i], fill: ''})
             }
-        this.setState({numOptions});
-        this.setState({stats});
+        
+            this.setState({numOptions});
+            
         
         for( let i=0; i<numOptions; i++){
             this.state.options2.push({'Option': this.state.options.split(";")[i], 'letter': this.state.options3[i]});
@@ -73,6 +74,10 @@ class QuizResults extends Component {
         this.setState({isLoading:false})
         console.log("this.state.isLoading")
         });
+    }
+
+    isLoading() {
+        this.setState({isLoading:false})
     }
 
     render() {
