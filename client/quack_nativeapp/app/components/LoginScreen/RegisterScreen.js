@@ -72,6 +72,8 @@ class RegisterScreen extends Component {
             console.log(this.state.fullName.split(" ")[1])
             console.log(this.state.email)
             console.log(this.state.password)
+
+            
             this.props.navigation.navigate('Home');
 
             }else if (this.state.password != this.state.passwordConfirmed){

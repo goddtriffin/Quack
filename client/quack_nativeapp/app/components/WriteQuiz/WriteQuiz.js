@@ -61,7 +61,7 @@ class WriteQuiz extends Component {
         this.setState({courseID:this.props.navigation.state.params.courseID})
         this.setState({date:this.props.navigation.state.params.date})
         this.setState({quizID:this.props.navigation.state.params.quizID})
-        console.log(this.props.navigation.state.params.quizID)
+        this.setState({quizID:this.props.navigation.state.params.studentID})
         this.props.client.mutate({ mutation: gql`
                 mutation quizGetQuestions($id: Int!) {
                     quizGetQuestions(id: $id){
@@ -172,7 +172,7 @@ class WriteQuiz extends Component {
                 }`,
                 variables: {
                     input: {
-                        userID: 3,
+                        userID: parseInt(this.state.studentID),
                         quizID: parseInt(this.state.quizID),
                         questionID: parseInt(this.state.questions[index].questionID),
                         type: this.state.questions[index].type,

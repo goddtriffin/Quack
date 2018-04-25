@@ -98,6 +98,7 @@ class HomeScreen extends Component {
                 mutation userAddCourse($id: Int!, $courseID: Int!) {
                     userAddCourse(id: $id, courseID: $courseID) {
                         name
+                        id
                     }
                 }
             `,
@@ -116,8 +117,8 @@ class HomeScreen extends Component {
                         courses.push({'course': data.data.userAddCourse[i].name, 'key': data.data.userAddCourse[i].id})
                     }
                 }
-                this.setState({courses})
-                reset()
+                this.setState({courses}, () => this.reset())
+                
             })
     }
 
@@ -153,7 +154,6 @@ class HomeScreen extends Component {
         this.setState({title:'Courses'})
         this.setState({isSearching:false})
         this.setState({search:''})
-        this.componentDidMount();
     }
 
     render() {
