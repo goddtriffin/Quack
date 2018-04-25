@@ -35,7 +35,7 @@ var localConfig = {
     database: process.env.DB_T_NAME,
     options: {
         database: process.env.DB_T_NAME,
-        rowCollectionOnRequestCompletion: true
+    	rowCollectionOnRequestCompletion: true
     }
 }
 

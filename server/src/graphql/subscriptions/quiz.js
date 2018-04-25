@@ -11,6 +11,9 @@ function subscribeToQuizUpdate (socket, courseID) {
 
     // push the socket into the subscriber list attached to the specific courseID
     quizUpdateSubscribers[courseID].push(socket);
+
+	console.log('subscribing', socket.id, 'to', courseID);
+	console.log(typeof courseID);
 }
 
 // unsubscribes a socket to quiz updates from a specific course
@@ -38,11 +41,16 @@ function unsubscribeToQuizUpdate (socket, courseID) {
 // send newly updated quiz information to all sockets
 // that are subscribed to the corresponding courseID
 function sendQuizUpdateEvent (courseID, quiz) {
+			console.log('sending updated quiz to all quiz_updated subscribers');
+			console.log(quizUpdateSubscribers);
+			console.log('1', courseID, quiz);
+			console.log(typeof courseID);
     // if courseID is being subscribed to,
     if (quizUpdateSubscribers.hasOwnProperty(courseID)) {
             // send updated quiz info to socket
             quizUpdateSubscribers[courseID].forEach(function (socket) {
                     socket.emit('quiz_updated', quiz);
+			console.log(socket.id, 'just got updated quiz:', quiz);
             });
     }
 }

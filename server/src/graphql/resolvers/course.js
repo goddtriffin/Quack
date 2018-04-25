@@ -28,8 +28,8 @@ export default {
                 } catch(err) {
                         return new Error(err);
                 }
-		argSQL[0] = {name: "name", type: TYPES.NVarChar, arg: args.name};
-        	return context.db.executeSQL("SELECT * FROM TestSchema.Courses where name = @name", argSQL, false);
+		argSQL[0] = {name: "id", type: TYPES.NVarChar, arg: args.id};
+        	return context.db.executeSQL("SELECT * FROM TestSchema.Courses where id = @id", argSQL, false);
    	}
     },
 
@@ -68,7 +68,7 @@ export default {
 		    argSQL, false);
 	}
     },
-    courseGetSections: async (args, context) => {
+    courseGetUsers: async (args, context) => {
         if(!context.headers.hasOwnProperty('authorization')) {
                 return new Error("No authorization");
         }else {
@@ -78,8 +78,9 @@ export default {
                         return new Error(err);
                 }
                 argSQL[0] = {name: "id", type: TYPES.Int, arg: args.id};
-                return context.db.executeSQL("SELECT * FROM TestSchema.Sections where courseID = @id", argSQL, true);
-        }
+       		return context.db.executeSQL("SELECT c.id, * FROM TestSchema.UsersCourses sc " +
+                        "INNER JOIN TestSchema.Users c ON c.id = sc.s_id WHERE sc.c_id = @id;", argSQL, true);
+	 }
     },
     courseGetQuizzes: async (args, context) => {
         if(!context.headers.hasOwnProperty('authorization')) {

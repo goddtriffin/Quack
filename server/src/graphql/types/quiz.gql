@@ -25,4 +25,5 @@ type Mutation {
     quizUpdate(id: Int!, input: QuizInput): Quiz
     quizGetQuestions(id: Int!): [Question]
     quizGetStats(questionID: Int!): [Int!]
+    quizGetAnswers(id: Int!): [Answer]
 }

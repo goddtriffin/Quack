@@ -55,13 +55,19 @@ export default {
 			      } catch(err) {
 				      return new Error(err);
 			      }
-			      // return newly created User to client
-			      argSQL = {};
-			      argSQL[0] = {name: 'userID', type: TYPES.NVarChar, arg: args.input.userID};
-			      argSQL[1] = {name: 'questionID', type: TYPES.NVarChar, arg: args.input.questionID};	
+			      	argSQL = {};
+			      	argSQL[0] = {name: 'id', type: TYPES.Int, arg: args.input.quizID};
+			      	const quiz = await context.db.executeSQL("SELECT isOpen FROM TestSchema.Quizzes where id=@id",argSQL, false);
+				if(!quiz.isOpen) {
+					return new Error("Quiz is not available");
+				}
+				// return newly created User to client
+			      	argSQL = {};
+			      	argSQL[0] = {name: 'userID', type: TYPES.NVarChar, arg: args.input.userID};
+			      	argSQL[1] = {name: 'questionID', type: TYPES.NVarChar, arg: args.input.questionID};	
 				argSQL[2] = {name: 'quizID', type: TYPES.NVarChar, arg: args.input.quizID};
-			      argSQL[3] = {name: 'type', type: TYPES.NVarChar, arg: args.input.type};
-				  argSQL[4] = {name: 'content', type: TYPES.NVarChar, arg: args.input.content};
+			      	argSQL[3] = {name: 'type', type: TYPES.NVarChar, arg: args.input.type};
+				argSQL[4] = {name: 'content', type: TYPES.NVarChar, arg: args.input.content};
 				  
 				  	// send subscription
 				  	const quizID = argSQL[2].arg;
