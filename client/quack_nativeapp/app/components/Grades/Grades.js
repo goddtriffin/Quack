@@ -146,7 +146,7 @@ class Grades extends Component {
                                     <View>
                                         <Grid>
                                                 <TouchableOpacity style={{flex: 1}} onPress={()=> this.handleQuiz(title, date, key, isOpen)}>
-                                                <Row style={{justifyContent: 'center', alignItems: 'center'}}>
+                                                <Row style={{justifyContent: 'center', alignItems: 'center', margin: 10}}>
                                                         <Col size={80}>
                                                         <Text style={styles.quizText}>{title}</Text>
                                                         </Col>
