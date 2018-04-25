@@ -29,11 +29,10 @@ export default StyleSheet.create({
   },
   quizTextLive: {
     fontFamily: 'Fira Sans',
-    color: 'white',
     textAlign: 'center',
     paddingTop: 10,
     fontSize: 25,
-    color: 'red'
+    color: colors.qRed,
   },
   headerText: {
     fontFamily: 'Fira Sans',
