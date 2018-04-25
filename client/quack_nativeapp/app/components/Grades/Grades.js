@@ -93,7 +93,7 @@ class Grades extends Component {
         return (
             <View style={styles.container}>
                 <Header style={styles.headerTop}>
-                    <Left>
+                    <Left style={{flex: 1}}>
                         <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Home'})]}))}>
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>

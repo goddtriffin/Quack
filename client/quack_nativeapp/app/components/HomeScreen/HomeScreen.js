@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, AsyncStorage, Alert, Platform } from 'react-native';
 import styles from './styles';
 import { StackNavigator } from 'react-navigation';
-import { HeaderContainer, Header, Left, Body, Right, Button, Icon, Title, Item, Input } from 'native-base';
+import { HeaderContainer, Header, Left, Body, Right, Button, Icon, Title, Item, Input, Spinner } from 'native-base';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { ApolloProvider, graphql, withApollo } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
@@ -159,7 +159,7 @@ class HomeScreen extends Component {
     render() {
 
         if(this.state.isLoading) {
-            return(<View><Text>Loading...</Text></View>);
+            return(<View style={styles.loading}><Spinner color='white'/></View>);
         }else {
             //alert(this.state.email);
         }

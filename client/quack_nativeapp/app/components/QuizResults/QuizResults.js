@@ -84,7 +84,7 @@ class QuizResults extends Component {
         return (
             <Grid style={styles.background}>
                 <Header style={styles.headerTop}>
-                    <Left>
+                    <Left style={{flex: 1}}>
                         <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Questions', params:  {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options}})]}))}>
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
@@ -95,7 +95,7 @@ class QuizResults extends Component {
                         {this.state.course.split(":")[0]}
                     </Text>
                 </Row>
-                <Row size={5}>
+                <Row size={10}>
                     <Text style = {styles.subTitle}>
                         {this.state.course.split(":")[1]}
                     </Text>
