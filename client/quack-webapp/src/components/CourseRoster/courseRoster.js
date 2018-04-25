@@ -49,9 +49,11 @@ constructor(props) {
         courseID: props.courseID,
         columns: [
             {key: '1', dataField: 'name', text: "Name"},
-            {key: '2', dataField: 'email', text: "Email"}
+            {key: '2', dataField: 'email', text: "Email"},
+            {key: '3', dataField: 'instructor', text: ""}
         ],
-        courseStudents: []
+        courseStudents: [],
+        userID: localStorage.getItem("userID")
                 
     }
     
@@ -65,6 +67,7 @@ componentDidMount() {
                   firstName
                   lastName
                   email
+                  id
                 }
               }`,
             variables: {
@@ -75,7 +78,11 @@ componentDidMount() {
             var students = [];
             var s = data.data.courseGetUsers;
             for(var i = 0; i < s.length; i++) {
-                students.push({key: i, name: s[i].firstName + " " + s[i].lastName, email: s[i].email})
+                if(this.state.userID == s[i].id) {
+                    students.push({key: i, name: s[i].firstName + " " + s[i].lastName, email: s[i].email, instructor: "Instructor"})
+                }else {
+                    students.push({key: i, name: s[i].firstName + " " + s[i].lastName, email: s[i].email, instructor: ""})
+                }
             }
             this.setState({courseStudents: students})
         })
