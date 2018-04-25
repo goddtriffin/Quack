@@ -61,7 +61,7 @@ class WriteQuiz extends Component {
         this.setState({courseID:this.props.navigation.state.params.courseID})
         this.setState({date:this.props.navigation.state.params.date})
         this.setState({quizID:this.props.navigation.state.params.quizID})
-        this.setState({quizID:this.props.navigation.state.params.studentID})
+        this.setState({studentID:this.props.navigation.state.params.studentID})
         this.props.client.mutate({ mutation: gql`
                 mutation quizGetQuestions($id: Int!) {
                     quizGetQuestions(id: $id){

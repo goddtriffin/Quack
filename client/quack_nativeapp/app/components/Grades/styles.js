@@ -23,8 +23,12 @@ export default StyleSheet.create({
     fontFamily: 'Fira Sans',
     color: 'white',
     fontWeight: '400',
+    fontSize: 25,
+  },
+  noQuizText: { 
+    fontFamily: 'Fira Sans',
+    color: 'white',
     textAlign: 'center',
-    paddingTop: 10,
     fontSize: 25,
   },
   quizTextLive: {

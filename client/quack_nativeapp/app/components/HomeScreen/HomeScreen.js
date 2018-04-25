@@ -109,14 +109,9 @@ class HomeScreen extends Component {
             }).then( data => {
                 courses = [];
 
-                if(data.data.userAddCourse.length == 0) {
-                    courses.push({'course': 'Search for a course to join it.', 'key': 0})
-                }
-                else {
                     for(let i = 0; i < data.data.userAddCourse.length; i++) {
                         courses.push({'course': data.data.userAddCourse[i].name, 'key': data.data.userAddCourse[i].id})
                     }
-                }
                 this.setState({courses}, () => this.reset())
                 
             })

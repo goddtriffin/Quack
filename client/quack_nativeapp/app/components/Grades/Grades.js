@@ -48,7 +48,6 @@ class Grades extends Component {
             
             for (let i = 0; i < this.state.quizzes.length; i++) {
                 if (this.state.quizzes[i].key == this.state.updatedQuiz.id) {
-                    console.log("gotcha bitch")
                     this.state.quizzes[i].date = this.state.updatedQuiz.date;
                     this.state.quizzes[i].isOpen = this.state.updatedQuiz.isOpen == 1 ? true : false
                     this.state.quizzes[i].key = this.state.updatedQuiz.id;
@@ -56,8 +55,6 @@ class Grades extends Component {
 
                 }
             }
-            console.log("meh")
-            console.log(this.state.quizzes)
             this.setState({plzUpdate: 'ok'})
         })
     }
@@ -67,12 +64,11 @@ class Grades extends Component {
     }
 
     componentDidMount() {
-        
-        
 
         this.setState({course:this.props.navigation.state.params.course})
         this.setState({studentID:this.props.navigation.state.params.studentID})
         this.setState({courseID:this.props.navigation.state.params.key})
+
         this.props.client.mutate({ mutation: gql`
                 mutation userGetQuizzes($courseID: Int!) {
                     userGetQuizzes(courseID: $courseID) {
@@ -94,9 +90,6 @@ class Grades extends Component {
                     quizzes.push({title: data.data.userGetQuizzes[i].title, isOpen:data.data.userGetQuizzes[i].isOpen, date:data.data.userGetQuizzes[i].date, key:data.data.userGetQuizzes[i].id})
                 }
 
-                if(quizzes.length == 0) {
-                    quizzes.push({'title' : 'No Quizzes', 'isOpen':false, 'date':'', 'key':0})
-                }
             console.log(quizzes)
             this.setState({quizzes});
             }).catch(function(error) {
@@ -147,27 +140,32 @@ class Grades extends Component {
 
                 <View style={styles.gradesListView}>
                     <ScrollView style={styles.gradesListRow}>
-                        {this.state.quizzes.map(({title, isOpen, date, key}) => {
-                            return (
-                                <View>
-                                    <Grid>
-                                        <Row style={{justifyContent: 'center', alignItems: 'center'}}>
-                                            {(title == "No Quizzes") ?
-                                                <Text style={styles.quizText}>{title}</Text>
-                                            :<TouchableOpacity onPress={()=> this.handleQuiz(title, date, key, isOpen)}>
-                                                {(isOpen == true) ?
-                                                <Text style={styles.quizTextLive}>{title}</Text>
-                                                :(date == "") ?
-                                                <Text style={styles.quizText}>{title}</Text>
-                                                :<Text style={styles.quizText}>{title} {date.substring(0,5)}</Text>
-                                                }
+                        {(this.state.quizzes.length != 0) ?
+                            this.state.quizzes.map(({title, isOpen, date, key}) => {
+                                return (
+                                    <View>
+                                        <Grid>
+                                            <TouchableOpacity onPress={()=> this.handleQuiz(title, date, key, isOpen)}>
+                                                <Row style={{justifyContent: 'center', alignItems: 'center'}}>
+                                                    <Col size={80}>
+                                                        <Text style={styles.quizText}>{title}</Text>
+                                                    </Col>
+                                                    <Col size={20}>
+                                                        {( isOpen == true) ?
+                                                            <Text style={styles.quizTextLive}>Live</Text>
+                                                        :(date == "") ?
+                                                            <Text style={styles.quizText}>Upcoming</Text>
+                                                        :
+                                                            <Text style={styles.quizText}>{date.substring(0,5)}</Text>
+                                                        }
+                                                    </Col>
+                                                </Row>
                                             </TouchableOpacity>
-                                            }
-                                        </Row>
-                                    </Grid>
-                                </View>);
-                                }
-                            )
+                                        </Grid>
+                                    </View>
+                                );
+                            })
+                        :<Text style={styles.noQuizText}>There are no quizzes</Text>
                         }
                     </ScrollView>
                 </View>

@@ -17,15 +17,20 @@ export default StyleSheet.create({
   },
   headerTop: {
     backgroundColor: colors.qLightGreen,
-    
     //height: 80,
   },
   quizText: {
     fontFamily: 'Fira Sans',
     color: 'white',
     textAlign: 'center',
-    paddingTop: 10,
     fontSize: 30,
+  },
+  quizSubText: {
+    fontFamily: 'Fira Sans',
+    color: 'white',
+    textAlign: 'center',
+    paddingBottom: 15,
+    fontSize: 17,
   },
   quizTextLive: {
     fontFamily: 'Fira Sans',
@@ -45,7 +50,7 @@ export default StyleSheet.create({
     fontFamily: 'Fira Sans',
     fontWeight: '600',
     flex: 3,
-    fontSize: 40,
+    fontSize: 35,
     color: 'white',
     textAlign: 'center',
     paddingBottom: 25,
