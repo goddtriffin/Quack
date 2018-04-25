@@ -71,6 +71,7 @@ class QuizResults extends Component {
             }
         }
         this.setState({isLoading:false})
+        console.log("this.state.isLoading")
         });
     }
 
@@ -87,17 +88,18 @@ class QuizResults extends Component {
 
         if(this.state.isLoading == true){
             return(
-                <View>
+                <View style={styles.background}>
                 <Header style={styles.headerTop}>
-                    <Left>
+                    <Left style={{flex: 1}}>
                         <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Questions', params:  {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options}})]}))}>
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
                     </Left>
                 </Header>
-                    <Content color = {colors.qLightGreen}>
+                
+                    <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
                         <Spinner color = 'white' />
-                    </Content>
+                    </View>
                 </View>
             );
         }

@@ -3,7 +3,8 @@ import { colors } from '../../style/styles';
 
 export default StyleSheet.create({
   background: {
-    backgroundColor: colors.qLightGreen
+    backgroundColor: colors.qLightGreen,
+    flex: 1
   },
   headerTop: {
     backgroundColor: colors.qLightGreen,
