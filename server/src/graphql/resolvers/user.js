@@ -65,10 +65,28 @@ export default {
 	
 
 	argSQL = {};
-
+	if(context.headers.type == "instructor") {
+		console.log("INSTRUCTOR");
+		argSQL[0] = {name: 'email', type: TYPES.NVarChar, arg: args.email};
+		const userID = await context.db.executeSQL("SELECT id FROM TestSchema.Users where email = @email", argSQL, true);
+		console.log(userID[0].id);
+		argSQL[0] = {name: 'userID', type: TYPES.NVarChar, arg: userID[0].id};
+		argSQL[1] = {name: 'type', type: TYPES.NVarChar, arg: "instructor"};
+		const role = await context.db.executeSQL("SELECT * FROM TestSchema.Roles where userID = @userID and type=@type", argSQL, true);
+		if(Object.keys(role).length == 0) {
+			return new Error("Not an instructor");
+		}
+		else {
+			console.log(role);
+		}
+	}
+	else {
+		console.log("NOT INSTRUCTOR");
+	}
         const users = await context.db.executeSQL("SELECT email, password FROM TestSchema.Users", argSQL, true);
         var emails = users.map(a => a.email);
-        if(emails.indexOf(args.email) == -1) {
+        console.log(context);
+	if(emails.indexOf(args.email) == -1) {
             return new Error("Email does not exist");
         }
         else {
@@ -79,7 +97,8 @@ export default {
             if (!validPassword) {
                 return new Error("Password is incorrect");
             }
-            
+
+            argSQL = {};
             argSQL[0] = {name: 'email', type: TYPES.NVarChar, arg: args.email};
             const sql = await context.db.executeSQL("SELECT * FROM TestSchema.Users where email = @email", argSQL, false);
             sql.jwt = jwt.sign({ id: sql.id }, context.JWT_SECRET);

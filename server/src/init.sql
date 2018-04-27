@@ -1,4 +1,5 @@
-TRUNCATE TABLE TestSchema.Quizzes;
+DELETE FROM TestSchema.Courses WHERE id=764741;
+/*TRUNCATE TABLE TestSchema.Quizzes;
 TRUNCATE TABLE TestSchema.Answers;
 TRUNCATE TABLE TestSchema.Questions;
 TRUNCATE TABLE TestSchema.Grades;
@@ -6,8 +7,8 @@ TRUNCATE TABLE TestSchema.Courses;
 TRUNCATE TABLE TestSchema.UsersCourses;
 TRUNCATE TABLE TestSchema.UsersSections;
 TRUNCATE TABLE TestSchema.Roles;
-
-
+TRUNCATE TABLE TestSchema.Users;
+*/
 /*DROP TABLE TestSchema.Quizzes;
 CREATE TABLE TestSchema.Quizzes (
         id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
