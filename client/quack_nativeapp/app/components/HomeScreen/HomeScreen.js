@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, AsyncStorage, Alert, Platform } from 'react-native';
 import styles from './styles';
 import { StackNavigator } from 'react-navigation';
-import { HeaderContainer, Header, Left, Body, Right, Button, Icon, Title, Item, Input } from 'native-base';
+import { HeaderContainer, Header, Left, Body, Right, Button, Icon, Title, Item, Input, Spinner } from 'native-base';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { ApolloProvider, graphql, withApollo } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
@@ -98,6 +98,7 @@ class HomeScreen extends Component {
                 mutation userAddCourse($id: Int!, $courseID: Int!) {
                     userAddCourse(id: $id, courseID: $courseID) {
                         name
+                        id
                     }
                 }
             `,
@@ -108,16 +109,11 @@ class HomeScreen extends Component {
             }).then( data => {
                 courses = [];
 
-                if(data.data.userAddCourse.length == 0) {
-                    courses.push({'course': 'Search for a course to join it.', 'key': 0})
-                }
-                else {
                     for(let i = 0; i < data.data.userAddCourse.length; i++) {
                         courses.push({'course': data.data.userAddCourse[i].name, 'key': data.data.userAddCourse[i].id})
                     }
-                }
-                this.setState({courses})
-                reset()
+                this.setState({courses}, () => this.reset())
+                
             })
     }
 
@@ -153,23 +149,18 @@ class HomeScreen extends Component {
         this.setState({title:'Courses'})
         this.setState({isSearching:false})
         this.setState({search:''})
-        this.componentDidMount();
     }
 
     render() {
-
-        if(this.state.isLoading) {
-            return(<View><Text>Loading...</Text></View>);
-        }else {
-            //alert(this.state.email);
-        }
-
         let studentID = this.state.studentID;
-
+        if(this.state.isLoading) {
+            return(<View style={styles.loading}><Spinner color='white'/></View>);
+        }
+        
         return (
             <View style={styles.container}>
                 <Header searchBar rounded style={styles.header}>
-                    <Item>
+                    <Item style={{flex: 5}}>
                         <Icon name="ios-search"/>
                             <Input placeholder="Search Courses"
                             onChangeText={(search) => this.setState({search})}
@@ -181,7 +172,7 @@ class HomeScreen extends Component {
                             />
                         <Icon name="close" onPress={()=> this.reset()}/>
                     </Item>
-                    <Button transparent onPress={() => this.props.navigation.navigate('Feedback')}>
+                    <Button style={styles.feedbackButton} transparent onPress={() => this.props.navigation.navigate('Feedback')}>
                         <Icon style={{color: 'white'}} name='settings'/>
                     </Button>
                 </Header>

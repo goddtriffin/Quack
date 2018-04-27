@@ -4,7 +4,7 @@ import {Content } from 'native-base'
 import { StackNavigator } from 'react-navigation';
 import { View, Image, Text, Dimensions, TouchableHighlight, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
-import { HeaderContainer, Header, Left, Body, Right, Button, Icon, Title, Item, Input } from 'native-base';
+import { HeaderContainer, Header, Left, Body, Right, Button, Icon, Title, Item, Input, Spinner} from 'native-base';
 import { colors } from '../../style/styles';
 import ReactDOM from 'react-dom';
 import * as V from 'victory';
@@ -20,11 +20,13 @@ class QuizResults extends Component {
         courseID: '',
         date: '',
         quizID: '',
-        options: '',
-        options2: [],
+        options: [],
+        options3: ['A', 'B', 'C', 'D'],
         numoptions: 0,
         stats: [],
         correctAnswer: '',
+        isLoading: true,
+        type: ''
     }
 
     componentDidMount () {
@@ -36,7 +38,8 @@ class QuizResults extends Component {
         this.setState({questionID:this.props.navigation.state.params.id})
         this.setState({correctAnswer:this.props.navigation.state.params.correctAnswer})
         this.setState({userAnswer:this.props.navigation.state.params.userAnswer})
-        this.setState({options:this.props.navigation.state.params.options})
+        this.setState({type:this.props.navigation.state.params.type})
+        this.setState({studentID:this.props.navigation.state.params.studentID})
         this.props.client.mutate({ mutation: gql`
         mutation quizGetStats($questionID: Int!) {
             quizGetStats(questionID: $questionID)
@@ -50,25 +53,56 @@ class QuizResults extends Component {
             let numOptions = data.data.quizGetStats.length;
             console.log(data.data.quizGetStats);
             for(let i = 0; i < data.data.quizGetStats.length; i++) {
-                stats.push({answer: (i+1), number: data.data.quizGetStats[i], fill: ''})
-            }
-        this.setState({numOptions});
-        this.setState({stats});
-        
-        for( let i=0; i<numOptions; i++){
-            this.state.options2.push(this.state.options.split(";")[i]);
-        }
-        console.log(userAnswer)
-        console.log(correctAnswer)
-        console.log(options2)
-        for(let i=0; i<numOptions; i++){
-            if(this.state.userAnswer == options2[i]){
-                if(this.state.correctAnswer == options2[i]){
-                    this.state.stats[i].fill = 'white';
+                if(this.props.navigation.state.params.type.toLowerCase() == 'tf'){
+                    stats.push({answer: (3*i+2), number: data.data.quizGetStats[i], fill: ''})
+                }
+                else if(this.props.navigation.state.params.type.toLowerCase() == 'mc'){
+                    if(data.data.quizGetStats.length == 5){
+                        stats.push({answer: (i+1), number: data.data.quizGetStats[i], fill: ''})
+                    }
+                    else if(data.data.quizGetStats.length == 4){
+                        stats.push({answer: (i+1), number: data.data.quizGetStats[i], fill: ''})
+                    }
+                    else if(data.data.quizGetStats.length == 3){
+                        stats.push({answer: (2*i+2), number: data.data.quizGetStats[i], fill: ''})
+                    }
+                    else if(data.data.quizGetStats.length == 2){
+                        stats.push({answer: (3*i+2), number: data.data.quizGetStats[i], fill: ''})
+                    }
+                    else {
+                        stats.push({answer: (i+1), number: data.data.quizGetStats[i], fill: ''})
+                    }
                 }
             }
+            this.setState({stats})
+            this.setState({numOptions});
+            
+        
+        for( let i=0; i<numOptions; i++){
+            this.state.options.push({'option': this.props.navigation.state.params.options.split(";")[i], 'letter': this.state.options3[i]});
         }
+        console.log(this.state.correctAnswer)
+        console.log(this.state.userAnswer)
+        for(let i=0; i<numOptions; i++){
+            console.log(this.state.options[i])
+            if(this.state.userAnswer == this.state.options[i].option){
+                if(this.state.correctAnswer == this.state.userAnswer){
+                    this.state.stats[i].fill = 'white';
+                }
+                else{
+                    this.state.stats[i].fill = 'red';
+                }
+            }
+            else if(this.state.correctAnswer == this.state.options[i].option){
+                this.state.stats[i].fill = 'green';
+            }
+        }
+        this.setState({isLoading:false})
         });
+    }
+
+    isLoading() {
+        this.setState({isLoading:false})
     }
 
     render() {
@@ -81,11 +115,31 @@ class QuizResults extends Component {
         let correctAnswer = this.state.correctAnswer;
         let userAnswer = this.state.userAnswer;
         let options = this.state.options;
+        let studentID = this.state.studentID;
+
+        if(this.state.isLoading == true){
+            return(
+                <View style={styles.background}>
+                <Header style={styles.headerTop}>
+                    <Left style={{flex: 1}}>
+                        <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Questions', params:  {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options, studentID}})]}))}>
+                        <Icon name='arrow-back' style={styles.backButton}/>
+                        </TouchableOpacity>
+                    </Left>
+                </Header>
+                
+                    <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
+                        <Spinner color = 'white' />
+                    </View>
+                </View>
+            );
+        }
+        else{
         return (
             <Grid style={styles.background}>
                 <Header style={styles.headerTop}>
-                    <Left>
-                        <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Questions', params:  {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options}})]}))}>
+                    <Left style={{flex: 1}}>
+                        <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Questions', params:  {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options, studentID}})]}))}>
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
                     </Left>
@@ -95,7 +149,7 @@ class QuizResults extends Component {
                         {this.state.course.split(":")[0]}
                     </Text>
                 </Row>
-                <Row size={5}>
+                <Row size={7}>
                     <Text style = {styles.subTitle}>
                         {this.state.course.split(":")[1]}
                     </Text>
@@ -104,35 +158,48 @@ class QuizResults extends Component {
                     <VictoryChart
                     domainPadding={20}
                     >
-                    <VictoryLabel text={this.state.title} textAnchor="middle" x={Dimensions.get('window').width / 2} y={40}/>
-                    <VictoryAxis tickValues={[1, 2, 3, 4]} tickFormat={["A", "B", "C", "D"]}/>
-                    <VictoryAxis
-                      dependentAxis
-                      //tickFormat={(x) => (`$${x / 1000}k`)}
-                    />
+                    <VictoryLabel text={this.state.title} textAnchor="middle" x={Dimensions.get('window').width / 2} y={30} size={40} />
+                    {(this.state.type.toLowerCase() == "tf")?
+                    <VictoryAxis tickValues={[1, 2, 3, 4, 5, 6]} tickFormat={["", "True", "", "", "False", ""]}/>
+                    : (this.state.numOptions == 5) ?
+                    <VictoryAxis tickValues={[1, 2, 3, 4, 5]} tickFormat={[this.state.options[0].option, this.state.options[1].option, this.state.options[2].option, this.state.options[3].option, this.state.options[4].option]}/>
+                    : (this.state.numOptions == 4) ?
+                    <VictoryAxis tickValues={[1, 2, 3, 4]} tickFormat={[this.state.options[0].option, this.state.options[1].option, this.state.options[2].option, this.state.options[3].option]}/>
+                    : (this.state.numOptions == 3) ?
+                    <VictoryAxis tickValues={[1, 2, 3, 4, 5, 6, 7]} tickFormat={["", this.state.options[0].option, "", this.state.options[1].option, "", this.state.options[2].option, ""]}/>
+                    : (this.state.numOptions == 2) ?
+                    <VictoryAxis tickValues={[1, 2, 3, 4, 5, 6]} tickFormat={["", this.state.options[0].option, "", "", this.state.options[1].option, ""]}/>
+                    : <VictoryAxis tickValues={[1, 2, 3, 4]} tickFormat={["A", "B", "C", "D"]}/>
+                    }
+                    <VictoryAxis dependentAxis/>
                     <VictoryBar
                       data={this.state.stats}
                       labels={(d) => d.y}
                       x="answer"
                       y="number"
-                      //animate={{duration: 5}}
+                      animate={{duration: 5}}
                     />
                     </VictoryChart>
-     
-            </Row>
-            <Row size={9}>
-                <Text style= {styles.recentIndicator}>
-                
-                </Text>
-            </Row>
-            <Row size={30}>
-                <Content>
-                <Text style={styles.pastQuizIndicator}>
-                </Text>
-                </Content>
-            </Row>
+
+                </Row>
+                <Row size={8}>
+                    <Text style= {styles.recentIndicator}>
+                        Overview
+                    </Text>
+                </Row>
+                <Row size={25}>
+                    <Content>
+                        <View>
+                            <Grid>
+                                <Row style={{justifyContent: 'center', alignItems: 'center'}}>
+                                    <Text style={styles.pastQuizIndicator}> {this.state.correctAnswer}</Text>
+                                </Row>
+                            </Grid>
+                        </View>
+                    </Content>
+                </Row>
             </Grid>
-        );
+        );}
     }
 }
 

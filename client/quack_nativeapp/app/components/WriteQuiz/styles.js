@@ -114,13 +114,13 @@ downIndicator: {
 nextButton: {
     resizeMode: 'contain',
     position: 'absolute',
-    top: Dimensions.get('window').height - 35,
+    top: Dimensions.get('window').height - 45,
     left: 275, 
 },
 prevButton: {
   resizeMode: 'contain',
   position: 'absolute',
-  top: Dimensions.get('window').height - 36,
+  top: Dimensions.get('window').height - 47,
   left: 25, 
 },
   pictureView: {

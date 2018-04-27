@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Input, Item, Content, Container, Icon, Col, Row, Grid } from "native-base"
-import { View, Image, StatusBar, Text, Dimensions, TouchableHighlight, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
+import { Input, Item, Content, Container, Icon, Col, Row, Grid, Spinner } from "native-base"
+import { View, Image, StatusBar, Text, Dimensions, TouchableHighlight, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView, BackHandler } from 'react-native';
 import styles from './styles';
 import { NavigationActions } from 'react-navigation';
 import { ApolloProvider, graphql, withApollo } from 'react-apollo';
@@ -10,6 +10,7 @@ import gql from 'graphql-tag';
 class WriteQuiz extends Component {
     static navigationOptions = ({ navigation }) => ({
         header: null,
+        guesturesEnabled: false,
       })
 
     constructor(props) {
@@ -30,6 +31,7 @@ class WriteQuiz extends Component {
             firstTextCorrect: true,
             freeResp: false,
             multiChoice: false,
+            loading: false,
             hasPicture: false,
             fillinBlank: false,
             selectedAnswer: '',
@@ -53,12 +55,13 @@ class WriteQuiz extends Component {
     }
 
     componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         this.setState({title:this.props.navigation.state.params.title})
         this.setState({course:this.props.navigation.state.params.course})
         this.setState({courseID:this.props.navigation.state.params.courseID})
         this.setState({date:this.props.navigation.state.params.date})
         this.setState({quizID:this.props.navigation.state.params.quizID})
-        console.log(this.props.navigation.state.params.quizID)
+        this.setState({studentID:this.props.navigation.state.params.studentID})
         this.props.client.mutate({ mutation: gql`
                 mutation quizGetQuestions($id: Int!) {
                     quizGetQuestions(id: $id){
@@ -113,17 +116,17 @@ class WriteQuiz extends Component {
                 this.setState({numQuestions: data.data.quizGetQuestions.length})
                 console.log(questions)
                 switch(questions[0].type) {
-                    case "SA": 
+                    case "sa": 
                         this.setState({freeResp: true});
                         break;
-                    case "MC": 
+                    case "mc": 
                         this.setState({multiChoice: true});
                         break;
-                    case "TF": 
+                    case "tf": 
                         console.log("meh")
                         this.setState({multiChoice: true});
                         break;
-                    case "FB":
+                    case "fb":
                         this.setState({fillinBlank: true});
                         break;
                 }
@@ -139,6 +142,15 @@ class WriteQuiz extends Component {
                 alert(error.message);
             });
     }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+    handleBackButton() {
+        return true;
+    }
+
 
     sendAnswers(index) {
         console.log(this.state.questions[this.state.numCurrent].questionID)
@@ -160,7 +172,7 @@ class WriteQuiz extends Component {
                 }`,
                 variables: {
                     input: {
-                        userID: 3,
+                        userID: parseInt(this.state.studentID),
                         quizID: parseInt(this.state.quizID),
                         questionID: parseInt(this.state.questions[index].questionID),
                         type: this.state.questions[index].type,
@@ -197,7 +209,7 @@ class WriteQuiz extends Component {
                             return;
                         }
                     }
-                    this.sendAnswers(0);
+                    this.setState({multiChoice: false, freeResp: false, fillinBlank: false, hasPicture: false, loading: true}, () => this.sendAnswers(0))
                     return;
                 }
                 index = this.state.numCurrent + 1;
@@ -211,17 +223,35 @@ class WriteQuiz extends Component {
             this.setState({numCurrent: index, freeResp: false, multiChoice: false, fillinBlank: false}, function() {
                 console.log(this.state.numCurrent)
                 switch(this.state.questions[this.state.numCurrent].type) {
-                    case "SA": 
+                    case "sa": 
                         this.setState({freeResp: true});
                         break;
-                    case "MC": 
+                    case "mc": 
                         this.setState({multiChoice: true});
+                        if (this.state.questions[this.state.numCurrent].options.split(";")[0] == this.state.questions[this.state.numCurrent].answer) {
+                            this.setAChoiceState();
+                        }
+                        if (this.state.questions[this.state.numCurrent].options.split(";")[1] == this.state.questions[this.state.numCurrent].answer) {
+                            this.setBChoiceState();
+                        }
+                        if (this.state.questions[this.state.numCurrent].numberOfOptions > 2 && this.state.questions[this.state.numCurrent].options.split(";")[2] == this.state.questions[this.state.numCurrent].answer) {
+                            this.setCChoiceState();
+                        }
+                        if (this.state.questions[this.state.numCurrent].numberOfOptions > 3 && this.state.questions[this.state.numCurrent].options.split(";")[3] == this.state.questions[this.state.numCurrent].answer) {
+                            this.setDChoiceState();
+                        }
                         break;
-                    case "TF": 
+                    case "tf": 
                         console.log("meh")
                         this.setState({multiChoice: true});
+                        if (this.state.questions[this.state.numCurrent].options.split(";")[0] == this.state.questions[this.state.numCurrent].answer) {
+                            this.setAChoiceState();
+                        }
+                        if (this.state.questions[this.state.numCurrent].options.split(";")[1] == this.state.questions[this.state.numCurrent].answer) {
+                            this.setBChoiceState();
+                        }
                         break;
-                    case "FB":
+                    case "fb":
                         this.setState({fillinBlank: true});
                         break;
                 }
@@ -281,16 +311,18 @@ class WriteQuiz extends Component {
             style={styles.pictureView}
             />
         const quizQuestion = 
-        <Text style={styles.quizQuestionText}>{
-            this.state.questions[this.state.numCurrent].questionText}
+        <Text style={styles.quizQuestionText}>
+            {this.state.loading ? null : this.state.questions[this.state.numCurrent].questionText}
         </Text>
         const answerBox = 
                 <Item rounded>
                 <Input 
                     placeholder='Enter text here...'
+                    placeholderTextColor='white'
                     multiline={true}
+                    defaultValue={this.state.questions[this.state.numCurrent].answer == '' ? '' : this.state.questions[this.state.numCurrent].answer}
                     numberOfLines={5}
-                    style={this.state.questions[this.state.numCurrent].hasPicture ? {height:200} : {height:200}}
+                    style={{height:200, textAlignVertical: 'top', color: 'white'}}
                     onChangeText = {(text) => this.state.questions[this.state.numCurrent].answer = text}
                 />
                 </Item>
@@ -299,6 +331,9 @@ class WriteQuiz extends Component {
             <Item>
                 <Input 
                 placeholder='Answer'
+                defaultValue={this.state.questions[this.state.numCurrent].answer == '' ? '' : this.state.questions[this.state.numCurrent].answer}
+                placeholderTextColor='white'
+                style={{color: 'white'}}
              //   style={this.state.hasPicture ? {height:200} : {height:200}}
                 onChangeText = {(text) => this.state.questions[this.state.numCurrent].answer = text}
                 />
@@ -411,8 +446,14 @@ class WriteQuiz extends Component {
         style={styles.pictureStyle}
         source={{uri: this.state.questions[this.state.numCurrent].image}}
         resizeMode="contain"
-        
         />
+
+        const spin = 
+            <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
+                <Spinner color="white"/>
+            </View>
+       
+        
         
         return (
         <Container style={styles.background}>
@@ -427,7 +468,8 @@ class WriteQuiz extends Component {
             </Row>
             <Row size={5}>
             <Content>
-                    {this.state.hasPicture ? quizQuestion : null}
+                    {this.state.hasPicture && !this.state.loading ? quizQuestion : null}
+                    
                     
             </Content>
             </Row>
@@ -450,7 +492,7 @@ class WriteQuiz extends Component {
                 </Text>
             </Col>
             </Row>
-            <Row size = {30} padding={8}>
+            <Row size = {35} padding={8}>
                 
                 {this.state.multiChoice ? multipleQuizCol1 : null}
                 {this.state.multiChoice ? multipleQuizCol2 : null}
@@ -458,29 +500,30 @@ class WriteQuiz extends Component {
                 <Content scrollEnabled={false}>
                 {this.state.freeResp ? answerBox : null}
                 {this.state.fillinBlank ? fillinBox : null}
+                
                 </Content>
                 
                 
                 
 
             </Row>
-            
+            {this.state.loading ? spin : null}
 
             <TouchableOpacity style={styles.nextButton} onPress={() => this.updateState(true)}>
-                {this.state.numCurrent < this.state.numQuestions
-                ? <Image source={require('../../images/quiz_resources/next_button.png')}/>
+                {this.state.loading
+                ? null
                 : <Image source={require('../../images/quiz_resources/next_button.png')}/>
                 }
             </TouchableOpacity>
             <TouchableOpacity style={styles.prevButton} onPress={() => this.updateState(false)}>
-                {(0 == 0)
+                {(this.state.numCurrent > 0 && !this.state.loading)
                 ?<Image source={require('../../images/quiz_resources/previous_button.png')}/>
                 :null
                 }
             </TouchableOpacity>
             </Grid>
             </View>
-            </Content>
+            </Content> 
         </Container>
         );
     }

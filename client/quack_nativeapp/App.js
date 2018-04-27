@@ -151,8 +151,9 @@ const LoginRoute = StackNavigator({
         headerStyle: {
           backgroundColor: '#07A386'
         }
-    },
-}});
+    }}},
+    { headerMode: 'screen' }
+    );
 
 const HomeRoute = StackNavigator({
   Home: {

@@ -13,7 +13,7 @@ export default StyleSheet.create({
   },
   header: {
     backgroundColor: colors.qLightGreen,
-    height: 80,
+    height: 100,
   },
   headerTop: {
     backgroundColor: colors.qLightGreen,
@@ -22,17 +22,21 @@ export default StyleSheet.create({
   quizText: {
     fontFamily: 'Fira Sans',
     color: 'white',
-    textAlign: 'center',
-    paddingTop: 10,
-    fontSize: 30,
+    fontWeight: '400',
+    fontSize: 25,
   },
-  quizTextLive: {
+  noQuizText: { 
     fontFamily: 'Fira Sans',
     color: 'white',
     textAlign: 'center',
+    fontSize: 25,
+  },
+  quizTextLive: {
+    fontFamily: 'Fira Sans',
+    textAlign: 'center',
     paddingTop: 10,
-    fontSize: 30,
-    color: 'red'
+    fontSize: 25,
+    color: colors.qRed,
   },
   headerText: {
     fontFamily: 'Fira Sans',
@@ -45,9 +49,10 @@ export default StyleSheet.create({
     fontWeight: '600',
     flex: 3,
     fontSize: 50,
+    lineHeight: 60,
     color: 'white',
     textAlign: 'center',
-    paddingBottom: 25,
+    //paddingBottom: 25,
   },
   subTitle: {
     fontFamily: 'Fira Sans',
@@ -56,7 +61,7 @@ export default StyleSheet.create({
     fontSize: 25,
     color: 'white',
     textAlign: 'center',
-    paddingBottom: 10,
+    //paddingBottom: 10,
   },
   gradesListView: {
     paddingLeft: 10,

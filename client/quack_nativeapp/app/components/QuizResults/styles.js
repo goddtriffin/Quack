@@ -3,7 +3,8 @@ import { colors } from '../../style/styles';
 
 export default StyleSheet.create({
   background: {
-    backgroundColor: colors.qLightGreen
+    backgroundColor: colors.qLightGreen,
+    flex: 1
   },
   headerTop: {
     backgroundColor: colors.qLightGreen,
@@ -27,10 +28,11 @@ export default StyleSheet.create({
     fontFamily: 'Fira Sans',
     fontWeight: '600',
     flex: 3,
+    lineHeight: 60,
     fontSize: 50,
     color: 'white',
     textAlign: 'center',
-    paddingBottom: 25,
+    //paddingBottom: 25,
   },
   subTitle: {
     fontFamily: 'Fira Sans',
@@ -39,7 +41,7 @@ export default StyleSheet.create({
     fontSize: 25,
     color: 'white',
     textAlign: 'center',
-    paddingBottom: 10,
+   // paddingBottom: 10,
   },
   classHeaderText: {
     flex: 1,

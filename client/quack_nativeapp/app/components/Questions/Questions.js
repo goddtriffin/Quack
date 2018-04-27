@@ -11,7 +11,6 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 import { NavigationActions } from 'react-navigation';
 
-
 class Questions extends Component {
 
     static navigationOptions = {
@@ -66,6 +65,7 @@ class Questions extends Component {
                     options: data.data.quizGetQuestions[i].options,
                     correctAnswer: data.data.quizGetQuestions[i].correctAnswer,
                     type: data.data.quizGetQuestions[i].type,
+                    fullType: '',
                     key: i})
             }
             this.setState({questions})
@@ -79,6 +79,8 @@ class Questions extends Component {
         let course = this.state.course;
         let quizID = this.state.quizID;
         let courseID = this.state.courseID;
+        let studentID = this.state.studentID;
+        console.log('test'+studentID)
         this.props.client
                 .query({
                     query: gql`
@@ -91,18 +93,23 @@ class Questions extends Component {
                 }`
             })
             .then(data => {
+                let userAnswer = '';
+                console.log(this.state.studentID)
+                console.log(id)
             for(let i = 0; i < data.data.answers.length; i++) {
                 if(data.data.answers[i].userID == this.state.studentID && data.data.answers[i].questionID == id){
-                    this.setState({userAnswer:data.data.answers[i].content});
-                    break;
+                    userAnswer = data.data.answers[i].content;
+                    console.log(data.data.answers[i].content)
                 }
             }
-            let userAnswer = this.state.userAnswer;
-        if( type == "mc"){
-            this.props.navigation.navigate('QuizResults', {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options})
+        if( type.toLowerCase() == "mc"){
+            this.props.navigation.navigate('QuizResults', {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options, type, studentID})
         }
-        else if(type == "tf"){
-            this.props.navigation.navigate('QuizResults', {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options})
+        else if(type.toLowerCase() == "tf"){
+            this.props.navigation.navigate('QuizResults', {title, course, courseID, date, quizID, id, correctAnswer, userAnswer, options, type, studentID})
+        }
+        else{
+            //SA or FB
         }
     });
     }
@@ -120,6 +127,8 @@ class Questions extends Component {
                         <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
                     </Left>
+                    <Body style={{flex: 1}}></Body>
+                    <Right style={{flex: 1}}></Right>
                 </Header>
 
                 <View style={styles.header}>
@@ -133,9 +142,19 @@ class Questions extends Component {
                             return (
                                 <View>
                                     <Grid>
-                                        <Row>
+                                        <Row style={{justifyContent: 'center', alignItems: 'center'}}>
                                             <TouchableOpacity onPress={()=> this.handleQuestion(id, options, type, key, correctAnswer)}>
-                                                <Text style={styles.quizText}>question {key+1} {type}</Text>
+                                                <Text style={styles.quizText}>Question {key+1}</Text>
+                                                { (type.toUpperCase() == 'MC') ?
+                                                <Text style={styles.quizSubText}>Multiple-Choice</Text>
+                                                : (type.toUpperCase() == 'TF') ?
+                                                <Text style={styles.quizSubText}>True-False</Text>
+                                                : (type.toUpperCase() == 'SA') ?
+                                                <Text style={styles.quizSubText}>Short-Answer</Text>
+                                                : (type.toUpperCase() == 'FB') ?
+                                                <Text style={styles.quizSubText}>Fill-in-the-blank</Text>
+                                                : <Text style={styles.quizSubText}>Type Not Reconized</Text>
+                                                }
                                             </TouchableOpacity>
                                         </Row>
                                     </Grid>
