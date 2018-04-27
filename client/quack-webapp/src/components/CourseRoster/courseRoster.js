@@ -19,7 +19,7 @@ class CourseRoster extends Component {
         courseDescription: "Software Engineering",
         newCourseInput: '',
         columns: [],
-        courseSections: [{id: 0}],
+        courseStudents: [],
         rosters: [],
         newSectionTitle: '',
         show: false,
@@ -43,38 +43,31 @@ constructor(props) {
         )
     }
 
-    var cs = [];
-    if(props.courseSections == null) {
-        cs = [];
-    }else {
-        cs = props.courseSections;
-    }
+    
 
     this.state = {
         courseID: props.courseID,
         columns: [
             {key: '1', dataField: 'name', text: "Name"},
-            {key: '2', dataField: 'email', text: "Email"}
+            {key: '2', dataField: 'email', text: "Email"},
+            {key: '3', dataField: 'instructor', text: ""}
         ],
-        
-        rosters: [temp, temp2, temp],
-        show: false,
-        newSectionTitle: '',
-        courseSections: [{id: 0, title: ""}]
+        courseStudents: [],
+        userID: localStorage.getItem("userID")
                 
     }
     
-    this.handleChangeSection = this.handleChangeSection.bind(this);
-    this.handleClose = this.handleClose.bind(this)
 }
 
 componentDidMount() {
     this.props.client.mutate({
             mutation: gql`
-                mutation courseGetSections($id: Int!) {
-                courseGetSections(id: $id) {
+                mutation courseGetUsers($id: Int!) {
+                courseGetUsers(id: $id) {
+                  firstName
+                  lastName
+                  email
                   id
-                  name
                 }
               }`,
             variables: {
@@ -82,72 +75,48 @@ componentDidMount() {
             }
         }).then( data => {
             console.log(data);
-            var s = data.data.courseGetSections;
-            var temp = [];
+            var students = [];
+            var s = data.data.courseGetUsers;
             for(var i = 0; i < s.length; i++) {
-                temp.push({key: s[i].id, title: s[i].name})
+                if(this.state.userID == s[i].id) {
+                    students.push({key: i, name: s[i].firstName + " " + s[i].lastName, email: s[i].email, instructor: "Instructor"})
+                }else {
+                    students.push({key: i, name: s[i].firstName + " " + s[i].lastName, email: s[i].email, instructor: ""})
+                }
             }
-
-           this.setState({courseSections: temp});
+            this.setState({courseStudents: students})
         })
 }
 
-handleChangeSection(e) {
-    this.setState({newSectionTitle: e.target.value})
-}
 
-handleClose() {
-
-    if(this.state.newSectionTitle.length != 0) {
-        var cs = this.state.courseSections.slice();
-        cs.push({key: `${cs.length + 1}`, title: `${this.state.newSectionTitle}`})
-        
-        var r = this.state.rosters;
-        r.push([]);
-
-        this.setState({
-            show: false,
-            newSectionTitle: '',
-            courseSections: cs,
-            rosters: r
-        });
-    }else {
-        this.setState({
-            show: false,
-            newSectionTitle: '',
-
-        })
-    }
-}
 
 
 render() {
-    console.log(this.state.courseSections)
     var tabs = [];
     var pages = [];
-    if(this.state.courseSections == null) {
+    if(this.state.courseStudents.length == 0) {
         return(<div></div>);
     }
     
-    tabs = this.state.courseSections.map(section => (
-        <NavItem key={section.key} eventKey={section.key}>{section.title}</NavItem>
-        ));
+        // tabs = this.state.courseSections.map(section => (
+        //     <NavItem key={section.key} eventKey={section.key}>{section.title}</NavItem>
+        // ));
 
-        pages = this.state.courseSections.map((section) => {
-            return(
-                <Tab.Pane key={section.key} eventKey={section.key} style={{width: '80%', height: '70vh', overflowY: 'scroll'}} >
-                    <BootstrapTable
-                        striped
-                        hover
-                        condensed
-                        bordered={false} 
-                        keyField='key' 
-                        data={this.state.courseSections} 
-                        columns={this.state.columns}
-                        />
-                </Tab.Pane>
-            );
-        });
+        // pages = this.state.courseSections.map((section) => {
+        //     return(
+        //         <Tab.Pane key={section.key} eventKey={section.key} style={{width: '80%', height: '70vh', overflowY: 'scroll'}} >
+        //             <BootstrapTable
+        //                 striped
+        //                 hover
+        //                 condensed
+        //                 bordered={false} 
+        //                 keyField='key' 
+        //                 data={this.state.courseSections} 
+        //                 columns={this.state.columns}
+        //                 />
+        //         </Tab.Pane>
+        //     );
+        // });
 
     return(
         <div>
@@ -172,31 +141,22 @@ render() {
             </div>
         <Grid style={{width: 'auto'}}>
             <Row style={{marginTop: '20px'}}>
-                <Col sm={3} style={{paddingLeft: '0px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <h1 style={styles.header}>Sections</h1>
-                    <button onClick={this.addSection} style={styles.button}>
-                        <div style={styles.buttonText} onClick={() => {this.setState({show: true})}}>add section</div>
-                    </button>
-                </Col>
-                <Col sm={9} style={{paddingLeft: '0px'}}>
-                <h1 style={styles.header}>Roster</h1>
+                <Col sm={6} style={{paddingLeft: '0px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <h1 style={styles.header}>Course Roster</h1>
                 </Col>
             </Row>
             <Row>
-                <Tab.Container id="left-tabs-example" >
-                    <Row className="clearfix">
-                        <Col sm={3}>
-                        <Nav bsStyle="pills" stacked>
-                            {tabs}
-                        </Nav>
-                        </Col>
-                        <Col sm={9}>
-                        <Tab.Content animation>
-                            {pages}
-                        </Tab.Content>
-                        </Col>
-                    </Row>
-                </Tab.Container>
+                <Col sm={11} style={{paddingLeft: '0px'}}>
+                    <BootstrapTable
+                        striped
+                        hover
+                        condensed
+                        bordered={false} 
+                        keyField='key' 
+                        data={this.state.courseStudents} 
+                        columns={this.state.columns}
+                        />
+                </Col>
             </Row>
         </Grid>
         </div>

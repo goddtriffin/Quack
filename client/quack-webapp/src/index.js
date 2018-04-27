@@ -7,15 +7,17 @@ import Register from './components/Login/register';
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
+import { ApolloClient, createBatchingNetworkInterface } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { AUTH_TOKEN } from './constants'
+import { BatchLink } from "apollo-link-batch";
 
 
 const httpLink = createHttpLink({
   uri: 'http://endor-vm2.cs.purdue.edu:4000/graphql',
+  credentials: 'same-origin',
 });
 
 const authToken = localStorage.getItem(AUTH_TOKEN);
@@ -26,7 +28,8 @@ const middlewareLink = new ApolloLink((operation, forward) => {
 	  operation.setContext({
 	    headers: {
         type: 'instructor',
-	      authorization: authToken
+        authorization: authToken,
+        "Access-Control-Allow-Credentials" : "*",
 	    }
 	  });
 	}
@@ -34,11 +37,9 @@ const middlewareLink = new ApolloLink((operation, forward) => {
   return forward(operation)
 })
 
-
-
 const client = new ApolloClient({
   link: middlewareLink.concat(httpLink),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 console.log("TOKEN: " + authToken);

@@ -9,7 +9,8 @@ import CourseRoster from '../CourseRoster/courseRoster'
 import CourseRoles from '../CourseRoles/courseRoles';
 import CourseQuizzes from '../CourseQuizzes/courseQuizzes';
 import { graphql, withApollo } from 'react-apollo'
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
+import TransitionGroup, { Transition } from 'react-transition-group/TransitionGroup';
 
 class Course extends Component {
 
@@ -40,30 +41,30 @@ constructor(props) {
 
 handleSelect(key) {
     this.setState({ key: key });
-    if(key == 3) {
-        // download roster data
-        this.props.client.mutate({
-            mutation: gql`
-                mutation courseGetSections($id: Int!) {
-                courseGetSections(id: $id) {
-                  id
-                  name
-                }
-              }`,
-            variables: {
-                id: this.state.courseID,
-            }
-        }).then( data => {
-            console.log(data);
-            var s = data.data.courseGetSections;
-            var temp = [];
-            for(var i = 0; i < s.length; i++) {
-                temp.push({key: s[i].id, title: s[i].name})
-            }
+    // if(key == 3) {
+    //     // download roster data
+    //     this.props.client.mutate({
+    //         mutation: gql`
+    //             mutation courseGetSections($id: Int!) {
+    //             courseGetSections(id: $id) {
+    //               id
+    //               name
+    //             }
+    //           }`,
+    //         variables: {
+    //             id: this.state.courseID,
+    //         }
+    //     }).then( data => {
+    //         console.log(data);
+    //         var s = data.data.courseGetSections;
+    //         var temp = [];
+    //         for(var i = 0; i < s.length; i++) {
+    //             temp.push({key: s[i].id, title: s[i].name})
+    //         }
 
-            this.setState({courseSections: temp});
-        })
-    }
+    //         this.setState({courseSections: temp});
+    //     })
+    // }
 }
 
 updateDetails(title, description) {
@@ -79,6 +80,7 @@ updateDetails(title, description) {
 render() {
     
     return(
+        <TransitionGroup>
         <div style={{width: '100%'}}>
         <Grid style={{width: '100%', margin: '0px', padding: '0px', marginLeft: '20px'}}>
             <Row>
@@ -108,19 +110,18 @@ render() {
                     <Tab eventKey={3} title="Roster">
                         <CourseRoster courseID={this.state.courseID} />
                     </Tab>
-                    <Tab eventKey={4} title="Roles">
+                    {/* <Tab eventKey={4} title="Roles">
                         <CourseRoles/>
-                    </Tab>
+                    </Tab> */}
                 
                 </Tabs>
             </div>
             </Row>
             </Grid>
         </div>
-        
+        </TransitionGroup>
     );
 }
-
 
 }
 export default withApollo(Course);

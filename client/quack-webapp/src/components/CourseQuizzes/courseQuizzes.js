@@ -5,7 +5,7 @@ import styles from './styles'
 import { Link } from 'react-router-dom';
 import { Grid, Col, Row, Tabs, Tab, FormGroup, 
     ControlLabel, FormControl, HelpBlock, 
-    Nav, NavItem, Table } from '../../../node_modules/react-bootstrap';
+    Nav, NavItem, Table, Modal } from '../../../node_modules/react-bootstrap';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 import { graphql, withApollo } from 'react-apollo'
@@ -50,6 +50,7 @@ constructor(props) {
     var temp1 = [];
     var temp2 = [];
 
+    this.getCourseQuizzes = this.getCourseQuizzes.bind(this);
 
     this.state = {
         courseSections: [],
@@ -67,12 +68,13 @@ constructor(props) {
         recentQuizzes: temp1,
         upcomingQuizzes: temp2,
         courseID: props.courseID,
+        show: false,
 
     }
     
 }
 
-componentDidMount() {
+getCourseQuizzes() {
     var temp1 = [];
     var temp2 = [];
     console.log("COURSE ID: " + this.state.courseID);
@@ -89,6 +91,8 @@ componentDidMount() {
             id: this.state.courseID,
         }
     }).then( data => { 
+        console.log("DOWNLOADING COURSE QUIZZES");
+        console.log(data);
         var quizzes = data.data.courseGetQuizzes;
         for(var i = 0; i < quizzes.length; i++) {
             if(quizzes[i].date == "") {
@@ -104,10 +108,26 @@ componentDidMount() {
     })
 }
 
+componentDidMount() {
+    setTimeout(this.getCourseQuizzes, 200);
+}
+
+yes() {
+    this.setState({ password: true })
+}
+
+no() {
+    this.setState({ password: false })
+}
+
+handleClose() {
+    this.setState({show: false})
+}
+
 
 render() {
     return(
-        <div >
+        <div>
         <Grid style={{width: 'auto'}}>
             <Row style={{marginTop: '20px'}}>
                 <Col sm={6} style={{paddingLeft: '0px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
