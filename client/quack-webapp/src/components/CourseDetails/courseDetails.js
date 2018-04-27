@@ -150,7 +150,7 @@ render() {
                     <h1 style={styles.header}>Course description</h1>
                     
                     <div >
-                       <Panel style={{width: '60%', height: '200px'}}><Panel.Body>{this.state.courseDescription}</Panel.Body></Panel>
+                       <Panel style={{width: '60%', height: '250px'}}><Panel.Body>{this.state.courseDescription}</Panel.Body></Panel>
                     </div>
                     
                 </Col>
