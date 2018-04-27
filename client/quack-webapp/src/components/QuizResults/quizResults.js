@@ -4,6 +4,8 @@ import { Grid, Col, Row, Button} from '../../../node_modules/react-bootstrap';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import { Bar } from 'react-chartjs-2';
+import { graphql, withApollo } from 'react-apollo'
+import gql from 'graphql-tag'
 
 class QuizResults extends Component {
 
@@ -25,73 +27,124 @@ class QuizResults extends Component {
             courseID: props.location.state.courseID,
             quizID: props.match.params.quizID,
             quizTitle: props.location.state.quizTitle,
-            quizQuestions: [
-                {key: "1", id: '1', type: 'mc', question: "What is the capital of Ohio?", options: ["Cleveland", "Dayton", "Columbus", "Cincinnati"], image: "", answer: "Columbus"},
-                {key: "2", id: '2', type: 'mc', question: "What is the capital of Michigan?", options: ["Detroit", "Lansing", "Battle Creek", "Grand Rapids"], image: "", answer: "Lansing"}
-            ],
-            answers: [
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Cleveland'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Cleveland'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Cleveland'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Cleveland'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Columbus'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Columbus'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Columbus'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Columbus'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Columbus'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Columbus'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Columbus'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Columbus'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Columbus'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Columbus'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Dayton'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Dayton'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Dayton'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Dayton'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Dayton'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Cincinnati'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Cincinnati'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Cincinnati'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Cincinnati'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Cincinnati'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Cincinnati'},
-                {key: '1', id: '123', qNum: '1', quizID: '1', type: 'mc', content: 'Cincinnati'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Grand Rapids'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Grand Rapids'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Grand Rapids'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Grand Rapids'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Grand Rapids'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Grand Rapids'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Grand Rapids'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Grand Rapids'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Grand Rapids'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Lansing'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Lansing'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Lansing'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Lansing'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Lansing'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Lansing'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Lansing'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Lansing'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Lansing'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Battle Creek'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Battle Creek'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Battle Creek'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Battle Creek'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Battle Creek'},
-                {key: '1', id: '123', qNum: '2', quizID: '1', type: 'mc', content: 'Battle Creek'},
-                
-            ],
+            quizQuestions: [],
             results: [],
         }
+        this.download = this.download.bind(this);
+    }
 
-        this.parseAnswers = this.parseAnswers.bind(this);
+    download = async() => {
+        var quizResults = [];
+        var quizQuestions = [];
+        var qu = 2;
 
+        await this.props.client.query({
+            query: gql`
+                query quiz($id: Int!) {
+                quiz(id: $id) {
+                  id
+                  title
+                  date
+                }
+              }`,
+            variables: {
+                id: this.state.quizID,
+            }
+        }).then( data => { 
+            console.log("-----QUIZ-----");
+            console.log(data);
+            this.setState({
+                quizDate: data.data.quiz.date,
+            })
+        })
+
+        await this.props.client.mutate({
+            mutation: gql`
+                mutation quizGetQusetions($id: Int!) {
+                    quizGetQuestions(id: $id) {
+                        id
+                        question
+                        options
+                        correctAnswer
+                        type
+                    }
+                }`,
+                variables: {
+                    id: this.state.quizID,
+                }
+        }).then(quest => {
+            qu = quest;
+        }) 
+
+        //while(qu != 2);
+
+        console.log(qu);
+        var i;
+        for(i = 0; i < qu.data.quizGetQuestions.length; i++){
+            var q = qu.data.quizGetQuestions[i];
+            if(q.type == "sa" || q.type == 'fb') {
+                await this.props.client.mutate({
+                    mutation: gql`
+                    mutation quizGetAnswers($id: Int!) {
+                        quizGetAnswers(id: $id){ 
+                            content
+                            questionID
+                        }  
+                    }`, variables: {
+                        id: this.state.quizID
+                    }
+                }).then(content => {
+                    console.log(content)
+                    quizResults.push([]);
+                    var ar = [];
+                    for(var j = 0; j < content.data.quizGetAnswers.length; j++) {
+                        if(content.data.quizGetAnswers[j].questionID == q.id) {
+                            ar.push(content.data.quizGetAnswers[j].content)
+                        }
+                    }
+                    quizQuestions.push({key: i + 1, num: i+1, type: q.type, question: q.question, options: [], content: ar })
+                    
+                })
+            }else {
+                await this.props.client.mutate({
+                    mutation: gql`
+                    mutation quizGetStats($questionID: Int!) {
+                        quizGetStats(questionID: $questionID)  
+                    }`, variables: {
+                        questionID: q.id
+                    }
+                }).then(stats => {
+                    quizResults.push(stats.data.quizGetStats)
+                    if(q.type == "tf") {
+                        quizQuestions.push({key: i + 1, num: i+1, type: q.type, question: q.question, options: ["True", "False"], answer: q.correctAnswer })
+                    }else {
+                        quizQuestions.push({key: i + 1, num: i+1, type: q.type, question: q.question, options: q.options.split(";"), answer: q.correctAnswer })
+                    }
+                })
+            }
+            console.log("QUESTION ID = " + q.id);
+            
+            
+            
+        }
+
+        console.log(quizResults);
+        console.log(quizQuestions);
+        this.setState({
+            results: quizResults,
+            quizQuestions: quizQuestions,
+        })
+        
+    }
+
+    componentWillMount() {
+        setTimeout(this.download, 200);
     }
 
     render() {
 
-        var r = this.parseAnswers();        
+        var r = this.state.results.slice();   
+        console.log(this.state.results);
         var count = 0;
         const QuestionList = ({questions}) => (
             <Fragment>
@@ -109,8 +162,7 @@ class QuizResults extends Component {
                     <Row>
                         <div style={{margin: '0px', padding: '0px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'baseline'}}>
                         <h1 style={styles.title}>{this.state.quizTitle}</h1>
-                        <h2 style={{...styles.subtitle, ...{marginLeft: '20px'}}}>Attendance: 69/96</h2>
-                        <h2 style={{...styles.subtitle, ...{marginLeft: '20px'}}}>Date: 4/18/2018</h2>
+                        <h2 style={{...styles.subtitle, ...{marginLeft: '20px'}}}>Date: {this.state.quizDate}</h2>
                         </div>
                     </Row>
                     <Row>
@@ -121,47 +173,8 @@ class QuizResults extends Component {
         );
     }
 
-    parseAnswers() {
-
-        var answers = this.state.answers;
-        var questions = this.state.quizQuestions;
-        var numQuestions = 0;
-        for(var i = 0; i < answers.length; i++) {
-            if(answers[i].qNum > numQuestions) {
-                numQuestions = answers[i].qNum;
-            }
-        }
-
-        var results = [];   // {key: 1, options: [x, x, x, x, etc.]}
-        for(var i = 0; i < numQuestions; i++) {
-            results[i] = {key: i + 1, options: []};
-            for(var j = 0; j < questions[i].options.length; j++) {
-                results[i].options.push(0);
-            }
-        }
-        console.log(results)
-
-        for(var i = 0; i < answers.length; i++) {
-            var choice = questions[answers[i].qNum - 1].options.indexOf(answers[i].content);
-            var numOptions = questions[answers[i].qNum - 1].options.length;
-            var temp = results[answers[i].qNum - 1].options;
-            var currentCount = results[answers[i].qNum - 1].options[choice];
-            currentCount =  currentCount + 1;
-            temp.splice(choice, 1, currentCount);
-            results[answers[i].qNum - 1].options = temp;
-        }
-
-        if(this.refs.mainGrid) {
-            this.setState({
-                results: results,
-            })
-        }
-
-        return results;
-        
-    }
 }
-export default QuizResults
+export default withApollo(QuizResults)
 
 class Question extends Component {
 
@@ -180,6 +193,47 @@ class Question extends Component {
         var labels = [];
         var results = this.props.results;
         var correctIndex = this.props.question.options.indexOf(this.props.question.answer);
+        var type = this.props.question.type;
+        var question = this.props.question;
+        
+        if(results.length == 0) {
+            return(
+                <div>
+                <div style={styles.questionTitle}>{this.props.question.num}.) {this.props.question.question}</div>
+                <div style={{width: '80%', marginTop: '15px', marginBottom: '20px'}}>
+                    <div style={{fontFamily: 'Fira Sans', fontStyle: 'italic'}}>No answers for this question</div>
+                </div>
+                </div>
+            )
+        }else if(type == "fb") {
+            var responses = [];
+            for (var k = 0; k < question.content.length; k++) {
+                responses.push(<div style={{paddingLeft: '1em'}} key={k}>{k+1}. {question.content[k]}</div>);
+            }
+            return(
+                <div>
+                <div style={styles.questionTitle}>{this.props.question.num}.) {this.props.question.question}</div>
+                <div style={{fontFamily: 'Fira Sans', color: '#5A5A5A', fontSize: '13pt'}}>Responses:</div>
+                <div style={{width: '80%', marginTop: '5px', marginBottom: '20px'}}>
+                    <div style={{fontFamily: 'Fira Sans', fontSize: '12pt', color: 'black'}}>{responses}</div>
+                </div>
+                </div>
+            )
+        }else if (type == "sa") {
+            var responses = [];
+            for (var k = 0; k < question.content.length; k++) {
+                responses.push(<div style={{paddingLeft: '1em'}} key={k}>{k+1}. {question.content[k]}</div>);
+            }
+            return(
+                <div>
+                <div style={styles.questionTitle}>{this.props.question.num}.) {this.props.question.question}</div>
+                <div style={{fontFamily: 'Fira Sans', color: '#5A5A5A', fontSize: '13pt'}}>Responses:</div>
+                <div style={{width: '80%', marginTop: '5px', marginBottom: '20px'}}>
+                    <div style={{fontFamily: 'Fira Sans', fontSize: '12pt', color: 'black'}}>{responses}</div>
+                </div>
+                </div>
+            )
+        }
         for(var i = 0; i < this.props.question.options.length; i++) {
             if(i == correctIndex) {
                 bgColors.push('#057B65');
@@ -191,22 +245,24 @@ class Question extends Component {
 
             labels.push(this.props.question.options[i].toString());
         }
-        
-        var data = {
+        console.log(results[this.props.question.num - 1]);
+        var thisdata = {
             labels: labels,
             datasets: [{
                 backgroundColor: bgColors,
                 borderColor: borderColors,
                 borderWidth: 1,
-                data: results[this.props.question.key - 1].options,
+                data: results[this.props.question.num - 1],
             }]
         }
+
+        console.log(thisdata);
 
         return(
             <div>
             <div style={styles.questionTitle}>{this.props.question.key}.) {this.props.question.question}</div>
             <div style={{width: '80%', marginTop: '15px'}}>
-                <Bar data={data} options={{ legend: { display: false } }}/>
+                <Bar data={thisdata} options={{ legend: { display: false }, scales: { yAxes: [{ ticks: { beginAtZero: true, min: 0 } }] } }}/>
             </div>
             </div>
         );

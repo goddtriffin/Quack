@@ -13,11 +13,11 @@ type Course {
 
 type Query {
     courses: [Course]
-    course(name: String!): Course
+    course(id: Int!): Course
 }
 
 type Mutation {
     courseCreate(input: CourseInput): Course
-    courseGetSections(id: Int!): [Section]
+    courseGetUsers(id: Int!): [User]
     courseGetQuizzes(id: Int!): [Quiz]
 }

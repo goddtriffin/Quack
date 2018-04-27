@@ -7,6 +7,9 @@ export default StyleSheet.create({
     paddingTop: 50,
     height: 60,
   },
+  background: {
+    backgroundColor: colors.qLightGreen
+  },
   backgroundContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -52,22 +55,40 @@ export default StyleSheet.create({
     bottom: 0,
     left: 15,
  },
+ pictureStyle: {
+    //resizeMode: 'contain',
+    width: Dimensions.get('window').width - 10,
+    height: Dimensions.get('window').height / 3,
+    position: 'absolute',
+    top: 20,
+    bottom: 0,
+    left: 5,
+    right: 5,
+ },
  quizQuestionText: {
  // position: 'absolute',
   fontFamily: 'Fira Sans',
   color: 'white',
-  fontSize: 20,
+  fontSize: 25,
   textAlign: 'center',
-  textAlignVertical: 'center',
-  width: Dimensions.get('window').width - 5,
+  fontWeight: 'bold'
+  //textAlignVertical: 'center',
+  //width: Dimensions.get('window').width - 5,
 //  paddingTop: 150,
   
 
 },
-quizAnswerText: {
+quizAnswerTextLeft: {
   fontFamily: 'Fira Sans',
   color: 'white',
   fontWeight: 'bold',
+  paddingLeft: Dimensions.get('window').width / 4,
+},
+quizAnswerTextRight: {
+  fontFamily: 'Fira Sans',
+  color: 'white',
+  fontWeight: 'bold',
+  paddingLeft: 50,
 },
 quizQuestionTextWithoutPic: {
   // position: 'absolute',
@@ -93,13 +114,13 @@ downIndicator: {
 nextButton: {
     resizeMode: 'contain',
     position: 'absolute',
-    top: Dimensions.get('window').height - 35,
+    top: Dimensions.get('window').height - 45,
     left: 275, 
 },
 prevButton: {
   resizeMode: 'contain',
   position: 'absolute',
-  top: Dimensions.get('window').height - 36,
+  top: Dimensions.get('window').height - 47,
   left: 25, 
 },
   pictureView: {

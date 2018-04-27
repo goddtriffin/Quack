@@ -96,7 +96,7 @@ export default {
                 argSQL[5] = {name: 'isOpen', type: TYPES.NVarChar, arg: (args.input.isOpen) ? 1 : 0};
                 
                 // send subscription
-                const courseID = argSQL[1].arg;
+                const courseID = argSQL[2].arg;
                 const quiz = {
                         id:             argSQL[0].arg,
 			title: 		argSQL[1].arg,
@@ -147,7 +147,8 @@ export default {
 		console.log(options);
 		for(var i = 0; i < options.length; i++) {
 			argSQL[0] = {name: "content", type: TYPES.NVarChar, arg: options[i]};
-			var selection = await context.db.executeSQL("SELECT COUNT(*) FROM TestSchema.Answers where content=@content", argSQL, false);
+			argSQL[1] = {name: "questionID", type: TYPES.Int, arg: args.questionID};
+			var selection = await context.db.executeSQL("SELECT COUNT(*) FROM TestSchema.Answers where content=@content and questionID=@questionID", argSQL, false);
 			selections.push(Object.values(selection)[0]);
 		}
 
@@ -165,6 +166,19 @@ export default {
                 }
                 argSQL[0] = {name: "id", type: TYPES.Int, arg: args.id};
                 return context.db.executeSQL("SELECT * FROM TestSchema.Questions where quizID = @id", argSQL, true);
+        }
+    },
+    quizGetAnswers: async (args, context) => {
+        if(!context.headers.hasOwnProperty('authorization')) {
+                return new Error("No authorization");
+        }else {
+                try {
+                        var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
+                } catch(err) {
+                        return new Error(err);
+                }
+                argSQL[0] = {name: "id", type: TYPES.Int, arg: args.id};
+                return context.db.executeSQL("SELECT * FROM TestSchema.Answers where quizID = @id", argSQL, true);
         }
     },
 }

@@ -8,13 +8,12 @@ export default StyleSheet.create({
   },
   backButton: {
     color: 'white',
-    
     height: 30,
     width: 30,
   },
   header: {
     backgroundColor: colors.qLightGreen,
-    height: 80,
+    height: 100,
   },
   headerTop: {
     backgroundColor: colors.qLightGreen,
@@ -23,17 +22,21 @@ export default StyleSheet.create({
   quizText: {
     fontFamily: 'Fira Sans',
     color: 'white',
-    textAlign: 'center',
-    paddingTop: 10,
-    fontSize: 30,
+    fontWeight: '400',
+    fontSize: 25,
   },
-  quizTextLive: {
+  noQuizText: { 
     fontFamily: 'Fira Sans',
     color: 'white',
     textAlign: 'center',
+    fontSize: 25,
+  },
+  quizTextLive: {
+    fontFamily: 'Fira Sans',
+    textAlign: 'center',
     paddingTop: 10,
-    fontSize: 30,
-    color: 'red'
+    fontSize: 25,
+    color: colors.qRed,
   },
   headerText: {
     fontFamily: 'Fira Sans',
@@ -41,24 +44,24 @@ export default StyleSheet.create({
     textAlign: 'right',
     paddingTop: 10,
   },
-
   bigTitle: {
     fontFamily: 'Fira Sans',
     fontWeight: '600',
     flex: 3,
     fontSize: 50,
+    lineHeight: 60,
     color: 'white',
     textAlign: 'center',
-    paddingBottom: 25,
+    //paddingBottom: 25,
   },
   subTitle: {
     fontFamily: 'Fira Sans',
     fontWeight: '600',
     flex: 3,
-    fontSize: 30,
+    fontSize: 25,
     color: 'white',
     textAlign: 'center',
-    paddingBottom: 10,
+    //paddingBottom: 10,
   },
   gradesListView: {
     paddingLeft: 10,

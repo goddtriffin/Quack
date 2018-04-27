@@ -5,7 +5,7 @@ import { StackNavigator } from 'react-navigation';
 import { View, Image, Text, Dimensions, TouchableHighlight, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
 import { colors } from '../../style/styles';
-import {Content, Form, Textarea, Button } from 'native-base'
+import {Content, Form, Textarea, Button, Container } from 'native-base'
 import ReactDOM from 'react-dom';
 import * as V from 'victory';
 import {VictoryBar, VictoryChart, VictoryTheme, VictoryAxis, VictoryLabel} from 'victory-native';
@@ -70,7 +70,10 @@ class Feedback extends Component {
       ];
 
         return (
-            <Grid style={styles.background}>
+            <Container style={styles.background}>
+            <Content scrollEnabled={false}>
+            <View style={{flex: 1, height: Dimensions.get('window').height}}>
+            <Grid>
                 <Row size={15}>        
                         <Text style = {styles.classHeaderText}>
                         Feedback
@@ -102,6 +105,9 @@ class Feedback extends Component {
                 </Content>
             </Row>
             </Grid>
+            </View>
+            </Content>
+            </Container>
         );
     }
 }

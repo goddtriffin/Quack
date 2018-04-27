@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, StatusBar, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, AsyncStorage, Alert, Platform } from 'react-native';
 import styles from './styles';
 import { StackNavigator } from 'react-navigation';
-import { HeaderContainer, Header, Left, Body, Right, Button, Icon, Title, Item, Input } from 'native-base';
+import { HeaderContainer, Header, Left, Body, Right, Button, Icon, Title, Item, Input, Spinner } from 'native-base';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { ApolloProvider, graphql, withApollo } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
@@ -14,6 +14,7 @@ class HomeScreen extends Component {
     
     static navigationOptions = {
         header: null,
+        gesturesEnabled: false,
     };
     
 
@@ -59,14 +60,10 @@ class HomeScreen extends Component {
               console.log(data);
               courses = [];
 
-              if(data.data.userGetCourses.length == 0) {
-                courses.push({'course': 'Search for a course to join it.' , 'key': 0})
-              }
-              else {
                 for(let i = 0; i < data.data.userGetCourses.length; i++) {
                     courses.push({'course': data.data.userGetCourses[i].name, 'key': data.data.userGetCourses[i].id})
                 }
-              }
+
               this.setState({courses});
             })
         });
@@ -101,6 +98,7 @@ class HomeScreen extends Component {
                 mutation userAddCourse($id: Int!, $courseID: Int!) {
                     userAddCourse(id: $id, courseID: $courseID) {
                         name
+                        id
                     }
                 }
             `,
@@ -111,27 +109,18 @@ class HomeScreen extends Component {
             }).then( data => {
                 courses = [];
 
-                if(data.data.userAddCourse.length == 0) {
-                    courses.push({'course': 'Search for a course to join it.', 'key': 0})
-                }
-                else {
                     for(let i = 0; i < data.data.userAddCourse.length; i++) {
                         courses.push({'course': data.data.userAddCourse[i].name, 'key': data.data.userAddCourse[i].id})
                     }
-                }
-                this.setState({courses})
+                this.setState({courses}, () => this.reset())
+                
             })
-
-        this.setState({title:'Courses'})
-        this.setState({isSearching:false})
-        this.setState({search:''})
     }
 
     handleSearch() {
         if(this.state.search == ""){
             return
         }
-        
         this.state.searchResults = [];
         this.props.client
             .query({
@@ -163,17 +152,15 @@ class HomeScreen extends Component {
     }
 
     render() {
-
+        let studentID = this.state.studentID;
         if(this.state.isLoading) {
-            return(<View><Text>Loading...</Text></View>);
-        }else {
-            //alert(this.state.email);
+            return(<View style={styles.loading}><Spinner color='white'/></View>);
         }
-
+        
         return (
             <View style={styles.container}>
                 <Header searchBar rounded style={styles.header}>
-                    <Item>
+                    <Item style={{flex: 5}}>
                         <Icon name="ios-search"/>
                             <Input placeholder="Search Courses"
                             onChangeText={(search) => this.setState({search})}
@@ -185,7 +172,7 @@ class HomeScreen extends Component {
                             />
                         <Icon name="close" onPress={()=> this.reset()}/>
                     </Item>
-                    <Button transparent onPress={() => this.props.navigation.navigate('Feedback')}>
+                    <Button style={styles.feedbackButton} transparent onPress={() => this.props.navigation.navigate('Feedback')}>
                         <Icon style={{color: 'white'}} name='settings'/>
                     </Button>
                 </Header>
@@ -199,15 +186,16 @@ class HomeScreen extends Component {
                 <View style={styles.courseListView}>
                     <ScrollView style={styles.courseList}>
                         { (this.state.isSearching == false) ?
-                            this.state.courses.map(({course, key}) => {
+                            (this.state.courses.length != 0) ?
+                                this.state.courses.map(({course, key}) => {
                                     return (<View>
-                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades', {course, key})}>
+                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades', {course, key, studentID})}>
                                         <Text style={styles.courseListText}>{course}</Text>
                                         <Text style={styles.courseIDListText}>{key}</Text>
                                     </TouchableOpacity>
-                                </View>);
-                                }
-                            )
+                                    </View>);
+                                })
+                            : <Text style = {styles.noCourses}> Search for a course to join it </Text>
                             : this.state.searchResults.map(({name, key}) => {
                                     return (<View style={{paddingVertical: 10}}>
                                         <Grid>
@@ -223,7 +211,7 @@ class HomeScreen extends Component {
                                         </Grid>
                                 </View>);
                                 }
-                            ) 
+                            )
                         }
                     </ScrollView>
                 </View>

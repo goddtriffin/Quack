@@ -1,3 +1,13 @@
+TRUNCATE TABLE TestSchema.Quizzes;
+TRUNCATE TABLE TestSchema.Answers;
+TRUNCATE TABLE TestSchema.Questions;
+TRUNCATE TABLE TestSchema.Grades;
+TRUNCATE TABLE TestSchema.Courses;
+TRUNCATE TABLE TestSchema.UsersCourses;
+TRUNCATE TABLE TestSchema.UsersSections;
+TRUNCATE TABLE TestSchema.Roles;
+
+
 /*DROP TABLE TestSchema.Quizzes;
 CREATE TABLE TestSchema.Quizzes (
         id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -6,7 +16,7 @@ CREATE TABLE TestSchema.Quizzes (
         qCount INT,
         date NVARCHAR(10),
         isOpen BIT,
-);*/
+);
 DROP TABLE TestSchema.Answers;
 CREATE TABLE TestSchema.Answers (
         id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -17,7 +27,7 @@ CREATE TABLE TestSchema.Answers (
         content NVARCHAR(50)
 );
 SELECT * FROM TestSchema.Answers;
-
+*/
 /*DROP TABLE TestSchema.Grades;
 
 CREATE TABLE TestSchema.Grades (

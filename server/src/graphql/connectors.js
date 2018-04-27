@@ -18,11 +18,15 @@ class sqlConnector {
 	}
 
 	executeSQL(sqlString, args, isIterable) {
+	
+	var jsonArray = [];
+	
     	return new Promise((resolve, reject) => {
 	        var request = new Request(sqlString, function(err, rowCount, rows) {
 	            
 	            if (err) {
 	                console.log(err);
+			//resolve("");
 	            } else {
 	                console.log(rowCount + ' rows');
 	                //console.log(rows);
@@ -40,13 +44,13 @@ class sqlConnector {
 	                console.log(jsonArray.length);
 	                console.log(jsonArray[1]);
 	                console.log(jsonArray);
-
-	                if(!isIterable) {
-	                    resolve(jsonArray[0]);
-	                }
-	                else {
-	                    resolve(jsonArray);
-	                }
+			
+			if(!isIterable) {
+                            resolve(jsonArray[0]);
+                        }
+                        else {
+                            resolve(jsonArray);
+                        }
 	            }
 	        });
 
