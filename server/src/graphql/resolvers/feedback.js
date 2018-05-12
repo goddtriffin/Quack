@@ -6,7 +6,6 @@ var TYPES   = require('tedious').TYPES;
 var argSQL = {};
 
 export default {
-
     // Query //
 
     feedbacks: async (args, context) => {
@@ -20,6 +19,7 @@ export default {
             }
 
             argSQL = {};
+            
             return context.db.executeSQL("SELECT * FROM TestSchema.Feedbacks", argSQL, true);
         }
     },
@@ -36,6 +36,7 @@ export default {
 
             argSQL = {}
             argSQL[0] = {name: "id", type: TYPES.NVarChar, arg: args.id};
+
             return context.db.executeSQL("SELECT * FROM TestSchema.Feedbacks where id = @id", argSQL, false);
 	    }
     },
@@ -66,21 +67,21 @@ export default {
             feedbackSubscriptions.sendFeedbackCreationEvent(feedback);
 
             return context.db.executeSQL( 
-                "INSERT INTO TestSchema.Feedbacks (userID, content, date) OUTPUT " + 
-                "INSERTED.id, INSERTED.userID, INSERTED.content, INSERTED.date " + 
-                "VALUES (@userID, @content, @date);", 
-                argSQL, false
-            );
+                    "INSERT INTO TestSchema.Feedbacks (userID, content, date) OUTPUT " + 
+                    "INSERTED.id, INSERTED.userID, INSERTED.content, INSERTED.date " + 
+                    "VALUES (@userID, @content, @date);", 
+                    argSQL, false
+                );
         }
     }, 
 
     feedbackUpdate: async (args, context) => {
 	    if (!context.headers.hasOwnProperty('authorization')) {
-                return new Error("No authorization");
+            return new Error("No authorization");
         } else {
             try {
                 var decode = await jwt.verify(context.headers.authorization, context.JWT_SECRET);
-            } catch(err) {
+            } catch (err) {
                 return new Error(err);
             }
 
@@ -91,11 +92,11 @@ export default {
             argSQL[3] = {name: 'date', type: TYPES.NVarChar, arg: args.input.date};
             
             return context.db.executeSQL( 
-                "UPDATE TestSchema.Feedbacks SET " + 
-                "userID=@userID, content=@content, date=@date " + 
-                "OUTPUT INSERTED.id, INSERTED.userID, INSERTED.content, INSERTED.date WHERE id = @id;", 
-                argSQL, false
-            );
+                    "UPDATE TestSchema.Feedbacks SET " + 
+                    "userID=@userID, content=@content, date=@date " + 
+                    "OUTPUT INSERTED.id, INSERTED.userID, INSERTED.content, INSERTED.date WHERE id = @id;", 
+                    argSQL, false
+                );
     	}
     }
 }
