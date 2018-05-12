@@ -14,10 +14,10 @@ type Course {
 type Query {
     courses: [Course]
     course(id: Int!): Course
+    courseGetUsers(id: Int!): [User]
+    courseGetQuizzes(id: Int!): [Quiz]
 }
 
 type Mutation {
     courseCreate(input: CourseInput): Course
-    courseGetUsers(id: Int!): [User]
-    courseGetQuizzes(id: Int!): [Quiz]
 }
