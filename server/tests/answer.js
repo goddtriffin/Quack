@@ -101,7 +101,7 @@ module.exports = {
         // print score
         console.log("Finished. Score: " + score + "/" + tests.length);
 
-        // let the big momma know about the points
+        // globally tally it
         let tally = {};
         tally['score'] = score;
         tally['total'] = tests.length;
