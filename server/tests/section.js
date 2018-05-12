@@ -1,8 +1,3 @@
-// 2.5 hours = 5 unit tests
-// Given the server receives the appropriate request, a Section can be created in the database.
-// Given the server receives the appropriate request, a Section can be received from the database.
-// Given the Roles class test cases are ran, they will all pass.
-
 const v = require('../src/graphql/validators/validate');
 
 // SECTIONS NAME

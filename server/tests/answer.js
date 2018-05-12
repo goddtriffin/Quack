@@ -1,7 +1,3 @@
-// 5 hours = 10 unit tests
-// Given the server receives the appropriate request, an Answer can be created in the database.
-// Given the server receives the appropriate request, an Answer can be received from the database.
-
 const v = require('../src/graphql/validators/validate');
 
 // ANSWER TYPE
