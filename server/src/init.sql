@@ -1,5 +1,5 @@
 DELETE FROM TestSchema.Courses WHERE id=764741;
-/*TRUNCATE TABLE TestSchema.Quizzes;
+TRUNCATE TABLE TestSchema.Quizzes;
 TRUNCATE TABLE TestSchema.Answers;
 TRUNCATE TABLE TestSchema.Questions;
 TRUNCATE TABLE TestSchema.Grades;
@@ -8,8 +8,8 @@ TRUNCATE TABLE TestSchema.UsersCourses;
 TRUNCATE TABLE TestSchema.UsersSections;
 TRUNCATE TABLE TestSchema.Roles;
 TRUNCATE TABLE TestSchema.Users;
-*/
-/*DROP TABLE TestSchema.Quizzes;
+
+DROP TABLE TestSchema.Quizzes;
 CREATE TABLE TestSchema.Quizzes (
         id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
         title NVARCHAR(60),
@@ -18,6 +18,7 @@ CREATE TABLE TestSchema.Quizzes (
         date NVARCHAR(10),
         isOpen BIT,
 );
+
 DROP TABLE TestSchema.Answers;
 CREATE TABLE TestSchema.Answers (
         id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -27,9 +28,10 @@ CREATE TABLE TestSchema.Answers (
         type NVARCHAR(50),
         content NVARCHAR(50)
 );
+
 SELECT * FROM TestSchema.Answers;
-*/
-/*DROP TABLE TestSchema.Grades;
+
+DROP TABLE TestSchema.Grades;
 
 CREATE TABLE TestSchema.Grades (
 	id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -39,8 +41,9 @@ CREATE TABLE TestSchema.Grades (
 	answerID INT,
 	points FLOAT,
 	totalPoints FLOAT
-)*/
-/*CREATE TABLE TestSchema.Questions (
+)
+
+CREATE TABLE TestSchema.Questions (
         id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
         quizID INT,
         qIndex INT,
@@ -51,6 +54,7 @@ CREATE TABLE TestSchema.Grades (
         correctAnswer NVARCHAR(1000),
         isManual BIT
 );
+
 CREATE TABLE TestSchema.UsersSections (
         u_id INT,
         s_id INT,
@@ -64,9 +68,9 @@ CREATE TABLE TestSchema.Quizzes (
         qCount INT,
 	date NVARCHAR(10),
         isOpen BIT,
-);*/
+);
 
-/*DROP TABLE TestSchema.Courses;
+DROP TABLE TestSchema.Courses;
 
 CREATE TABLE TestSchema.Courses (
         id INT,
@@ -82,15 +86,14 @@ CREATE TABLE TestSchema.Feedbacks (
 	date NVARCHAR(10),
 	content NVARCHAR(4000)
 
-);*/
+);
 
-/*DROP TABLE TestSchema.Courses;
+DROP TABLE TestSchema.Courses;
 
 CREATE TABLE TestSchema.Courses (
         id INT,
         name NVARCHAR(50)
 );
-
 
 CREATE SCHEMA TestSchema;
 
@@ -148,6 +151,3 @@ CREATE TABLE TestSchema.Roles (
 	courseID INT,
 	type NVARCHAR(50)
 );
-*/
-
-
