@@ -11,13 +11,11 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
 class HomeScreen extends Component {
-    
     static navigationOptions = {
         header: null,
         gesturesEnabled: false,
     };
     
-
     constructor(props) {
         super(props);
         this.updateCourseList = this.addCourse.bind(this);
@@ -37,37 +35,32 @@ class HomeScreen extends Component {
     };
 
     componentDidMount() {
-
         AsyncStorage.getItem('studentID').then((token) => {
             this.setState({
                 studentID: token,
                 isLoading: false
             });
 
-            //console.log(this.state.studentID);
-
             this.props.client.mutate({ mutation: gql`
                 mutation userGetCourses($id: Int!) {
-                  userGetCourses(id: $id) {
-                    name
-                    id
-                  }
+                    userGetCourses(id: $id) {
+                        name
+                        id
+                    }
+                }`,
+                variables: {
+                    id : parseInt(this.state.studentID)
                 }
-              `,
-              variables: {
-                id : parseInt(this.state.studentID)
-               }}).then( data => {
-              console.log(data);
-              courses = [];
+            }).then(data => {
+                courses = [];
 
                 for(let i = 0; i < data.data.userGetCourses.length; i++) {
                     courses.push({'course': data.data.userGetCourses[i].name, 'key': data.data.userGetCourses[i].id})
                 }
 
-              this.setState({courses});
+                this.setState({courses});
             })
         });
-
 
         AsyncStorage.getItem('email:key').then((token) => {
             this.setState({
@@ -78,11 +71,11 @@ class HomeScreen extends Component {
     }
 
     addCourse(name, id) {
-
         var title = "";
         let courses = this.state.courses;
         var i = _.findIndex(courses, {'course':name, 'key':id})
-        if(i != -1){
+
+        if (i != -1) {
             Alert.alert(
                 'Course Enrollment Error',
                 'You are already enrolled in ' + name,
@@ -91,57 +84,55 @@ class HomeScreen extends Component {
                 ],
                 { cancelable: false }
             )
+
             return;
         }
                 
-            this.props.client.mutate({ mutation: gql`
-                mutation userAddCourse($id: Int!, $courseID: Int!) {
-                    userAddCourse(id: $id, courseID: $courseID) {
-                        name
-                        id
-                    }
+        this.props.client.mutate({ mutation: gql`
+            mutation userAddCourse($id: Int!, $courseID: Int!) {
+                userAddCourse(id: $id, courseID: $courseID) {
+                    name
+                    id
                 }
-            `,
-            variables: {
-                id : this.state.studentID,
-                courseID: id,
             }
-            }).then( data => {
-                courses = [];
+        `,
+        variables: {
+            id : this.state.studentID,
+            courseID: id,
+        }
+        }).then( data => {
+            courses = [];
 
-                    for(let i = 0; i < data.data.userAddCourse.length; i++) {
-                        courses.push({'course': data.data.userAddCourse[i].name, 'key': data.data.userAddCourse[i].id})
-                    }
-                this.setState({courses}, () => this.reset())
-                
-            })
+            for(let i = 0; i < data.data.userAddCourse.length; i++) {
+                courses.push({'course': data.data.userAddCourse[i].name, 'key': data.data.userAddCourse[i].id})
+            }
+
+            this.setState({courses}, () => this.reset())  
+        })
     }
 
     handleSearch() {
-        if(this.state.search == ""){
+        if (this.state.search == ""){
             return
         }
+
         this.state.searchResults = [];
         this.props.client
-            .query({
-                query: gql`
+            .query({query: gql`
             {
                 courses {
                     name
                     id
                 }
+            }`
+        }).then(data => {
+            for (let i = 0; i < data.data.courses.length; i++) {
+                if (data.data.courses[i].name.toLowerCase().match(this.state.search.toLowerCase()))
+                    this.state.searchResults.push({'name' : data.data.courses[i].name, 'key': data.data.courses[i].id})
             }
-            `
-        })
-        .then(data => {
 
-        for(let i = 0; i < data.data.courses.length; i++) {
-            if(data.data.courses[i].name.toLowerCase().match(this.state.search.toLowerCase()))
-            this.state.searchResults.push({'name' : data.data.courses[i].name, 'key': data.data.courses[i].id})
-            
-        }
-        this.setState({isSearching:true})
-        this.setState({title:'Search Results'})
+            this.setState({isSearching:true})
+            this.setState({title:'Search Results'})
         });
     }
 
@@ -153,7 +144,7 @@ class HomeScreen extends Component {
 
     render() {
         let studentID = this.state.studentID;
-        if(this.state.isLoading) {
+        if (this.state.isLoading) {
             return(<View style={styles.loading}><Spinner color='white'/></View>);
         }
         
@@ -162,16 +153,19 @@ class HomeScreen extends Component {
                 <Header searchBar rounded style={styles.header}>
                     <Item style={{flex: 5}}>
                         <Icon name="ios-search"/>
-                            <Input placeholder="Search Courses"
+
+                        <Input placeholder="Search Courses"
                             onChangeText={(search) => this.setState({search})}
                             onSubmitEditing={() => this.handleSearch()} 
                             autoCorrect={false}
                             autoCapitalize="none"
                             returnKeyType="search"
                             value={this.state.search}
-                            />
+                        />
+
                         <Icon name="close" onPress={()=> this.reset()}/>
                     </Item>
+
                     <Button style={styles.feedbackButton} transparent onPress={() => this.props.navigation.navigate('Feedback')}>
                         <Icon style={{color: 'white'}} name='settings'/>
                     </Button>
@@ -189,10 +183,10 @@ class HomeScreen extends Component {
                             (this.state.courses.length != 0) ?
                                 this.state.courses.map(({course, key}) => {
                                     return (<View>
-                                    <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades', {course, key, studentID})}>
-                                        <Text style={styles.courseListText}>{course}</Text>
-                                        <Text style={styles.courseIDListText}>{key}</Text>
-                                    </TouchableOpacity>
+                                        <TouchableOpacity style={styles.courseListRow} onPress={() => this.props.navigation.navigate('Grades', {course, key, studentID})}>
+                                            <Text style={styles.courseListText}>{course}</Text>
+                                            <Text style={styles.courseIDListText}>{key}</Text>
+                                        </TouchableOpacity>
                                     </View>);
                                 })
                             : <Text style = {styles.noCourses}> Search for a course to join it </Text>
@@ -203,6 +197,7 @@ class HomeScreen extends Component {
                                                 <Text style={styles.courseListText}>{name}</Text>
                                                 <Text style={styles.courseIDListText}>{key}</Text>
                                             </Col>
+
                                             <Col size={15}>
                                                 <TouchableOpacity onPress={() => this.addCourse(name, key)}>
                                                     <Icon style={styles.addButton} name='add'/>
@@ -215,8 +210,6 @@ class HomeScreen extends Component {
                         }
                     </ScrollView>
                 </View>
-                
-            
             </View>
         );
     }

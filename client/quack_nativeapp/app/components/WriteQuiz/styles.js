@@ -41,10 +41,8 @@ export default StyleSheet.create({
      position: 'absolute',
      top: 40,
      left: 20,
-
   },
   quizBodyText: {
-   // flex: 1,
     fontFamily: 'Fira Sans',
     color: 'white',
     fontSize: 25,
@@ -56,7 +54,6 @@ export default StyleSheet.create({
     left: 15,
  },
  pictureStyle: {
-    //resizeMode: 'contain',
     width: Dimensions.get('window').width - 10,
     height: Dimensions.get('window').height / 3,
     position: 'absolute',
@@ -66,17 +63,11 @@ export default StyleSheet.create({
     right: 5,
  },
  quizQuestionText: {
- // position: 'absolute',
   fontFamily: 'Fira Sans',
   color: 'white',
   fontSize: 25,
   textAlign: 'center',
   fontWeight: 'bold'
-  //textAlignVertical: 'center',
-  //width: Dimensions.get('window').width - 5,
-//  paddingTop: 150,
-  
-
 },
 quizAnswerTextLeft: {
   fontFamily: 'Fira Sans',
@@ -91,16 +82,12 @@ quizAnswerTextRight: {
   paddingLeft: 50,
 },
 quizQuestionTextWithoutPic: {
-  // position: 'absolute',
    fontFamily: 'Fira Sans',
    color: 'white',
    fontSize: 20,
    textAlign: 'center',
    textAlignVertical: 'center',
    width: Dimensions.get('window').width - 5,
- //  paddingTop: 150,
-   
- 
  },
 downIndicator: {
     resizeMode: 'contain',
@@ -109,7 +96,6 @@ downIndicator: {
     position: 'absolute',
     top: 40,
     left: 275,
-
 },
 nextButton: {
     resizeMode: 'contain',
@@ -145,10 +131,8 @@ prevButton: {
     justifyContent: 'center',
   },
   textInput: {
-     // flex:1,
       width: 100,
       height: 200,
-    //  position: 'absolute',
       borderColor: 'white',
       top: 120,
       bottom: 20,
@@ -157,7 +141,6 @@ prevButton: {
   },
   input: {
     height: 100,
-    //backgroundColor: 'rgba(255,255,255,0.8)',
     marginBottom: 120,
     borderBottomColor: 'rgba(255,255,255,0.8)',
     borderBottomWidth: 1.5,
@@ -166,6 +149,5 @@ prevButton: {
     fontSize: 18,
     color: 'white',
     paddingLeft: 50,
-
-},  
+  },  
 });

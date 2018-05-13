@@ -17,7 +17,6 @@ export default StyleSheet.create({
   },
   headerTop: {
     backgroundColor: colors.qLightGreen,
-    //height: 80,
   },
   quizText: {
     fontFamily: 'Fira Sans',
@@ -52,7 +51,6 @@ export default StyleSheet.create({
     lineHeight: 60,
     color: 'white',
     textAlign: 'center',
-    //paddingBottom: 25,
   },
   subTitle: {
     fontFamily: 'Fira Sans',
@@ -61,7 +59,6 @@ export default StyleSheet.create({
     fontSize: 25,
     color: 'white',
     textAlign: 'center',
-    //paddingBottom: 10,
   },
   gradesListView: {
     paddingLeft: 10,

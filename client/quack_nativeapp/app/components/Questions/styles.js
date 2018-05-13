@@ -17,7 +17,6 @@ export default StyleSheet.create({
   },
   headerTop: {
     backgroundColor: colors.qLightGreen,
-    //height: 80,
   },
   quizText: {
     fontFamily: 'Fira Sans',

@@ -11,6 +11,7 @@ import * as V from 'victory';
 import {VictoryBar, VictoryChart, VictoryTheme, VictoryAxis, VictoryLabel} from 'victory-native';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
+
 class Feedback extends Component {
 
     static navigationOptions = {
@@ -34,79 +35,79 @@ class Feedback extends Component {
     sendFeedback() {
         if (this.state.feedback != '') {
             this.props.client.mutate({
-                    mutation: gql`mutation feedbackCreate($input: FeedbackInput) {
-                        feedbackCreate( input: $input) {
-                            id
-                        }
-                    }`,
-                    variables: {
-                        input: {
-                            userID: 69,
-                            content: this.state.feedback,
-                            date: 'now'
-                        }
+                mutation: gql`mutation feedbackCreate($input: FeedbackInput) {
+                    feedbackCreate( input: $input) {
+                        id
                     }
-                }).then( data => { 
-                    this.setState({feedbackID: data.data.feedbackCreate.id});
-                    this.props.navigation.navigate('Home')
-                    alert("Thank you for your feedback!")
-                    
-                }).catch(function(error) { 
-                    alert(error.message); 
-                     // ADD THIS THROW error 
-                    throw error; 
-                });
+                }`,
+                variables: {
+                    input: {
+                        userID: 69,
+                        content: this.state.feedback,
+                        date: 'now'
+                    }
+                }
+            }).then( data => { 
+                this.setState({feedbackID: data.data.feedbackCreate.id});
+                this.props.navigation.navigate('Home')
+                alert("Thank you for your feedback!")
+                
+            }).catch(function(error) { 
+                alert(error.message);
+                throw error; 
+            });
         }
     }
     
-
     render() {
-       //this.state.course = this.props.navigation.state.params.courses;
-       const data = [
-        {answer: 1, number: 13, opacity: 0.7},
-        {answer: 2, number: 20, fill: colors.qRed},
-        {answer: 3, number: 20, opacity: 0.7},
-        {answer: 4, number: 69, fill: 'white', opacity: .9}
-      ];
+        const data = [
+            {answer: 1, number: 13, opacity: 0.7},
+            {answer: 2, number: 20, fill: colors.qRed},
+            {answer: 3, number: 20, opacity: 0.7},
+            {answer: 4, number: 69, fill: 'white', opacity: .9}
+        ];
 
         return (
             <Container style={styles.background}>
-            <Content scrollEnabled={false}>
-            <View style={{flex: 1, height: Dimensions.get('window').height}}>
-            <Grid>
-                <Row size={15}>        
-                        <Text style = {styles.classHeaderText}>
-                        Feedback
-                        </Text>
-                </Row>
-                <Row size={20}>
-                    <Text style = {styles.recentIndicator}>
-                    Have some feedback for us? Please enter it below!
-                    </Text>
-            </Row>
-            <Row size={40}>
-                <Content padder scrollEnabled={false}>
-                    <Form>
-                        <Textarea 
-                        rowSpan={5}
-                        bordered placeholder="Enter here" 
-                        placeholderTextColor={'white'}
-                        style={styles.textArea}
-                        onChangeText = {(text) => this.setState({feedback: text})}
-                        />
-                    </Form>
+                <Content scrollEnabled={false}>
+                    <View style={{flex: 1, height: Dimensions.get('window').height}}>
+                        <Grid>
+                            <Row size={15}>        
+                                <Text style = {styles.classHeaderText}>
+                                    Feedback
+                                </Text>
+                            </Row>
+
+                            <Row size={20}>
+                                <Text style = {styles.recentIndicator}>
+                                    Have some feedback for us? Please enter it below!
+                                </Text>
+                            </Row>
+
+                            <Row size={40}>
+                                <Content padder scrollEnabled={false}>
+                                    <Form>
+                                        <Textarea 
+                                            rowSpan={5}
+                                            bordered placeholder="Enter here" 
+                                            placeholderTextColor={'white'}
+                                            style={styles.textArea}
+                                            onChangeText = {(text) => this.setState({feedback: text})}
+                                        />
+                                    </Form>
+                                </Content>
+                            </Row>
+
+                            <Row size={50}>
+                                <Content padder scrollEnabled={false}>
+                                    <TouchableOpacity style={styles.button} onPress={() => this.sendFeedback()}>
+                                        <Text style={styles.buttonText}>Submit</Text>
+                                    </TouchableOpacity>
+                                </Content>
+                            </Row>
+                        </Grid>
+                    </View>
                 </Content>
-            </Row>
-            <Row size={50}>
-                <Content padder scrollEnabled={false}>
-                <TouchableOpacity style={styles.button} onPress={() => this.sendFeedback()}>
-                        <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
-                </Content>
-            </Row>
-            </Grid>
-            </View>
-            </Content>
             </Container>
         );
     }

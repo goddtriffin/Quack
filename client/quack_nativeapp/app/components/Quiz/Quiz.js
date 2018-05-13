@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { View, Image, StatusBar, Text, Dimensions, TouchableHighlight, TouchableOpacity, Alert } from 'react-native';
 import styles from './styles';
-
 import { ApolloProvider, graphql, withApollo } from 'react-apollo';
-
 import gql from 'graphql-tag';
 
 class Quiz extends Component {
-
     constructor(props) {
         super(props);
+
         this.state = { 
             text: 'Enter text here',
             picture: '../../images/quiz_resources/quiz_backdrop_triple.png',
@@ -28,34 +26,28 @@ class Quiz extends Component {
     }
 
     componentDidMount() {
-
         this.props.client.query({ query: gql`
-                query quiz($id: Int!) {
-                  quiz(id: $id) {
+            query quiz($id: Int!) {
+                quiz(id: $id) {
                     image
                     question
                     options
-                  }
                 }
-              `,
-              variables: {
+            }`,
+            variables: {
                 id : 3
-               }}).then( data => {
-                console.log(data);
-              
-                this.setState({
-                    image: data.data.quiz.image,
-                    questionText : data.data.quiz.question,
-                    options: data.data.quiz.options
-                });
-            }).catch(function(error) {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
-                 // ADD THIS THROW error
-                throw error;
+            }
+        }).then( data => {
+            this.setState({
+                image: data.data.quiz.image,
+                questionText : data.data.quiz.question,
+                options: data.data.quiz.options
+            });
+        }).catch(function(error) {
+            console.log('There has been a problem with your fetch operation: ' + error.message);
+            throw error;
         });
     }
-
-
 
     render() {
         return (
@@ -64,21 +56,25 @@ class Quiz extends Component {
                     barStyle="dark-content"
                     style={styles.navBar}
                 />
+
                 <View style={styles.backgroundContainer}>
                     <Image
-                    source={require('../../images/quiz_resources/quiz_backdrop_triple.png')}
-                    style={styles.quizBackground}
+                        source={require('../../images/quiz_resources/quiz_backdrop_triple.png')}
+                        style={styles.quizBackground}
                     />
+
                     <Text style={styles.quizText}>
                         Current Quiz
                     </Text>
+
                     <Image
-                    source={require('../../images/quiz_resources/close_quiz_indicator_triple.png')}
-                    style={styles.downIndicator}
+                        source={require('../../images/quiz_resources/close_quiz_indicator_triple.png')}
+                        style={styles.downIndicator}
                     />
+
                     <Image
-                    source={{uri: this.state.image}}
-                    style={styles.pictureView}
+                        source={{uri: this.state.image}}
+                        style={styles.pictureView}
                     />
                 </View>
 
@@ -86,6 +82,7 @@ class Quiz extends Component {
                     <Text style={styles.quizQuestionText}>
                         {'a.) '}{this.state.options.split(";")[0]}
                     </Text>
+
                     <Text style={styles.quizQuestionText}>
                         {'b.) '}{this.state.options.split(";")[1]}
                     </Text>
@@ -95,24 +92,26 @@ class Quiz extends Component {
                     <Text style={styles.quizBodyText}>
                         {this.state.questionText}
                     </Text>
+
                     <TouchableOpacity onPress={() => Alert.alert("You selected A!")}>
                         <Image
-                        source={require('../../images/quiz_resources/A_button.png')}
-                        style={styles.abQuestionButtons}
+                            source={require('../../images/quiz_resources/A_button.png')}
+                            style={styles.abQuestionButtons}
                         />
                     </TouchableOpacity>
+
                     <TouchableOpacity onPress={() => Alert.alert("You selected B!")}>
                         <Image
-                        source={require('../../images/quiz_resources/B_button.png')}
-                        style={styles.abQuestionButtons}
+                            source={require('../../images/quiz_resources/B_button.png')}
+                            style={styles.abQuestionButtons}
                         />
                     </TouchableOpacity>
+                    
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('WriteQuiz')}>
                         <Text style={styles.nextButton}>
-                        Next Question
+                            Next Question
                         </Text>
                     </TouchableOpacity>
-                
                 </View>
             </View>
         );
