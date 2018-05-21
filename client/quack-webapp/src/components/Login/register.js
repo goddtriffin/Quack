@@ -7,13 +7,12 @@ import { Link } from 'react-router-dom'
 import { AUTH_TOKEN } from '../../constants'
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
-import { Grid, Col, Row, FormGroup, ControlLabel, 
-    FormControl, HelpBlock, Button } from '../../../node_modules/react-bootstrap';
-
-
+import {
+    Grid, Col, Row, FormGroup, ControlLabel, 
+    FormControl, HelpBlock, Button
+} from '../../../node_modules/react-bootstrap';
 
 class Register extends Component {
-
     state = {
         firstName: "",
         lastName: "",
@@ -21,7 +20,7 @@ class Register extends Component {
         password: "",
     }
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.state = {
@@ -39,90 +38,99 @@ class Register extends Component {
         this.register = this.register.bind(this);
     }
 
-    handleChangeEmail(e) {
+    handleChangeEmail (e) {
         this.setState({email: e.target.value})
     }
 
-    handleChangePassword(e) {
+    handleChangePassword (e) {
         this.setState({password: e.target.value})
     }
 
-    handleChangeFirstName(e) {
+    handleChangeFirstName (e) {
         this.setState({firstName: e.target.value})
     }
 
-    handleChangeLastName(e) {
+    handleChangeLastName (e) {
         this.setState({firstName: e.target.value})
-    }
-
-    login() {
-
     }
 
     register = async () => {
-        if(this.state.email == "" || this.state.password == "" || this.state.firstName == "" || this.state.lastName == "") {
+        if (this.state.email == "" || this.state.password == "" || this.state.firstName == "" || this.state.lastName == "") {
             alert("Please fill out all fields")
             return;
-        }else if(!this.state.email.includes("@")) {
+        } else if (!this.state.email.includes("@")) {
             alert("Invalid email address")
             return;
         }
-        
     }
 
     saveUserData = token => {
         localStorage.setItem(AUTH_TOKEN, token)
     }
 
-render() {
-    return(
-        <div style={styles.container}>
-            <Grid style={{marginTop: "40px"}}>
-                <Row style={{display: "flex", justifyContent: "center", paddingBottom: "15px"}}>
-                    <Col>
-                        <div style={styles.logoContainer}>
-                            <img src={logo} style={styles.logo}/>
-                        </div>
-                    </Col>
-                </Row>
-                <Row style={{display: "flex", justifyContent: 'center'}}>
-                    <Col style={{width: "25%"}}>
-                        <div style={styles.formContainer}>
-                        <form>
-                            <FormGroup>
-                            <h2 style={styles.label}>First name</h2>
-                            <FormControl type="text" value={this.state.firstName} placeholder="John" onChange={this.handleChangeFirstName}/>
-                            <h2 style={styles.label}>Last name</h2>
-                            <FormControl type="text" value={this.state.lastName} placeholder="johndoe@example.edu" onChange={this.handleChangeLastName}/>
-                            <h2 style={styles.label}>Email</h2>
-                            <FormControl type="text" value={this.state.email} placeholder="johndoe@example.edu" onChange={this.handleChangeEmail}/>
-                            <FormControl.Feedback/>
-                            <h2 style={styles.label}>Password</h2>
-                            <FormControl type="text" value={this.state.password} placeholder="password" onChange={this.handleChangePassword}/>
-                            <FormControl.Feedback/>
-                            </FormGroup>
-                        </form>
-                        </div>
-                        <div style={{display: "flex", justifyContent: 'center'}}>
-                            <button onClick={ () => this.register } style={styles.loginButton}>Register</button>
-                        </div>
-                        <div style={{display: "flex", justifyContent: 'center'}}>
-                            <button style={styles.registerButton}><Link to={"/auth/login"} style={styles.link}><span style={styles.accent}>Already a user? </span> Login</Link></button>
-                        </div>
-                    </Col>
-                </Row>
-            </Grid>
-        </div>
-    );
-}
+    render() {
+        return(
+            <div style={styles.container}>
+                <Grid style={{marginTop: "40px"}}>
+                    <Row style={{display: "flex", justifyContent: "center", paddingBottom: "15px"}}>
+                        <Col>
+                            <div style={styles.logoContainer}>
+                                <img src={logo} style={styles.logo}/>
+                            </div>
+                        </Col>
+                    </Row>
 
+                    <Row style={{display: "flex", justifyContent: 'center'}}>
+                        <Col style={{width: "25%"}}>
+                            <div style={styles.formContainer}>
+                                <form>
+                                    <FormGroup>
+                                        <h2 style={styles.label}>First name</h2>
+                                        <FormControl type="text" value={this.state.firstName} placeholder="John" onChange={this.handleChangeFirstName}/>
+                                        
+                                        <h2 style={styles.label}>Last name</h2>
+                                        <FormControl type="text" value={this.state.lastName} placeholder="johndoe@example.edu" onChange={this.handleChangeLastName}/>
+                                        
+                                        <h2 style={styles.label}>Email</h2>
+                                        <FormControl
+                                            type="text"
+                                            value={this.state.email}
+                                            placeholder="johndoe@example.edu"
+                                            onChange={this.handleChangeEmail}
+                                        />
+                                        <FormControl.Feedback/>
+                                        
+                                        <h2 style={styles.label}>Password</h2>
+                                        <FormControl
+                                            type="text"
+                                            value={this.state.password}
+                                            placeholder="password"
+                                            onChange={this.handleChangePassword}
+                                        />
+                                        <FormControl.Feedback/>
+                                    </FormGroup>
+                                </form>
+                            </div>
 
+                            <div style={{display: "flex", justifyContent: 'center'}}>
+                                <button onClick={ () => this.register } style={styles.loginButton}>Register</button>
+                            </div>
+                            
+                            <div style={{display: "flex", justifyContent: 'center'}}>
+                                <button style={styles.registerButton}><Link to={"/auth/login"} style={styles.link}><span style={styles.accent}>Already a user? </span> Login</Link></button>
+                            </div>
+                        </Col>
+                    </Row>
+                </Grid>
+            </div>
+        );
+    }
 }
 
 const REGISTER_MUTATION = gql`
     mutation userCreate($input: UserInput, $password: String!) {
     userCreate(input: $input, password: $password) {
-      id
+        id
     }
   }
 `

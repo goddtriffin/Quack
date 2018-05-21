@@ -8,7 +8,6 @@ export const styles = {
         marginRight: '20px',
         marginBottom: '10px',
         display: 'flex',
-        //backgroundColor: 'orange'
     },
     title: {
         fontFamily: 'Fira Sans',
@@ -70,7 +69,6 @@ export const styles = {
         fontWeight: '400',
         textAlign: 'left',
     }
-    
 }
 
 export default styles;

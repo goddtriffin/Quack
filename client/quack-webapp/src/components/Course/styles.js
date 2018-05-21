@@ -1,13 +1,6 @@
 import { StyleSheet } from 'react'
 import { colors } from '../../styles/styles'
 
-// export default StyleSheet.create({
-//     container: {
-//         backgroundColor: 'orange',
-//     }
-
-// });
-
 export const styles = {
     container: {
         marginTop: '15px',
@@ -15,7 +8,6 @@ export const styles = {
         marginRight: '20px',
         marginBottom: '10px',
         display: 'flex',
-        //backgroundColor: 'orange'
     },
     title: {
         fontFamily: 'Fira Sans',

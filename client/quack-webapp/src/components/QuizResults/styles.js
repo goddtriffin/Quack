@@ -7,8 +7,7 @@ export const styles = {
         paddingLeft: '15px',
         marginRight: '20px',
         marginBottom: '10px',
-        display: 'flex',
-        //backgroundColor: 'orange'
+        display: 'flex'
     },
     title: {
         fontFamily: 'Fira Sans',
