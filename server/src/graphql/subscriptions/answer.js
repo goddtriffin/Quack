@@ -18,8 +18,8 @@ function unsubscribeToAnswerCreation (socket, quizID) {
     // if quizID doesn't exist in answer update subscriber list,
     // error, don't do anything
     if (!answerCreationSubscribers.hasOwnProperty(quizID)) {
-            console.error('answer creation (un)subscriber error: quizID', quizID, 'doesn\'t exist.');
-            return;
+		console.error('answer creation (un)subscriber error: quizID', quizID, 'doesn\'t exist.');
+		return;
     }
 
     // get index of socket within quizID subscriber list
@@ -27,8 +27,8 @@ function unsubscribeToAnswerCreation (socket, quizID) {
 
     // check if socket exists within quizID subscriber list
     if (index === -1) {
-            console.error('answer creation (un)subscriber error: socket', socket.id, 'isn\'t subscribed to ', quizID,'.');
-            return;
+		console.error('answer creation (un)subscriber error: socket', socket.id, 'isn\'t subscribed to ', quizID,'.');
+		return;
     }
 
     // everything gucci, remove socket from quizID subscriber list
@@ -40,10 +40,10 @@ function unsubscribeToAnswerCreation (socket, quizID) {
 function sendAnswerCreationEvent (quizID, answer) {
     // if quizID is being subscribed to,
     if (answerCreationSubscribers.hasOwnProperty(quizID)) {
-            // send updated answer info to socket
-            answerCreationSubscribers[quizID].forEach(function (socket) {
-                    socket.emit('quiz_answer_created', answer);
-            });
+		// send updated answer info to socket
+		answerCreationSubscribers[quizID].forEach(function (socket) {
+				socket.emit('quiz_answer_created', answer);
+		});
     }
 }
 

@@ -18,12 +18,12 @@ type Quiz {
 type Query {
     quizzes: [Quiz]
     quiz(id: Int!): Quiz
+    quizGetQuestions(id: Int!): [Question]
+    quizGetStats(questionID: Int!): [Int!]
+    quizGetAnswers(id: Int!): [Answer]
 }
 
 type Mutation {
     quizCreate(input: QuizInput): Quiz
     quizUpdate(id: Int!, input: QuizInput): Quiz
-    quizGetQuestions(id: Int!): [Question]
-    quizGetStats(questionID: Int!): [Int!]
-    quizGetAnswers(id: Int!): [Answer]
 }

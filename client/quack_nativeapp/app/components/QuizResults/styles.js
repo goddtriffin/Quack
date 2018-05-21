@@ -8,7 +8,6 @@ export default StyleSheet.create({
   },
   headerTop: {
     backgroundColor: colors.qLightGreen,
-    //height: 80,
   },
   gradeListText: {
     fontFamily: 'Fira Sans',
@@ -32,7 +31,6 @@ export default StyleSheet.create({
     fontSize: 50,
     color: 'white',
     textAlign: 'center',
-    //paddingBottom: 25,
   },
   subTitle: {
     fontFamily: 'Fira Sans',
@@ -41,7 +39,6 @@ export default StyleSheet.create({
     fontSize: 25,
     color: 'white',
     textAlign: 'center',
-   // paddingBottom: 10,
   },
   classHeaderText: {
     flex: 1,
@@ -50,14 +47,12 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 60,
     textAlign: 'center',
-  //  width: 200,
     paddingTop: 10,
  },
  button: {
   backgroundColor: colors.qDarkGreen,
   paddingVertical: 15,
   borderRadius: 40,
-
 },
 buttonText: {
   fontFamily: 'Fira Sans',
@@ -73,16 +68,12 @@ buttonText: {
     fontWeight: 'bold',
     fontSize: 25,
     textAlign: 'center',
-   // width: 500,
  },
  pastQuizIndicator: {
-  //flex: 1,
   fontFamily: 'Fira Sans',
   color: 'white',
-  //fontWeight: 'bold',
   fontSize: 25,
   textAlign: 'center',
-
 },
 line: {
   borderBottomColor: 'black', 

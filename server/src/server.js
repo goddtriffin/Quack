@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 
 var express = require('express');
@@ -17,15 +16,15 @@ var cors = require('cors');
 console.log(process.env.PLS_WORK);
 // Create connection to database
 var prodConfig = {
-  userName: "sa",//process.env.DB_P_USER,
-  password: "goddtriffin#1334",//process.env.DB_P_PASS,
-  server: "localhost",//process.env.DB_P_ENDPOINT,
-  database: "quackDB",//process.env.DB_P_NAME,
-  options: {
-     encrypt: true,
-     database: "quackDB",//process.env.DB_P_NAME,
-     rowCollectionOnRequestCompletion: true
-  }
+    userName: process.env.DB_P_USER,
+    password: process.env.DB_P_PASS,
+    server: process.env.DB_P_ENDPOINT,
+    database: process.env.DB_P_NAME,
+    options: {
+        encrypt: true,
+        database: process.env.DB_P_NAME,
+        rowCollectionOnRequestCompletion: true
+    }
 }
 
 var localConfig = {
@@ -39,15 +38,15 @@ var localConfig = {
     }
 }
 
-if(process.argv.length != 3) {
+if (process.argv.length != 3) {
     console.log("Usage: node server.js <type>");
     process.exit(1);
 }
 
-if(process.argv[2] == "p" ) {
+if (process.argv[2] == "p" ) {
     config = prodConfig;
 }
-else if(process.argv[2] == "l") {
+else if (process.argv[2] == "l") {
     config = localConfig;
 }
 else {

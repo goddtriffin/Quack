@@ -43,7 +43,6 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 40,
     textAlign: 'center',
-  //  width: 200,
     paddingTop: 10,
  },
  recentIndicator: {
@@ -53,13 +52,10 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 25,
     textAlign: 'center',
-   // width: 500,
  },
  pastQuizIndicator: {
-  //flex: 1,
   fontFamily: 'Fira Sans',
   color: 'white',
-  //fontWeight: 'bold',
   fontSize: 25,
   textAlign: 'center',
 

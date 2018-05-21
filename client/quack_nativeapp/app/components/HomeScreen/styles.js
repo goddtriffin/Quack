@@ -94,6 +94,4 @@ export default StyleSheet.create({
     color: 'white',
     textAlign: 'right',
   }
-  
-  
 });

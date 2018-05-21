@@ -22,141 +22,135 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { AsyncStorage } from 'react-native';
 import gql from 'graphql-tag';
 
-
 const httpLink = createHttpLink({
-  uri: 'http://endor-vm2.cs.purdue.edu:4000/graphql',
+  	uri: 'http://endor-vm2.cs.purdue.edu:4000/graphql',
 });
-
 
 let token;
 
 const withToken = setContext(operation => 
-  AsyncStorage.getItem('auth-token').then(userToken => {
-    return { 
-      headers: {
-        type: "student",
-        authorization : userToken || null
-      },
-    };
-  })
+	AsyncStorage.getItem('auth-token').then(userToken => {
+		return { 
+			headers: {
+				type: "student",
+				authorization : userToken || null
+			},
+		};
+	})
 );
 
 const client = new ApolloClient({
-  link: withToken.concat(httpLink),
-  cache: new InMemoryCache()
+	link: withToken.concat(httpLink),
+	cache: new InMemoryCache()
 });
 
 export default class App extends Component {
-  state = {
-    authToken: '',
-    loggedIn: false,
-    user: {
-      firstName: '',
-      lastName: '',
-      email: '',
-    }
-  }
-  
+	state = {
+		authToken: '',
+		loggedIn: false,
+		user: {
+			firstName: '',
+			lastName: '',
+			email: '',
+		}
+	}
 
-  render() {
-    
-    console.disableYellowBox = true;
-    
-    /*
-    return (
-        <Feedback/>
-    )
-    */
-    
-    if(!this.state.authToken) {
-      return (
-        <ApolloProvider client={client}>
-          <LoginRoute screenProps={this.state.user.firstName}/>
-        </ApolloProvider>
-      );
-    }else {
-      return (
-        <ApolloProvider client={client}>
-          <HomeRoute />
-        </ApolloProvider>
-      );
-    }
-    
-  }
+  	render() {
+		console.disableYellowBox = true;
+		
+		if (!this.state.authToken) {
+			return (
+				<ApolloProvider client={client}>
+					<LoginRoute screenProps={this.state.user.firstName}/>
+				</ApolloProvider>
+			);
+		} else {
+			return (
+				<ApolloProvider client={client}>
+					<HomeRoute/>
+				</ApolloProvider>
+			);
+		}
+  	}
 }
 
-const LoginRoute = StackNavigator({
-    Login: {
-      screen: LoginScreen,
-    },
-    Register: {
-      screen: RegisterScreen,
-    },
-    Home: {
-      screen: HomeScreen,
-    },
-    Grades: {
-      screen: Grades,
-    },
-    QuizResults: {
-      screen: QuizResults,
-      navigationOptions: {
-        header: null,
-        gesturesEnabled: false,
-        headerTintColor: 'white',
-        headerStyle: {
-          backgroundColor: '#07A386'
-        }
-      }
-    },
-    Quiz: {
-      screen: Quiz,
-      navigationOptions: {
-        header: null,
-        gesturesEnabled: false,
-      },
-    },
-    PastQuiz: {
-      screen: PastQuiz,
-      navigationOptions: {
-        header: null,
-        gesturesEnabled: false,
-      },
-    },
-    WriteQuiz: {
-      screen: WriteQuiz,
-      navigationOptions: {
-        header: null,
-        gesturesEnabled: false,
-      },
-    },
-    CourseDetails: {
-      screen: CourseDetails,
-      navigationOptions: {
-        header: null,
-        gesturesEnabled: false,
-      },
-    },
-    Questions: {
-      screen: Questions,
-      navigationOptions: {
-        header: null,
-        gesturesEnabled: false
-      },
-    },
-    Feedback: {
-      screen: Feedback,
-      navigationOptions: {
-        headerTintColor: 'white',
-        headerStyle: {
-          backgroundColor: '#07A386'
-        }
-    }}},
-    { headerMode: 'screen' }
-    );
+const LoginRoute = StackNavigator(
+	{
+		Login: {
+			screen: LoginScreen,
+		},
+		Register: {
+			screen: RegisterScreen,
+		},
+		Home: {
+			screen: HomeScreen,
+		},
+		Grades: {
+			screen: Grades,
+		},
+		QuizResults: {
+			screen: QuizResults,
+			navigationOptions: {
+				header: null,
+				gesturesEnabled: false,
+				headerTintColor: 'white',
+				headerStyle: {
+					backgroundColor: '#07A386'
+				}
+			}
+		},
+		Quiz: {
+			screen: Quiz,
+			navigationOptions: {
+				header: null,
+				gesturesEnabled: false,
+			},
+		},
+		PastQuiz: {
+			screen: PastQuiz,
+			navigationOptions: {
+				header: null,
+				gesturesEnabled: false,
+			},
+		},
+		WriteQuiz: {
+			screen: WriteQuiz,
+			navigationOptions: {
+				header: null,
+				gesturesEnabled: false,
+			},
+		},
+		CourseDetails: {
+			screen: CourseDetails,
+			navigationOptions: {
+				header: null,
+				gesturesEnabled: false,
+			},
+		},
+		Questions: {
+			screen: Questions,
+			navigationOptions: {
+				header: null,
+				gesturesEnabled: false
+			},
+		},
+		Feedback: {
+			screen: Feedback,
+			navigationOptions: {
+				headerTintColor: 'white',
+				headerStyle: {
+					backgroundColor: '#07A386'
+				}
+			}
+		}
+	},
+    {
+		headerMode: 'screen'
+	}
+);
 
 const HomeRoute = StackNavigator({
-  Home: {
-    screen: HomeScreen,
-  }
+	Home: {
+		screen: HomeScreen,
+	}
 });

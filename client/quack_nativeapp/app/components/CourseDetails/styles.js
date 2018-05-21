@@ -3,7 +3,6 @@ import { colors } from '../../style/styles';
 
 export default StyleSheet.create({
   navigationButton: {
-    //justifyContent: 'flex-end',
     resizeMode: 'contain',
     paddingTop: 80,
   },

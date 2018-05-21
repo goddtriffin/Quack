@@ -1,8 +1,3 @@
-// 2.5 hours = 5 unit tests
-// Given the server receives the appropriate request, a Feedback can be created in the database.
-// Given the server receives the appropriate request, a Feedback can be received from the database.
-// Given the tests for the Feedback are ran, they all pass.
-
 const v = require('../src/graphql/validators/validate');
 
 // FEEDBACK CONTENT
@@ -68,7 +63,7 @@ module.exports = {
         // print score
         console.log("Finished. Score: " + score + "/" + tests.length);
 
-        // let the big momma know about the points
+        // globally tally it
         let tally = {};
         tally['score'] = score;
         tally['total'] = tests.length;

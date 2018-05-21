@@ -1,7 +1,6 @@
 import { colors } from '../../styles/styles'
 
 export const styles = {
-
     container: {
         display: "flex",
         width: "100vw",
@@ -56,7 +55,6 @@ export const styles = {
         textDecoration: 'none',
         color: 'white'
     }
-    
 }
 
 export default styles;

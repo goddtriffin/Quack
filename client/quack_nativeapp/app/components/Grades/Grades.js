@@ -43,18 +43,16 @@ class Grades extends Component {
     }
 
     updateQuiz(quiz) {
-        
         this.setState({updatedQuiz: quiz}, function() {
-            
             for (let i = 0; i < this.state.quizzes.length; i++) {
                 if (this.state.quizzes[i].key == this.state.updatedQuiz.id) {
-                    this.state.quizzes[i].date = this.state.updatedQuiz.date;
-                    this.state.quizzes[i].isOpen = this.state.updatedQuiz.isOpen == 1 ? true : false
-                    this.state.quizzes[i].key = this.state.updatedQuiz.id;
-                    this.state.quizzes[i].title = this.state.updatedQuiz.title;
-
+                    this.state.quizzes[i].date      = this.state.updatedQuiz.date;
+                    this.state.quizzes[i].isOpen    = this.state.updatedQuiz.isOpen == 1 ? true : false
+                    this.state.quizzes[i].key       = this.state.updatedQuiz.id;
+                    this.state.quizzes[i].title     = this.state.updatedQuiz.title;
                 }
             }
+
             this.setState({plzUpdate: 'ok'})
         })
     }
@@ -64,49 +62,45 @@ class Grades extends Component {
     }
 
     componentDidMount() {
-
         this.setState({course:this.props.navigation.state.params.course})
         this.setState({studentID:this.props.navigation.state.params.studentID})
         this.setState({courseID:this.props.navigation.state.params.key})
 
         this.props.client.mutate({ mutation: gql`
-                mutation userGetQuizzes($courseID: Int!) {
-                    userGetQuizzes(courseID: $courseID) {
-                        id
-                        isOpen
-                        date
-                        title
-                    }
+            mutation userGetQuizzes($courseID: Int!) {
+                userGetQuizzes(courseID: $courseID) {
+                    id
+                    isOpen
+                    date
+                    title
                 }
-            `,
+            }`,
             variables: {
                 courseID : this.props.navigation.state.params.key,
             }
-            }).then( data => {
-                quizzes = [];
-                console.log(data.data.quizzes)
+        }).then( data => {
+            quizzes = [];
 
-                for(let i = 0; i < data.data.userGetQuizzes.length; i++) {
-                    quizzes.push({title: data.data.userGetQuizzes[i].title, isOpen:data.data.userGetQuizzes[i].isOpen, date:data.data.userGetQuizzes[i].date, key:data.data.userGetQuizzes[i].id})
-                }
+            for (let i = 0; i < data.data.userGetQuizzes.length; i++) {
+                quizzes.push({title: data.data.userGetQuizzes[i].title, isOpen:data.data.userGetQuizzes[i].isOpen, date:data.data.userGetQuizzes[i].date, key:data.data.userGetQuizzes[i].id})
+            }
 
-            console.log(quizzes)
             this.setState({quizzes});
-            }).catch(function(error) {
-                alert(error.message);
-            });
+        }).catch(function(error) {
+            alert(error.message);
+        });
     }
+
     handleQuiz (title, date, quizID, isOpen) {
         let course = this.state.course;
         let courseID = this.state.courseID;
         let studentID = this.state.studentID;
-        if(isOpen == true){
+
+        if (isOpen == true) {
             this.props.navigation.navigate('WriteQuiz', {course, courseID, title, date, quizID, studentID})
-        }
-        else if(date != ""){
+        } else if (date != "") {
             this.props.navigation.navigate('Questions', {course, courseID, title, date, quizID, studentID})
-        }
-        else{
+        } else {
             Alert.alert(
                 'Upcoming Quiz',
                 title + ' is an upcoming quiz',
@@ -124,7 +118,7 @@ class Grades extends Component {
                 <Header style={styles.headerTop}>
                     <Left style={{flex: 1}}>
                         <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({ routeName: 'Home'})]}))}>
-                        <Icon name='arrow-back' style={styles.backButton}/>
+                            <Icon name='arrow-back' style={styles.backButton}/>
                         </TouchableOpacity>
                     </Left>
                 </Header>
@@ -133,6 +127,7 @@ class Grades extends Component {
                     <Text style={styles.bigTitle}>
                         {this.state.course.split(":")[0]}
                     </Text>
+
                     <Text style={styles.subTitle}>
                         {this.state.course.split(":")[1]}
                     </Text>
@@ -145,22 +140,24 @@ class Grades extends Component {
                                 return (
                                     <View>
                                         <Grid>
-                                                <TouchableOpacity style={{flex: 1}} onPress={()=> this.handleQuiz(title, date, key, isOpen)}>
+                                            <TouchableOpacity style={{flex: 1}} onPress={()=> this.handleQuiz(title, date, key, isOpen)}>
                                                 <Row style={{justifyContent: 'center', alignItems: 'center', margin: 10}}>
                                                         <Col size={80}>
-                                                        <Text style={styles.quizText}>{title}</Text>
+                                                            <Text style={styles.quizText}>{title}</Text>
                                                         </Col>
+                                                        
                                                         <Col size={20}>
-                                                        {(isOpen == true) ?
-                                                            <Text style={styles.quizTextLive}>Live</Text>
-                                                        : (date == "") ?
-                                                            <Text style={styles.quizText}></Text>
-                                                        :
-                                                            <Text style={styles.quizText}>{date.substring(0,5)}</Text>
-                                                        }
+                                                            {
+                                                                (isOpen == true) ?
+                                                                    <Text style={styles.quizTextLive}>Live</Text>
+                                                                : (date == "") ?
+                                                                    <Text style={styles.quizText}></Text>
+                                                                :
+                                                                    <Text style={styles.quizText}>{date.substring(0,5)}</Text>
+                                                            }
                                                         </Col>
                                                 </Row>
-                                                </TouchableOpacity>
+                                            </TouchableOpacity>
                                         </Grid>
                                     </View>
                                 );

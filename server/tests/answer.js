@@ -1,7 +1,3 @@
-// 5 hours = 10 unit tests
-// Given the server receives the appropriate request, an Answer can be created in the database.
-// Given the server receives the appropriate request, an Answer can be received from the database.
-
 const v = require('../src/graphql/validators/validate');
 
 // ANSWER TYPE
@@ -105,7 +101,7 @@ module.exports = {
         // print score
         console.log("Finished. Score: " + score + "/" + tests.length);
 
-        // let the big momma know about the points
+        // globally tally it
         let tally = {};
         tally['score'] = score;
         tally['total'] = tests.length;

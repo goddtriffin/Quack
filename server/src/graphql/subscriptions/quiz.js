@@ -13,7 +13,6 @@ function subscribeToQuizUpdate (socket, courseID) {
     quizUpdateSubscribers[courseID].push(socket);
 
 	console.log('subscribing', socket.id, 'to', courseID);
-	console.log(typeof courseID);
 }
 
 // unsubscribes a socket to quiz updates from a specific course
@@ -21,8 +20,8 @@ function unsubscribeToQuizUpdate (socket, courseID) {
     // if courseID doesn't exist in quiz update subscriber list,
     // error, don't do anything
     if (!quizUpdateSubscribers.hasOwnProperty(courseID)) {
-            console.error('quiz update (un)subscriber error: courseID', courseID, 'doesn\'t exist.');
-            return;
+		console.error('quiz update (un)subscriber error: courseID', courseID, 'doesn\'t exist.');
+		return;
     }
 
     // get index of socket within courseID subscriber list
@@ -30,8 +29,8 @@ function unsubscribeToQuizUpdate (socket, courseID) {
 
     // check if socket exists within courseID subscriber list
     if (index === -1) {
-            console.error('quiz update (un)subscriber error: socket', socket.id, 'isn\'t subscribed to ', courseID,'.');
-            return;
+		console.error('quiz update (un)subscriber error: socket', socket.id, 'isn\'t subscribed to ', courseID,'.');
+		return;
     }
 
     // everything gucci, remove socket from courseID subscriber list
@@ -41,17 +40,12 @@ function unsubscribeToQuizUpdate (socket, courseID) {
 // send newly updated quiz information to all sockets
 // that are subscribed to the corresponding courseID
 function sendQuizUpdateEvent (courseID, quiz) {
-			console.log('sending updated quiz to all quiz_updated subscribers');
-			console.log(quizUpdateSubscribers);
-			console.log('1', courseID, quiz);
-			console.log(typeof courseID);
     // if courseID is being subscribed to,
     if (quizUpdateSubscribers.hasOwnProperty(courseID)) {
-            // send updated quiz info to socket
-            quizUpdateSubscribers[courseID].forEach(function (socket) {
-                    socket.emit('quiz_updated', quiz);
-			console.log(socket.id, 'just got updated quiz:', quiz);
-            });
+		// send updated quiz info to socket
+		quizUpdateSubscribers[courseID].forEach(function (socket) {
+			socket.emit('quiz_updated', quiz);
+		});
     }
 }
 

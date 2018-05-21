@@ -20,8 +20,6 @@ export default StyleSheet.create({
   },
   logoContainer: {
       alignItems: 'center',
-      //flexGrow: 1,
-      //flex: 1,
       justifyContent: 'center',
       height: 200,
       paddingVertical: 30,
@@ -29,11 +27,9 @@ export default StyleSheet.create({
   },
   formContainer: {
     padding: 20,
-    
   },
   input: {
       height: 50,
-      //backgroundColor: 'rgba(255,255,255,0.8)',
       marginBottom: 30,
       borderBottomColor: 'rgba(255,255,255,0.8)',
       borderBottomWidth: 1.5,
@@ -41,13 +37,11 @@ export default StyleSheet.create({
       fontWeight: '500',
       fontSize: 18,
       color: 'white',
-
   },
   button: {
     backgroundColor: colors.qDarkGreen,
     paddingVertical: 15,
     borderRadius: 40,
-
   },
 
   buttonText: {
@@ -105,7 +99,5 @@ export default StyleSheet.create({
 
   HELLO: {
     paddingVertical: 10,
-    
   }
-  
 });

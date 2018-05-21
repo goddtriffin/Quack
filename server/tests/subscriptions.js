@@ -1,15 +1,3 @@
-// 1 hr     |   Quiz updated
-// "Given the server receives the correct request, a client can subscribe to a certain event."
-// "Given a client subscribes to an event, it gets their updates."
-// "Given a subscription is successfully implemented, all the test cases will pass."
-
-// 1 hr     |   Quiz Answer created
-// "Given quiz results can be viewed in real-time, an instructor should be able to see responses from their quiz for non-free response questions (true/false & multiple choice)."
-// "Given quiz results can be viewed in real-time, a user should only be able to see their own answer and not any others for that quiz."
-// "Given quiz results can be viewed in real-time, a user should only be able to see the class results once the instructor has made it available to view."
-
-// import { request, GraphQLClient } from 'graphql-request'
-
 const { request, GraphQLClient } = require('graphql-request')
 
 const graphqlEndpoint = "http://endor-vm2.cs.purdue.edu:4000/graphql";

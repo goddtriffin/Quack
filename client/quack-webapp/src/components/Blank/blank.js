@@ -21,16 +21,14 @@ const styles = {
 }
 
 class Blank extends Component {
-
-render() {
-    return(
-        <div style={styles.container}>
-            {/* <Alert bsStyle="warning">Hello</Alert> */}
-            <h1 style={styles.header}>To get started, select a course from the sidebar or add a new course.</h1>
-        </div>
-    );
+    render() {
+        return(
+            <div style={styles.container}>
+                {/* <Alert bsStyle="warning">Hello</Alert> */}
+                <h1 style={styles.header}>To get started, select a course from the sidebar or add a new course.</h1>
+            </div>
+        );
+    }
 }
 
-
-}
 export default Blank;

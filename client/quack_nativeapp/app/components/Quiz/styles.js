@@ -37,7 +37,6 @@ export default StyleSheet.create({
      textAlign: 'left',
      width: 250,
      paddingLeft: 20,
-
   },
   quizBodyText: {
     flex: 1,
@@ -59,13 +58,11 @@ export default StyleSheet.create({
   textAlign: 'center',
   width: 250,
   paddingTop: 90,
-
 },
   downIndicator: {
     resizeMode: 'contain',
     justifyContent: 'flex-end',
     paddingRight: 125,
-
   },
   pictureView: {
       resizeMode: 'contain',
@@ -93,12 +90,6 @@ export default StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 20,
-    //width: 250,
     paddingTop: 20,
-
   }
-  
-
-
-  
 });

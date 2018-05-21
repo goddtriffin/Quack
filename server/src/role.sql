@@ -4,4 +4,3 @@ CREATE TABLE TestSchema.Roles (
 	courseID INT,
 	type NVARCHAR(50)
 );
-

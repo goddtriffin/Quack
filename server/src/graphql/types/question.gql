@@ -24,11 +24,11 @@ type Question {
 type Query {
     questions: [Question]
     question(id: Int!): Question
+    questionGetUserAnswer(questionID: Int!, userID: Int!): Answer
 }
 
 type Mutation {
     questionCreate(input: QuestionInput): Quiz
     questionUpdate(id: Int!, input: QuestionInput): Quiz
-    questionGetUserAnswer(questionID: Int!, userID: Int!): Answer
 }
  

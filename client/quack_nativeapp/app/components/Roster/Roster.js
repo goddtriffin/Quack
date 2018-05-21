@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { View, Image, Text, Dimensions, TouchableOpacity, AlertIOS, ScrollView } from 'react-native';
 import styles from './styles';
+
 export default class Roster extends Component {
     state = {
         students : [
@@ -20,6 +21,7 @@ export default class Roster extends Component {
             'Attendence Details', this.state.students[key].name + ' has been to ' + this.state.students[key].attendence + ' out of 5 classes.'
         );
     }
+
     grade_click(key) {
         let students = this.state.courses;
         AlertIOS.alert(
@@ -32,12 +34,6 @@ export default class Roster extends Component {
         return (
             <Grid>
                 <Row size={20}>
-                    {/* Can't Figure out why this wont work
-                     <Image>
-                        source={require('../../images/navigation_resources/back_button.png')}
-                        style={styles.navigationButton}
-                    </Image> */}
-
                     <Text style = {styles.rosterHeaderText}>
                         {this.state.course} class roster
                     </Text>
@@ -48,6 +44,7 @@ export default class Roster extends Component {
                         <Text style = {styles.RosterTitle}>
                             Students
                        </Text>
+
                        <ScrollView style={styles.courseList}>
                         {
                             this.state.students.map(({name, key}) => 
@@ -65,6 +62,7 @@ export default class Roster extends Component {
                         <Text style = {styles.RosterTitle}>
                             Grade
                         </Text>
+
                         <ScrollView style={styles.courseList}>
                         {
                             this.state.students.map(({avg, key}) => 

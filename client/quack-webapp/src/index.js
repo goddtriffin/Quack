@@ -14,35 +14,31 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { AUTH_TOKEN } from './constants'
 import { BatchLink } from "apollo-link-batch";
 
-
 const httpLink = createHttpLink({
-  uri: 'http://endor-vm2.cs.purdue.edu:4000/graphql',
-  credentials: 'same-origin',
+	uri: 'http://endor-vm2.cs.purdue.edu:4000/graphql',
+	credentials: 'same-origin'
 });
 
 const authToken = localStorage.getItem(AUTH_TOKEN);
-//localStorage.setItem(AUTH_TOKEN, "");
 
 const middlewareLink = new ApolloLink((operation, forward) => {
   	if (authToken) {
-	  operation.setContext({
-	    headers: {
-        type: 'instructor',
-        authorization: authToken,
-        "Access-Control-Allow-Credentials" : "*",
-	    }
-	  });
+		operation.setContext({
+			headers: {
+				type: 'instructor',
+				authorization: authToken,
+				"Access-Control-Allow-Credentials" : "*",
+			}
+		});
 	}
-	console.log(operation.getContext());
-  return forward(operation)
+	
+  	return forward(operation)
 })
 
 const client = new ApolloClient({
-  link: middlewareLink.concat(httpLink),
-  cache: new InMemoryCache(),
+	link: middlewareLink.concat(httpLink),
+	cache: new InMemoryCache(),
 });
-
-console.log("TOKEN: " + authToken);
 
 ReactDOM.render(
 <ApolloProvider client={client}>

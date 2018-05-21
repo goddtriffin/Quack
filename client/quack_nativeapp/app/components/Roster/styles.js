@@ -27,14 +27,12 @@ export default StyleSheet.create({
       paddingLeft: 20,
       paddingTop: 30,
   },
-
   header: {
     height: 80,
     paddingTop: 30,
     paddingLeft: 10,
     flexDirection: 'row',
   },
-
   bigTitle: {
     fontFamily: 'Fira Sans',
     fontWeight: '800',

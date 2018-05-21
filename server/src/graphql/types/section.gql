@@ -12,10 +12,10 @@ type Section {
 type Query {
     sections: [Section]
     section(id: Int!): Section
+    sectionGetUsers(id: Int!): [User]
 }
 
 type Mutation {
     sectionCreate(input: SectionInput): Section
     sectionUpdate(id: Int!, input: SectionInput): Section
-    sectionGetUsers(id: Int!): [User]
 }
