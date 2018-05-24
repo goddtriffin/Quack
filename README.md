@@ -1,5 +1,5 @@
 # quack
 
-Purdue CS 307 project.
+Mobile, all-in-one quiz taking platform with a GraphQL backend.
 
-Justin Hartman, Mason Wesolek, Theo Burkhart, Todd Griffin, Tyler Rex
+Purdue CS307 project: Theo Burkhart, Todd Griffin, Justin Hartman, Tyler Rex, Mason Wesolek
